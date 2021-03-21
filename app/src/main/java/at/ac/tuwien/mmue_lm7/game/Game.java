@@ -4,7 +4,7 @@ import android.graphics.Canvas;
 
 import at.ac.tuwien.mmue_lm7.game.objects.GameObject;
 import at.ac.tuwien.mmue_lm7.game.rendering.RenderSystem;
-import at.ac.tuwien.mmue_lm7.physics.PhysicsSystem;
+import at.ac.tuwien.mmue_lm7.game.physics.PhysicsSystem;
 import at.ac.tuwien.mmue_lm7.utils.Vec2;
 
 /**

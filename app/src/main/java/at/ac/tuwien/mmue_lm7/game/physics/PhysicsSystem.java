@@ -1,4 +1,4 @@
-package at.ac.tuwien.mmue_lm7.physics;
+package at.ac.tuwien.mmue_lm7.game.physics;
 
 /**
  * Manages all Bounding boxes, checks collisions between them
