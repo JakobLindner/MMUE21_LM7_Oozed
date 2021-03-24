@@ -1,7 +1,5 @@
 package at.ac.tuwien.mmue_lm7.game.objects;
 
-import java.util.ArrayList;
-
 import at.ac.tuwien.mmue_lm7.game.Game;
 import at.ac.tuwien.mmue_lm7.game.rendering.RenderSystem;
 import at.ac.tuwien.mmue_lm7.utils.Vec2;
