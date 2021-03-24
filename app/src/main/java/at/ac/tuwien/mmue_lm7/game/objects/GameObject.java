@@ -5,7 +5,7 @@ import at.ac.tuwien.mmue_lm7.game.rendering.RenderSystem;
 import at.ac.tuwien.mmue_lm7.utils.Vec2;
 
 /**
- * Initialization may happen in constructor
+ *
  */
 public class GameObject {
     /**
@@ -23,20 +23,24 @@ public class GameObject {
     private GameObject nextSibling = null;
     private GameObject prevSibling = null;
 
-    public GameObject getParent() {
-        return parent;
-    }
+    /**
+     * whether or not this game object has been initialized
+     */
+    private boolean initialized = false;
 
-    public GameObject getFirstChild() {
-        return firstChild;
-    }
 
-    public GameObject getNextSibling() {
-        return nextSibling;
-    }
+    //##################################
+    //###   METHODS FOR OVERWRITING  ###
+    //##################################
 
-    public GameObject getPrevSibling() {
-        return prevSibling;
+    /**
+     * Called when first added to scene tree, can be overwritten by subclasses
+     * can be used to set up game object, register callback functions, ...
+     * super.init() does not need to be called
+     */
+    public void init() {
+        //used for root game object
+        initialized = true;
     }
 
     /**
@@ -53,6 +57,15 @@ public class GameObject {
     }
 
     /**
+     * called by the destroy method when
+     */
+    protected void onDestroy() { }
+
+    //###############################
+    //#####  OTHER METHODS  #########
+    //###############################
+
+    /**
      * Removes the game object from the scene tree
      * calls destroy on all child objects
      */
@@ -61,6 +74,20 @@ public class GameObject {
 
         onDestroy();
         detachFromParent();
+    }
+
+    /**
+     * Recursively initializes children in breadth first order
+     */
+    private void initChildren() {
+        //init children
+        for(GameObject child = firstChild; child!=null; child = firstChild.nextSibling) {
+            child.initialized = true;
+            child.init();
+        }
+        //init grandchildren
+        for(GameObject child = firstChild; child!=null; child = firstChild.nextSibling)
+            child.initChildren();
     }
 
     /**
@@ -88,11 +115,6 @@ public class GameObject {
     }
 
     /**
-     * called by the destroy method when
-     */
-    protected void onDestroy() { }
-
-    /**
      * calls destroy on all children, order is depth first, but i guess it wont matter here
      */
     public final void destroyChildren() {
@@ -106,6 +128,13 @@ public class GameObject {
      * @return this for chaining
      */
     public final GameObject addChild(GameObject child) {
+        //initialize child, if this game object is already part of the scene tree
+        if(!initialized) {
+            child.initialized = true;
+            child.init();
+            child.initChildren();
+        }
+
         //clear current parent of child
         child.detachFromParent();
 

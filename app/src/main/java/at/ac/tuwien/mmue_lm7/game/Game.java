@@ -35,6 +35,9 @@ public class Game {
         //initialize singleton
         singleton = this;
 
+        //initialize root, so that every object added to scene tree gets automatically initialized
+        root.init();
+
         //TODO load assets
     }
 
