@@ -12,6 +12,11 @@ import at.ac.tuwien.mmue_lm7.utils.Vec2;
  */
 public class Game {
 
+    private static Game singleton = null;
+    public static Game get() {
+        return singleton;
+    }
+
     /**
      * Root object of the scene tree
      */
@@ -20,12 +25,16 @@ public class Game {
     private RenderSystem renderSystem = new RenderSystem();
     private PhysicsSystem physicsSystem = new PhysicsSystem();
 
+    //TODO optimization: have object pools for all types of game objects, free in GameObject::destroy
 
     /**
      * Initializes the game world
      * Allocates ressources
      */
     public void init() {
+        //initialize singleton
+        singleton = this;
+
         //TODO load assets
     }
 
@@ -43,7 +52,7 @@ public class Game {
         //advance physics, calculate collisions, emit collision events
         physicsSystem.update();
         //update game world: players, entities, ...
-        //TODO
+        root.updateChildren();
         //check loose win condition(s),
         //are there still enemies left
         //does the player have lives left?
@@ -55,7 +64,8 @@ public class Game {
      * @param canvas, not null
      */
     public void render(Canvas canvas) {
-        //TODO render all game objects
+        //render game objects
+        root.renderChildren(renderSystem);
 
         //perform batched render commands
         renderSystem.render(canvas);
@@ -67,5 +77,12 @@ public class Game {
 
     public void swipe(Vec2 position, Vec2 direction) {
         //TODO emit event for all listening game objects
+    }
+
+    /**
+     * @return root of scene tree
+     */
+    public GameObject getRoot() {
+        return root;
     }
 }
