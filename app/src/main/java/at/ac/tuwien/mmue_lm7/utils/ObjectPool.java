@@ -1,5 +1,6 @@
 package at.ac.tuwien.mmue_lm7.utils;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 
 /**
@@ -7,6 +8,8 @@ import java.util.ArrayList;
  * inspired from libgdx object pool
  */
 public class ObjectPool<T extends ObjectPool.Poolable> {
+
+
     /**
      * Must be implemented by a class to be reuseable by an object pool
      */
@@ -18,14 +21,19 @@ public class ObjectPool<T extends ObjectPool.Poolable> {
     }
 
     //TODO maybe change to static array
-    private ArrayList<T> objects;
+    private final ArrayDeque<T> freeObjects;
+    /**
+     * used to generate a new instance of T, if there are no free objects
+     */
+    private final Supplier<T> supplier;
 
-    public ObjectPool() {
-        this(16);
+    public ObjectPool(Supplier<T> supplier) {
+        this(supplier,16);
     }
 
-    public ObjectPool(int initialSize) {
-        objects = new ArrayList<T>(initialSize);
+    public ObjectPool(Supplier<T> supplier, int initialSize) {
+        freeObjects = new ArrayDeque<T>(initialSize);
+        this.supplier = supplier;
     }
 
     /**
@@ -33,7 +41,10 @@ public class ObjectPool<T extends ObjectPool.Poolable> {
      * @return a free object from the object pool
      */
     public T obtain(){
-        return null;//TODO
+        if(freeObjects.isEmpty())
+            return supplier.get();
+        else
+            return freeObjects.removeLast();
     }
 
     /**
@@ -41,7 +52,8 @@ public class ObjectPool<T extends ObjectPool.Poolable> {
      * @param t, !=null
      */
     public void free(T t) {
-        //TODO
+        freeObjects.addLast(t);
+        t.reset();
     }
 
     /**
@@ -49,6 +61,8 @@ public class ObjectPool<T extends ObjectPool.Poolable> {
      * @param objects , !=null
      */
     public void freeAll(ArrayList<T> objects) {
-        //TODO
+        freeObjects.addAll(objects);
+        for(T t : objects)
+            t.reset();
     }
 }

@@ -17,14 +17,14 @@ public class PhysicsSystem {
     public final Subject<Contact> onGlobalCollision = new Subject<>();
 
     //Possible optimization: unordered array list
-    private ArrayList<AABB>[] aabbByLayer = new ArrayList[16];//16 because collision layer is a short
+    private final ArrayList<AABB>[] aabbByLayer = new ArrayList[16];//16 because collision layer is a short
 
     //Contact management, to reduce frequent allocations and prevent unnecessary garbage collecting
-    private ObjectPool<Contact> contactPool;
+    private final ObjectPool<Contact> contactPool = new ObjectPool<>(Contact::new);
     /**
      * Contacts that are generated during collision events, these get cleared at the beginning of each physics step
      */
-    private ArrayList<Contact> usedContacts = new ArrayList<Contact>(64);//TODO find good initial capacity
+    private final ArrayList<Contact> usedContacts = new ArrayList<Contact>(64);//TODO find good initial capacity
 
     /**
      * Adds given box to the physics system
