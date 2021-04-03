@@ -44,5 +44,36 @@ public class Vec2 {
         return this;
     }
 
+    /**
+     * sets the coordinates of the vector to given values
+     * @param x
+     * @param y
+     * @return this, for chaining
+     */
+    public Vec2 set(float x, float y) {
+        this.x = x;
+        this.y = y;
+        return this;
+    }
+
+    /**
+     * sets the coordinates of the vector to the same values as given vector
+     * @param vec
+     * @return this, for chaining
+     */
+    public Vec2 set(Vec2 vec) {
+        return set(vec.x,vec.y);
+    }
+
+    /**
+     * inverts this vector
+     * @return this, for chaining
+     */
+    public Vec2 invert() {
+        this.x*=-1;
+        this.y*=-1;
+        return this;
+    }
+
     //TODO methods, length, dot product, rotate ...
 }

@@ -88,4 +88,12 @@ public class Game {
     public GameObject getRoot() {
         return root;
     }
+
+    public RenderSystem getRenderSystem() {
+        return renderSystem;
+    }
+
+    public PhysicsSystem getPhysicsSystem() {
+        return physicsSystem;
+    }
 }

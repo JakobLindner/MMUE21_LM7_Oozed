@@ -1,4 +1,4 @@
-package at.ac.tuwien.mmue_lm7.game;
+package at.ac.tuwien.mmue_lm7.game.physics;
 
 /**
  * Static class with collision layer constants
@@ -6,6 +6,8 @@ package at.ac.tuwien.mmue_lm7.game;
  * e.g. used for collisions
  */
 public class CollisionLayers {
+    public static final short MAX_LAYERS = 16;
+
     public static final short NONE = 1<<0;
     public static final short PLAYER = 1<<1;
     public static final short ENEMY = 1<<2;

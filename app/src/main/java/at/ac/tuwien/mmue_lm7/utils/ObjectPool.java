@@ -37,10 +37,18 @@ public class ObjectPool<T extends ObjectPool.Poolable> {
     }
 
     /**
-     * Frees given object, can be obtained later
-     * @param t
+     * Frees given object, calls reset on given object, can be obtained later
+     * @param t, !=null
      */
     public void free(T t) {
+        //TODO
+    }
+
+    /**
+     * Frees all given objects, calls reset on every object
+     * @param objects , !=null
+     */
+    public void freeAll(ArrayList<T> objects) {
         //TODO
     }
 }
