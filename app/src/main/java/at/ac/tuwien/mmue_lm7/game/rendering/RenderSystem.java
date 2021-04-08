@@ -2,6 +2,7 @@ package at.ac.tuwien.mmue_lm7.game.rendering;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -29,6 +30,13 @@ public class RenderSystem {
 
         batchedCommands.add(d);
         return d;
+    }
+
+    /**
+     * called once by game
+     */
+    public void init() {
+
     }
 
     /**
@@ -96,8 +104,8 @@ public class RenderSystem {
             super.reset();
             left = right = top = bottom = 0;
             paint.reset();
-            pos = null;
-            halfSize = null;
+            pos.zero();
+            halfSize.zero();
             posSet = sizeSet = false;
         }
 
@@ -118,7 +126,7 @@ public class RenderSystem {
         }
 
         public DrawRect at(Vec2 pos) {
-            this.pos = pos;
+            this.pos.set(pos);
             posSet = true;
             updateBounds();
             return this;
@@ -171,7 +179,7 @@ public class RenderSystem {
             return this;
         }
 
-        public DrawRect color(long color) {
+        public DrawRect color(int color) {
             paint.setColor(color);
             return this;
         }

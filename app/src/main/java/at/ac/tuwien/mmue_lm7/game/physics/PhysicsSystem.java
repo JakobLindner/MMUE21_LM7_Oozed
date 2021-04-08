@@ -35,6 +35,16 @@ public class PhysicsSystem {
     private final ArrayList<Sweep> usedSweeps = new ArrayList<>(16);//TODO find good initial capacity
 
     /**
+     * Called once by game
+     */
+    public void init() {
+        //instantiate array lists of aabbs
+        for(int i = 0; i<aabbByLayer.length;++i) {
+            aabbByLayer[i] = new ArrayList<AABB>(32);//TODO find good initial capacity
+        }
+    }
+
+    /**
      * Adds given box to the physics system
      *
      * @param box, !=null

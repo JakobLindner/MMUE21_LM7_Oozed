@@ -124,6 +124,19 @@ public class GameObject {
     }
 
     /**
+     * calls debugRender() on children in breadth first order
+     * @param render
+     */
+    public final void debugRenderChildren(RenderSystem render) {
+        //render children
+        for(GameObject child = firstChild; child!=null; child = firstChild.nextSibling)
+            child.debugRender(render);
+        //render grandchildren
+        for(GameObject child = firstChild; child!=null; child = firstChild.nextSibling)
+            child.debugRenderChildren(render);
+    }
+
+    /**
      * calls destroy on all children, order is depth first, but i guess it wont matter here
      */
     public final void destroyChildren() {

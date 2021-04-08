@@ -1,30 +1,40 @@
 package at.ac.tuwien.mmue_lm7.game.objects;
 
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.util.Log;
+
 import at.ac.tuwien.mmue_lm7.game.Game;
 import at.ac.tuwien.mmue_lm7.game.physics.CollisionLayers;
 import at.ac.tuwien.mmue_lm7.game.physics.PhysicsSystem;
+import at.ac.tuwien.mmue_lm7.game.rendering.RenderSystem;
 import at.ac.tuwien.mmue_lm7.utils.Subject;
 import at.ac.tuwien.mmue_lm7.utils.Vec2;
 
 /**
  * Bounding box
  */
-public class AABB extends GameObject{
+public class AABB extends GameObject {
     /**
      * Subject for collision events involving this aabb, the passed contact is in the view of this aabb
      */
     public final Subject<PhysicsSystem.Contact> onCollide = new Subject<PhysicsSystem.Contact>();
     /**
-     * half Size of the bounding box
+     * half Size of the bounding box, components must be >=0
      */
-    private Vec2 halfSize;
+    private Vec2 halfSize = new Vec2();
     /**
      * Defines the layer this AABB is scanning collisions for
      */
     private short collisionMask = 0;
     private short collisionLayer = CollisionLayers.NONE;
 
-    //TODO constructor
+    /**
+     * Copies the values of the vector
+     */
+    public AABB(float halfWidth, float halfHeight) {
+        this.halfSize.set(halfWidth, halfHeight);
+    }
 
     public Vec2 getHalfSize() {
         return halfSize;
@@ -52,6 +62,7 @@ public class AABB extends GameObject{
 
     /**
      * Changes collision mask and layer at once, should be used if both values need to be changed
+     *
      * @param collisionLayer
      * @param collisionMask
      */
@@ -72,4 +83,12 @@ public class AABB extends GameObject{
         Game.get().getPhysicsSystem().removeAABB(this);
     }
 
+    @Override
+    public void debugRender(RenderSystem render) {
+        render.drawRect()
+                .at(position)
+                .halfSize(halfSize)
+                .color(Color.GREEN)
+                .style(Paint.Style.STROKE);
+    }
 }

@@ -5,8 +5,8 @@
 
     <at.ac.tuwien.mmue_lm7.GameSurfaceView
         style="@style/Widget.Theme.MMUELM7.MyView"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:paddingLeft="20dp"
         android:paddingBottom="40dp"
         app:exampleDimension="24sp"

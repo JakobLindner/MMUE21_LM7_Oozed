@@ -1,5 +1,7 @@
 package at.ac.tuwien.mmue_lm7.utils;
 
+import androidx.annotation.NonNull;
+
 /**
  * Simple 2d vector utility class
  */
@@ -172,6 +174,21 @@ public class Vec2 {
      */
     public float len2() {
         return x * x + y * y;
+    }
+
+    /**
+     * Sets components to 0
+     * @return this, for chaining
+     */
+    public Vec2 zero() {
+        this.x = this.y = 0;
+        return this;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return String.format("(%f,%f)", x,y);
     }
 
     //TODO methods, length, dot product, rotate ...

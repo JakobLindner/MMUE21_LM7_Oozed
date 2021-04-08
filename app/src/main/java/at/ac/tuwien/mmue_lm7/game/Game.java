@@ -3,6 +3,7 @@ package at.ac.tuwien.mmue_lm7.game;
 import android.graphics.Canvas;
 import android.util.Log;
 
+import at.ac.tuwien.mmue_lm7.game.objects.AABB;
 import at.ac.tuwien.mmue_lm7.game.objects.GameObject;
 import at.ac.tuwien.mmue_lm7.game.rendering.RenderSystem;
 import at.ac.tuwien.mmue_lm7.game.physics.PhysicsSystem;
@@ -40,7 +41,16 @@ public class Game {
         //initialize root, so that every object added to scene tree gets automatically initialized
         root.init();
 
+        //initialize systems
+        physicsSystem.init();
+        renderSystem.init();
+
         //TODO load assets
+
+        //TODO plz remove following
+        //AABB aabb = new AABB(50,50);
+        //aabb.position.set(500,500);
+        //root.addChild(aabb);
     }
 
     /**
@@ -73,6 +83,11 @@ public class Game {
         root.renderChildren(renderSystem);
 
         //perform batched render commands
+        renderSystem.render(canvas);
+
+        //DEBUG RENDER
+        //TODO only if enabled
+        root.debugRenderChildren(renderSystem);
         renderSystem.render(canvas);
     }
 
