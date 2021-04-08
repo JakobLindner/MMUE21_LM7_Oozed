@@ -1,5 +1,7 @@
 package at.ac.tuwien.mmue_lm7.game.objects;
 
+import android.graphics.Canvas;
+
 import at.ac.tuwien.mmue_lm7.game.Game;
 import at.ac.tuwien.mmue_lm7.game.rendering.RenderSystem;
 import at.ac.tuwien.mmue_lm7.utils.Vec2;
@@ -54,6 +56,13 @@ public class GameObject {
      * renders the game object, can be overwritten by subclasses
      */
     public void render(RenderSystem render) {
+    }
+
+    /**
+     * renders debug information if enabled, can be overwritten by subclass
+     */
+    public void debugRender(RenderSystem render) {
+
     }
 
     /**

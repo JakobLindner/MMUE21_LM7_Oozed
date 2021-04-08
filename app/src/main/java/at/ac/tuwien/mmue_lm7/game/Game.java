@@ -1,6 +1,7 @@
 package at.ac.tuwien.mmue_lm7.game;
 
 import android.graphics.Canvas;
+import android.util.Log;
 
 import at.ac.tuwien.mmue_lm7.game.objects.GameObject;
 import at.ac.tuwien.mmue_lm7.game.rendering.RenderSystem;
@@ -32,6 +33,7 @@ public class Game {
      * Allocates ressources
      */
     public void init() {
+        Log.i("Game","Initialize Game");
         //initialize singleton
         singleton = this;
 
