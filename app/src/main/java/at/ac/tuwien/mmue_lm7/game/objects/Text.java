@@ -29,6 +29,6 @@ public class Text extends GameObject {
                 .align(align)
                 .typeFace(Typeface.DEFAULT)
                 .color(color)
-                .size(64);//TODO make size configurable
+                .size(32);//TODO make size configurable
     }
 }

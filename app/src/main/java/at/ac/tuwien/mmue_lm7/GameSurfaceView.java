@@ -17,11 +17,8 @@ import android.view.View;
 import at.ac.tuwien.mmue_lm7.game.Game;
 import at.ac.tuwien.mmue_lm7.game.GameConstants;
 
-/**
- * TODO: document your custom view class.
- */
 public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callback {
-
+    private static final String TAG = GameSurfaceView.class.getName();
 
     private GameLoop gameLoop;
     private Game game;
@@ -29,7 +26,9 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
 
     public GameSurfaceView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        getHolder().setFixedSize(GameConstants.GAME_RES_WIDTH,GameConstants.GAME_RES_HEIGHT);
+        //set resolution of underlying view
+        getHolder().setFixedSize(GameConstants.GAME_RES_WIDTH, GameConstants.GAME_RES_HEIGHT);
+        //TODO set scale to nearest neighbor
         getHolder().addCallback(this);
         setFocusable(true);
 
@@ -38,7 +37,7 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
     }
 
     private void startGame(SurfaceHolder holder) {
-        gameLoop = new GameLoop(holder, this,game);
+        gameLoop = new GameLoop(holder, this, game);
         gameMainThread = new Thread(gameLoop);
         gameMainThread.start();
     }
@@ -71,6 +70,36 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
         endGame();
+    }
+
+    /**
+     * Overwrites width and height to achieve desired aspect ratio
+     * dimensions are set such that nothing is rendered off screen & black bars are minimized
+     * solution inspired from: https://stackoverflow.com/a/10772572
+     */
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        int originalWidth = MeasureSpec.getSize(widthMeasureSpec);
+        int originalHeight = MeasureSpec.getSize(heightMeasureSpec);
+        float originalRatio = originalWidth / (float) originalHeight;
+        float desiredRatio = GameConstants.GAME_RES_WIDTH / (float) GameConstants.GAME_RES_HEIGHT;
+
+        int desiredWidth;
+        int desiredHeight;
+        if (originalRatio > desiredRatio) {
+            //if screen is wider, than height is the limiting factor
+            desiredHeight = originalHeight;
+            desiredWidth = (desiredHeight * GameConstants.GAME_RES_WIDTH) / GameConstants.GAME_RES_HEIGHT;
+        } else {
+            //if screen is broader, then width is the limiting factor
+            desiredWidth = originalWidth;
+            desiredHeight = (desiredWidth * GameConstants.GAME_RES_HEIGHT) / GameConstants.GAME_RES_WIDTH;
+        }
+
+        Log.i(TAG, String.format("Setting dimensions of game view to %dx%d", desiredWidth, desiredHeight));
+        //setMeasuredDimension(desiredWidth, desiredHeight);
+        super.onMeasure(MeasureSpec.makeMeasureSpec(desiredWidth, MeasureSpec.EXACTLY),
+                MeasureSpec.makeMeasureSpec(desiredHeight, MeasureSpec.EXACTLY));
     }
 
     @Override
