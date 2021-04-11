@@ -90,12 +90,12 @@ public class GameObject {
      */
     private void initChildren() {
         //init children
-        for(GameObject child = firstChild; child!=null; child = firstChild.nextSibling) {
+        for(GameObject child = firstChild; child!=null; child = child.nextSibling) {
             child.initialized = true;
             child.init();
         }
         //init grandchildren
-        for(GameObject child = firstChild; child!=null; child = firstChild.nextSibling)
+        for(GameObject child = firstChild; child!=null; child = child.nextSibling)
             child.initChildren();
     }
 
@@ -104,10 +104,10 @@ public class GameObject {
      */
     public final void updateChildren() {
         //update children
-        for(GameObject child = firstChild; child!=null; child = firstChild.nextSibling)
+        for(GameObject child = firstChild; child!=null; child = child.nextSibling)
             child.update();
         //update grandchildren
-        for(GameObject child = firstChild; child!=null; child = firstChild.nextSibling)
+        for(GameObject child = firstChild; child!=null; child = child.nextSibling)
             child.updateChildren();
     }
 
@@ -116,10 +116,10 @@ public class GameObject {
      */
     public final void renderChildren(RenderSystem render) {
         //render children
-        for(GameObject child = firstChild; child!=null; child = firstChild.nextSibling)
+        for(GameObject child = firstChild; child!=null; child = child.nextSibling)
             child.render(render);
         //render grandchildren
-        for(GameObject child = firstChild; child!=null; child = firstChild.nextSibling)
+        for(GameObject child = firstChild; child!=null; child = child.nextSibling)
             child.renderChildren(render);
     }
 
@@ -129,10 +129,10 @@ public class GameObject {
      */
     public final void debugRenderChildren(RenderSystem render) {
         //render children
-        for(GameObject child = firstChild; child!=null; child = firstChild.nextSibling)
+        for(GameObject child = firstChild; child!=null; child = child.nextSibling)
             child.debugRender(render);
         //render grandchildren
-        for(GameObject child = firstChild; child!=null; child = firstChild.nextSibling)
+        for(GameObject child = firstChild; child!=null; child = child.nextSibling)
             child.debugRenderChildren(render);
     }
 
@@ -140,7 +140,7 @@ public class GameObject {
      * calls destroy on all children, order is depth first, but i guess it wont matter here
      */
     public final void destroyChildren() {
-        for(GameObject child = firstChild; child!=null; child = firstChild.nextSibling)
+        for(GameObject child = firstChild; child!=null; child = child.nextSibling)
             child.destroy();
     }
 
@@ -209,7 +209,7 @@ public class GameObject {
         Vec2 global = position.copy();
 
         GameObject go = parent;
-        while(parent!=null) {
+        while(go!=null) {
             global.add(parent.position);
             go = go.parent;
         }
@@ -225,7 +225,7 @@ public class GameObject {
         float global = rotation;
 
         GameObject go = parent;
-        while(parent!=null) {
+        while(go!=null) {
             global += parent.rotation;
             go = go.parent;
         }
