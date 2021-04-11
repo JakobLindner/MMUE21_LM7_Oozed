@@ -15,6 +15,7 @@ import android.view.SurfaceView;
 import android.view.View;
 
 import at.ac.tuwien.mmue_lm7.game.Game;
+import at.ac.tuwien.mmue_lm7.game.GameConstants;
 
 /**
  * TODO: document your custom view class.
@@ -28,6 +29,7 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
 
     public GameSurfaceView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        getHolder().setFixedSize(GameConstants.GAME_RES_WIDTH,GameConstants.GAME_RES_HEIGHT);
         getHolder().addCallback(this);
         setFocusable(true);
 

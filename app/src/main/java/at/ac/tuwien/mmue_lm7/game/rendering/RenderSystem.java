@@ -9,6 +9,7 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import at.ac.tuwien.mmue_lm7.game.GameConstants;
 import at.ac.tuwien.mmue_lm7.utils.ObjectPool;
 import at.ac.tuwien.mmue_lm7.utils.Vec2;
 
@@ -16,7 +17,6 @@ import at.ac.tuwien.mmue_lm7.utils.Vec2;
  * batches Draw/render commands to potentially do optimizations and ordering of objects
  */
 public class RenderSystem {
-    //TODO drawText
 
     private ObjectPool<DrawRect> rectCommandPool = new ObjectPool<DrawRect>(DrawRect::new);
     private ObjectPool<DrawSprite> spriteCommandPool = new ObjectPool<>(DrawSprite::new);
@@ -75,7 +75,7 @@ public class RenderSystem {
         //sort render commands, Collections.sort is a stable sort, so the call order for same layers is preserved
         Collections.sort(batchedCommands);
 
-        for(RenderCommand command : batchedCommands) {
+        for (RenderCommand command : batchedCommands) {
             //perform and free commands again
             command.render(canvas);
             command.free();
@@ -85,16 +85,17 @@ public class RenderSystem {
         batchedCommands.clear();
     }
 
-    public abstract class RenderCommand implements Comparable<RenderCommand>, ObjectPool.Poolable{
+    public abstract class RenderCommand implements Comparable<RenderCommand>, ObjectPool.Poolable {
         protected short layer = Layers.DEFAULT;
 
         @Override
         public final int compareTo(RenderCommand o) {
-            return Short.compare(layer,o.layer);
+            return Short.compare(layer, o.layer);
         }
 
         /**
          * Performs this render command
+         *
          * @param canvas, !=null
          */
         public abstract void render(Canvas canvas);
@@ -181,7 +182,7 @@ public class RenderSystem {
             return this;
         }
 
-        public DrawRect top (float top) {
+        public DrawRect top(float top) {
             this.top = top;
             return this;
         }
@@ -218,7 +219,12 @@ public class RenderSystem {
 
         @Override
         public void render(Canvas canvas) {
-            canvas.drawRect(left, top, right, bottom, paint);
+            //TODO should coordinates be rounded/truncated to int to be pixel perfect?
+            canvas.drawRect(left * GameConstants.PIXELS_PER_UNIT,
+                    top * GameConstants.PIXELS_PER_UNIT,
+                    right * GameConstants.PIXELS_PER_UNIT,
+                    bottom * GameConstants.PIXELS_PER_UNIT,
+                    paint);
         }
 
         @Override
@@ -255,7 +261,7 @@ public class RenderSystem {
      * Render command to draw text
      */
     public class DrawText extends RenderCommand {
-        private String text="";
+        private String text = "";
         private float x = 0;
         private float y = 0;
         private Paint paint = new Paint();
@@ -272,6 +278,7 @@ public class RenderSystem {
 
         /**
          * Copies reference of text
+         *
          * @param text
          */
         public DrawText text(String text) {
@@ -302,6 +309,7 @@ public class RenderSystem {
         /**
          * When setting this, the text is drawn on given path
          * Position is then seen relative to the path position
+         *
          * @param path !=null
          */
         public DrawText path(Path path) {
@@ -321,10 +329,14 @@ public class RenderSystem {
 
         @Override
         public void render(Canvas canvas) {
-            if(path!=null)
-                canvas.drawTextOnPath(text,path,x,y,paint);
+            //TODO should coordinates be rounded/truncated to int to be pixel perfect?
+            //calculate screen coordinates
+            float sx = this.x*GameConstants.PIXELS_PER_UNIT;
+            float sy = this.y*GameConstants.PIXELS_PER_UNIT;
+            if (path != null)
+                canvas.drawTextOnPath(text, path, sx, sy, paint);
             else
-                canvas.drawText(text,x,y,paint);
+                canvas.drawText(text, sx, sy, paint);
         }
 
         @Override

@@ -1,12 +1,15 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/frame_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/gray_600">
 
     <at.ac.tuwien.mmue_lm7.GameSurfaceView
         style="@style/Widget.Theme.MMUELM7.MyView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/black"
         android:paddingLeft="20dp"
         android:paddingBottom="40dp"
         app:exampleDimension="24sp"

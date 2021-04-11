@@ -49,11 +49,11 @@ public class Game {
         //TODO load assets
 
         //TODO plz remove following
-        AABB aabb = new AABB(50,50);
-        aabb.position.set(500,500);
+        AABB aabb = new AABB(1,1);
+        aabb.position.set(15,8);
         root.addChild(aabb);
         Text text = new Text("There is a green rectangle.");
-        text.position.set(400,400);
+        text.position.set(15,4);
         root.addChild(text);
     }
 
