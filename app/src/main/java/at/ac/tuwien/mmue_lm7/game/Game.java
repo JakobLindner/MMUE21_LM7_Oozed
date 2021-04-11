@@ -5,6 +5,7 @@ import android.util.Log;
 
 import at.ac.tuwien.mmue_lm7.game.objects.AABB;
 import at.ac.tuwien.mmue_lm7.game.objects.GameObject;
+import at.ac.tuwien.mmue_lm7.game.objects.Text;
 import at.ac.tuwien.mmue_lm7.game.rendering.RenderSystem;
 import at.ac.tuwien.mmue_lm7.game.physics.PhysicsSystem;
 import at.ac.tuwien.mmue_lm7.utils.Vec2;
@@ -48,9 +49,12 @@ public class Game {
         //TODO load assets
 
         //TODO plz remove following
-        //AABB aabb = new AABB(50,50);
-        //aabb.position.set(500,500);
-        //root.addChild(aabb);
+        AABB aabb = new AABB(50,50);
+        aabb.position.set(500,500);
+        root.addChild(aabb);
+        Text text = new Text("There is a green rectangle.");
+        text.position.set(400,400);
+        root.addChild(text);
     }
 
     /**

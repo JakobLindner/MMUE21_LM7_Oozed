@@ -2,6 +2,8 @@ package at.ac.tuwien.mmue_lm7.game.rendering;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Path;
+import android.graphics.Typeface;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -14,10 +16,11 @@ import at.ac.tuwien.mmue_lm7.utils.Vec2;
  * batches Draw/render commands to potentially do optimizations and ordering of objects
  */
 public class RenderSystem {
-    //TODO drawSprite(...)
     //TODO drawText
 
     private ObjectPool<DrawRect> rectCommandPool = new ObjectPool<DrawRect>(DrawRect::new);
+    private ObjectPool<DrawSprite> spriteCommandPool = new ObjectPool<>(DrawSprite::new);
+    private ObjectPool<DrawText> textCommandPool = new ObjectPool<>(DrawText::new);
     private ArrayList<RenderCommand> batchedCommands = new ArrayList<>(128);//TODO find good initial capacity
 
     public DrawRect drawRect() {
@@ -26,6 +29,30 @@ public class RenderSystem {
 
     public DrawRect drawRect(short layer) {
         DrawRect d = rectCommandPool.obtain();
+        d.layer = layer;
+
+        batchedCommands.add(d);
+        return d;
+    }
+
+    public DrawSprite drawSprite() {
+        return drawSprite(Layers.DEFAULT);
+    }
+
+    public DrawSprite drawSprite(short layer) {
+        DrawSprite d = spriteCommandPool.obtain();
+        d.layer = layer;
+
+        batchedCommands.add(d);
+        return d;
+    }
+
+    public DrawText drawText() {
+        return drawText(Layers.DEFAULT);
+    }
+
+    public DrawText drawText(short layer) {
+        DrawText d = textCommandPool.obtain();
         d.layer = layer;
 
         batchedCommands.add(d);
@@ -184,6 +211,11 @@ public class RenderSystem {
             return this;
         }
 
+        public DrawRect strokeWidth(float width) {
+            paint.setStrokeWidth(width);
+            return this;
+        }
+
         @Override
         public void render(Canvas canvas) {
             canvas.drawRect(left, top, right, bottom, paint);
@@ -192,6 +224,112 @@ public class RenderSystem {
         @Override
         public void free() {
             rectCommandPool.free(this);
+        }
+    }
+
+    /**
+     * render command to draw a sprite
+     */
+    public class DrawSprite extends RenderCommand {
+        //TODO members and builder methods to set those members
+
+        @Override
+        public void reset() {
+            super.reset();
+
+            //TODO reset member fields
+        }
+
+        @Override
+        public void render(Canvas canvas) {
+            //TODO
+        }
+
+        @Override
+        public void free() {
+            spriteCommandPool.free(this);
+        }
+    }
+
+    /**
+     * Render command to draw text
+     */
+    public class DrawText extends RenderCommand {
+        private String text="";
+        private float x = 0;
+        private float y = 0;
+        private Paint paint = new Paint();
+        private Path path;
+
+        /**
+         * @param pos !=null, is unchanged
+         */
+        public DrawText at(Vec2 pos) {
+            this.x = pos.x;
+            this.y = pos.y;
+            return this;
+        }
+
+        /**
+         * Copies reference of text
+         * @param text
+         */
+        public DrawText text(String text) {
+            this.text = text;
+            return this;
+        }
+
+        public DrawText align(Paint.Align align) {
+            paint.setTextAlign(align);
+            return this;
+        }
+
+        public DrawText typeFace(Typeface typeface) {
+            paint.setTypeface(typeface);
+            return this;
+        }
+
+        public DrawText color(int color) {
+            paint.setColor(color);
+            return this;
+        }
+
+        public DrawText size(float textSize) {
+            paint.setTextSize(textSize);
+            return this;
+        }
+
+        /**
+         * When setting this, the text is drawn on given path
+         * Position is then seen relative to the path position
+         * @param path !=null
+         */
+        public DrawText path(Path path) {
+            this.path = path;
+            return this;
+        }
+
+        @Override
+        public void reset() {
+            super.reset();
+            //TODO
+            text = "";
+            x = y = 0;
+            paint.reset();
+            path = null;
+        }
+
+        @Override
+        public void render(Canvas canvas) {
+            if(path!=null)
+                canvas.drawTextOnPath(text,path,x,y,paint);
+            else
+                canvas.drawText(text,x,y,paint);
+        }
+
+        @Override
+        public void free() {
+            textCommandPool.free(this);
         }
     }
 }

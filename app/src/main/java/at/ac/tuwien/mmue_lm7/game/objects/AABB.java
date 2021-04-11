@@ -15,6 +15,9 @@ import at.ac.tuwien.mmue_lm7.utils.Vec2;
  * Bounding box
  */
 public class AABB extends GameObject {
+    private static final float DEBUG_RECT_STROKE_WIDTH = 4;
+    private static final int DEBUG_RECT_COLOR = Color.GREEN;
+
     /**
      * Subject for collision events involving this aabb, the passed contact is in the view of this aabb
      */
@@ -88,7 +91,8 @@ public class AABB extends GameObject {
         render.drawRect()
                 .at(position)
                 .halfSize(halfSize)
-                .color(Color.GREEN)
-                .style(Paint.Style.STROKE);
+                .color(DEBUG_RECT_COLOR)
+                .style(Paint.Style.STROKE)
+                .strokeWidth(DEBUG_RECT_STROKE_WIDTH);
     }
 }
