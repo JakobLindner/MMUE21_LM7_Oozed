@@ -26,9 +26,6 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
 
     public GameSurfaceView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        //set resolution of underlying view
-        getHolder().setFixedSize(GameConstants.GAME_RES_WIDTH, GameConstants.GAME_RES_HEIGHT);
-        //TODO set scale to nearest neighbor
         getHolder().addCallback(this);
         setFocusable(true);
 
