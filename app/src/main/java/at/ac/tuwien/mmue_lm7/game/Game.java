@@ -6,8 +6,10 @@ import android.util.Log;
 import at.ac.tuwien.mmue_lm7.game.objects.AABB;
 import at.ac.tuwien.mmue_lm7.game.objects.GameObject;
 import at.ac.tuwien.mmue_lm7.game.objects.Text;
+import at.ac.tuwien.mmue_lm7.game.physics.CollisionLayers;
 import at.ac.tuwien.mmue_lm7.game.rendering.RenderSystem;
 import at.ac.tuwien.mmue_lm7.game.physics.PhysicsSystem;
+import at.ac.tuwien.mmue_lm7.utils.Subject;
 import at.ac.tuwien.mmue_lm7.utils.Vec2;
 
 /**
@@ -30,6 +32,12 @@ public class Game {
 
     //TODO optimization: have object pools for all types of game objects, free in GameObject::destroy
 
+    ///////////////////////////////////////////////////////////////////////////
+    // EVENTS
+    ///////////////////////////////////////////////////////////////////////////
+    public final Subject<TapEvent> onTap = new Subject<>();
+    public final Subject<SwipeEvent> onSwipe = new Subject<>();
+
     /**
      * Initializes the game world
      * Allocates ressources
@@ -49,7 +57,7 @@ public class Game {
         //TODO load assets
 
         //TODO plz remove following
-        AABB aabb = new AABB(1,1);
+        AABB aabb = new AABB(1,1, CollisionLayers.NONE, CollisionLayers.NONE);
         aabb.position.set(15,8);
         root.addChild(aabb);
         Text text = new Text("There is a green rectangle.");
@@ -96,11 +104,11 @@ public class Game {
     }
 
     public void tap(Vec2 position) {
-        //TODO emit event for all listening game objects
+        onTap.notify(new TapEvent(position));
     }
 
     public void swipe(Vec2 position, Vec2 direction) {
-        //TODO emit event for all listening game objects
+        onSwipe.notify(new SwipeEvent(position,direction));
     }
 
     /**

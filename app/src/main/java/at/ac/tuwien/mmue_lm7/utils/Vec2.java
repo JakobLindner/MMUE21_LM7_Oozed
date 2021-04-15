@@ -177,6 +177,29 @@ public class Vec2 {
     }
 
     /**
+     * @return cross product of this vector and given values
+     */
+    public float cross(float x, float y) {
+        return this.x*y - this.y*x;
+    }
+
+    /**
+     * @param vec !=null
+     * @return cross product of this and given vector
+     */
+    public float cross(Vec2 vec) {
+        return cross(vec.x,vec.y);
+    }
+
+    /**
+     * @param to !=null
+     * @return true if a counter clockwise rotation is shorter to rotate this vector to to
+     */
+    public boolean isCCW(Vec2 to) {
+        return cross(to)>=0;
+    }
+
+    /**
      * Sets components to 0
      * @return this, for chaining
      */

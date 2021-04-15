@@ -32,11 +32,10 @@ public class AABB extends GameObject {
     private short collisionMask = 0;
     private short collisionLayer = CollisionLayers.NONE;
 
-    /**
-     * Copies the values of the vector
-     */
-    public AABB(float halfWidth, float halfHeight) {
+    public AABB(float halfWidth, float halfHeight, short mask, short layer) {
         this.halfSize.set(halfWidth, halfHeight);
+        this.collisionMask = mask;
+        this.collisionLayer = layer;
     }
 
     public Vec2 getHalfSize() {

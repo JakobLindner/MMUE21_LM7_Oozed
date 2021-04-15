@@ -460,5 +460,7 @@ public class PhysicsSystem {
         public Vec2 getPosition() {
             return position;
         }
+
+        public float getTime() {return time;}
     }
 }
