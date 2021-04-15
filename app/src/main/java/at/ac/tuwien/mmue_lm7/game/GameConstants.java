@@ -1,5 +1,7 @@
 package at.ac.tuwien.mmue_lm7.game;
 
+import at.ac.tuwien.mmue_lm7.game.physics.CollisionLayers;
+
 public class GameConstants {
 
     public static final int PIXELS_PER_UNIT = 16;
