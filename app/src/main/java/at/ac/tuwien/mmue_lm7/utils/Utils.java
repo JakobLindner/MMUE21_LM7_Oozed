@@ -14,6 +14,14 @@ public class Utils {
         return value;
     }
 
+    public static int signum(float v) {
+        if(v>0)
+            return 1;
+        if(v<0)
+            return -1;
+        return 0;
+    }
+
     //prevent instantiation
     private Utils() {
     }
