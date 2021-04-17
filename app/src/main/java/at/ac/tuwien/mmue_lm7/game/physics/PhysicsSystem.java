@@ -137,14 +137,17 @@ public class PhysicsSystem {
      * @return null, if there is no collision, a contact object obtained from the contact pool from the view of a
      */
     private Contact testCollision(AABB a, AABB b) {
+        Vec2 globalA = a.getGlobalPosition();
+        Vec2 globalB = b.getGlobalPosition();
+
         //check if distance between midpoints is smaller than sum of half widths
-        float dx = a.position.x - b.position.x;
+        float dx = globalA.x - globalB.x;
         float px = a.getHalfSize().x + b.getHalfSize().x - Math.abs(dx);
         if (px <= 0)
             return null;
 
         //check if vertical distance between midpoints is smaller than sum of half heights
-        float dy = Math.abs(a.position.y - b.position.y);
+        float dy = Math.abs(globalA.y - globalB.y);
         float py = a.getHalfSize().y + b.getHalfSize().y - Math.abs(dy);
         if (py <= 0)
             return null;
@@ -157,15 +160,15 @@ public class PhysicsSystem {
             int sx = (int) Math.signum(dx);
             contact.overlap.x = px * sx;
             contact.normal.x = sx;
-            contact.position.x = a.position.x + a.getHalfSize().x * sx;
-            contact.position.y = (a.position.y + b.position.y) * 0.5f;
+            contact.position.x = globalA.x + a.getHalfSize().x * sx;
+            contact.position.y = (globalA.y + globalB.y) * 0.5f;
         } else {
             int sy = (int) Math.signum(dy);
             contact.overlap.y = py * sy;
             contact.normal.y = sy;
             //halfway between positions is used as estimate
-            contact.position.x = (a.position.x + b.position.x) * 0.5f;
-            contact.position.y = a.position.y + a.getHalfSize().y * sy;
+            contact.position.x = (globalA.x + globalB.x) * 0.5f;
+            contact.position.y = globalA.y + a.getHalfSize().y * sy;
         }
 
         return contact;
@@ -184,13 +187,14 @@ public class PhysicsSystem {
      * @return null if there is no collision, otherwise a contact object with contact.box set to null, contact.other=aabb, the contact is not marked as used
      */
     private Contact raycast(Vec2 position, Vec2 ray, AABB aabb, float paddingX, float paddingY) {
+        Vec2 globalPos = aabb.getGlobalPosition();
         //check 0 cases
         if (ray.x == 0) {
-            if (position.x < (aabb.position.x - aabb.getHalfSize().x - paddingX) ||
-                    position.x > (aabb.position.x + aabb.getHalfSize().x + paddingX))
+            if (position.x < (globalPos.x - aabb.getHalfSize().x - paddingX) ||
+                    position.x > (globalPos.x + aabb.getHalfSize().x + paddingX))
                 return null;
             //reduce to 1d
-            float time = raycast1D(position.y, ray.y, aabb.position.y, aabb.getHalfSize().y, paddingY);
+            float time = raycast1D(position.y, ray.y, globalPos.y, aabb.getHalfSize().y, paddingY);
             if (time > 1)
                 return null;
 
@@ -203,11 +207,11 @@ public class PhysicsSystem {
             contact.position.set(ray).scl(contact.time).add(position);
             return contact;
         } else if (ray.y == 0) {
-            if (position.y < (aabb.position.y - aabb.getHalfSize().y - paddingY) ||
-                    position.y > (aabb.position.y + aabb.getHalfSize().y + paddingY))
+            if (position.y < (globalPos.y - aabb.getHalfSize().y - paddingY) ||
+                    position.y > (globalPos.y + aabb.getHalfSize().y + paddingY))
                 return null;
             //reduce to 1d
-            float time = raycast1D(position.x, ray.x, aabb.position.x, aabb.getHalfSize().x, paddingX);
+            float time = raycast1D(position.x, ray.x, globalPos.x, aabb.getHalfSize().x, paddingX);
             if (time > 1)
                 return null;
 
@@ -229,8 +233,8 @@ public class PhysicsSystem {
         //if ray.x>0 then left edge of aabb is near right is far
         //if ray.x<0 then right edge=near, left=far
         //vice versa for vertical
-        Vec2 near = aabb.position.copy().sub(edgePos).sub(position).scl(scale);
-        Vec2 far = aabb.position.copy().add(edgePos).sub(position).scl(scale);
+        Vec2 near = globalPos.copy().sub(edgePos).sub(position).scl(scale);
+        Vec2 far = globalPos.copy().add(edgePos).sub(position).scl(scale);
 
         //if intersection with near edge if further than intersection with opposite far edge -> no collision
         if (near.x > far.y || near.y > far.x)
@@ -288,9 +292,11 @@ public class PhysicsSystem {
      * @return sweep, registered as used by the physics system
      */
     public Sweep move(AABB aabb, Vec2 move, short mask) {
+        Vec2 aabbPos = aabb.getGlobalPosition();
+
         Sweep closest = sweepPool.obtain();
         closest.time = 1;
-        closest.position.set(aabb.position).add(move);
+        closest.position.set(aabbPos).add(move);
 
         //iterate over interesting layers
         for (short layer = 1, li = 0; li < CollisionLayers.MAX_LAYERS; ++li, layer = (short) (1 << li)) {
@@ -326,30 +332,33 @@ public class PhysicsSystem {
      * @return sweep, not registered as used
      */
     private Sweep move(AABB aabb, AABB other, Vec2 move) {
+        Vec2 aabbPos = aabb.getGlobalPosition();
+        Vec2 otherPos = other.getGlobalPosition();
+
         Sweep sweep = sweepPool.obtain();
         //check if it simply does not move
         if (move.len2() == 0) {
             //perform simple intersection
-            sweep.position.set(aabb.position);
+            sweep.position.set(aabbPos);
             sweep.contact = testCollision(aabb, other);
             sweep.time = sweep.contact == null ? (sweep.contact.time = 0) : 1;
             return sweep;
         }
 
         //blow up other box by size of aabb and perform a raycast
-        sweep.contact = raycast(aabb.position, move, other, aabb.getHalfSize().x, aabb.getHalfSize().y);
+        sweep.contact = raycast(aabbPos, move, other, aabb.getHalfSize().x, aabb.getHalfSize().y);
         if (sweep.contact != null) {
             sweep.time = Utils.clamp(sweep.contact.time - Utils.EPSILON, 0, 1);
-            sweep.position.set(move).scl(sweep.time).add(aabb.position);
+            sweep.position.set(move).scl(sweep.time).add(aabbPos);
             //TODO pool vector
             Vec2 dir = move.copy().norm();
             //undo the blow up
             sweep.contact.position.x = Utils.clamp(sweep.contact.position.x + dir.x * aabb.getHalfSize().x,
-                    other.position.x - other.getHalfSize().x, other.position.x + other.getHalfSize().x);
+                    otherPos.x - other.getHalfSize().x, otherPos.x + other.getHalfSize().x);
             sweep.contact.position.y = Utils.clamp(sweep.contact.position.y + dir.y * aabb.getHalfSize().y,
-                    other.position.y - other.getHalfSize().y, other.position.y + other.getHalfSize().y);
+                    otherPos.y - other.getHalfSize().y, otherPos.y + other.getHalfSize().y);
         } else {
-            sweep.position.set(aabb.position).add(move);
+            sweep.position.set(aabbPos).add(move);
             sweep.time = 1;
         }
         return sweep;

@@ -9,6 +9,7 @@ import at.ac.tuwien.mmue_lm7.game.objects.GameObject;
 import at.ac.tuwien.mmue_lm7.game.objects.Platform;
 import at.ac.tuwien.mmue_lm7.game.objects.Sprite;
 import at.ac.tuwien.mmue_lm7.game.objects.Text;
+import at.ac.tuwien.mmue_lm7.game.physics.CollisionLayers;
 import at.ac.tuwien.mmue_lm7.game.resources.ResourceSystem;
 import at.ac.tuwien.mmue_lm7.utils.Vec2;
 
@@ -28,7 +29,7 @@ public class LevelFactories {
 
         // TODO remove this
         // === AABB FOR TESTING ===
-        AABB aabb = new AABB(1,1);
+        AABB aabb = new AABB(1,1, (short) 0, CollisionLayers.PLATFORM);
         aabb.position.set(15,8);
         root.addChild(aabb);
 
