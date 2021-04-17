@@ -202,19 +202,27 @@ public class GameObject {
 
     /**
      * Calculate global position by accumulating all translations up to the root game object
-     * @return global position
+     * @return global position, vector allocated via new
      */
     //TODO optimization: if this is used often, then this should be stored in the Gameobject and marked dirty for recalculation if a parent changes position
     public final Vec2 getGlobalPosition() {
-        Vec2 global = position.copy();
+        Vec2 global = new Vec2();
+        getGlobalPosition(global);
+        return global;
+    }
+
+    /**
+     * Sets given vector to global position
+     * @param vec
+     */
+    public final void getGlobalPosition(Vec2 vec) {
+        vec.set(position);
 
         GameObject go = parent;
         while(go!=null) {
-            global.add(parent.position);
+            vec.add(parent.position);
             go = go.parent;
         }
-
-        return global;
     }
 
     /**
