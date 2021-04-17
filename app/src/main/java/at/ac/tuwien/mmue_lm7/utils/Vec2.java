@@ -177,6 +177,21 @@ public class Vec2 {
     }
 
     /**
+     * @return dot product
+     */
+    public float dot(float x, float y) {
+        return this.x*x+this.y*y;
+    }
+
+    /**
+     * @param vec !=null
+     * @return dot product between this and given vector
+     */
+    public float dot(Vec2 vec) {
+        return dot(vec.x,vec.y);
+    }
+
+    /**
      * @return cross product of this vector and given values
      */
     public float cross(float x, float y) {
@@ -197,6 +212,17 @@ public class Vec2 {
      */
     public boolean isCCW(Vec2 to) {
         return cross(to)>=0;
+    }
+
+    /**
+     * Swaps components
+     * @return this, for chaining
+     */
+    public Vec2 swap() {
+        float tmp = x;
+        this.x = y;
+        this.y = tmp;
+        return this;
     }
 
     /**
