@@ -23,6 +23,8 @@ public class Sprite extends GameObject {
     public void render(RenderSystem render) {
         render.drawSprite()
                 .at(position)
+                .rotated(rotation)
+                .mirrored(mirrored)
                 .spriteInfo(spriteInfo)
                 .frame(0);
     }

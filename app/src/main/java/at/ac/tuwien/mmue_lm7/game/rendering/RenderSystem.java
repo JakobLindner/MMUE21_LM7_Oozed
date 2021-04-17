@@ -249,6 +249,8 @@ public class RenderSystem {
         //TODO members and builder methods to set those members
 
         private Vec2 pos = new Vec2(0, 0);
+        private float rot = 0;
+        private int xMir = 1;
         private int frame = 0;
         private SpriteInfo spriteInfo = new SpriteInfo();
         private Paint paint;
@@ -268,9 +270,17 @@ public class RenderSystem {
         }
 
         public DrawSprite at(Vec2 pos) {
-            this.pos.set(pos);
-            //posSet = true;
-            //updateBounds();
+            this.pos.set(new Vec2(pos.x * GameConstants.PIXELS_PER_UNIT, pos.y * GameConstants.PIXELS_PER_UNIT));
+            return this;
+        }
+
+        public DrawSprite rotated(float rot) {
+            this.rot = rot;
+            return this;
+        }
+
+        public DrawSprite mirrored(boolean mir) {
+            this.xMir = mir ? -1 : 1;
             return this;
         }
 
@@ -304,9 +314,9 @@ public class RenderSystem {
                     spriteInfo.size / 2);
 
             canvas.save();
-            canvas.scale(-1, 1, pos.x * GameConstants.PIXELS_PER_UNIT, pos.y * GameConstants.PIXELS_PER_UNIT);
-            canvas.rotate(90, pos.x * GameConstants.PIXELS_PER_UNIT, pos.y * GameConstants.PIXELS_PER_UNIT);
-            canvas.translate((pos.x) * GameConstants.PIXELS_PER_UNIT, pos.y * GameConstants.PIXELS_PER_UNIT);
+            canvas.scale(xMir, 1, pos.x, pos.y);
+            canvas.rotate(rot, pos.x, pos.y);
+            canvas.translate(pos.x, pos.y);
             canvas.drawBitmap(bitmap, source, dest, paint);
             canvas.restore();
         }

@@ -18,6 +18,10 @@ public class GameObject {
      * local rotation in degrees
      */
     public float rotation = 0;
+    /**
+     * local x axis mirroring of the object
+     */
+    public boolean mirrored = false;
 
     //references to objects in scene tree
     private GameObject parent = null;

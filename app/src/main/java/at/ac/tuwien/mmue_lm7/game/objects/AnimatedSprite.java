@@ -35,6 +35,8 @@ public class AnimatedSprite extends GameObject{
     public void render(RenderSystem render) {
         render.drawSprite()
                 .at(position)
+                .rotated(rotation)
+                .mirrored(mirrored)
                 .spriteInfo(spriteInfo)
                 .frame(frame);
     }
