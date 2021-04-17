@@ -30,7 +30,7 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
         setFocusable(true);
 
         //TODO pass parameters to game coming from somewhere
-        game = new Game();
+        game = new Game(context);
     }
 
     private void startGame(SurfaceHolder holder) {

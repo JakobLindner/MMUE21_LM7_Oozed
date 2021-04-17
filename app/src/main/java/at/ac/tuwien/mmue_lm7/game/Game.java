@@ -1,13 +1,17 @@
 package at.ac.tuwien.mmue_lm7.game;
 
+import android.content.Context;
 import android.graphics.Canvas;
 import android.util.Log;
 
 import at.ac.tuwien.mmue_lm7.game.objects.AABB;
+import at.ac.tuwien.mmue_lm7.game.objects.AnimatedSprite;
 import at.ac.tuwien.mmue_lm7.game.objects.GameObject;
+import at.ac.tuwien.mmue_lm7.game.objects.Sprite;
 import at.ac.tuwien.mmue_lm7.game.objects.Text;
 import at.ac.tuwien.mmue_lm7.game.rendering.RenderSystem;
 import at.ac.tuwien.mmue_lm7.game.physics.PhysicsSystem;
+import at.ac.tuwien.mmue_lm7.game.resources.ResourceSystem;
 import at.ac.tuwien.mmue_lm7.utils.Vec2;
 
 /**
@@ -27,8 +31,13 @@ public class Game {
 
     private RenderSystem renderSystem = new RenderSystem();
     private PhysicsSystem physicsSystem = new PhysicsSystem();
+    private ResourceSystem resourceSystem;
 
     //TODO optimization: have object pools for all types of game objects, free in GameObject::destroy
+
+    public Game(Context context) {
+        resourceSystem = new ResourceSystem(context);
+    }
 
     /**
      * Initializes the game world
@@ -55,6 +64,14 @@ public class Game {
         Text text = new Text("There is a green rectangle.");
         text.position.set(15,4);
         root.addChild(text);
+        Sprite sprite = new Sprite();
+        sprite.position.set(3,6);
+        sprite.setSpriteInfo(resourceSystem.spriteInfo(ResourceSystem.SpriteEnum.tileCenter));
+        root.addChild(sprite);
+        AnimatedSprite animatedSprite = new AnimatedSprite();
+        animatedSprite.position.set(5,6);
+        animatedSprite.setSpriteInfo(resourceSystem.spriteInfo(ResourceSystem.SpriteEnum.oozeRun));
+        root.addChild(animatedSprite);
     }
 
     /**
@@ -116,5 +133,9 @@ public class Game {
 
     public PhysicsSystem getPhysicsSystem() {
         return physicsSystem;
+    }
+
+    public ResourceSystem getResourceSystem() {
+        return resourceSystem;
     }
 }
