@@ -39,7 +39,7 @@ public class PhysicsSystem {
      */
     public void init() {
         //instantiate array lists of aabbs
-        for(int i = 0; i<aabbByLayer.length;++i) {
+        for (int i = 0; i < aabbByLayer.length; ++i) {
             aabbByLayer[i] = new ArrayList<AABB>(32);//TODO find good initial capacity
         }
     }
@@ -174,7 +174,44 @@ public class PhysicsSystem {
         return contact;
     }
 
-    //TODO public raycast against all
+    /**
+     * Performs a raycast against all objects specified by given mask and returns the first collision
+     *
+     * @param position origin of ray
+     * @param ray      describes length and direction of ray
+     * @param mask
+     * @return the first contact or null if there was no contact
+     */
+    public Contact raycast(Vec2 position, Vec2 ray, short mask) {
+
+        Contact closest = null;
+
+        //iterate over interesting layers
+        for (short layer = 1, li = 0; li < CollisionLayers.MAX_LAYERS; ++li, layer = (short) (1 << li)) {
+            if ((layer & mask) == 0)
+                continue;
+
+            //iterate over all aabbs in layer
+            ArrayList<AABB> others = aabbByLayer[li];
+            for (int i = 0; i < others.size(); ++i) {
+                AABB other = others.get(i);
+
+                //perform raycast and take contact, if it is closer than current closest contact
+                Contact raycast = raycast(position, ray, other, 0,0);
+                if (raycast!=null && (closest==null || raycast.time<closest.time)) {
+                    if(closest!=null)
+                        contactPool.free(closest);
+                    closest = raycast;
+                }
+            }
+        }
+
+        //register returned contact as used
+        usedContacts.add(closest);
+
+        return closest;
+    }
+
 
     /**
      * Performs a raycast against given aabb with given padding
@@ -279,6 +316,9 @@ public class PhysicsSystem {
             return Utils.clamp(near, 0, 1);
     }
 
+    /**
+     * Performs a sweep against all other aabbs, that are in the collision mask of the given aabb
+     */
     public Sweep move(AABB aabb, Vec2 move) {
         return move(aabb, move, aabb.getCollisionMask());
     }
@@ -286,9 +326,6 @@ public class PhysicsSystem {
     /**
      * Performs a sweep check against all objects of given layers (mask)
      *
-     * @param aabb
-     * @param move
-     * @param mask
      * @return sweep, registered as used by the physics system
      */
     public Sweep move(AABB aabb, Vec2 move, short mask) {
@@ -470,6 +507,8 @@ public class PhysicsSystem {
             return position;
         }
 
-        public float getTime() {return time;}
+        public float getTime() {
+            return time;
+        }
     }
 }
