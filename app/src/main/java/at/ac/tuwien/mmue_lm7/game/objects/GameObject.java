@@ -18,6 +18,10 @@ public class GameObject {
      * local rotation in degrees
      */
     public float rotation = 0;
+    /**
+     * local x axis mirroring of the object
+     */
+    public boolean mirrored = false;
 
     //references to objects in scene tree
     private GameObject parent = null;
@@ -86,54 +90,46 @@ public class GameObject {
     }
 
     /**
-     * Recursively initializes children in breadth first order
+     * Recursively initializes children in depth first order
      */
     private void initChildren() {
-        //init children
         for(GameObject child = firstChild; child!=null; child = child.nextSibling) {
             child.initialized = true;
             child.init();
-        }
-        //init grandchildren
-        for(GameObject child = firstChild; child!=null; child = child.nextSibling)
             child.initChildren();
+        }
     }
 
     /**
-     * calls update on children in breadth first order
+     * calls update on children in depth first order
      */
     public final void updateChildren() {
-        //update children
-        for(GameObject child = firstChild; child!=null; child = child.nextSibling)
+        for(GameObject child = firstChild; child!=null; child = child.nextSibling) {
             child.update();
-        //update grandchildren
-        for(GameObject child = firstChild; child!=null; child = child.nextSibling)
             child.updateChildren();
+        }
     }
 
     /**
-     * calls render() on children in breadth first order
+     * calls render() on children in depth first order
      */
     public final void renderChildren(RenderSystem render) {
-        //render children
-        for(GameObject child = firstChild; child!=null; child = child.nextSibling)
+        for(GameObject child = firstChild; child!=null; child = child.nextSibling) {
             child.render(render);
-        //render grandchildren
-        for(GameObject child = firstChild; child!=null; child = child.nextSibling)
             child.renderChildren(render);
+
+        }
     }
 
     /**
-     * calls debugRender() on children in breadth first order
+     * calls debugRender() on children in depth first order
      * @param render
      */
     public final void debugRenderChildren(RenderSystem render) {
-        //render children
-        for(GameObject child = firstChild; child!=null; child = child.nextSibling)
+        for(GameObject child = firstChild; child!=null; child = child.nextSibling) {
             child.debugRender(render);
-        //render grandchildren
-        for(GameObject child = firstChild; child!=null; child = child.nextSibling)
             child.debugRenderChildren(render);
+        }
     }
 
     /**

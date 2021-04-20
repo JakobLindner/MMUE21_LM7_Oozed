@@ -1,15 +1,23 @@
 package at.ac.tuwien.mmue_lm7.game.rendering;
 
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.Rect;
+import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
+import at.ac.tuwien.mmue_lm7.R;
+import at.ac.tuwien.mmue_lm7.game.Game;
 import at.ac.tuwien.mmue_lm7.game.GameConstants;
+import at.ac.tuwien.mmue_lm7.game.resources.ResourceSystem;
+import at.ac.tuwien.mmue_lm7.game.resources.SpriteInfo;
 import at.ac.tuwien.mmue_lm7.utils.ObjectPool;
 import at.ac.tuwien.mmue_lm7.utils.Vec2;
 
@@ -234,10 +242,25 @@ public class RenderSystem {
     }
 
     /**
+     * @author jakob
      * render command to draw a sprite
      */
     public class DrawSprite extends RenderCommand {
         //TODO members and builder methods to set those members
+
+        private Vec2 pos = new Vec2(0, 0);
+        private float rot = 0;
+        private int xMir = 1;
+        private int frame = 0;
+        private SpriteInfo spriteInfo = new SpriteInfo();
+        private Paint paint;
+
+        public DrawSprite() {
+            paint = new Paint();
+            paint.setAntiAlias(false);
+            paint.setDither(false);
+            paint.setFilterBitmap(false);
+        }
 
         @Override
         public void reset() {
@@ -246,9 +269,56 @@ public class RenderSystem {
             //TODO reset member fields
         }
 
+        public DrawSprite at(Vec2 pos) {
+            this.pos.set(new Vec2(pos.x * GameConstants.PIXELS_PER_UNIT, pos.y * GameConstants.PIXELS_PER_UNIT));
+            return this;
+        }
+
+        public DrawSprite rotated(float rot) {
+            this.rot = rot;
+            return this;
+        }
+
+        public DrawSprite mirrored(boolean mir) {
+            this.xMir = mir ? -1 : 1;
+            return this;
+        }
+
+        public DrawSprite spriteInfo(SpriteInfo spriteInfo) {
+            this.spriteInfo = spriteInfo;
+            return this;
+        }
+
+        public DrawSprite frame(int frame) {
+            this.frame = frame;
+            return this;
+        }
+
+
+
         @Override
         public void render(Canvas canvas) {
-            //TODO
+
+            Bitmap bitmap = Game.get().getResourceSystem().getBitmap(spriteInfo.spriteSheetId);
+
+            Rect source = new Rect();
+            source.set(spriteInfo.firstX + spriteInfo.size * frame,
+                    spriteInfo.firstY,
+                    spriteInfo.firstX + spriteInfo.size * (frame + 1),
+                    spriteInfo.firstY + spriteInfo.size);
+
+            Rect dest = new Rect();
+            dest.set(- spriteInfo.size / 2,
+                    - spriteInfo.size / 2,
+                    spriteInfo.size / 2,
+                    spriteInfo.size / 2);
+
+            canvas.save();
+            canvas.scale(xMir, 1, pos.x, pos.y);
+            canvas.rotate(rot, pos.x, pos.y);
+            canvas.translate(pos.x, pos.y);
+            canvas.drawBitmap(bitmap, source, dest, paint);
+            canvas.restore();
         }
 
         @Override
