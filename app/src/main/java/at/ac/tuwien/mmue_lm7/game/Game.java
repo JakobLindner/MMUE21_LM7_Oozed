@@ -16,6 +16,7 @@ import at.ac.tuwien.mmue_lm7.utils.Vec2;
  * Represents the main game
  */
 public class Game {
+    private static final String TAG = "Game";
 
     private static Game singleton = null;
     public static Game get() {
@@ -104,10 +105,16 @@ public class Game {
     }
 
     public void tap(Vec2 position) {
+        Log.d(TAG, String.format("Tap at: %s",position.toString()));
         onTap.notify(new TapEvent(position));
     }
 
+    /**
+     * @param position where the swipe started
+     * @param direction should be normalized
+     */
     public void swipe(Vec2 position, Vec2 direction) {
+        Log.d(TAG, String.format("Swipe starting at: %s, Direction: %s",position.toString(),direction.toString()));
         onSwipe.notify(new SwipeEvent(position,direction));
     }
 

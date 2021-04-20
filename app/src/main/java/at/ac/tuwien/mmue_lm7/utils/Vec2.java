@@ -239,6 +239,4 @@ public class Vec2 {
     public String toString() {
         return String.format("(%f,%f)", x,y);
     }
-
-    //TODO methods, length, dot product, rotate ...
 }
