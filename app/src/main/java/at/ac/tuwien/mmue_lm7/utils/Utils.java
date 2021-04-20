@@ -25,7 +25,7 @@ public class Utils {
     }
 
     /**
-     * Transforms given screen coordinates to world coordinates
+     * Transforms given screen coordinates (game resolution, see GameConstants) to world coordinates
      *
      * @param screenCoords !=null changed by this method to have world coordinates
      */

@@ -13,6 +13,7 @@ import androidx.core.view.GestureDetectorCompat;
 
 import at.ac.tuwien.mmue_lm7.game.Game;
 import at.ac.tuwien.mmue_lm7.game.GameConstants;
+import at.ac.tuwien.mmue_lm7.utils.Utils;
 import at.ac.tuwien.mmue_lm7.utils.Vec2;
 
 public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callback {
@@ -120,6 +121,10 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
         public boolean onSingleTapUp(MotionEvent e) {
             Log.d(TAG, "Single Tap Confirmed: "+e.toString());
             position.set(e.getX(),e.getY());
+            //transform to game resolution
+            position.scl(GameConstants.GAME_RES_WIDTH, GameConstants.GAME_RES_HEIGHT).div(getWidth(),getHeight());
+            //transform to game world coords
+            Utils.screenToWorld(position);
 
             game.tap(position);
             return true;
@@ -128,7 +133,13 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
         @Override
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
             Log.d(TAG, "Fling: "+e1.toString()+", motion: "+e2.toString());
-            game.swipe(position.set(e1.getX(), e1.getY()),
+            position.set(e1.getX(), e1.getY());
+            //transform to game resolution
+            position.scl(GameConstants.GAME_RES_WIDTH, GameConstants.GAME_RES_HEIGHT).div(getWidth(),getHeight());
+            //transform to game world coords
+            Utils.screenToWorld(position);
+
+            game.swipe(position,
                     direction.set(velocityX,velocityY).norm());
             return true;
         }

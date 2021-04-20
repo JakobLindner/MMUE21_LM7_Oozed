@@ -100,6 +100,35 @@ public class Vec2 {
         return scl(other.x, other.y);
     }
 
+    public Vec2 div(float scalar) {
+        this.x /= scalar;
+        this.y /= scalar;
+        return this;
+    }
+
+    /**
+     * Componentwise division
+     *
+     * @param x
+     * @param y
+     * @return this, for chaining
+     */
+    public Vec2 div(float x, float y) {
+        this.x /= x;
+        this.y /= y;
+        return this;
+    }
+
+    /**
+     * Performs componentwise division
+     *
+     * @param other, !=null, not changed
+     * @return this, for chaining
+     */
+    public Vec2 div(Vec2 other) {
+        return div(other.x, other.y);
+    }
+
     /**
      * sets the coordinates of the vector to given values
      *
