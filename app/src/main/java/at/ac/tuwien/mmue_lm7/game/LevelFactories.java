@@ -6,6 +6,7 @@ import java.util.HashMap;
 import at.ac.tuwien.mmue_lm7.game.objects.AABB;
 import at.ac.tuwien.mmue_lm7.game.objects.AnimatedSprite;
 import at.ac.tuwien.mmue_lm7.game.objects.GameObject;
+import at.ac.tuwien.mmue_lm7.game.objects.Platform;
 import at.ac.tuwien.mmue_lm7.game.objects.Sprite;
 import at.ac.tuwien.mmue_lm7.game.objects.Text;
 import at.ac.tuwien.mmue_lm7.game.resources.ResourceSystem;
@@ -26,56 +27,29 @@ public class LevelFactories {
     public static void createLevel1(GameObject root) {
 
         // TODO remove this
-        // === SOME TEXT AND AABB ===
+        // === AABB FOR TESTING ===
         AABB aabb = new AABB(1,1);
         aabb.position.set(15,8);
         root.addChild(aabb);
-        Text text = new Text("There is a green rectangle.");
-        text.position.set(15,4);
-        root.addChild(text);
+
+        // === TEXT ===
+        root.addChild(ObjectFactories.makeText(16, 4, "Tap to Jump!"));
 
         // === OOZE ===
         root.addChild(ObjectFactories.makeOoze(3, 6, 0, false));
 
         // === ENEMIES ===
-        root.addChild(ObjectFactories.makeBlocker(5, 6, 0, false));
+        root.addChild(ObjectFactories.makeBlocker(7, 6, 0, false));
 
         // === PLATFORM 1 ===
-
-        //GameObject platform = ObjectFactories.makePlatform(new ObjectFactories.PlatformParams());
-        //...
-
-        //root.addChild(platform);
-        //...
-
-        GameObject platform1 = new GameObject(); // TODO make this Platform class object
+        GameObject platform1 = ObjectFactories.makePlatform(3, 7);
+        platform1.addChild(ObjectFactories.makePlatformTile(0, 0, ResourceSystem.SpriteEnum.platformPipe));
+        platform1.addChild(ObjectFactories.makePlatformTile(1, 0, ResourceSystem.SpriteEnum.platformPipeOpen));
+        platform1.addChild(ObjectFactories.makePlatformTile(2, 0, ResourceSystem.SpriteEnum.platformCircuit));
+        platform1.addChild(ObjectFactories.makePlatformTile(3, 0, ResourceSystem.SpriteEnum.platformIce));
+        platform1.addChild(ObjectFactories.makePlatformTile(4, 0, ResourceSystem.SpriteEnum.platformPipe));
+        platform1.addChild(ObjectFactories.makePlatformTile(5, 0, 180, false, ResourceSystem.SpriteEnum.platformCircuit));
         root.addChild(platform1);
-        platform1.position.set(3, 7);
-        //platform1.rotation = 90; // TODO broken
-
-        GameObject pipe1 = new GameObject();
-        platform1.addChild(pipe1);
-        Sprite pipe1Sprite = new Sprite(ResourceSystem.SpriteEnum.platformPipe);
-        pipe1Sprite.position.set(0,0);
-        pipe1.addChild(pipe1Sprite);
-
-        GameObject pipeOpen1 = new GameObject();
-        platform1.addChild(pipeOpen1);
-        Sprite pipeOpen1Sprite = new Sprite(ResourceSystem.SpriteEnum.platformPipeOpen);
-        pipeOpen1Sprite.position.set(1,0);
-        pipeOpen1.addChild(pipeOpen1Sprite);
-
-        GameObject circuit1 = new GameObject();
-        platform1.addChild(circuit1);
-        Sprite circuit1Sprite = new Sprite(ResourceSystem.SpriteEnum.platformCircuit);
-        circuit1Sprite.position.set(2,0);
-        circuit1.addChild(circuit1Sprite);
-
-        GameObject ice1 = new GameObject();
-        platform1.addChild(ice1);
-        Sprite ice1Sprite = new Sprite(ResourceSystem.SpriteEnum.platformIce);
-        ice1Sprite.position.set(3,0);
-        ice1.addChild(ice1Sprite);
 
         // === BACKGROUND ===
         GameObject background = new GameObject();
@@ -88,7 +62,8 @@ public class LevelFactories {
     }
 
     public static void createLevel2(GameObject root) {
-
+        // === OOZE ===
+        root.addChild(ObjectFactories.makeOoze(3, 6, 0, false));
     }
 
     public static void loadLevel(GameObject root, int id) {

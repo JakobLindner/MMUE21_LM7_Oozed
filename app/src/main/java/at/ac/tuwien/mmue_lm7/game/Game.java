@@ -55,8 +55,6 @@ public class Game {
         physicsSystem.init();
         renderSystem.init();
 
-        //TODO load assets
-
         LevelFactories.loadLevel(root, 1);
     }
 
