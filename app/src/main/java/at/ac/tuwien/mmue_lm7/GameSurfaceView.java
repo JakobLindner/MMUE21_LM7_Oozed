@@ -1,21 +1,19 @@
 package at.ac.tuwien.mmue_lm7;
 
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.drawable.Drawable;
-import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import android.view.View;
+
+import androidx.core.view.GestureDetectorCompat;
 
 import at.ac.tuwien.mmue_lm7.game.Game;
 import at.ac.tuwien.mmue_lm7.game.GameConstants;
+import at.ac.tuwien.mmue_lm7.utils.Vec2;
 
 public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callback {
     private static final String TAG = GameSurfaceView.class.getName();
@@ -24,6 +22,8 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
     private Game game;
     private Thread gameMainThread;
 
+    private GestureDetectorCompat gestureDetector;
+
     public GameSurfaceView(Context context, AttributeSet attrs) {
         super(context, attrs);
         getHolder().addCallback(this);
@@ -31,6 +31,7 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
 
         //TODO pass parameters to game coming from somewhere
         game = new Game(context);
+        gestureDetector = new GestureDetectorCompat(context,new GameGestureListener());
     }
 
     private void startGame(SurfaceHolder holder) {
@@ -50,7 +51,7 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
 
     @Override
     public boolean onTouchEvent(MotionEvent e) {
-        //TODO detect gestures and pass to game
+        gestureDetector.onTouchEvent(e);
         return true;
     }
 
@@ -104,5 +105,30 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
         super.draw(canvas);
 
         game.render(canvas);
+    }
+
+    private class GameGestureListener extends GestureDetector.SimpleOnGestureListener {
+        private Vec2 position = new Vec2();
+        private Vec2 direction = new Vec2();
+
+        @Override
+        public boolean onDown(MotionEvent e) {
+            return true;
+        }
+
+        @Override
+        public boolean onSingleTapUp(MotionEvent e) {
+            Log.d(TAG, "Single Tap Confirmed: "+e.toString());
+            game.tap(position.set(e.getX(),e.getY()));
+            return true;
+        }
+
+        @Override
+        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+            Log.d(TAG, "Fling: "+e1.toString()+", motion: "+e2.toString());
+            game.swipe(position.set(e1.getX(), e1.getY()),
+                    direction.set(velocityX,velocityY).norm());
+            return true;
+        }
     }
 }
