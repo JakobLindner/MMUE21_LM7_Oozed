@@ -27,8 +27,8 @@ public class Sprite extends GameObject {
     @Override
     public void render(RenderSystem render) {
         render.drawSprite()
-                .at(position)
-                .rotated(rotation)
+                .at(getGlobalPosition())
+                .rotated(getGlobalRotation())
                 .mirrored(mirrored)
                 .spriteInfo(spriteInfo)
                 .frame(0);
@@ -37,7 +37,7 @@ public class Sprite extends GameObject {
     @Override
     public void debugRender(RenderSystem render) {
         render.drawRect()
-                .at(position)
+                .at(getGlobalPosition())
                 .halfSize(new Vec2(0.5f * spriteInfo.size / GameConstants.PIXELS_PER_UNIT, 0.5f * spriteInfo.size / GameConstants.PIXELS_PER_UNIT))
                 .color(DEBUG_RECT_COLOR)
                 .style(Paint.Style.STROKE)

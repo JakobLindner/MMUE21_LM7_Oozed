@@ -7,19 +7,19 @@ public class GameConstants {
     /**
      * Resolution width of the game
      */
-    public static final int GAME_RES_WIDTH = 480;
+    public static final int GAME_RES_WIDTH = 512;
     /**
      * Resolution height of the game
      */
-    public static final int GAME_RES_HEIGHT = 270;
+    public static final int GAME_RES_HEIGHT = 288;
     /**
      * in units
      */
-    public static final float GAME_WIDTH = GAME_RES_WIDTH/(float)PIXELS_PER_UNIT;//30
+    public static final float GAME_WIDTH = GAME_RES_WIDTH/(float)PIXELS_PER_UNIT;//=32
     /**
      * in units
      */
-    public static final float GAME_HEIGHT = GAME_RES_HEIGHT/(float)PIXELS_PER_UNIT;//=16.875
+    public static final float GAME_HEIGHT = GAME_RES_HEIGHT/(float)PIXELS_PER_UNIT;//=18
 
     /**
      * Prevent instantiation

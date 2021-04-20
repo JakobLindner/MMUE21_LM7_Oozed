@@ -2,6 +2,7 @@ package at.ac.tuwien.mmue_lm7.game.objects;
 
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.util.Log;
 
 import at.ac.tuwien.mmue_lm7.game.Game;
 import at.ac.tuwien.mmue_lm7.game.GameConstants;
@@ -38,9 +39,9 @@ public class AnimatedSprite extends GameObject{
     @Override
     public void render(RenderSystem render) {
         render.drawSprite()
-                .at(position)
-                .rotated(rotation)
-                .mirrored(mirrored)
+                .at(getGlobalPosition())
+                .rotated(getGlobalRotation())
+                .mirrored(mirrored) // TODO global
                 .spriteInfo(spriteInfo)
                 .frame(frame);
     }
@@ -48,7 +49,7 @@ public class AnimatedSprite extends GameObject{
     @Override
     public void debugRender(RenderSystem render) {
         render.drawRect()
-                .at(position)
+                .at(getGlobalPosition())
                 .halfSize(new Vec2(0.5f * spriteInfo.size / GameConstants.PIXELS_PER_UNIT, 0.5f * spriteInfo.size / GameConstants.PIXELS_PER_UNIT))
                 .color(DEBUG_RECT_COLOR)
                 .style(Paint.Style.STROKE)
