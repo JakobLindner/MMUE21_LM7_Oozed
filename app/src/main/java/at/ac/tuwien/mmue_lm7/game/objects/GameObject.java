@@ -222,6 +222,15 @@ public class GameObject {
     }
 
     /**
+     * Changes the local position to match given global pos
+     * @param globalPos !=null is unchanged
+     */
+    public final void setGlobalPosition(Vec2 globalPos) {
+        Vec2 diff = getGlobalPosition().sub(globalPos).inv();//TODO pool vectors
+        position.add(diff);
+    }
+
+    /**
      * @return global rotation of this object
      */
     //TODO optimization: if this is used often, then this should be stored in the Gameobject and marked dirty for recalculation if a parent changes rotation

@@ -184,7 +184,7 @@ public class Player extends AABB{
                     PhysicsSystem.Contact contact = movement.getContact();
 
                     //resolve collision
-                    position = movement.getPosition();//TODO this does not work position=local while movement.getPosition=global
+                    setGlobalPosition(movement.getPosition());
 
                     //rotate player
                     if(dir.dir.isCCW(upDir.dir)) {
@@ -252,7 +252,7 @@ public class Player extends AABB{
                 if(movement.getContact()!=null) {
                     PhysicsSystem.Contact contact = movement.getContact();
                     //resolve collision
-                    position = movement.getPosition();//TODO this does not work, see above
+                    setGlobalPosition(movement.getPosition());//TODO this does not work, see above
 
                     //recalculate direction and up vector
                     //set up vector to most similar cardinal direction to normal
