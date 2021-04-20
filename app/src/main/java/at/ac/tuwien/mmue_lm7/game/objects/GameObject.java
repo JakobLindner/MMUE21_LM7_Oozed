@@ -206,7 +206,7 @@ public class GameObject {
 
         GameObject go = parent;
         while(go!=null) {
-            global.add(parent.position);
+            global.add(go.position);
             go = go.parent;
         }
 
@@ -222,7 +222,7 @@ public class GameObject {
 
         GameObject go = parent;
         while(go!=null) {
-            global += parent.rotation;
+            global += go.rotation;
             go = go.parent;
         }
 

@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 
 import at.ac.tuwien.mmue_lm7.R;
+import at.ac.tuwien.mmue_lm7.game.GameConstants;
 import at.ac.tuwien.mmue_lm7.game.rendering.RenderSystem;
 import at.ac.tuwien.mmue_lm7.game.resources.ResourceSystem;
 import at.ac.tuwien.mmue_lm7.game.resources.SpriteInfo;
@@ -15,6 +16,10 @@ public class Sprite extends GameObject {
 
     private SpriteInfo spriteInfo;
 
+    public Sprite(ResourceSystem.SpriteEnum sprite) {
+        this.spriteInfo = ResourceSystem.spriteInfo(sprite);
+    }
+
     public void setSpriteInfo(SpriteInfo spriteInfo) {
         this.spriteInfo = spriteInfo;
     }
@@ -22,8 +27,8 @@ public class Sprite extends GameObject {
     @Override
     public void render(RenderSystem render) {
         render.drawSprite()
-                .at(position)
-                .rotated(rotation)
+                .at(getGlobalPosition())
+                .rotated(getGlobalRotation())
                 .mirrored(mirrored)
                 .spriteInfo(spriteInfo)
                 .frame(0);
@@ -32,8 +37,8 @@ public class Sprite extends GameObject {
     @Override
     public void debugRender(RenderSystem render) {
         render.drawRect()
-                .at(position)
-                .halfSize(new Vec2(0.5f, 0.5f))
+                .at(getGlobalPosition())
+                .halfSize(new Vec2(0.5f * spriteInfo.size / GameConstants.PIXELS_PER_UNIT, 0.5f * spriteInfo.size / GameConstants.PIXELS_PER_UNIT))
                 .color(DEBUG_RECT_COLOR)
                 .style(Paint.Style.STROKE)
                 .strokeWidth(DEBUG_RECT_STROKE_WIDTH);
