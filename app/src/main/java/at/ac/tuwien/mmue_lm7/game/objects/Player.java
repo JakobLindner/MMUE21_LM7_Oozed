@@ -2,9 +2,7 @@ package at.ac.tuwien.mmue_lm7.game.objects;
 
 import android.util.Log;
 
-import at.ac.tuwien.mmue_lm7.Constants;
 import at.ac.tuwien.mmue_lm7.game.Game;
-import at.ac.tuwien.mmue_lm7.game.GameConstants;
 import at.ac.tuwien.mmue_lm7.game.SwipeEvent;
 import at.ac.tuwien.mmue_lm7.game.TapEvent;
 import at.ac.tuwien.mmue_lm7.game.physics.CollisionLayers;
@@ -15,6 +13,10 @@ import at.ac.tuwien.mmue_lm7.utils.Vec2;
 
 /**
  * Player object
+ * ASSUMPTION: the player never runs faster than its own size in a single frame, otherwise edge turns cannot be performed correctly
+ *              since every frame two rays are performed down at the front and back of the player to
+ *              detect the start of running off the edge
+ * Dashing can only end while running, so the player won't suddenly become slower in midair
  */
 public class Player extends AABB{
     private static final String TAG = "Player";
@@ -42,11 +44,22 @@ public class Player extends AABB{
      * Jump height for
      */
     public static final float JUMP_HEIGHT = 4;
+    //assuming platforms are at least 1 in width & height
+    public static final float RUNNING_RAY_CAST_LENGTH = 1;
+    /**
+     * How much of its own size can the player
+     */
+    public static final float OVERHANG_PERCENT = 0.5f;
+    /**
+     * Outer turn animation duration is measured in distance, so the turn is automatically performed faster when dashing
+     */
+    public static final float OUTER_TURN_DIST = 1;
 
     public enum PlayerState {
         RUNNING,
-        DASHING,
-        JUMPING
+        JUMPING,
+        //TODO OUTER_TURN custom hitbox and turn animation
+        OUTER_TURN,
     }
     ///////////////////////////////////////////////////////////////////////////
     // STATE variables
@@ -60,7 +73,7 @@ public class Player extends AABB{
      * set to true if swipe detected
      */
     private boolean wantDash = false;
-    //RUNNING
+    //RUNNING & DASHING
     /**
      * Direction of movement
      */
@@ -71,20 +84,34 @@ public class Player extends AABB{
     private Direction upDir;
 
     /**
-     * Vector reused for movement operations
+     * Vectors reused for movement operations
      */
     private Vec2 move = new Vec2();
+    private Vec2 ray = new Vec2();
 
-    //DASHING
+    /**
+     * This is set when the player is starting to run off the edge, when this is 0 => state = OUTER_TURN
+     */
+    private float distUntilTurn = PLAYER_DASH_SPEED*2;
+
+    /**
+     * is the player currently dashing?
+     */
+    private boolean dashing = false;
     /**
      * Remaining duration of dash
      */
-    private float duration;
+    private float dashDuration;
 
     //JUMPING
     //these jump objects are valid when state==JUMPING
     private Jump jump = new Jump();
     private Jump dashJump = new Jump();
+
+    //OUTER_TURN
+    //set by previous RUNNING/DASHING state
+    private Vec2 cornerPos;
+    private float coveredTurnDist;
 
     public Player() {
         super(PLAYER_HALF_SIZE,
@@ -122,23 +149,31 @@ public class Player extends AABB{
     public void update() {
 
         //handle inputs
-        if(wantJump && (state==PlayerState.DASHING || state==PlayerState.RUNNING)) {
-            state = PlayerState.JUMPING;
-
-            //position jump parabolas
-            jump.setPositioningAndMirroring(dir,upDir,position,0);
-            dashJump.setPositioningAndMirroring(dir,upDir,position,0);
+        if(wantJump && state==PlayerState.RUNNING) {
+            changeState(PlayerState.JUMPING);
         }
         if(wantDash && state==PlayerState.RUNNING) {
-            state = PlayerState.DASHING;
-            duration = PLAYER_DASH_DURATION;
+            dashDuration = PLAYER_DASH_DURATION;
+            dashing = true;
         }
 
         //handle current state
         switch (state) {
             case RUNNING:
-            case DASHING:
             {
+                //should turning be initiated?
+                if(distUntilTurn<getCurrentSpeed()) {
+                    //set how much of the turn is already covered
+                    coveredTurnDist = getCurrentSpeed()-distUntilTurn;
+                    changeState(PlayerState.OUTER_TURN);
+                    break;
+                }
+
+                //see if dash has ended
+                if(dashing && dashDuration<=0) {
+                    dashing = false;
+                }
+
                 //perform movement
                 PhysicsSystem.Sweep movement = Game.get().getPhysicsSystem().move(this,
                         move.set(dir.dir).scl(getCurrentSpeed()),
@@ -165,16 +200,41 @@ public class Player extends AABB{
                     //TODO should player need time for rotating (e.g playing animation?
                 }
                 else {
-                    //cast a raycast "down" to check if the end of the platform has been reached
-                    //TODO
+                    //cast two raycast down(=inverse to upDir) to check if the end of the platform has been reached
+                    ray.set(upDir.dir).inv().scl(RUNNING_RAY_CAST_LENGTH);
+                    move.set(dir.dir).scl(PLAYER_HALF_SIZE);
+                    PhysicsSystem.Contact frontRay = Game.get().getPhysicsSystem().raycast(move,ray,PLAYER_MOVEMENT_MASK);
+                    move.set(dir.dir).inv().scl(PLAYER_HALF_SIZE);
+                    PhysicsSystem.Contact backRay = Game.get().getPhysicsSystem().raycast(move,ray,PLAYER_MOVEMENT_MASK);
+
+                    if(backRay!=null) {
+                        //check if player is already partly over edge
+                        if(frontRay==null) {
+                            //determine how far the player is already over the edge
+
+                            //determine corner position
+                            AABB platform = backRay.getOther();
+                            cornerPos.set(dir.dir).add(upDir.dir).scl(platform.getHalfSize()).add(platform.getGlobalPosition());
+
+                            //determine how far player is peeking off the platform edge with the front edge
+                            //ray = overhang
+                            ray.set(getGlobalPosition())
+                                    .sub(cornerPos)
+                                    .scl(dir.dir);//take only relevant component
+                            float overhang = ray.x+ray.y+PLAYER_HALF_SIZE;
+
+                            //set remaining overhang, such that a state change can be triggered
+                            distUntilTurn = OVERHANG_PERCENT*2*PLAYER_HALF_SIZE-overhang;
+                        }
+                    }
+                    else {
+                        if(frontRay==null) {
+                            Log.e(TAG, "No collision for any ray detected");
+                            //TODO should player simply fall down?
+                        }
+                    }
                 }
 
-                //count down dash duration, switch to running if dash is over
-                if(state==PlayerState.DASHING) {
-                    --duration;
-                    if(duration<=0)
-                        state = PlayerState.RUNNING;
-                }
                 break;
             }
             case JUMPING:
@@ -205,9 +265,31 @@ public class Player extends AABB{
                         dir = upDir.rotateCW();
 
                     //switch to running
-                    state = PlayerState.RUNNING;
+                    changeState(PlayerState.RUNNING);
                 }
 
+                break;
+            }
+            case OUTER_TURN: {
+                //TODO play animation, dependent on coveredTurnDist
+
+                //advance turn
+                coveredTurnDist+=getCurrentSpeed();
+
+                //if turn animation performed, switch to previously running/dashing
+                if(coveredTurnDist>=OUTER_TURN_DIST) {
+                    //rotate player
+                    if (dir.dir.isCCW(upDir.dir)) {
+                        dir = dir.rotateCW();
+                        upDir = upDir.rotateCW();
+                    } else {
+                        dir = dir.rotateCCW();
+                        upDir = upDir.rotateCCW();
+                    }
+
+                    //position player
+                    position.set(upDir.dir).scl(PLAYER_HALF_SIZE).add(cornerPos);
+                }
                 break;
             }
             default:
@@ -215,6 +297,12 @@ public class Player extends AABB{
                 Log.e(TAG,"Unhandled/Unknown player state");
             }
         }
+
+        if(dashing) {
+            --dashDuration;
+        }
+
+        //TODO based on state, set hitbox and sprite
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -240,6 +328,31 @@ public class Player extends AABB{
     // Helper methods
     ///////////////////////////////////////////////////////////////////////////
 
+    private void changeState(PlayerState to) {
+        if(state==to)
+            return;
+
+        switch(state) {
+            case OUTER_TURN: {
+                //reset remaining over edge distance
+                distUntilTurn = PLAYER_DASH_SPEED*2;
+            }
+        }
+        switch(to) {
+            case JUMPING: {
+                //position jump parabolas
+                jump.setPositioningAndMirroring(dir, upDir, position, 0);
+                dashJump.setPositioningAndMirroring(dir, upDir, position, 0);
+                break;
+            }
+        }
+
+        //TODO make effects (e.g. RUNNING->DASHING)
+        //TODO play sounds (e.g. ->JUMPING)
+
+        state = to;
+    }
+
     /**
      * may be called by different input methods to perform a jump
      */
@@ -255,7 +368,7 @@ public class Player extends AABB{
     }
 
     private Jump getCurrentJump() {
-        if(state==PlayerState.DASHING)
+        if(dashing)
             return dashJump;
         return jump;
     }
@@ -264,6 +377,6 @@ public class Player extends AABB{
      * @return current running speed
      */
     private float getCurrentSpeed() {
-        return state==PlayerState.DASHING?PLAYER_DASH_SPEED:PLAYER_SPEED;
+        return dashing?PLAYER_DASH_SPEED:PLAYER_SPEED;
     }
 }

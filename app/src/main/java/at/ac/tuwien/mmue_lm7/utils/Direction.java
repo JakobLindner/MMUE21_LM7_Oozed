@@ -45,6 +45,14 @@ public enum Direction {
         }
     }
 
+    public boolean isHorizontal() {
+        return this==LEFT || this==RIGHT;
+    }
+
+    public boolean isVertical() {
+        return !isHorizontal();
+    }
+
     /**
      * @param to !=null
      * @return cardinal direction that is closest (anglewise) to given vector
