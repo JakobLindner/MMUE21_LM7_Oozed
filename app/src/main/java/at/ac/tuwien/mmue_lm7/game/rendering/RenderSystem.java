@@ -275,7 +275,7 @@ public class RenderSystem {
 
         public DrawSprite at(Vec2 pos) {
             this.pos.set(pos);
-            Utils.worldToScreen(pos);
+            Utils.worldToScreen(this.pos);
             return this;
         }
 
