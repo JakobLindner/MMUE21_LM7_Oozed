@@ -19,6 +19,7 @@ import at.ac.tuwien.mmue_lm7.game.GameConstants;
 import at.ac.tuwien.mmue_lm7.game.resources.ResourceSystem;
 import at.ac.tuwien.mmue_lm7.game.resources.SpriteInfo;
 import at.ac.tuwien.mmue_lm7.utils.ObjectPool;
+import at.ac.tuwien.mmue_lm7.utils.Utils;
 import at.ac.tuwien.mmue_lm7.utils.Vec2;
 
 /**
@@ -228,10 +229,10 @@ public class RenderSystem {
         @Override
         public void render(Canvas canvas) {
             //TODO should coordinates be rounded/truncated to int to be pixel perfect?
-            canvas.drawRect(left * GameConstants.PIXELS_PER_UNIT,
-                    top * GameConstants.PIXELS_PER_UNIT,
-                    right * GameConstants.PIXELS_PER_UNIT,
-                    bottom * GameConstants.PIXELS_PER_UNIT,
+            canvas.drawRect(Utils.worldToScreenX(left),
+                    Utils.worldToScreenY(top),
+                    Utils.worldToScreenX(right),
+                    Utils.worldToScreenY(bottom),
                     paint);
         }
 
@@ -248,12 +249,15 @@ public class RenderSystem {
     public class DrawSprite extends RenderCommand {
         //TODO members and builder methods to set those members
 
+        /**
+         * in screen coords
+         */
         private Vec2 pos = new Vec2(0, 0);
         private float rot = 0;
         private int xMir = 1;
         private int frame = 0;
         private SpriteInfo spriteInfo = new SpriteInfo();
-        private Paint paint;
+        private Paint paint;//TODO make static, if no builder methods can change this?
 
         public DrawSprite() {
             paint = new Paint();
@@ -270,7 +274,8 @@ public class RenderSystem {
         }
 
         public DrawSprite at(Vec2 pos) {
-            this.pos.set(new Vec2(pos.x * GameConstants.PIXELS_PER_UNIT, pos.y * GameConstants.PIXELS_PER_UNIT));
+            this.pos.set(pos);
+            Utils.worldToScreen(pos);
             return this;
         }
 
@@ -390,7 +395,6 @@ public class RenderSystem {
         @Override
         public void reset() {
             super.reset();
-            //TODO
             text = "";
             x = y = 0;
             paint.reset();
@@ -401,8 +405,8 @@ public class RenderSystem {
         public void render(Canvas canvas) {
             //TODO should coordinates be rounded/truncated to int to be pixel perfect?
             //calculate screen coordinates
-            float sx = this.x*GameConstants.PIXELS_PER_UNIT;
-            float sy = this.y*GameConstants.PIXELS_PER_UNIT;
+            float sx = Utils.worldToScreenX(x);
+            float sy = Utils.worldToScreenY(y);
             if (path != null)
                 canvas.drawTextOnPath(text, path, sx, sy, paint);
             else

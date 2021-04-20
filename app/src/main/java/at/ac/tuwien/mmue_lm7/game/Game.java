@@ -106,13 +106,16 @@ public class Game {
         renderSystem.render(canvas);
     }
 
+    /**
+     * @param position in game units
+     */
     public void tap(Vec2 position) {
         Log.d(TAG, String.format("Tap at: %s",position.toString()));
         onTap.notify(new TapEvent(position));
     }
 
     /**
-     * @param position where the swipe started
+     * @param position where the swipe started in game units
      * @param direction should be normalized
      */
     public void swipe(Vec2 position, Vec2 direction) {

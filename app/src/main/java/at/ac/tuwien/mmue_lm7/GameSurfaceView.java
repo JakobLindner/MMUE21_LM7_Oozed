@@ -119,7 +119,9 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
         @Override
         public boolean onSingleTapUp(MotionEvent e) {
             Log.d(TAG, "Single Tap Confirmed: "+e.toString());
-            game.tap(position.set(e.getX(),e.getY()));
+            position.set(e.getX(),e.getY());
+
+            game.tap(position);
             return true;
         }
 

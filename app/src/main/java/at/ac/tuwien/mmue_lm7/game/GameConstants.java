@@ -5,6 +5,7 @@ import at.ac.tuwien.mmue_lm7.game.physics.CollisionLayers;
 public class GameConstants {
 
     public static final int PIXELS_PER_UNIT = 16;
+    public static final float UNITS_PER_PIXEL = 1/(float)PIXELS_PER_UNIT;
 
     /**
      * Resolution width of the game
