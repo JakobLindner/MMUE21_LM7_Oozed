@@ -17,7 +17,7 @@ public class ResourceSystem {
     private BitmapFactory.Options options;
 
     private HashMap<Integer, Bitmap> bitmaps = new HashMap<>();
-    private HashMap<SpriteEnum, SpriteInfo> spriteInfos = new HashMap<>();
+    private static HashMap<SpriteEnum, SpriteInfo> spriteInfos = new HashMap<>();
 
     public ResourceSystem (Context context) {
         this.context = context;
@@ -36,7 +36,7 @@ public class ResourceSystem {
         return bitmap;
     }
 
-    public SpriteInfo spriteInfo(SpriteEnum spriteEnum) {
+    public static SpriteInfo spriteInfo(SpriteEnum spriteEnum) {
         if (spriteInfos.containsKey(spriteEnum)) {
             return spriteInfos.get(spriteEnum);
         }
@@ -48,9 +48,27 @@ public class ResourceSystem {
                 info.animationLength = 2;
                 info.frameDuration = 15;
                 break;
-            case tileCenter:
-                info.spriteSheetId = R.drawable.tile;
+            case blockerIdle:
+                info.spriteSheetId = R.drawable.blocker;
                 break;
+            case platformPipe:
+                info.spriteSheetId = R.drawable.platforms;
+                break;
+            case platformPipeOpen:
+                info.spriteSheetId = R.drawable.platforms;
+                info.firstX = 16;
+                break;
+            case platformCircuit:
+                info.spriteSheetId = R.drawable.platforms;
+                info.firstX = 32;
+                break;
+            case platformIce:
+                info.spriteSheetId = R.drawable.platforms;
+                info.firstX = 48;
+                break;
+            case background:
+                info.spriteSheetId = R.drawable.background;
+                info.size = 32;
             default:
                 return info;
         }
@@ -60,6 +78,11 @@ public class ResourceSystem {
 
     public enum SpriteEnum {
         oozeRun,
-        tileCenter,
+        blockerIdle,
+        platformPipe,
+        platformPipeOpen,
+        platformCircuit,
+        platformIce,
+        background,
     }
 }

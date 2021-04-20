@@ -57,23 +57,7 @@ public class Game {
 
         //TODO load assets
 
-        //TODO plz remove following
-        AABB aabb = new AABB(1,1);
-        aabb.position.set(15,8);
-        root.addChild(aabb);
-        Text text = new Text("There is a green rectangle.");
-        text.position.set(15,4);
-        root.addChild(text);
-        Sprite sprite = new Sprite();
-        sprite.position.set(3,6);
-        sprite.rotation = 90;
-        sprite.setSpriteInfo(resourceSystem.spriteInfo(ResourceSystem.SpriteEnum.tileCenter));
-        root.addChild(sprite);
-        AnimatedSprite animatedSprite = new AnimatedSprite();
-        animatedSprite.position.set(5,6);
-        animatedSprite.mirrored = true;
-        animatedSprite.setSpriteInfo(resourceSystem.spriteInfo(ResourceSystem.SpriteEnum.oozeRun));
-        root.addChild(animatedSprite);
+        LevelFactories.loadLevel(root, 1);
     }
 
     /**

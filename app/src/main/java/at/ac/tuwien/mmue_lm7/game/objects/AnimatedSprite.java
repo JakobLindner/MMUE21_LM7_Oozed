@@ -18,6 +18,10 @@ public class AnimatedSprite extends GameObject{
     private int updateCount = 0;
     private SpriteInfo spriteInfo = new SpriteInfo();
 
+    public AnimatedSprite(ResourceSystem.SpriteEnum sprite) {
+        this.spriteInfo = ResourceSystem.spriteInfo(sprite);
+    }
+
     public void setSpriteInfo(SpriteInfo spriteInfo) {
         this.spriteInfo = spriteInfo;
     }
@@ -45,7 +49,7 @@ public class AnimatedSprite extends GameObject{
     public void debugRender(RenderSystem render) {
         render.drawRect()
                 .at(position)
-                .halfSize(new Vec2(0.5f, 0.5f))
+                .halfSize(new Vec2(0.5f * spriteInfo.size / GameConstants.PIXELS_PER_UNIT, 0.5f * spriteInfo.size / GameConstants.PIXELS_PER_UNIT))
                 .color(DEBUG_RECT_COLOR)
                 .style(Paint.Style.STROKE)
                 .strokeWidth(DEBUG_RECT_STROKE_WIDTH);
