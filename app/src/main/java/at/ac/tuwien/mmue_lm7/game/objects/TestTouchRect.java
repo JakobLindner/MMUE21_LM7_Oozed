@@ -45,7 +45,7 @@ public class TestTouchRect extends AABB {
     public void update() {
         move.set(targetPos).sub(getGlobalPosition());
         if (move.len2() > SPEED * SPEED) {
-            PhysicsSystem.Sweep sweep = Game.get().getPhysicsSystem().move(this, move.norm().scl(SPEED), (short)0);//TODO remove 0 mask
+            PhysicsSystem.Sweep sweep = Game.get().getPhysicsSystem().move(this, move.norm().scl(SPEED));
 
             setGlobalPosition(sweep.getPosition());
 
@@ -58,7 +58,7 @@ public class TestTouchRect extends AABB {
     public void debugRender(RenderSystem render) {
         render.drawRect()
                 .at(getGlobalPosition())
-                .strokeWidth(2)
+                .strokeWidth(1)
                 .halfSize(getHalfSize())
                 .color(isColliding ? Color.RED : Color.GREEN)
                 .style(Paint.Style.STROKE);

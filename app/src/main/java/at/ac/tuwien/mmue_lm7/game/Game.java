@@ -81,10 +81,9 @@ public class Game {
 
         LevelFactories.loadLevel(root, 1);
 
-        //TODO remove test rect
-        TestTouchRect testRect = new TestTouchRect();
-        testRect.position.set(5.5f,7.5f);
-        root.addChild(testRect);
+        //TestTouchRect testRect = new TestTouchRect();
+        //testRect.position.set(1,1);
+        //root.addChild(testRect);
     }
 
     /**
