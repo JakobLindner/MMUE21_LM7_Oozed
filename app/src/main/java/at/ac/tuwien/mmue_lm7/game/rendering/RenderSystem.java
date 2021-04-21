@@ -259,6 +259,12 @@ public class RenderSystem {
         private SpriteInfo spriteInfo = new SpriteInfo();
         private Paint paint;//TODO make static, if no builder methods can change this?
 
+        /**
+         * used for performing the command/rendering, allocated once to save allocations
+         */
+        private Rect source = new Rect();
+        private Rect dest = new Rect();
+
         public DrawSprite() {
             paint = new Paint();
             paint.setAntiAlias(false);
@@ -306,13 +312,11 @@ public class RenderSystem {
 
             Bitmap bitmap = Game.get().getResourceSystem().getBitmap(spriteInfo.spriteSheetId);
 
-            Rect source = new Rect();
             source.set(spriteInfo.firstX + spriteInfo.size * frame,
                     spriteInfo.firstY,
                     spriteInfo.firstX + spriteInfo.size * (frame + 1),
                     spriteInfo.firstY + spriteInfo.size);
 
-            Rect dest = new Rect();
             dest.set(- spriteInfo.size / 2,
                     - spriteInfo.size / 2,
                     spriteInfo.size / 2,
