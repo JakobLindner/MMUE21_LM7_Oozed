@@ -112,6 +112,11 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
         private Vec2 position = new Vec2();
         private Vec2 direction = new Vec2();
 
+        /**
+         * If the player performs a long press at the top left corner in this radius then debug rendering is toggled
+         */
+        private static final float DEBUG_TOGGLE_RADIUS = 3;
+
         @Override
         public boolean onDown(MotionEvent e) {
             return true;
@@ -121,10 +126,7 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
         public boolean onSingleTapUp(MotionEvent e) {
             Log.d(TAG, "Single Tap Confirmed: "+e.toString());
             position.set(e.getX(),e.getY());
-            //transform to game resolution
-            position.scl(GameConstants.GAME_RES_WIDTH, GameConstants.GAME_RES_HEIGHT).div(getWidth(),getHeight());
-            //transform to game world coords
-            Utils.screenToWorld(position);
+            screenToWorld();
 
             game.tap(position);
             return true;
@@ -134,14 +136,37 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
             Log.d(TAG, "Fling: "+e1.toString()+", motion: "+e2.toString());
             position.set(e1.getX(), e1.getY());
-            //transform to game resolution
-            position.scl(GameConstants.GAME_RES_WIDTH, GameConstants.GAME_RES_HEIGHT).div(getWidth(),getHeight());
-            //transform to game world coords
-            Utils.screenToWorld(position);
+            screenToWorld();
 
             game.swipe(position,
                     direction.set(velocityX,velocityY).norm());
             return true;
+        }
+
+        @Override
+        public void onLongPress(MotionEvent e) {
+            Log.d(TAG, String.format("Long press: "+e.toString()));
+
+            //if there is a long press on the bottom left corner => toggle debug render
+            position.set(e.getX(), e.getY());
+            screenToWorld();
+            position.y = GameConstants.GAME_HEIGHT-position.y;
+
+            //check if the long press is close enough to the top left corner
+            if(position.len2()<DEBUG_TOGGLE_RADIUS*DEBUG_TOGGLE_RADIUS) {
+                Log.i(TAG, "Long press at bottom left corner detected, toggling debug render");
+                game.toggleDebugRender();
+            }
+        }
+
+        /**
+         * Transforms position from screen to world coords
+         */
+        private void screenToWorld() {
+            //transform to game resolution
+            position.scl(GameConstants.GAME_RES_WIDTH, GameConstants.GAME_RES_HEIGHT).div(getWidth(),getHeight());
+            //transform to game world coords
+            Utils.screenToWorld(position);
         }
     }
 }

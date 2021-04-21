@@ -40,6 +40,11 @@ public class Game {
     private PhysicsSystem physicsSystem = new PhysicsSystem();
     private ResourceSystem resourceSystem;
 
+    /**
+     * if true, debugRender is called on all objects
+     */
+    private boolean renderDebug = false;
+
     //TODO optimization: have object pools for all types of game objects, free in GameObject::destroy
 
     ///////////////////////////////////////////////////////////////////////////
@@ -121,9 +126,10 @@ public class Game {
         renderSystem.render(canvas);
 
         //DEBUG RENDER
-        //TODO only if enabled
-        root.debugRenderChildren(renderSystem);
-        renderSystem.render(canvas);
+        if(renderDebug) {
+            root.debugRenderChildren(renderSystem);
+            renderSystem.render(canvas);
+        }
 
         freeAllTmpVec();
     }
@@ -176,5 +182,17 @@ public class Game {
     private void freeAllTmpVec() {
         vectorPool.freeAll(usedVectors);
         usedVectors.clear();
+    }
+
+    public void disableDebugRender() {
+        renderDebug = false;
+    }
+
+    public void enableDebugRender() {
+        renderDebug = true;
+    }
+
+    public void toggleDebugRender() {
+        renderDebug = !renderDebug;
     }
 }
