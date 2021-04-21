@@ -15,7 +15,7 @@ import at.ac.tuwien.mmue_lm7.utils.Vec2;
  * Bounding box
  */
 public class AABB extends GameObject {
-    private static final float DEBUG_RECT_STROKE_WIDTH = 4;
+    private static final float DEBUG_RECT_STROKE_WIDTH = 1;
     private static final int DEBUG_RECT_COLOR = Color.GREEN;
 
     /**
@@ -88,7 +88,7 @@ public class AABB extends GameObject {
     @Override
     public void debugRender(RenderSystem render) {
         render.drawRect()
-                .at(position)
+                .at(getGlobalPosition())
                 .halfSize(halfSize)
                 .color(DEBUG_RECT_COLOR)
                 .style(Paint.Style.STROKE)
