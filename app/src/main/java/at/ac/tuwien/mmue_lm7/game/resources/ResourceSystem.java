@@ -3,6 +3,7 @@ package at.ac.tuwien.mmue_lm7.game.resources;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 
 import java.util.HashMap;
 
@@ -25,6 +26,7 @@ public class ResourceSystem {
         // disable scaling for crispy pixel art
         options = new BitmapFactory.Options();
         options.inScaled = false;
+        options.inPreferredConfig = Bitmap.Config.ARGB_8888;
     }
 
     public Bitmap getBitmap(int id) {

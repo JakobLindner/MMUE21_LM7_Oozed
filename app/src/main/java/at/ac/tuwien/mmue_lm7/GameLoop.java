@@ -38,7 +38,7 @@ public class GameLoop implements Runnable {
         this.surfaceHolder = surfaceHolder;
         this.gameSurfaceView = gameSurfaceView;
         this.game = game;
-        this.gameBitmap = Bitmap.createBitmap(GameConstants.GAME_RES_WIDTH,GameConstants.GAME_RES_HEIGHT, Bitmap.Config.RGB_565);
+        this.gameBitmap = Bitmap.createBitmap(GameConstants.GAME_RES_WIDTH,GameConstants.GAME_RES_HEIGHT, Bitmap.Config.ARGB_8888);
         this.gameBitmapSrc = new Rect(0,0,gameBitmap.getWidth(),gameBitmap.getHeight());
         this.gameCanvas = new Canvas(this.gameBitmap);
         this.gameCanvas.setDrawFilter(noAntiAliasingFlags);
