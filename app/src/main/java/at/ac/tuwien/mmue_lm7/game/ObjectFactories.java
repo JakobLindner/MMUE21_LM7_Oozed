@@ -67,9 +67,8 @@ public class ObjectFactories {
 
         tile.addChild(new Sprite(sprite));
 
-        // TODO Fix AABB
         AABB aabb = new AABB(0.5f, 0.5f,(short) 0, CollisionLayers.PLATFORM);
-        //tile.addChild(aabb);
+        tile.addChild(aabb);
 
         return tile;
     }
