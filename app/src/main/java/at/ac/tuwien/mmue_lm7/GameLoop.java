@@ -13,6 +13,7 @@ import at.ac.tuwien.mmue_lm7.game.GameConstants;
 
 import static at.ac.tuwien.mmue_lm7.Constants.FIXED_DELTA;
 import static at.ac.tuwien.mmue_lm7.Constants.FIXED_DELTA_MS;
+import static at.ac.tuwien.mmue_lm7.Constants.UPDATE_TIME_ACCUM_MAX_MS;
 
 public class GameLoop implements Runnable {
 
@@ -75,7 +76,9 @@ public class GameLoop implements Runnable {
             //increase accumulator
             accumulator +=delta;
 
-            //TODO cap accumulated time to prevent spiral of death
+            //cap accumulated time to prevent spiral of death (=cannot keep up with target update rate)
+            if(accumulator>UPDATE_TIME_ACCUM_MAX_MS)
+                accumulator = UPDATE_TIME_ACCUM_MAX_MS;
 
             //do update if necessary
             boolean redraw = accumulator>=FIXED_DELTA_MS;
