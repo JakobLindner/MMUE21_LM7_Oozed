@@ -68,9 +68,15 @@ public class ResourceSystem {
                 info.spriteSheetId = R.drawable.platforms;
                 info.firstX = 48;
                 break;
+            case bigPlatformGears:
+                info.spriteSheetId = R.drawable.platforms;
+                info.firstY = 16;
+                info.size = 32;
+                break;
             case background:
                 info.spriteSheetId = R.drawable.background;
                 info.size = 512;
+                break;
             default:
                 return info;
         }
@@ -85,6 +91,7 @@ public class ResourceSystem {
         platformPipeOpen,
         platformCircuit,
         platformIce,
+        bigPlatformGears,
         background,
     }
 }

@@ -73,6 +73,24 @@ public class ObjectFactories {
         return tile;
     }
 
+    public static GameObject makeBigPlatformTile(int x, int y, ResourceSystem.SpriteEnum sprite) {
+        return makeBigPlatformTile(x, y, 0, false, sprite);
+    }
+
+    public static GameObject makeBigPlatformTile(int x, int y, float rot, boolean mir, ResourceSystem.SpriteEnum sprite) {
+        GameObject tile = new GameObject();
+        tile.position.set(x + 0.5f, y + 0.5f);
+        tile.rotation = rot;
+        tile.mirrored = mir;
+
+        tile.addChild(new Sprite(sprite));
+
+        AABB aabb = new AABB(1.0f, 1.0f,(short) 0, CollisionLayers.PLATFORM);
+        tile.addChild(aabb);
+
+        return tile;
+    }
+
     public static GameObject makeBackground(int x, int y) {
         Sprite sprite = new Sprite(ResourceSystem.SpriteEnum.background);
         sprite.position.set(x, y);
