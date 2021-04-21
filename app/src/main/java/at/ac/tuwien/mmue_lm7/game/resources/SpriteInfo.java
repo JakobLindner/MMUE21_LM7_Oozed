@@ -4,7 +4,7 @@ import at.ac.tuwien.mmue_lm7.R;
 import at.ac.tuwien.mmue_lm7.game.GameConstants;
 
 public class SpriteInfo {
-    public int spriteSheetId = R.drawable.tile; // TODO error sprite in bright color
+    public int spriteSheetId = R.drawable.platforms; // TODO error sprite in bright color
     public int size = GameConstants.PIXELS_PER_UNIT;
     public int firstX = 0;
     public int firstY = 0;

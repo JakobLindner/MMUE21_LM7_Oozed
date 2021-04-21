@@ -53,13 +53,7 @@ public class LevelFactories {
         root.addChild(platform1);
 
         // === BACKGROUND ===
-        GameObject background = new GameObject();
-        root.addChild(background);
-        for (int i = 0; i < GameConstants.GAME_WIDTH / 2; i++) {
-            for (int j = 0; j < GameConstants.GAME_HEIGHT / 2; j++) {
-                background.addChild(ObjectFactories.makeBackground(i * 2 + 1, j * 2 + 1));
-            }
-        }
+        root.addChild(ObjectFactories.makeBackground(16, 9));
     }
 
     public static void createLevel2(GameObject root) {

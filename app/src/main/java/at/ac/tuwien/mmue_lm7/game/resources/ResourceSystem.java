@@ -50,6 +50,8 @@ public class ResourceSystem {
                 break;
             case blockerIdle:
                 info.spriteSheetId = R.drawable.blocker;
+                info.animationLength = 4;
+                info.frameDuration = 20;
                 break;
             case platformPipe:
                 info.spriteSheetId = R.drawable.platforms;
@@ -68,7 +70,7 @@ public class ResourceSystem {
                 break;
             case background:
                 info.spriteSheetId = R.drawable.background;
-                info.size = 32;
+                info.size = 512;
             default:
                 return info;
         }
