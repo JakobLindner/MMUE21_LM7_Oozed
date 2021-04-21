@@ -56,7 +56,7 @@ public class LevelFactories {
         GameObject background = new GameObject();
         root.addChild(background);
         for (int i = 0; i < GameConstants.GAME_WIDTH / 2; i++) {
-            for (int j = 0; j < GameConstants.GAME_RES_HEIGHT / 2; j++) {
+            for (int j = 0; j < GameConstants.GAME_HEIGHT / 2; j++) {
                 background.addChild(ObjectFactories.makeBackground(i * 2 + 1, j * 2 + 1));
             }
         }
