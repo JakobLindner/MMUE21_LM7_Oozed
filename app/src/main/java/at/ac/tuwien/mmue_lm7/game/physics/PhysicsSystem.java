@@ -388,7 +388,7 @@ public class PhysicsSystem {
             //perform simple intersection
             sweep.position.set(aabbPos);
             sweep.contact = testCollision(aabb, other);
-            sweep.time = sweep.contact == null ? (sweep.contact.time = 0) : 1;
+            sweep.time = sweep.contact != null ? (sweep.contact.time = 0) : 1;
             return sweep;
         }
 
