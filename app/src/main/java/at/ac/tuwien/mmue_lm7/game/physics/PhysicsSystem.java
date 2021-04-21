@@ -217,7 +217,8 @@ public class PhysicsSystem {
         }
 
         //register returned contact as used
-        usedContacts.add(closest);
+        if(closest!=null)
+            usedContacts.add(closest);
 
         return closest;
     }
@@ -237,8 +238,8 @@ public class PhysicsSystem {
         Vec2 globalPos = aabb.getGlobalPosition();
         //check 0 cases
         if (ray.x == 0) {
-            if (position.x < (globalPos.x - aabb.getHalfSize().x - paddingX) ||
-                    position.x > (globalPos.x + aabb.getHalfSize().x + paddingX))
+            if (position.x <= (globalPos.x - aabb.getHalfSize().x - paddingX) ||
+                    position.x >= (globalPos.x + aabb.getHalfSize().x + paddingX))
                 return null;
             //reduce to 1d
             float time = raycast1D(position.y, ray.y, globalPos.y, aabb.getHalfSize().y, paddingY);
@@ -254,8 +255,8 @@ public class PhysicsSystem {
             contact.position.set(ray).scl(contact.time).add(position);
             return contact;
         } else if (ray.y == 0) {
-            if (position.y < (globalPos.y - aabb.getHalfSize().y - paddingY) ||
-                    position.y > (globalPos.y + aabb.getHalfSize().y + paddingY))
+            if (position.y <= (globalPos.y - aabb.getHalfSize().y - paddingY) ||
+                    position.y >= (globalPos.y + aabb.getHalfSize().y + paddingY))
                 return null;
             //reduce to 1d
             float time = raycast1D(position.x, ray.x, globalPos.x, aabb.getHalfSize().x, paddingX);

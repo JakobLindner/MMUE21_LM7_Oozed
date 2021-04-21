@@ -2,6 +2,7 @@ package at.ac.tuwien.mmue_lm7.game.objects;
 
 import android.util.Log;
 
+import at.ac.tuwien.mmue_lm7.Constants;
 import at.ac.tuwien.mmue_lm7.game.Game;
 import at.ac.tuwien.mmue_lm7.game.SwipeEvent;
 import at.ac.tuwien.mmue_lm7.game.TapEvent;
@@ -9,6 +10,7 @@ import at.ac.tuwien.mmue_lm7.game.physics.CollisionLayers;
 import at.ac.tuwien.mmue_lm7.game.physics.PhysicsSystem;
 import at.ac.tuwien.mmue_lm7.utils.Direction;
 import at.ac.tuwien.mmue_lm7.utils.Jump;
+import at.ac.tuwien.mmue_lm7.utils.Utils;
 import at.ac.tuwien.mmue_lm7.utils.Vec2;
 
 /**
@@ -34,7 +36,7 @@ public class Player extends AABB{
      */
     public static final float PLAYER_DASH_DURATION = 60;
     public static final float PLAYER_HALF_SIZE = 0.5f;
-    public static final short PLAYER_MASK = CollisionLayers.ENEMY;
+    public static final short PLAYER_MASK = CollisionLayers.ENEMY | CollisionLayers.PLATFORM;
     public static final short PLAYER_MOVEMENT_MASK = CollisionLayers.PLATFORM;
     /**
      * Jump distance for normal jump
@@ -53,7 +55,7 @@ public class Player extends AABB{
     /**
      * Outer turn animation duration is measured in distance, so the turn is automatically performed faster when dashing
      */
-    public static final float OUTER_TURN_DIST = 1;
+    public static final float OUTER_TURN_DIST = 0.25f;
 
     public enum PlayerState {
         RUNNING,
@@ -113,11 +115,17 @@ public class Player extends AABB{
     private Vec2 cornerPos = new Vec2();
     private float coveredTurnDist;
 
-    public Player() {
+    public Player(Direction startingDir, boolean runningCW) {
         super(PLAYER_HALF_SIZE,
                 PLAYER_HALF_SIZE,
                 CollisionLayers.PLAYER,
                 PLAYER_MASK);
+
+        this.dir = startingDir;
+        if(runningCW)
+            this.upDir = this.dir.rotateCCW();
+        else
+            this.upDir = this.dir.rotateCW();
     }
 
     @Override
@@ -151,10 +159,12 @@ public class Player extends AABB{
         //handle inputs
         if(wantJump && state==PlayerState.RUNNING) {
             changeState(PlayerState.JUMPING);
+            wantJump = false;
         }
         if(wantDash && state==PlayerState.RUNNING) {
             dashDuration = PLAYER_DASH_DURATION;
             dashing = true;
+            wantDash = false;
         }
 
         //handle current state
@@ -183,29 +193,48 @@ public class Player extends AABB{
                 if(movement.getContact()!=null) {
                     PhysicsSystem.Contact contact = movement.getContact();
 
-                    //resolve collision
-                    setGlobalPosition(movement.getPosition());
-
-                    //rotate player
-                    if(dir.dir.isCCW(upDir.dir)) {
-                        dir = dir.rotateCCW();
-                        upDir = upDir.rotateCCW();
+                    //check if player is just too close to platform
+                    if(Game.get().tmpVec().set(contact.getNormal()).scl(dir.dir).len2()==0) {
+                        //lift player up, just a tiny bit
+                        position.add(upDir.dir.x*Utils.EPSILON,upDir.dir.y*Utils.EPSILON);
                     }
                     else {
-                        dir = dir.rotateCW();
-                        upDir = upDir.rotateCW();
+                        //resolve collision
+                        setGlobalPosition(movement.getPosition());
+
+                        //rotate player
+                        if (dir.dir.isCCW(upDir.dir)) {
+                            dir = dir.rotateCCW();
+                            upDir = upDir.rotateCCW();
+                        } else {
+                            dir = dir.rotateCW();
+                            upDir = upDir.rotateCW();
+                        }
                     }
 
                     //TODO should player move the remaining time 1-movement.time
                     //TODO should player need time for rotating (e.g playing animation?
                 }
                 else {
+                    //perform move
+                    setGlobalPosition(movement.getPosition());
+
                     //cast two raycast down(=inverse to upDir) to check if the end of the platform has been reached
+                    //rays are redone with a slight offset since there is a tiny chance that the rays slip exactly between two boxes
                     ray.set(upDir.dir).inv().scl(RUNNING_RAY_CAST_LENGTH);
-                    move.set(dir.dir).scl(PLAYER_HALF_SIZE);
+                    move.set(dir.dir).scl(PLAYER_HALF_SIZE).add(movement.getPosition());
                     PhysicsSystem.Contact frontRay = Game.get().getPhysicsSystem().raycast(move,ray,PLAYER_MOVEMENT_MASK);
-                    move.set(dir.dir).inv().scl(PLAYER_HALF_SIZE);
+                    if(frontRay==null) {
+                        move.set(dir.dir).scl(PLAYER_HALF_SIZE-Utils.EPSILON).add(movement.getPosition());
+                        frontRay = Game.get().getPhysicsSystem().raycast(move,ray,PLAYER_MOVEMENT_MASK);
+                    }
+
+                    move.set(dir.dir).inv().scl(PLAYER_HALF_SIZE).add(movement.getPosition());
                     PhysicsSystem.Contact backRay = Game.get().getPhysicsSystem().raycast(move,ray,PLAYER_MOVEMENT_MASK);
+                    if(backRay==null) {
+                        move.set(dir.dir).inv().scl(PLAYER_HALF_SIZE-Utils.EPSILON).add(movement.getPosition());
+                        backRay = Game.get().getPhysicsSystem().raycast(move,ray,PLAYER_MOVEMENT_MASK);
+                    }
 
                     if(backRay!=null) {
                         //check if player is already partly over edge
@@ -288,7 +317,11 @@ public class Player extends AABB{
                     }
 
                     //position player
-                    position.set(upDir.dir).scl(PLAYER_HALF_SIZE).add(cornerPos);
+                    Vec2 newPos = Game.get().tmpVec().set(upDir.dir).scl(PLAYER_HALF_SIZE).add(cornerPos);
+                    setGlobalPosition(newPos);
+
+                    //change to running
+                    changeState(PlayerState.RUNNING);
                 }
                 break;
             }
@@ -310,7 +343,6 @@ public class Player extends AABB{
     ///////////////////////////////////////////////////////////////////////////
 
     private boolean onCollide(PhysicsSystem.Contact contact) {
-        //TODO handle
         return false;
     }
 

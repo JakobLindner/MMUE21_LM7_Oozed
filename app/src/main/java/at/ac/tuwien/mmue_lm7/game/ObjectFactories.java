@@ -4,18 +4,20 @@ import at.ac.tuwien.mmue_lm7.game.objects.AABB;
 import at.ac.tuwien.mmue_lm7.game.objects.AnimatedSprite;
 import at.ac.tuwien.mmue_lm7.game.objects.GameObject;
 import at.ac.tuwien.mmue_lm7.game.objects.Platform;
+import at.ac.tuwien.mmue_lm7.game.objects.Player;
 import at.ac.tuwien.mmue_lm7.game.objects.Sprite;
 import at.ac.tuwien.mmue_lm7.game.objects.Text;
 import at.ac.tuwien.mmue_lm7.game.physics.CollisionLayers;
 import at.ac.tuwien.mmue_lm7.game.resources.ResourceSystem;
+import at.ac.tuwien.mmue_lm7.utils.Direction;
 import at.ac.tuwien.mmue_lm7.utils.Vec2;
 
 public class ObjectFactories {
 
 
 
-    public static GameObject makeOoze(int x, int y, float rot, boolean lookingLeft) {
-        GameObject ooze = new GameObject();
+    public static Player makeOoze(int x, int y, float rot, boolean lookingLeft) {
+        Player ooze = new Player(Direction.RIGHT,true);//TODO make starting direction a parameter
         ooze.position.set(x, y);
         ooze.rotation = rot;
         ooze.mirrored = lookingLeft;
