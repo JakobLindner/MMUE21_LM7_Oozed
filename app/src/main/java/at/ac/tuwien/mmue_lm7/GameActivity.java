@@ -1,14 +1,11 @@
 package at.ac.tuwien.mmue_lm7;
 
-import android.annotation.SuppressLint;
-
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.view.MotionEvent;
+import android.util.Log;
 import android.view.View;
 
 /**
@@ -16,16 +13,20 @@ import android.view.View;
  * status bar and navigation/system bar) with user interaction.
  */
 public class GameActivity extends AppCompatActivity {
+    private static final String TAG = "GameActivity";
     /**
      * Amount of ms until ui is hidden again after showing up
      */
     private static final long HIDE_DELAY = 1000;
     private final Handler hideDelayed = new Handler(Looper.getMainLooper());
+    private GameSurfaceView gameView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+
+        gameView = findViewById(R.id.fullscreen_content);
 
         //Schedule a delayed hide of system ui if user forces its appearance
         View decorView = getWindow().getDecorView();
@@ -77,4 +78,22 @@ public class GameActivity extends AppCompatActivity {
                         | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d(TAG, "onPause");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d(TAG, "onResume");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d(TAG, "onDestroy");
+        gameView.onDestroy();
+    }
 }

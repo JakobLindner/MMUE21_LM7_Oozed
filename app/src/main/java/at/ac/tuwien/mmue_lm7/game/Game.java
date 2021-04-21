@@ -73,7 +73,7 @@ public class Game {
      * Allocates ressources
      */
     public void init() {
-        Log.i("Game","Initialize Game");
+        Log.i(TAG,"Initialize Game");
         //initialize singleton
         singleton = this;
 
@@ -95,7 +95,26 @@ public class Game {
      * Cleans up all resources
      */
     public void cleanup() {
+        Log.i(TAG,"Cleanup Game");
 
+    }
+
+    /**
+     * Called when activity is paused
+     * releases all resources
+     */
+    public void pause() {
+        Log.i(TAG,"Pause Game");
+        //TODO load resources
+    }
+
+    /**
+     * Called when activity is resumed
+     * loads all resources which are released in pause
+     */
+    public void resume() {
+        Log.i(TAG,"Resume Game");
+        //TODO release resources
     }
 
     /**

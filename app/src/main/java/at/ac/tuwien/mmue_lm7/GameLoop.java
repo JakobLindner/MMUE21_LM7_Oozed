@@ -60,8 +60,6 @@ public class GameLoop implements Runnable {
     public void run() {
         setRunning(true);
 
-        game.init();
-
         long lastTime = getTime();
         long currentTime = 0;
         long accumulator = FIXED_DELTA_MS;

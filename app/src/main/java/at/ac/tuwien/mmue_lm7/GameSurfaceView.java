@@ -32,22 +32,27 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
 
         //TODO pass parameters to game coming from somewhere
         game = new Game(context);
+        game.init();
         gestureDetector = new GestureDetectorCompat(context,new GameGestureListener());
+        Log.d(TAG, "Initialize GameSurfaceView");
     }
 
-    private void startGame(SurfaceHolder holder) {
+    private void resumeGame(SurfaceHolder holder) {
+        game.resume();
         gameLoop = new GameLoop(holder, this, game);
         gameMainThread = new Thread(gameLoop);
         gameMainThread.start();
     }
 
-    private void endGame() {
+    private void pauseGame() {
         gameLoop.setRunning(false);
         try {
             gameMainThread.join();
         } catch (InterruptedException e) {
             Log.e("Error", e.getMessage());
         }
+
+        game.pause();
     }
 
     @Override
@@ -58,7 +63,8 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
-        startGame(holder);
+        Log.d(TAG, "Surface created");
+        resumeGame(holder);
     }
 
     @Override
@@ -68,7 +74,15 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
-        endGame();
+        Log.d(TAG, "Surface destroyed");
+        pauseGame();
+    }
+
+    /**
+     * called by activity to signal that the game should be cleaned up
+     */
+    public void onDestroy() {
+        game.cleanup();
     }
 
     /**
