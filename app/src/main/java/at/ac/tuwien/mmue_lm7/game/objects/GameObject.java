@@ -15,7 +15,7 @@ public class GameObject {
      */
     public Vec2 position = new Vec2();
     /**
-     * local rotation in degrees
+     * local rotation in degrees, clockwise
      */
     public float rotation = 0;
     /**

@@ -126,6 +126,8 @@ public class Player extends AABB{
             this.upDir = this.dir.rotateCCW();
         else
             this.upDir = this.dir.rotateCW();
+
+        updateRotation();
     }
 
     @Override
@@ -210,6 +212,7 @@ public class Player extends AABB{
                             dir = dir.rotateCW();
                             upDir = upDir.rotateCW();
                         }
+                        updateRotation();
                     }
 
                     //TODO should player move the remaining time 1-movement.time
@@ -293,6 +296,8 @@ public class Player extends AABB{
                     else
                         dir = upDir.rotateCW();
 
+                    updateRotation();
+
                     //switch to running
                     changeState(PlayerState.RUNNING);
                 }
@@ -315,6 +320,7 @@ public class Player extends AABB{
                         dir = dir.rotateCCW();
                         upDir = upDir.rotateCCW();
                     }
+                    updateRotation();
 
                     //position player
                     Vec2 newPos = Game.get().tmpVec().set(upDir.dir).scl(PLAYER_HALF_SIZE).add(cornerPos);
@@ -410,5 +416,17 @@ public class Player extends AABB{
      */
     private float getCurrentSpeed() {
         return dashing?PLAYER_DASH_SPEED:PLAYER_SPEED;
+    }
+
+    private void updateRotation() {
+        //TODO implement via vector angle
+        if(dir==Direction.RIGHT)
+            rotation=0;
+        else if(dir == Direction.DOWN)
+            rotation = 90;
+        else if(dir == Direction.LEFT)
+            rotation = 180;
+        else
+            rotation = 270;
     }
 }
