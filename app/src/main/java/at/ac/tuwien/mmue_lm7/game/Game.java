@@ -4,15 +4,19 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.util.Log;
 
+import java.util.ArrayList;
+
 import at.ac.tuwien.mmue_lm7.game.objects.AABB;
 import at.ac.tuwien.mmue_lm7.game.objects.AnimatedSprite;
 import at.ac.tuwien.mmue_lm7.game.objects.GameObject;
 import at.ac.tuwien.mmue_lm7.game.objects.Sprite;
+import at.ac.tuwien.mmue_lm7.game.objects.TestTouchRect;
 import at.ac.tuwien.mmue_lm7.game.objects.Text;
 import at.ac.tuwien.mmue_lm7.game.physics.CollisionLayers;
 import at.ac.tuwien.mmue_lm7.game.rendering.RenderSystem;
 import at.ac.tuwien.mmue_lm7.game.physics.PhysicsSystem;
 import at.ac.tuwien.mmue_lm7.game.resources.ResourceSystem;
+import at.ac.tuwien.mmue_lm7.utils.ObjectPool;
 import at.ac.tuwien.mmue_lm7.utils.Subject;
 import at.ac.tuwien.mmue_lm7.utils.Vec2;
 
@@ -44,6 +48,16 @@ public class Game {
     public final Subject<TapEvent> onTap = new Subject<>();
     public final Subject<SwipeEvent> onSwipe = new Subject<>();
 
+    ///////////////////////////////////////////////////////////////////////////
+    // POOLS
+    ///////////////////////////////////////////////////////////////////////////
+    private final static int VECTOR_POOL_SIZE = 128;
+    /**
+     * Pool for reusing vector objects, which can be used in temporary calculations, that are valid for a single update/render
+     */
+    private final ObjectPool<Vec2> vectorPool = new ObjectPool<Vec2>(Vec2::new,VECTOR_POOL_SIZE);
+    private final ArrayList<Vec2> usedVectors = new ArrayList<Vec2>(VECTOR_POOL_SIZE);
+
     public Game(Context context) {
         resourceSystem = new ResourceSystem(context);
     }
@@ -66,6 +80,11 @@ public class Game {
         renderSystem.init();
 
         LevelFactories.loadLevel(root, 1);
+
+        //TODO remove test rect
+        TestTouchRect testRect = new TestTouchRect();
+        testRect.position.set(5.5f,7.5f);
+        root.addChild(testRect);
     }
 
     /**
@@ -87,6 +106,8 @@ public class Game {
         //are there still enemies left
         //does the player have lives left?
         //TODO maybe in own game object??
+
+        freeAllTmpVec();
     }
 
     /**
@@ -104,6 +125,8 @@ public class Game {
         //TODO only if enabled
         root.debugRenderChildren(renderSystem);
         renderSystem.render(canvas);
+
+        freeAllTmpVec();
     }
 
     /**
@@ -140,5 +163,19 @@ public class Game {
 
     public ResourceSystem getResourceSystem() {
         return resourceSystem;
+    }
+
+    /**
+     * @return a temporary vector that may only be used in the same update or render, x=y=0
+     */
+    public Vec2 tmpVec() {
+        Vec2 tmpVec = vectorPool.obtain();
+        usedVectors.add(tmpVec);
+        return tmpVec;
+    }
+
+    private void freeAllTmpVec() {
+        vectorPool.freeAll(usedVectors);
+        usedVectors.clear();
     }
 }

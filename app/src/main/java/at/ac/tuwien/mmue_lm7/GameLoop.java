@@ -78,13 +78,15 @@ public class GameLoop implements Runnable {
             //TODO cap accumulated time to prevent spiral of death
 
             //do update if necessary
+            boolean redraw = accumulator>=FIXED_DELTA_MS;
             while(accumulator>=FIXED_DELTA_MS)
             {
                 game.update();
                 accumulator-=FIXED_DELTA_MS;
             }
 
-            render();
+            if(redraw)
+                render();
         }
     }
 

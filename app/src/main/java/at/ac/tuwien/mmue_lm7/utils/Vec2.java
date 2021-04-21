@@ -5,7 +5,7 @@ import androidx.annotation.NonNull;
 /**
  * Simple 2d vector utility class
  */
-public class Vec2 {
+public class Vec2 implements ObjectPool.Poolable {
     public float x;
     public float y;
 
@@ -16,6 +16,11 @@ public class Vec2 {
     public Vec2(float x, float y) {
         this.x = x;
         this.y = y;
+    }
+
+    @Override
+    public void reset() {
+        this.zero();
     }
 
     /**

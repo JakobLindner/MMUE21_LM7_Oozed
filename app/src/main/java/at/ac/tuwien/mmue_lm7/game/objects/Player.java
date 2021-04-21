@@ -110,7 +110,7 @@ public class Player extends AABB{
 
     //OUTER_TURN
     //set by previous RUNNING/DASHING state
-    private Vec2 cornerPos;
+    private Vec2 cornerPos = new Vec2();
     private float coveredTurnDist;
 
     public Player() {

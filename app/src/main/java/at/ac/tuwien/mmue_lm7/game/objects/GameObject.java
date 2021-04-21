@@ -72,7 +72,8 @@ public class GameObject {
     /**
      * called by the destroy method when
      */
-    protected void onDestroy() { }
+    protected void onDestroy() {
+    }
 
     //###############################
     //#####  OTHER METHODS  #########
@@ -93,10 +94,12 @@ public class GameObject {
      * Recursively initializes children in depth first order
      */
     private void initChildren() {
-        for(GameObject child = firstChild; child!=null; child = child.nextSibling) {
-            child.initialized = true;
-            child.init();
-            child.initChildren();
+        for (GameObject child = firstChild; child != null; child = child.nextSibling) {
+            if (!child.initialized) {
+                child.initialized = true;
+                child.init();
+                child.initChildren();
+            }
         }
     }
 
@@ -104,7 +107,7 @@ public class GameObject {
      * calls update on children in depth first order
      */
     public final void updateChildren() {
-        for(GameObject child = firstChild; child!=null; child = child.nextSibling) {
+        for (GameObject child = firstChild; child != null; child = child.nextSibling) {
             child.update();
             child.updateChildren();
         }
@@ -114,7 +117,7 @@ public class GameObject {
      * calls render() on children in depth first order
      */
     public final void renderChildren(RenderSystem render) {
-        for(GameObject child = firstChild; child!=null; child = child.nextSibling) {
+        for (GameObject child = firstChild; child != null; child = child.nextSibling) {
             child.render(render);
             child.renderChildren(render);
 
@@ -123,10 +126,11 @@ public class GameObject {
 
     /**
      * calls debugRender() on children in depth first order
+     *
      * @param render
      */
     public final void debugRenderChildren(RenderSystem render) {
-        for(GameObject child = firstChild; child!=null; child = child.nextSibling) {
+        for (GameObject child = firstChild; child != null; child = child.nextSibling) {
             child.debugRender(render);
             child.debugRenderChildren(render);
         }
@@ -136,18 +140,19 @@ public class GameObject {
      * calls destroy on all children, order is depth first, but i guess it wont matter here
      */
     public final void destroyChildren() {
-        for(GameObject child = firstChild; child!=null; child = child.nextSibling)
+        for (GameObject child = firstChild; child != null; child = child.nextSibling)
             child.destroy();
     }
 
     /**
      * adds given child at the beginning of the child list
+     *
      * @param child, not null
      * @return this for chaining
      */
     public final GameObject addChild(GameObject child) {
         //initialize child, if this game object is already part of the scene tree
-        if(!initialized) {
+        if (initialized && !child.initialized) {
             child.initialized = true;
             child.init();
             child.initChildren();
@@ -161,7 +166,7 @@ public class GameObject {
 
         //update references
         child.nextSibling = firstChild;
-        if(firstChild!=null)
+        if (firstChild != null)
             firstChild.prevSibling = child;
         firstChild = child;
 
@@ -172,15 +177,15 @@ public class GameObject {
      * removes the game object from the scene tree
      */
     private void detachFromParent() {
-        if(parent == null)
+        if (parent == null)
             return;
 
         //update references
-        if(prevSibling!=null)
+        if (prevSibling != null)
             prevSibling.nextSibling = nextSibling;
-        if(nextSibling!=null)
+        if (nextSibling != null)
             nextSibling.prevSibling = prevSibling;
-        if(parent.firstChild==this)
+        if (parent.firstChild == this)
             parent.firstChild = nextSibling;
         parent = nextSibling = prevSibling = null;
     }
@@ -198,24 +203,26 @@ public class GameObject {
 
     /**
      * Calculate global position by accumulating all translations up to the root game object
-     * @return global position, vector allocated via new
+     *
+     * @return global position as a temporary vector!!
      */
     //TODO optimization: if this is used often, then this should be stored in the Gameobject and marked dirty for recalculation if a parent changes position
     public final Vec2 getGlobalPosition() {
-        Vec2 global = new Vec2();
+        Vec2 global = Game.get().tmpVec();
         getGlobalPosition(global);
         return global;
     }
 
     /**
      * Sets given vector to global position
+     *
      * @param vec
      */
     public final void getGlobalPosition(Vec2 vec) {
         vec.set(position);
 
         GameObject go = parent;
-        while(go!=null) {
+        while (go != null) {
             vec.add(go.position);
             go = go.parent;
         }
@@ -223,6 +230,7 @@ public class GameObject {
 
     /**
      * Changes the local position to match given global pos
+     *
      * @param globalPos !=null is unchanged
      */
     public final void setGlobalPosition(Vec2 globalPos) {
@@ -238,7 +246,7 @@ public class GameObject {
         float global = rotation;
 
         GameObject go = parent;
-        while(go!=null) {
+        while (go != null) {
             global += go.rotation;
             go = go.parent;
         }

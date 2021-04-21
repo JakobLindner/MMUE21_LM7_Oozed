@@ -1,5 +1,7 @@
 package at.ac.tuwien.mmue_lm7.game.physics;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 
 import at.ac.tuwien.mmue_lm7.game.objects.AABB;
@@ -13,6 +15,8 @@ import at.ac.tuwien.mmue_lm7.utils.Vec2;
  * Manages all Bounding boxes, checks collisions between them
  */
 public class PhysicsSystem {
+
+    private static final String TAG = "PhysicsSystem";
 
     //events
     public final Subject<Contact> onGlobalCollision = new Subject<>();
@@ -50,7 +54,10 @@ public class PhysicsSystem {
      * @param box, !=null
      */
     public void addAABB(AABB box) {
-        aabbByLayer[BitUtils.getRightmostSetBit(box.getCollisionMask())].add(box);
+        if(box.getCollisionLayer()==0) {
+            Log.w(TAG,String.format("No layer set for aabb %s, it will be ignored",box.toString()));
+        }
+        aabbByLayer[BitUtils.getRightmostSetBit(box.getCollisionLayer())-1].add(box);
     }
 
     /**
@@ -59,7 +66,10 @@ public class PhysicsSystem {
      * @param box, !=null
      */
     public void removeAABB(AABB box) {
-        aabbByLayer[BitUtils.getRightmostSetBit(box.getCollisionMask())].remove(box);
+        if(box.getCollisionLayer()==0)
+            return;
+
+        aabbByLayer[BitUtils.getRightmostSetBit(box.getCollisionLayer())-1].remove(box);
     }
 
     /**
