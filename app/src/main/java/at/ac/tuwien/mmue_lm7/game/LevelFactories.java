@@ -7,6 +7,10 @@ import at.ac.tuwien.mmue_lm7.game.objects.GameObject;
 import at.ac.tuwien.mmue_lm7.game.physics.CollisionLayers;
 import at.ac.tuwien.mmue_lm7.game.resources.ResourceSystem;
 
+/**
+ * @author jakob
+ * creates levels by creating and placing all game objects for them
+ */
 public class LevelFactories {
     @FunctionalInterface
     public interface LevelFactory {
@@ -18,6 +22,7 @@ public class LevelFactories {
         put("2",LevelFactories::createLevel2);
     }} ;
 
+    // TODO tutorial level
 
     public static void createLevel1(GameObject root) {
 

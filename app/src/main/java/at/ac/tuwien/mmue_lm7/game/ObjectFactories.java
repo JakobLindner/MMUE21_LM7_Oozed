@@ -12,12 +12,14 @@ import at.ac.tuwien.mmue_lm7.game.resources.ResourceSystem;
 import at.ac.tuwien.mmue_lm7.utils.Direction;
 import at.ac.tuwien.mmue_lm7.utils.Vec2;
 
+/**
+ * @author jakob
+ * creates all game objects for easy instanciation from the LevelFactories
+ */
 public class ObjectFactories {
 
-
-
     public static Player makeOoze(int x, int y, float rot, boolean lookingLeft) {
-        Player ooze = new Player(Direction.RIGHT,true);//TODO make starting direction a parameter
+        Player ooze = new Player(Direction.RIGHT, !lookingLeft);//TODO horizontally flip this or ooze sprites
         ooze.position.set(x, y);
         ooze.rotation = rot;
         ooze.mirrored = lookingLeft;
@@ -44,11 +46,6 @@ public class ObjectFactories {
         // TODO Add AABB
 
         return blocker;
-    }
-
-    public static class PlatformParams {
-        public Vec2 pos;
-        public Vec2 size;
     }
 
     public static GameObject makePlatform(int x, int y) {

@@ -23,6 +23,7 @@ import at.ac.tuwien.mmue_lm7.utils.Utils;
 import at.ac.tuwien.mmue_lm7.utils.Vec2;
 
 /**
+ * @author simon
  * batches Draw/render commands to potentially do optimizations and ordering of objects
  */
 public class RenderSystem {
@@ -247,7 +248,6 @@ public class RenderSystem {
      * render command to draw a sprite
      */
     public class DrawSprite extends RenderCommand {
-        //TODO members and builder methods to set those members
 
         /**
          * in screen coords

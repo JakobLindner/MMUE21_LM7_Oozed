@@ -10,6 +10,11 @@ import at.ac.tuwien.mmue_lm7.game.resources.ResourceSystem;
 import at.ac.tuwien.mmue_lm7.game.resources.SpriteInfo;
 import at.ac.tuwien.mmue_lm7.utils.Vec2;
 
+/**
+ * @author jakob
+ * Static sprite object that gets drawn on the canvas
+ * For animated sprites use AnimatedSprite instead
+ */
 public class Sprite extends GameObject {
     private static final float DEBUG_RECT_STROKE_WIDTH = 1;
     private static final int DEBUG_RECT_COLOR = Color.YELLOW;
@@ -29,7 +34,7 @@ public class Sprite extends GameObject {
         render.drawSprite()
                 .at(getGlobalPosition())
                 .rotated(getGlobalRotation())
-                .mirrored(mirrored)
+                .mirrored(mirrored) // TODO global
                 .spriteInfo(spriteInfo)
                 .frame(0);
     }

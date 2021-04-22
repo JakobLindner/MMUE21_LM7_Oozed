@@ -1,23 +1,27 @@
 package at.ac.tuwien.mmue_lm7.game.resources;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
 
 import java.util.HashMap;
+import java.util.MissingResourceException;
 
 import at.ac.tuwien.mmue_lm7.R;
 
 /**
+ * @author jakob
  * Don't keep this on Activity change
+ * Loads and stores all sprite bitmaps
  */
 public class ResourceSystem {
 
     private Context context;
     private BitmapFactory.Options options;
 
-    private HashMap<Integer, Bitmap> bitmaps = new HashMap<>();
+    private HashMap<Integer, Bitmap> bitmaps = null;
     private static HashMap<SpriteEnum, SpriteInfo> spriteInfos = new HashMap<>();
 
     public ResourceSystem (Context context) {
@@ -29,15 +33,34 @@ public class ResourceSystem {
         options.inPreferredConfig = Bitmap.Config.ARGB_8888;
     }
 
-    public Bitmap getBitmap(int id) {
-        if (bitmaps.containsKey(id)) {
-            return bitmaps.get(id);
-        }
-        Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), id, options);
-        bitmaps.put(id, bitmap);
-        return bitmap;
+    /**
+     * loads all resources and stores them for faster access
+     */
+    public void loadResources() {
+        bitmaps = new HashMap<>();
+        bitmaps.put(R.drawable.ooze, BitmapFactory.decodeResource(context.getResources(), R.drawable.ooze, options));
+        bitmaps.put(R.drawable.blocker, BitmapFactory.decodeResource(context.getResources(), R.drawable.blocker, options));
+        bitmaps.put(R.drawable.platforms, BitmapFactory.decodeResource(context.getResources(), R.drawable.platforms, options));
+        bitmaps.put(R.drawable.background, BitmapFactory.decodeResource(context.getResources(), R.drawable.background, options));
     }
 
+    public void releaseResources() {
+        for (int key : bitmaps.keySet()) {
+            bitmaps.get(key).recycle();
+        }
+    }
+
+    /**
+     * returns the bitmap related to resource id
+     * loadResources must be called before this!
+     */
+    public Bitmap getBitmap(int id) {
+        return bitmaps.get(id);
+    }
+
+    /**
+     * provides info to find sprites and animations on sprite sheet
+     */
     public static SpriteInfo spriteInfo(SpriteEnum spriteEnum) {
         if (spriteInfos.containsKey(spriteEnum)) {
             return spriteInfos.get(spriteEnum);
@@ -80,6 +103,7 @@ public class ResourceSystem {
                 info.size = 512;
                 break;
             default:
+                Log.i("Resources", "spriteInfo: Sprite not found!");
                 return info;
         }
         spriteInfos.put(spriteEnum, info);

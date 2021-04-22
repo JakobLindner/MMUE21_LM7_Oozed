@@ -84,6 +84,8 @@ public class Game {
         physicsSystem.init();
         renderSystem.init();
 
+        resourceSystem.loadResources();
+
         LevelFactories.loadLevel(root, 1);
 
         //TestTouchRect testRect = new TestTouchRect();
@@ -96,7 +98,7 @@ public class Game {
      */
     public void cleanup() {
         Log.i(TAG,"Cleanup Game");
-
+        resourceSystem.releaseResources();
     }
 
     /**
@@ -105,7 +107,7 @@ public class Game {
      */
     public void pause() {
         Log.i(TAG,"Pause Game");
-        //TODO load resources
+        resourceSystem.releaseResources();
     }
 
     /**
@@ -114,7 +116,7 @@ public class Game {
      */
     public void resume() {
         Log.i(TAG,"Resume Game");
-        //TODO release resources
+        resourceSystem.loadResources();
     }
 
     /**
