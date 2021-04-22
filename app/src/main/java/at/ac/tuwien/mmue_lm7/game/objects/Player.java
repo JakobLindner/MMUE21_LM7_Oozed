@@ -144,8 +144,7 @@ public class Player extends AABB {
 
         //initialize jumps
         jump.setJump(NORMAL_JUMP_DISTANCE, JUMP_HEIGHT);
-        float gravity = jump.getGravity();
-        dashJump.setJumpByGravityAndHeight(gravity, JUMP_HEIGHT);
+        dashJump.setJump(PLAYER_DASH_SPEED*NORMAL_JUMP_DISTANCE/PLAYER_SPEED, JUMP_HEIGHT);
     }
 
     @Override
