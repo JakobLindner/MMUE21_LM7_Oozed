@@ -45,7 +45,7 @@ public class ResourceSystem {
         //do nothing if already loaded
         if (isLoaded)
             return;
-        
+
         bitmaps = new HashMap<>();
         bitmaps.put(R.drawable.ooze, BitmapFactory.decodeResource(context.getResources(), R.drawable.ooze, options));
         bitmaps.put(R.drawable.blocker, BitmapFactory.decodeResource(context.getResources(), R.drawable.blocker, options));

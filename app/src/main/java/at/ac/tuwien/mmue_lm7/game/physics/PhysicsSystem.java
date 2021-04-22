@@ -243,7 +243,7 @@ public class PhysicsSystem {
                 return null;
             //reduce to 1d
             float time = raycast1D(position.y, ray.y, globalPos.y, aabb.getHalfSize().y, paddingY);
-            if (time > 1)
+            if (time >= 1)
                 return null;
 
             //generate contact
@@ -260,7 +260,7 @@ public class PhysicsSystem {
                 return null;
             //reduce to 1d
             float time = raycast1D(position.x, ray.x, globalPos.x, aabb.getHalfSize().x, paddingX);
-            if (time > 1)
+            if (time >= 1)
                 return null;
 
             //generate contact
@@ -321,7 +321,7 @@ public class PhysicsSystem {
         float near = (aabbPos - edgeOffset - pos) * scale;
         float far = (aabbPos + edgeOffset - pos) * scale;
 
-        if (near > 1 || far < 0)
+        if (near >= 1 || far <= 0)
             return 2;
         else
             return Utils.clamp(near, 0, 1);
