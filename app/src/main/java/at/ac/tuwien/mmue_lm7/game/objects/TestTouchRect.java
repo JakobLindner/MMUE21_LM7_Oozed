@@ -12,8 +12,8 @@ import at.ac.tuwien.mmue_lm7.game.rendering.RenderSystem;
 import at.ac.tuwien.mmue_lm7.utils.Vec2;
 
 /**
- * @author simon
  * Test object used for testing basic collision
+ * @author simon
  */
 public class TestTouchRect extends AABB {
 

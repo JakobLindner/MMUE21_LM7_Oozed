@@ -11,9 +11,9 @@ import at.ac.tuwien.mmue_lm7.game.resources.SpriteInfo;
 import at.ac.tuwien.mmue_lm7.utils.Vec2;
 
 /**
- * @author jakob
  * Static sprite object that gets drawn on the canvas
  * For animated sprites use AnimatedSprite instead
+ * @author jakob
  */
 public class Sprite extends GameObject {
     private static final float DEBUG_RECT_STROKE_WIDTH = 1;

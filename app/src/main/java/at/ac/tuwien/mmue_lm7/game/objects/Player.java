@@ -15,12 +15,12 @@ import at.ac.tuwien.mmue_lm7.utils.Utils;
 import at.ac.tuwien.mmue_lm7.utils.Vec2;
 
 /**
- * @author simon
  * Player object
  * ASSUMPTION: the player never runs faster than its own size in a single frame, otherwise edge turns cannot be performed correctly
  * since every frame two rays are performed down at the front and back of the player to
  * detect the start of running off the edge
  * Dashing can only end while running, so the player won't suddenly become slower in midair
+ * @author simon
  */
 public class Player extends AABB {
     private static final String TAG = "Player";

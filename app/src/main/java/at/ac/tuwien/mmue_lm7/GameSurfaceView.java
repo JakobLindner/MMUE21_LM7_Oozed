@@ -18,8 +18,8 @@ import at.ac.tuwien.mmue_lm7.utils.Utils;
 import at.ac.tuwien.mmue_lm7.utils.Vec2;
 
 /**
- * @author Simon
  * Custom surface view to render the game
+ * @author Simon
  */
 public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callback {
     private static final String TAG = GameSurfaceView.class.getName();

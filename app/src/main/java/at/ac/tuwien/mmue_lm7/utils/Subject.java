@@ -3,8 +3,8 @@ package at.ac.tuwien.mmue_lm7.utils;
 import java.util.LinkedList;
 
 /**
- * @author simon
  * Manages an ordered list of listeners that can be notified of events
+ * @author simon
  * @param <Event> defines the type of events
  */
 public class Subject<Event> {

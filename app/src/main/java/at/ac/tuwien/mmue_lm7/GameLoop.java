@@ -16,9 +16,9 @@ import static at.ac.tuwien.mmue_lm7.Constants.FIXED_DELTA_MS;
 import static at.ac.tuwien.mmue_lm7.Constants.UPDATE_TIME_ACCUM_MAX_MS;
 
 /**
- * @author simon
  * Thread for updating a game instance
  * renders game on own lowres bitmap, which is then rendered onto the whole game surface view
+ * @author simon
  */
 public class GameLoop implements Runnable {
 

@@ -12,9 +12,9 @@ import java.util.MissingResourceException;
 import at.ac.tuwien.mmue_lm7.R;
 
 /**
- * @author jakob
  * Don't keep this on Activity change
  * Loads and stores all sprite bitmaps
+ * @author jakob
  */
 public class ResourceSystem {
 

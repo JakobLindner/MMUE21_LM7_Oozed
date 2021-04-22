@@ -4,8 +4,8 @@ import at.ac.tuwien.mmue_lm7.R;
 import at.ac.tuwien.mmue_lm7.game.GameConstants;
 
 /**
- * @author jakob
  * Information for a sprite/animation for where to find it on a spritesheet
+ * @author jakob
  */
 public class SpriteInfo {
     public int spriteSheetId = R.drawable.platforms;

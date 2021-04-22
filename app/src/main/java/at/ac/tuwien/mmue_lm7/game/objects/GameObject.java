@@ -9,8 +9,8 @@ import at.ac.tuwien.mmue_lm7.game.rendering.RenderSystem;
 import at.ac.tuwien.mmue_lm7.utils.Vec2;
 
 /**
- * @author simon & jakob
  * Base class for every type of object in the game
+ * @author simon & jakob
  */
 public class GameObject {
     /**

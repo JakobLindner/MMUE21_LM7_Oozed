@@ -6,9 +6,9 @@ import at.ac.tuwien.mmue_lm7.game.objects.GameObject;
 import at.ac.tuwien.mmue_lm7.utils.Vec2;
 
 /**
- * @author simon
  * Watches a certain set of entities
  * These entities are teleported to the other side of the screen when they exit the screen
+ * @author simon
  */
 public class WraparoundSystem {
     private final static float PADDING = 0.5f;

@@ -3,8 +3,8 @@ package at.ac.tuwien.mmue_lm7.utils;
 import androidx.annotation.NonNull;
 
 /**
- * @author simon
  * Simple 2d vector utility class
+ * @author simon
  */
 public class Vec2 implements ObjectPool.Poolable {
     public float x;

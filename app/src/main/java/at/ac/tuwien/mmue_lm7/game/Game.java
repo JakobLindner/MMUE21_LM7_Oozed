@@ -22,8 +22,8 @@ import at.ac.tuwien.mmue_lm7.utils.Subject;
 import at.ac.tuwien.mmue_lm7.utils.Vec2;
 
 /**
- * @author simon
  * Represents the main game, accessible globally via singleton pattern
+ * @author simon
  */
 public class Game {
     private static final String TAG = "Game";

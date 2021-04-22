@@ -9,8 +9,8 @@ import at.ac.tuwien.mmue_lm7.game.resources.ResourceSystem;
 import at.ac.tuwien.mmue_lm7.utils.Direction;
 
 /**
- * @author jakob
  * creates levels by creating and placing all game objects for them
+ * @author jakob
  */
 public class LevelFactories {
     @FunctionalInterface

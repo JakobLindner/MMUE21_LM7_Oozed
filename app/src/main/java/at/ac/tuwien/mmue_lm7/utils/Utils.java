@@ -3,8 +3,8 @@ package at.ac.tuwien.mmue_lm7.utils;
 import at.ac.tuwien.mmue_lm7.game.GameConstants;
 
 /**
- * @author simon
  * utility functions that have no other place
+ * @author simon
  */
 public class Utils {
     public static final float EPSILON = (float) 0.00001;//TODO find good epsilon

@@ -9,9 +9,9 @@ import android.util.Log;
 import android.view.View;
 
 /**
- * @author simon
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
+ * @author simon
  */
 public class GameActivity extends AppCompatActivity {
     private static final String TAG = "GameActivity";

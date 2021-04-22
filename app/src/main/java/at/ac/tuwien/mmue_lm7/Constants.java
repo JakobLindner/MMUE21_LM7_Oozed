@@ -1,8 +1,8 @@
 package at.ac.tuwien.mmue_lm7;
 
 /**
- * @author simon
  * Constants, which are irrelevant for the game instance
+ * @author simon
  */
 public class Constants {
     /**

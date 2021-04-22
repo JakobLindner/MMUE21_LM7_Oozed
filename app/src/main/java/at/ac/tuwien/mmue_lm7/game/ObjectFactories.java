@@ -12,9 +12,9 @@ import at.ac.tuwien.mmue_lm7.game.resources.ResourceSystem;
 import at.ac.tuwien.mmue_lm7.utils.Direction;
 
 /**
- * @author jakob
  * creates all game objects for easy instanciation from the LevelFactories
  * all x and y parameters are the lower left corner of the object
+ * @author jakob
  */
 public class ObjectFactories {
 

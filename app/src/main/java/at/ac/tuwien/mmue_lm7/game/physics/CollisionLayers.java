@@ -1,10 +1,10 @@
 package at.ac.tuwien.mmue_lm7.game.physics;
 
 /**
- * @author simon
  * Static class with collision layer constants
  * layer is a short, so there are 16 layers possible
  * e.g. used for collisions
+ * @author simon
  */
 public class CollisionLayers {
     public static final short MAX_LAYERS = 16;

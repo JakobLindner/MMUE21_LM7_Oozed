@@ -4,9 +4,9 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 
 /**
- * @author simon
  * Utility class to reuse objects, prevent too many instantiations
  * inspired from libgdx object pool (https://github.com/libgdx/libgdx/wiki/Memory-management)
+ * @author simon
  */
 public class ObjectPool<T extends ObjectPool.Poolable> {
 

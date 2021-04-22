@@ -23,8 +23,8 @@ import at.ac.tuwien.mmue_lm7.utils.Utils;
 import at.ac.tuwien.mmue_lm7.utils.Vec2;
 
 /**
- * @author simon
  * batches Draw/render commands to potentially do optimizations and ordering of objects
+ * @author simon
  */
 public class RenderSystem {
 
@@ -129,8 +129,8 @@ public class RenderSystem {
     }
 
     /**
-     * @author simon
      * render command to draw a rectangle
+     * @author simon
      */
     public class DrawRect extends RenderCommand {
         private float left;
@@ -252,8 +252,8 @@ public class RenderSystem {
     }
 
     /**
-     * @author jakob
      * render command to draw a sprite
+     * @author jakob
      */
     public class DrawSprite extends RenderCommand {
 
@@ -339,8 +339,8 @@ public class RenderSystem {
     }
 
     /**
-     * @author simon
      * Render command to draw text
+     * @author simon
      */
     public class DrawText extends RenderCommand {
         private String text = "";
