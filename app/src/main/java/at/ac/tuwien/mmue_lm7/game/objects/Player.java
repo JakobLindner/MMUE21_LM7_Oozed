@@ -163,12 +163,10 @@ public class Player extends AABB {
         //handle inputs
         if (wantJump && state == PlayerState.RUNNING) {
             changeState(PlayerState.JUMPING);
-            wantJump = false;
         }
         if (wantDash && state == PlayerState.RUNNING) {
             dashDuration = PLAYER_DASH_DURATION;
             dashing = true;
-            wantDash = false;
         }
 
         //handle current state
@@ -336,6 +334,9 @@ public class Player extends AABB {
         if (dashing) {
             --dashDuration;
         }
+
+        //reset inputs
+        wantJump = wantDash = false;
 
         //TODO based on state, set hitbox and sprite
     }
