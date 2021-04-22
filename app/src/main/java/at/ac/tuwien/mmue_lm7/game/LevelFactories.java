@@ -6,6 +6,7 @@ import at.ac.tuwien.mmue_lm7.game.objects.AABB;
 import at.ac.tuwien.mmue_lm7.game.objects.GameObject;
 import at.ac.tuwien.mmue_lm7.game.physics.CollisionLayers;
 import at.ac.tuwien.mmue_lm7.game.resources.ResourceSystem;
+import at.ac.tuwien.mmue_lm7.utils.Direction;
 
 /**
  * @author jakob
@@ -36,7 +37,7 @@ public class LevelFactories {
         root.addChild(ObjectFactories.makeText(16, 4, "Tap to Jump!"));
 
         // === OOZE ===
-        root.addChild(ObjectFactories.makeOoze(3, 13, 0, false));
+        root.addChild(ObjectFactories.makeOoze(3, 13, Direction.RIGHT, true));
 
         // === ENEMIES ===
         root.addChild(ObjectFactories.makeBlocker(13, 11, 0, true));
@@ -82,7 +83,7 @@ public class LevelFactories {
 
     public static void createLevel2(GameObject root) {
         // === OOZE ===
-        root.addChild(ObjectFactories.makeOoze(3, 6, 0, false));
+        root.addChild(ObjectFactories.makeOoze(3, 6, Direction.LEFT, false));
     }
 
     public static void loadLevel(GameObject root, int id) {

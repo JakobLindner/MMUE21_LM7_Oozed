@@ -10,7 +10,6 @@ import at.ac.tuwien.mmue_lm7.game.objects.Text;
 import at.ac.tuwien.mmue_lm7.game.physics.CollisionLayers;
 import at.ac.tuwien.mmue_lm7.game.resources.ResourceSystem;
 import at.ac.tuwien.mmue_lm7.utils.Direction;
-import at.ac.tuwien.mmue_lm7.utils.Vec2;
 
 /**
  * @author jakob
@@ -19,11 +18,9 @@ import at.ac.tuwien.mmue_lm7.utils.Vec2;
  */
 public class ObjectFactories {
 
-    public static Player makeOoze(int x, int y, float rot, boolean lookingLeft) {
-        Player ooze = new Player(Direction.RIGHT, !lookingLeft);//TODO horizontally flip this or ooze sprites
+    public static Player makeOoze(int x, int y, Direction direction, boolean runningCW) {
+        Player ooze = new Player(direction, runningCW);//TODO horizontally flip this or ooze sprites
         ooze.position.set(x + 0.5f, y + 0.5f);
-        ooze.rotation = rot;
-        ooze.mirrored = lookingLeft;
 
         AnimatedSprite runningSprite = new AnimatedSprite(ResourceSystem.SpriteEnum.oozeRun);
         runningSprite.position.set(0, 0);
