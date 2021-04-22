@@ -420,6 +420,9 @@ public class PhysicsSystem {
         private AABB box;
         private AABB other;
         private final Vec2 position = new Vec2(0, 0);
+        /**
+         * this i always seen from the surface of box
+         */
         private final Vec2 normal = new Vec2(0, 0);
         private final Vec2 overlap = new Vec2(0, 0);
         private float time = 1;

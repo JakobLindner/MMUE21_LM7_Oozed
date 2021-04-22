@@ -11,6 +11,8 @@ public enum Direction {
     LEFT(new Vec2(-1,0)),
     RIGHT(new Vec2(1,0));
 
+    private static final String TAG = "Direction";
+
     public final Vec2 dir;
 
     public Direction rotateCCW() {
@@ -24,7 +26,7 @@ public enum Direction {
             case RIGHT:
                 return UP;
             default:
-                Log.e("Direction","Unknown Direction in rotateCCW");
+                Log.e(TAG,"Unknown Direction in rotateCCW");
                 return UP;
         }
     }
@@ -40,7 +42,26 @@ public enum Direction {
             case RIGHT:
                 return DOWN;
             default:
-                Log.e("Direction","Unknown Direction in rotateCW");
+                Log.e(TAG,"Unknown Direction in rotateCW");
+                return UP;
+        }
+    }
+
+    /**
+     * @return the opposite direction
+     */
+    public Direction opposite() {
+        switch(this) {
+            case UP:
+                return DOWN;
+            case DOWN:
+                return UP;
+            case LEFT:
+                return RIGHT;
+            case RIGHT:
+                return LEFT;
+            default:
+                Log.e(TAG, "Unknown Direction in opposite()");
                 return UP;
         }
     }

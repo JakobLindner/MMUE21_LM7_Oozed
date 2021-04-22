@@ -287,8 +287,8 @@ public class Player extends AABB{
                     setGlobalPosition(movement.getPosition());//TODO this does not work, see above
 
                     //recalculate direction and up vector
-                    //set up vector to most similar cardinal direction to normal
-                    upDir = Direction.getClosest(contact.getNormal());
+                    //set up vector to most similar inverse cardinal direction to normal
+                    upDir = Direction.getClosest(contact.getNormal()).opposite();
 
                     //dir = most similar direction to move, which is perpendicular to up
                     if(upDir.dir.isCCW(move))
