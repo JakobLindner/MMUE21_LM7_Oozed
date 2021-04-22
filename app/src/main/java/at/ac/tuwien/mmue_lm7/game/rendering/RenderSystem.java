@@ -33,6 +33,8 @@ public class RenderSystem {
     private ObjectPool<DrawText> textCommandPool = new ObjectPool<>(DrawText::new);
     private ArrayList<RenderCommand> batchedCommands = new ArrayList<>(128);//TODO find good initial capacity
 
+    private Paint paint = new Paint();
+
     public DrawRect drawRect() {
         return drawRect(Layers.DEFAULT);
     }
@@ -73,7 +75,9 @@ public class RenderSystem {
      * called once by game
      */
     public void init() {
-
+        paint.setAntiAlias(false);
+        paint.setDither(false);
+        paint.setFilterBitmap(false);
     }
 
     /**
@@ -257,7 +261,6 @@ public class RenderSystem {
         private int xMir = 1;
         private int frame = 0;
         private SpriteInfo spriteInfo = new SpriteInfo();
-        private Paint paint;//TODO make static, if no builder methods can change this?
 
         /**
          * used for performing the command/rendering, allocated once to save allocations
@@ -265,18 +268,15 @@ public class RenderSystem {
         private Rect source = new Rect();
         private Rect dest = new Rect();
 
-        public DrawSprite() {
-            paint = new Paint();
-            paint.setAntiAlias(false);
-            paint.setDither(false);
-            paint.setFilterBitmap(false);
-        }
-
         @Override
         public void reset() {
             super.reset();
 
-            //TODO reset member fields
+            pos.set(0, 0);
+            rot = 0;
+            xMir = 1;
+            frame = 0;
+            spriteInfo = new SpriteInfo();
         }
 
         public DrawSprite at(Vec2 pos) {
@@ -304,8 +304,6 @@ public class RenderSystem {
             this.frame = frame;
             return this;
         }
-
-
 
         @Override
         public void render(Canvas canvas) {
