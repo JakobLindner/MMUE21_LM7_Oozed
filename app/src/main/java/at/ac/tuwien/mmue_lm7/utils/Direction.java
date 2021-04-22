@@ -3,6 +3,7 @@ package at.ac.tuwien.mmue_lm7.utils;
 import android.util.Log;
 
 /**
+ * @author simon
  * Describes cardinal directions
  */
 public enum Direction {

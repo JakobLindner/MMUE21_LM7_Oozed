@@ -3,6 +3,7 @@ package at.ac.tuwien.mmue_lm7.utils;
 import at.ac.tuwien.mmue_lm7.game.GameConstants;
 
 /**
+ * @author simon
  * utility functions that have no other place
  */
 public class Utils {

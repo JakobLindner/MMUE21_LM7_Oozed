@@ -1,5 +1,9 @@
 package at.ac.tuwien.mmue_lm7;
 
+/**
+ * @author simon
+ * Constants, which are irrelevant for the game instance
+ */
 public class Constants {
     /**
      * Timestep of the game in s

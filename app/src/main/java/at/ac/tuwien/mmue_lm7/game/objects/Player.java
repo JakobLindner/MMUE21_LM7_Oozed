@@ -15,6 +15,7 @@ import at.ac.tuwien.mmue_lm7.utils.Utils;
 import at.ac.tuwien.mmue_lm7.utils.Vec2;
 
 /**
+ * @author simon
  * Player object
  * ASSUMPTION: the player never runs faster than its own size in a single frame, otherwise edge turns cannot be performed correctly
  * since every frame two rays are performed down at the front and back of the player to

@@ -7,6 +7,7 @@ import android.graphics.Typeface;
 import at.ac.tuwien.mmue_lm7.game.rendering.RenderSystem;
 
 /**
+ * @author simon
  * Draws a text
  */
 public class Text extends GameObject {

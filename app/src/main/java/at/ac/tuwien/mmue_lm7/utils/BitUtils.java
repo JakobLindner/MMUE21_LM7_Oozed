@@ -1,6 +1,7 @@
 package at.ac.tuwien.mmue_lm7.utils;
 
 /**
+ * @author simon
  * Utility class with static methods for bit operations
  */
 public class BitUtils {

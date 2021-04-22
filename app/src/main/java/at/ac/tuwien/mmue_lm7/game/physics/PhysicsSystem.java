@@ -12,7 +12,9 @@ import at.ac.tuwien.mmue_lm7.utils.Utils;
 import at.ac.tuwien.mmue_lm7.utils.Vec2;
 
 /**
+ * @author simon
  * Manages all Bounding boxes, checks collisions between them
+ * offers methods for collision checks, raycasts and sweeps
  */
 public class PhysicsSystem {
 

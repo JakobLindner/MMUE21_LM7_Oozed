@@ -1,7 +1,8 @@
 package at.ac.tuwien.mmue_lm7.utils;
 
 /**
- * Event listener interface
+ * @author simon
+ * Event listener interface that can be registered at matching Subject classes
  */
 @FunctionalInterface
 public interface Listener<Event> {

@@ -11,6 +11,10 @@ import at.ac.tuwien.mmue_lm7.game.physics.PhysicsSystem;
 import at.ac.tuwien.mmue_lm7.game.rendering.RenderSystem;
 import at.ac.tuwien.mmue_lm7.utils.Vec2;
 
+/**
+ * @author simon
+ * Test object used for testing basic collision
+ */
 public class TestTouchRect extends AABB {
 
     private static final float SPEED = 0.05f;

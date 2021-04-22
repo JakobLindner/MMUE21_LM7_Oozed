@@ -1,6 +1,7 @@
 package at.ac.tuwien.mmue_lm7.game.rendering;
 
 /**
+ * @author simon
  * Static constants for render and gameplay layers
  */
 public class Layers {

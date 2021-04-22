@@ -3,8 +3,9 @@ package at.ac.tuwien.mmue_lm7.utils;
 import java.util.LinkedList;
 
 /**
+ * @author simon
  * Manages an ordered list of listeners that can be notified of events
- * @param <Event>
+ * @param <Event> defines the type of events
  */
 public class Subject<Event> {
     private LinkedList<Listener<Event>> observers = new LinkedList<>();

@@ -99,6 +99,9 @@ public class RenderSystem {
         batchedCommands.clear();
     }
 
+    /**
+     * @author simon
+     */
     public abstract class RenderCommand implements Comparable<RenderCommand>, ObjectPool.Poolable {
         protected short layer = Layers.DEFAULT;
 
@@ -126,6 +129,7 @@ public class RenderSystem {
     }
 
     /**
+     * @author simon
      * render command to draw a rectangle
      */
     public class DrawRect extends RenderCommand {
@@ -335,6 +339,7 @@ public class RenderSystem {
     }
 
     /**
+     * @author simon
      * Render command to draw text
      */
     public class DrawText extends RenderCommand {

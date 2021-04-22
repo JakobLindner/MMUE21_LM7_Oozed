@@ -1,5 +1,8 @@
 package at.ac.tuwien.mmue_lm7.utils;
 
+/**
+ * @author simon
+ */
 public class Parabola {
     /**
      * a component of parabola

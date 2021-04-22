@@ -3,6 +3,7 @@ package at.ac.tuwien.mmue_lm7.game;
 import at.ac.tuwien.mmue_lm7.utils.Vec2;
 
 /**
+ * @author simon
  * Represents a swipe event, has position and direction
  */
 public class SwipeEvent {

@@ -12,7 +12,8 @@ import at.ac.tuwien.mmue_lm7.utils.Subject;
 import at.ac.tuwien.mmue_lm7.utils.Vec2;
 
 /**
- * Bounding box
+ * @author simon
+ * Bounding box, registers itself to the physics system
  */
 public class AABB extends GameObject {
     private static final float DEBUG_RECT_STROKE_WIDTH = 1;

@@ -1,7 +1,8 @@
 package at.ac.tuwien.mmue_lm7.utils;
 
 /**
- * can be used to perform a jump
+ * @author simon
+ * can be used to calculate jump parabolas based on parameters and perform the jump
  */
 public class Jump {
     /**

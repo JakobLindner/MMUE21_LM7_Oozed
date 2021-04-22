@@ -22,6 +22,7 @@ import at.ac.tuwien.mmue_lm7.utils.Subject;
 import at.ac.tuwien.mmue_lm7.utils.Vec2;
 
 /**
+ * @author simon
  * Represents the main game, accessible globally via singleton pattern
  */
 public class Game {
