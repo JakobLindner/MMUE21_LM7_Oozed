@@ -27,14 +27,9 @@ public class LevelFactories {
 
     public static void createLevel1(GameObject root) {
 
-        // TODO remove this
-        // === AABB FOR TESTING ===
-        AABB aabb = new AABB(1,1, (short) 0, CollisionLayers.PLATFORM);
-        aabb.position.set(15,8);
-        root.addChild(aabb);
-
         // === TEXT ===
-        root.addChild(ObjectFactories.makeText(16, 4, "Tap to Jump!"));
+        root.addChild(ObjectFactories.makeText(16, 5, "Tap to Jump!"));
+        root.addChild(ObjectFactories.makeText(16, 3, "Swipe to Dash!"));
 
         // === OOZE ===
         root.addChild(ObjectFactories.makeOoze(3, 13, Direction.LEFT, false));
@@ -53,8 +48,45 @@ public class LevelFactories {
         platform1.addChild(ObjectFactories.makePlatformTile(4, 0, ResourceSystem.SpriteEnum.platformPipe));
         platform1.addChild(ObjectFactories.makePlatformTile(5, 0, 180, false, ResourceSystem.SpriteEnum.platformCircuit));
         platform1.addChild(ObjectFactories.makeBigPlatformTile(4, 1, 0, true, ResourceSystem.SpriteEnum.bigPlatformGears));
-
         root.addChild(platform1);
+
+        // === PLATFORM WRAP 1 ===
+        // wraps with itself
+        GameObject platformWrap1 = ObjectFactories.makePlatform(0, 4);
+        platformWrap1.addChild(ObjectFactories.makePlatformTile(-1, 0, ResourceSystem.SpriteEnum.platformPipe)); // out of screen for wrap
+        platformWrap1.addChild(ObjectFactories.makePlatformTile(0, 0, ResourceSystem.SpriteEnum.platformPipe));
+        platformWrap1.addChild(ObjectFactories.makePlatformTile(1, 0, ResourceSystem.SpriteEnum.platformPipeOpen));
+        platformWrap1.addChild(ObjectFactories.makePlatformTile(2, 0, ResourceSystem.SpriteEnum.platformCircuit));
+        platformWrap1.addChild(ObjectFactories.makePlatformTile(3, 0, ResourceSystem.SpriteEnum.platformIce));
+        platformWrap1.addChild(ObjectFactories.makePlatformTile(4, 0, ResourceSystem.SpriteEnum.platformPipe));
+        platformWrap1.addChild(ObjectFactories.makePlatformTile(5, 0, ResourceSystem.SpriteEnum.platformCircuit));
+
+        platformWrap1.addChild(ObjectFactories.makePlatformTile(29, 0, ResourceSystem.SpriteEnum.platformPipe));
+        platformWrap1.addChild(ObjectFactories.makePlatformTile(30, 0, ResourceSystem.SpriteEnum.platformPipeOpen));
+        platformWrap1.addChild(ObjectFactories.makePlatformTile(31, 0, ResourceSystem.SpriteEnum.platformCircuit));
+        platformWrap1.addChild(ObjectFactories.makePlatformTile(32, 0, ResourceSystem.SpriteEnum.platformCircuit)); // out of screen for wrap
+        root.addChild(platformWrap1);
+
+        // === PLATFORM WRAP 2 Left ===
+        // wraps together with platform 2 right
+        GameObject platformWrap2_left = ObjectFactories.makePlatform(0, 8);
+        platformWrap2_left.addChild(ObjectFactories.makePlatformTile(0, 0, ResourceSystem.SpriteEnum.platformPipe));
+        platformWrap2_left.addChild(ObjectFactories.makePlatformTile(1, 0, ResourceSystem.SpriteEnum.platformPipeOpen));
+        platformWrap2_left.addChild(ObjectFactories.makePlatformTile(2, 0, ResourceSystem.SpriteEnum.platformCircuit));
+        platformWrap2_left.addChild(ObjectFactories.makePlatformTile(3, 0, ResourceSystem.SpriteEnum.platformIce));
+        platformWrap2_left.addChild(ObjectFactories.makePlatformTile(4, 0, ResourceSystem.SpriteEnum.platformPipe));
+        platformWrap2_left.addChild(ObjectFactories.makePlatformTile(5, 0, 180, false, ResourceSystem.SpriteEnum.platformCircuit));
+        root.addChild(platformWrap2_left);
+
+        // === PLATFORM WRAP 2 Right ===
+        GameObject platformWrap2_right = ObjectFactories.makePlatform(32-6, 8);
+        platformWrap2_right.addChild(ObjectFactories.makePlatformTile(0, 0, ResourceSystem.SpriteEnum.platformPipe));
+        platformWrap2_right.addChild(ObjectFactories.makePlatformTile(1, 0, ResourceSystem.SpriteEnum.platformPipeOpen));
+        platformWrap2_right.addChild(ObjectFactories.makePlatformTile(2, 0, ResourceSystem.SpriteEnum.platformCircuit));
+        platformWrap2_right.addChild(ObjectFactories.makePlatformTile(3, 0, ResourceSystem.SpriteEnum.platformIce));
+        platformWrap2_right.addChild(ObjectFactories.makePlatformTile(4, 0, ResourceSystem.SpriteEnum.platformPipe));
+        platformWrap2_right.addChild(ObjectFactories.makePlatformTile(5, 0, 180, false, ResourceSystem.SpriteEnum.platformCircuit));
+        root.addChild(platformWrap2_right);
 
         // === PLATFORM 2 ===
         GameObject platform2 = ObjectFactories.makePlatform(12, 8);
@@ -76,6 +108,55 @@ public class LevelFactories {
         platform3.addChild(ObjectFactories.makePlatformTile(1, 2, ResourceSystem.SpriteEnum.platformPipe));
         root.addChild(platform3);
 
+        // === PLATFORM TEXT ===
+        GameObject platformText = ObjectFactories.makePlatform(16, 1);
+        // Bottom
+        platformText.addChild(ObjectFactories.makePlatformTile(0, 0, ResourceSystem.SpriteEnum.platformCircuit));
+        platformText.addChild(ObjectFactories.makePlatformTile(1, 0, ResourceSystem.SpriteEnum.platformIce));
+        platformText.addChild(ObjectFactories.makePlatformTile(2, 0, ResourceSystem.SpriteEnum.platformPipeOpen));
+        platformText.addChild(ObjectFactories.makePlatformTile(3, 0, ResourceSystem.SpriteEnum.platformPipe));
+        platformText.addChild(ObjectFactories.makePlatformTile(4, 0, ResourceSystem.SpriteEnum.platformCircuit));
+        platformText.addChild(ObjectFactories.makePlatformTile(5, 0, ResourceSystem.SpriteEnum.platformIce));
+        platformText.addChild(ObjectFactories.makePlatformTile(6, 0, ResourceSystem.SpriteEnum.platformPipeOpen));
+        platformText.addChild(ObjectFactories.makePlatformTile(7, 0, ResourceSystem.SpriteEnum.platformPipe));
+        platformText.addChild(ObjectFactories.makePlatformTile(-8, 0, ResourceSystem.SpriteEnum.platformCircuit));
+        platformText.addChild(ObjectFactories.makePlatformTile(-1, 0, ResourceSystem.SpriteEnum.platformIce));
+        platformText.addChild(ObjectFactories.makePlatformTile(-2, 0, ResourceSystem.SpriteEnum.platformPipeOpen));
+        platformText.addChild(ObjectFactories.makePlatformTile(-3, 0, ResourceSystem.SpriteEnum.platformPipe));
+        platformText.addChild(ObjectFactories.makePlatformTile(-4, 0, ResourceSystem.SpriteEnum.platformCircuit));
+        platformText.addChild(ObjectFactories.makePlatformTile(-5, 0, ResourceSystem.SpriteEnum.platformIce));
+        platformText.addChild(ObjectFactories.makePlatformTile(-6, 0, ResourceSystem.SpriteEnum.platformPipeOpen));
+        platformText.addChild(ObjectFactories.makePlatformTile(-7, 0, ResourceSystem.SpriteEnum.platformPipe));
+        // Top
+        platformText.addChild(ObjectFactories.makePlatformTile(0, 6, ResourceSystem.SpriteEnum.platformCircuit));
+        platformText.addChild(ObjectFactories.makePlatformTile(1, 6, ResourceSystem.SpriteEnum.platformIce));
+        platformText.addChild(ObjectFactories.makePlatformTile(2, 6, ResourceSystem.SpriteEnum.platformPipeOpen));
+        platformText.addChild(ObjectFactories.makePlatformTile(3, 6, ResourceSystem.SpriteEnum.platformPipe));
+        platformText.addChild(ObjectFactories.makePlatformTile(4, 6, ResourceSystem.SpriteEnum.platformCircuit));
+        platformText.addChild(ObjectFactories.makePlatformTile(5, 6, ResourceSystem.SpriteEnum.platformIce));
+        platformText.addChild(ObjectFactories.makePlatformTile(6, 6, ResourceSystem.SpriteEnum.platformPipeOpen));
+        platformText.addChild(ObjectFactories.makePlatformTile(7, 6, ResourceSystem.SpriteEnum.platformPipe));
+        platformText.addChild(ObjectFactories.makePlatformTile(-8, 6, ResourceSystem.SpriteEnum.platformCircuit));
+        platformText.addChild(ObjectFactories.makePlatformTile(-1, 6, ResourceSystem.SpriteEnum.platformIce));
+        platformText.addChild(ObjectFactories.makePlatformTile(-2, 6, ResourceSystem.SpriteEnum.platformPipeOpen));
+        platformText.addChild(ObjectFactories.makePlatformTile(-3, 6, ResourceSystem.SpriteEnum.platformPipe));
+        platformText.addChild(ObjectFactories.makePlatformTile(-4, 6, ResourceSystem.SpriteEnum.platformCircuit));
+        platformText.addChild(ObjectFactories.makePlatformTile(-5, 6, ResourceSystem.SpriteEnum.platformIce));
+        platformText.addChild(ObjectFactories.makePlatformTile(-6, 6, ResourceSystem.SpriteEnum.platformPipeOpen));
+        platformText.addChild(ObjectFactories.makePlatformTile(-7, 6, ResourceSystem.SpriteEnum.platformPipe));
+        // Left
+        platformText.addChild(ObjectFactories.makePlatformTile(-8, 5, ResourceSystem.SpriteEnum.platformCircuit));
+        platformText.addChild(ObjectFactories.makePlatformTile(-8, 4, ResourceSystem.SpriteEnum.platformIce));
+        platformText.addChild(ObjectFactories.makePlatformTile(-8, 3, ResourceSystem.SpriteEnum.platformPipeOpen));
+        platformText.addChild(ObjectFactories.makePlatformTile(-8, 2, ResourceSystem.SpriteEnum.platformPipe));
+        platformText.addChild(ObjectFactories.makePlatformTile(-8, 1, ResourceSystem.SpriteEnum.platformPipe));
+        // Right
+        platformText.addChild(ObjectFactories.makePlatformTile(7, 5, ResourceSystem.SpriteEnum.platformCircuit));
+        platformText.addChild(ObjectFactories.makePlatformTile(7, 4, ResourceSystem.SpriteEnum.platformIce));
+        platformText.addChild(ObjectFactories.makePlatformTile(7, 3, ResourceSystem.SpriteEnum.platformPipeOpen));
+        platformText.addChild(ObjectFactories.makePlatformTile(7, 2, ResourceSystem.SpriteEnum.platformPipe));
+        platformText.addChild(ObjectFactories.makePlatformTile(7, 1, ResourceSystem.SpriteEnum.platformPipe));
+        root.addChild(platformText);
 
         // === BACKGROUND ===
         root.addChild(ObjectFactories.makeBackground());

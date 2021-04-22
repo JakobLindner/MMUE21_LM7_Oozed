@@ -94,6 +94,9 @@ public class ObjectFactories {
         return sprite;
     }
 
+    /**
+     * @param x center of text! not left bound
+     */
     public static GameObject makeText(int x, int y, String text) {
         Text t = new Text(text);
         t.position.set(x, y);
