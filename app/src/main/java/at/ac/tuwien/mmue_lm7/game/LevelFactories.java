@@ -37,7 +37,7 @@ public class LevelFactories {
         root.addChild(ObjectFactories.makeText(16, 4, "Tap to Jump!"));
 
         // === OOZE ===
-        root.addChild(ObjectFactories.makeOoze(3, 13, Direction.RIGHT, true));
+        root.addChild(ObjectFactories.makeOoze(3, 13, Direction.LEFT, false));
 
         // === ENEMIES ===
         root.addChild(ObjectFactories.makeBlocker(13, 11, 0, true));

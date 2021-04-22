@@ -84,7 +84,7 @@ public class Jump {
 
     public void setJumpByGravityAndHeight(float gravity, float jumpHeight) {
         parabola.c = 0;
-        parabola.b = (float) Math.sqrt(gravity*jumpHeight/2.0f);
+        parabola.b = (float) Math.sqrt(-gravity*jumpHeight*2);
         parabola.a = gravity*0.5f;
 
         recalculatePosition();
@@ -103,7 +103,7 @@ public class Jump {
 
         negatedX = Utils.signum(dir.dir.x+dir.dir.y);
         negatedY = Utils.signum(up.dir.x+up.dir.y);
-        mirrored = up.dir.isCCW(dir.dir);
+        mirrored = up.isHorizontal();
 
         recalculatePosition();
     }

@@ -28,7 +28,7 @@ public class Player extends AABB {
     /**
      * per frame
      */
-    public static final float PLAYER_SPEED = 0.05f;
+    public static final float PLAYER_SPEED = 0.075f;
     public static final float PLAYER_DASH_SPEED = 0.2f;
     /**
      * in frames
@@ -44,7 +44,7 @@ public class Player extends AABB {
     /**
      * Jump height for
      */
-    public static final float JUMP_HEIGHT = 4;
+    public static final float JUMP_HEIGHT = 2;
     //assuming platforms are at least 1 in width & height
     public static final float RUNNING_RAY_CAST_LENGTH = 1;
     /**
