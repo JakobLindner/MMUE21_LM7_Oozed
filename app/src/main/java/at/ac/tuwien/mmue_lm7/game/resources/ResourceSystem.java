@@ -24,7 +24,12 @@ public class ResourceSystem {
     private HashMap<Integer, Bitmap> bitmaps = null;
     private static HashMap<SpriteEnum, SpriteInfo> spriteInfos = new HashMap<>();
 
-    public ResourceSystem (Context context) {
+    /**
+     * true if resources are loaded
+     */
+    private boolean isLoaded = false;
+
+    public ResourceSystem(Context context) {
         this.context = context;
 
         // disable scaling for crispy pixel art
@@ -37,17 +42,29 @@ public class ResourceSystem {
      * loads all resources and stores them for faster access
      */
     public void loadResources() {
+        //do nothing if already loaded
+        if (isLoaded)
+            return;
+        
         bitmaps = new HashMap<>();
         bitmaps.put(R.drawable.ooze, BitmapFactory.decodeResource(context.getResources(), R.drawable.ooze, options));
         bitmaps.put(R.drawable.blocker, BitmapFactory.decodeResource(context.getResources(), R.drawable.blocker, options));
         bitmaps.put(R.drawable.platforms, BitmapFactory.decodeResource(context.getResources(), R.drawable.platforms, options));
         bitmaps.put(R.drawable.background, BitmapFactory.decodeResource(context.getResources(), R.drawable.background, options));
+
+        isLoaded = true;
     }
 
     public void releaseResources() {
+        //do nothing if resources are not loaded
+        if (!isLoaded)
+            return;
+
         for (int key : bitmaps.keySet()) {
             bitmaps.get(key).recycle();
         }
+
+        isLoaded = false;
     }
 
     /**
