@@ -15,12 +15,13 @@ import at.ac.tuwien.mmue_lm7.utils.Vec2;
 /**
  * @author jakob
  * creates all game objects for easy instanciation from the LevelFactories
+ * all x and y parameters are the lower left corner of the object
  */
 public class ObjectFactories {
 
     public static Player makeOoze(int x, int y, float rot, boolean lookingLeft) {
         Player ooze = new Player(Direction.RIGHT, !lookingLeft);//TODO horizontally flip this or ooze sprites
-        ooze.position.set(x, y);
+        ooze.position.set(x + 0.5f, y + 0.5f);
         ooze.rotation = rot;
         ooze.mirrored = lookingLeft;
 
@@ -35,7 +36,7 @@ public class ObjectFactories {
 
     public static GameObject makeBlocker(int x, int y, float rot, boolean lookingRight) {
         GameObject blocker = new GameObject();
-        blocker.position.set(x, y);
+        blocker.position.set(x + 0.5f, y + 0.5f);
         blocker.rotation = rot;
         blocker.mirrored = lookingRight;
 
@@ -60,7 +61,7 @@ public class ObjectFactories {
 
     public static GameObject makePlatformTile(int x, int y, float rot, boolean mir, ResourceSystem.SpriteEnum sprite) {
         GameObject tile = new GameObject();
-        tile.position.set(x, y);
+        tile.position.set(x + 0.5f, y + 0.5f);
         tile.rotation = rot;
         tile.mirrored = mir;
 
@@ -78,7 +79,7 @@ public class ObjectFactories {
 
     public static GameObject makeBigPlatformTile(int x, int y, float rot, boolean mir, ResourceSystem.SpriteEnum sprite) {
         GameObject tile = new GameObject();
-        tile.position.set(x + 0.5f, y + 0.5f);
+        tile.position.set(x + 1.0f, y + 1.0f);
         tile.rotation = rot;
         tile.mirrored = mir;
 
@@ -90,9 +91,9 @@ public class ObjectFactories {
         return tile;
     }
 
-    public static GameObject makeBackground(int x, int y) {
+    public static GameObject makeBackground() {
         Sprite sprite = new Sprite(ResourceSystem.SpriteEnum.background);
-        sprite.position.set(x, y);
+        sprite.position.set(16, 9);
         return sprite;
     }
 

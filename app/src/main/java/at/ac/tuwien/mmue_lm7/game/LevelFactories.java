@@ -36,24 +36,47 @@ public class LevelFactories {
         root.addChild(ObjectFactories.makeText(16, 4, "Tap to Jump!"));
 
         // === OOZE ===
-        root.addChild(ObjectFactories.makeOoze(3, 8, 0, false));
+        root.addChild(ObjectFactories.makeOoze(3, 13, 0, false));
 
         // === ENEMIES ===
-        root.addChild(ObjectFactories.makeBlocker(7, 8, 0, false));
+        root.addChild(ObjectFactories.makeBlocker(13, 11, 0, true));
+        root.addChild(ObjectFactories.makeBlocker(22, 10, 180, false));
+        root.addChild(ObjectFactories.makeBlocker(23, 14, 0, false));
 
         // === PLATFORM 1 ===
-        GameObject platform1 = ObjectFactories.makePlatform(3, 7);
+        GameObject platform1 = ObjectFactories.makePlatform(3, 12);
         platform1.addChild(ObjectFactories.makePlatformTile(0, 0, ResourceSystem.SpriteEnum.platformPipe));
         platform1.addChild(ObjectFactories.makePlatformTile(1, 0, ResourceSystem.SpriteEnum.platformPipeOpen));
         platform1.addChild(ObjectFactories.makePlatformTile(2, 0, ResourceSystem.SpriteEnum.platformCircuit));
         platform1.addChild(ObjectFactories.makePlatformTile(3, 0, ResourceSystem.SpriteEnum.platformIce));
         platform1.addChild(ObjectFactories.makePlatformTile(4, 0, ResourceSystem.SpriteEnum.platformPipe));
         platform1.addChild(ObjectFactories.makePlatformTile(5, 0, 180, false, ResourceSystem.SpriteEnum.platformCircuit));
-        //platform1.addChild(ObjectFactories.makeBigPlatformTile(6, -1, ResourceSystem.SpriteEnum.bigPlatformGears));
+
         root.addChild(platform1);
 
+        // === PLATFORM 2 ===
+        GameObject platform2 = ObjectFactories.makePlatform(12, 8);
+        platform2.addChild(ObjectFactories.makeBigPlatformTile(0, 0, ResourceSystem.SpriteEnum.bigPlatformGears));
+        platform2.addChild(ObjectFactories.makePlatformTile(2, 0, ResourceSystem.SpriteEnum.platformCircuit));
+        platform2.addChild(ObjectFactories.makePlatformTile(3, 0, ResourceSystem.SpriteEnum.platformIce));
+        platform2.addChild(ObjectFactories.makeBigPlatformTile(2, 1, ResourceSystem.SpriteEnum.bigPlatformGears));
+        platform2.addChild(ObjectFactories.makePlatformTile(0, 2, ResourceSystem.SpriteEnum.platformPipeOpen));
+        platform2.addChild(ObjectFactories.makePlatformTile(1, 2, ResourceSystem.SpriteEnum.platformPipe));
+        root.addChild(platform2);
+
+        // === PLATFORM 3 ===
+        GameObject platform3 = ObjectFactories.makePlatform(20, 11);
+        platform3.addChild(ObjectFactories.makeBigPlatformTile(0, 0, ResourceSystem.SpriteEnum.bigPlatformGears));
+        platform3.addChild(ObjectFactories.makePlatformTile(2, 0, ResourceSystem.SpriteEnum.platformCircuit));
+        platform3.addChild(ObjectFactories.makePlatformTile(3, 0, ResourceSystem.SpriteEnum.platformIce));
+        platform3.addChild(ObjectFactories.makeBigPlatformTile(2, 1, ResourceSystem.SpriteEnum.bigPlatformGears));
+        platform3.addChild(ObjectFactories.makePlatformTile(0, 2, ResourceSystem.SpriteEnum.platformPipeOpen));
+        platform3.addChild(ObjectFactories.makePlatformTile(1, 2, ResourceSystem.SpriteEnum.platformPipe));
+        root.addChild(platform3);
+
+
         // === BACKGROUND ===
-        root.addChild(ObjectFactories.makeBackground(16, 9));
+        root.addChild(ObjectFactories.makeBackground());
     }
 
     public static void createLevel2(GameObject root) {
