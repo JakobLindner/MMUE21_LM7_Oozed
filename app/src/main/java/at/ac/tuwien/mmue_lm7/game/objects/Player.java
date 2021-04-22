@@ -274,16 +274,16 @@ public class Player extends AABB {
 
                 //perform sweep
                 PhysicsSystem.Sweep movement = Game.get().getPhysicsSystem().move(this, move, PLAYER_MOVEMENT_MASK);
+                //updatePosition
+                setGlobalPosition(movement.getPosition());
 
                 //check if there was a collision
                 if (movement.getContact() != null) {
                     PhysicsSystem.Contact contact = movement.getContact();
-                    //resolve collision
-                    setGlobalPosition(movement.getPosition());//TODO this does not work, see above
 
                     //recalculate direction and up vector
                     //set up vector to most similar inverse cardinal direction to normal
-                    upDir = Direction.getClosest(contact.getNormal()).opposite();
+                    upDir = Direction.getClosest(contact.getNormal());
 
                     //dir = most similar direction to move, which is perpendicular to up
                     if (upDir.dir.isCCW(move))
@@ -345,7 +345,7 @@ public class Player extends AABB {
     private boolean onCollide(PhysicsSystem.Contact contact) {
         if (contact.getOther().getCollisionLayer() == CollisionLayers.PLATFORM) {
             //resolve collision
-            position.add(Game.get().tmpVec().set(contact.getNormal()).inv().scl(Utils.EPSILON));
+            position.add(Game.get().tmpVec().set(contact.getNormal()).scl(Utils.EPSILON));
         }
         return false;
     }

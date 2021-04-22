@@ -157,7 +157,7 @@ public class PhysicsSystem {
             return null;
 
         //check if vertical distance between midpoints is smaller than sum of half heights
-        float dy = Math.abs(globalA.y - globalB.y);
+        float dy = globalA.y - globalB.y;
         float py = a.getHalfSize().y + b.getHalfSize().y - Math.abs(dy);
         if (py <= 0)
             return null;
@@ -165,6 +165,8 @@ public class PhysicsSystem {
         //generate contact information
         //contact is assumed to be in reset state
         Contact contact = contactPool.obtain();
+        contact.box = a;
+        contact.other = b;
         //check which axis has the least overlap
         if (px < py) {
             int sx = (int) Math.signum(dx);
@@ -396,6 +398,7 @@ public class PhysicsSystem {
         //blow up other box by size of aabb and perform a raycast
         sweep.contact = raycast(aabbPos, move, other, aabb.getHalfSize().x, aabb.getHalfSize().y);
         if (sweep.contact != null) {
+            sweep.contact.box = aabb;
             sweep.time = Utils.clamp(sweep.contact.time - Utils.EPSILON, 0, 1);
             sweep.position.set(move).scl(sweep.time).add(aabbPos);
             //TODO pool vector
@@ -421,7 +424,7 @@ public class PhysicsSystem {
         private AABB other;
         private final Vec2 position = new Vec2(0, 0);
         /**
-         * this i always seen from the surface of box
+         * this i always seen from the surface of other
          */
         private final Vec2 normal = new Vec2(0, 0);
         private final Vec2 overlap = new Vec2(0, 0);

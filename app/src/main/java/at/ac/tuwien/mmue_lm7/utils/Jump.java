@@ -103,7 +103,7 @@ public class Jump {
 
         negatedX = Utils.signum(dir.dir.x+dir.dir.y);
         negatedY = Utils.signum(up.dir.x+up.dir.y);
-        mirrored = dir.dir.isCCW(up.dir);
+        mirrored = up.dir.isCCW(dir.dir);
 
         recalculatePosition();
     }
