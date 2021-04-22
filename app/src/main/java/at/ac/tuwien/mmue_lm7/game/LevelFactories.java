@@ -32,7 +32,7 @@ public class LevelFactories {
         root.addChild(ObjectFactories.makeText(16, 3, "Swipe to Dash!"));
 
         // === OOZE ===
-        root.addChild(ObjectFactories.makeOoze(3, 5, Direction.RIGHT, true));
+        root.addChild(ObjectFactories.makeOoze(3, 3, Direction.LEFT, true));
 
         // === ENEMIES ===
         root.addChild(ObjectFactories.makeBlocker(13, 11, 0, true));
@@ -53,7 +53,6 @@ public class LevelFactories {
         // === PLATFORM WRAP 1 ===
         // wraps with itself
         GameObject platformWrap1 = ObjectFactories.makePlatform(0, 4);
-        platformWrap1.addChild(ObjectFactories.makePlatformTile(-2, 0, ResourceSystem.SpriteEnum.platformPipe)); // out of screen for wrap
         platformWrap1.addChild(ObjectFactories.makePlatformTile(-1, 0, ResourceSystem.SpriteEnum.platformPipe)); // out of screen for wrap
         platformWrap1.addChild(ObjectFactories.makePlatformTile(0, 0, ResourceSystem.SpriteEnum.platformPipe));
         platformWrap1.addChild(ObjectFactories.makePlatformTile(1, 0, ResourceSystem.SpriteEnum.platformPipeOpen));
@@ -66,7 +65,6 @@ public class LevelFactories {
         platformWrap1.addChild(ObjectFactories.makePlatformTile(30, 0, ResourceSystem.SpriteEnum.platformPipeOpen));
         platformWrap1.addChild(ObjectFactories.makePlatformTile(31, 0, ResourceSystem.SpriteEnum.platformCircuit));
         platformWrap1.addChild(ObjectFactories.makePlatformTile(32, 0, ResourceSystem.SpriteEnum.platformCircuit)); // out of screen for wrap
-        platformWrap1.addChild(ObjectFactories.makePlatformTile(33, 0, ResourceSystem.SpriteEnum.platformCircuit)); // out of screen for wrap
         root.addChild(platformWrap1);
 
         // === PLATFORM WRAP 2 Left ===

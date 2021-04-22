@@ -10,7 +10,7 @@ import at.ac.tuwien.mmue_lm7.utils.Vec2;
  * These entities are teleported to the other side of the screen when they exit the screen
  */
 public class WraparoundSystem {
-    private final static float PADDING = 1;
+    private final static float PADDING = 0.5f;
 
     private final ArrayList<GameObject> wrappables = new ArrayList<>(16);
 
