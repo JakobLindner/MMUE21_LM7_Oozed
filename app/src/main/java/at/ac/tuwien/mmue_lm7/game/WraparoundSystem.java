@@ -31,14 +31,16 @@ public class WraparoundSystem {
         boolean wrapY = pos.y < MIN.y || pos.y > MAX.y;
 
         if (wrapX) {
-            pos.x = ((pos.x + PADDING) % WRAP_SCREEN_SIZE.x) - PADDING;
+            pos.x = (pos.x + PADDING) % WRAP_SCREEN_SIZE.x;
             if(pos.x<0)
                 pos.x+=WRAP_SCREEN_SIZE.x;
+            pos.x-=PADDING;
         }
         if (wrapY) {
-            pos.y = ((pos.y + PADDING) % WRAP_SCREEN_SIZE.y) - PADDING;
+            pos.y = (pos.y + PADDING) % WRAP_SCREEN_SIZE.y;
             if(pos.y<=0)
                 pos.y+=WRAP_SCREEN_SIZE.y;
+            pos.y-=PADDING;
         }
 
         return wrapX || wrapY;
