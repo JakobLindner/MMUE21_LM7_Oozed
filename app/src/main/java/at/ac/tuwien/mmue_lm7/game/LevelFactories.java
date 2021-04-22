@@ -70,6 +70,7 @@ public class LevelFactories {
         // === PLATFORM WRAP 2 Left ===
         // wraps together with platform 2 right
         GameObject platformWrap2_left = ObjectFactories.makePlatform(0, 8);
+        platformWrap2_left.addChild(ObjectFactories.makePlatformTile(-1, 0, ResourceSystem.SpriteEnum.platformPipe));
         platformWrap2_left.addChild(ObjectFactories.makePlatformTile(0, 0, ResourceSystem.SpriteEnum.platformPipe));
         platformWrap2_left.addChild(ObjectFactories.makePlatformTile(1, 0, ResourceSystem.SpriteEnum.platformPipeOpen));
         platformWrap2_left.addChild(ObjectFactories.makePlatformTile(2, 0, ResourceSystem.SpriteEnum.platformCircuit));
@@ -86,6 +87,7 @@ public class LevelFactories {
         platformWrap2_right.addChild(ObjectFactories.makePlatformTile(3, 0, ResourceSystem.SpriteEnum.platformIce));
         platformWrap2_right.addChild(ObjectFactories.makePlatformTile(4, 0, ResourceSystem.SpriteEnum.platformPipe));
         platformWrap2_right.addChild(ObjectFactories.makePlatformTile(5, 0, 180, false, ResourceSystem.SpriteEnum.platformCircuit));
+        platformWrap2_right.addChild(ObjectFactories.makePlatformTile(6, 0, ResourceSystem.SpriteEnum.platformPipe));
         root.addChild(platformWrap2_right);
 
         // === PLATFORM 2 ===
