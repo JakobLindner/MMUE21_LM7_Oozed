@@ -36,9 +36,10 @@ public class Game {
      */
     private GameObject root = new GameObject();
 
-    private RenderSystem renderSystem = new RenderSystem();
-    private PhysicsSystem physicsSystem = new PhysicsSystem();
-    private ResourceSystem resourceSystem;
+    private final RenderSystem renderSystem = new RenderSystem();
+    private final PhysicsSystem physicsSystem = new PhysicsSystem();
+    private final ResourceSystem resourceSystem;
+    private final WraparoundSystem wraparoundSystem = new WraparoundSystem();
 
     /**
      * if true, debugRender is called on all objects
@@ -127,6 +128,9 @@ public class Game {
         physicsSystem.update();
         //update game world: players, entities, ...
         root.updateChildren();
+
+        //perform screen wrapping
+        wraparoundSystem.update();
         //check loose win condition(s),
         //are there still enemies left
         //does the player have lives left?
@@ -189,6 +193,10 @@ public class Game {
 
     public ResourceSystem getResourceSystem() {
         return resourceSystem;
+    }
+
+    public WraparoundSystem getWraparoundSystem() {
+        return wraparoundSystem;
     }
 
     /**

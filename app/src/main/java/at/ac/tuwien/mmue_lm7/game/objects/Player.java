@@ -5,6 +5,7 @@ import android.util.Log;
 import at.ac.tuwien.mmue_lm7.game.Game;
 import at.ac.tuwien.mmue_lm7.game.SwipeEvent;
 import at.ac.tuwien.mmue_lm7.game.TapEvent;
+import at.ac.tuwien.mmue_lm7.game.WraparoundSystem;
 import at.ac.tuwien.mmue_lm7.game.physics.CollisionLayers;
 import at.ac.tuwien.mmue_lm7.game.physics.PhysicsSystem;
 import at.ac.tuwien.mmue_lm7.utils.Direction;
@@ -128,13 +129,15 @@ public class Player extends AABB {
             this.upDir = this.dir.rotateCW();
 
         updateOrientation();
+
+        setWrappable(true);
     }
 
     @Override
     public void init() {
         super.init();
 
-        //register to events
+        //register to events and systems
         onCollide.addListener(this::onCollide);
         Game.get().onTap.addListener(this::onTap);
         Game.get().onSwipe.addListener(this::onSwipe);
@@ -149,7 +152,7 @@ public class Player extends AABB {
     protected void onDestroy() {
         super.onDestroy();
 
-        //deregister from events
+        //deregister from events and systems
         onCollide.removeListener(this::onCollide);
         Game.get().onTap.removeListener(this::onTap);
         Game.get().onSwipe.removeListener(this::onSwipe);
@@ -336,6 +339,15 @@ public class Player extends AABB {
         }
 
         //TODO based on state, set hitbox and sprite
+    }
+
+    @Override
+    public void onWrap(Vec2 translation) {
+        super.onWrap(translation);
+
+        //wrap jump parabola start positions
+        jump.translateStartingPosition(translation);
+        dashJump.translateStartingPosition(translation);
     }
 
     ///////////////////////////////////////////////////////////////////////////

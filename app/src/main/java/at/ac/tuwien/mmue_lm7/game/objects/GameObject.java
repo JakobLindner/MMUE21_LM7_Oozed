@@ -2,6 +2,8 @@ package at.ac.tuwien.mmue_lm7.game.objects;
 
 import android.graphics.Canvas;
 
+import androidx.annotation.CallSuper;
+
 import at.ac.tuwien.mmue_lm7.game.Game;
 import at.ac.tuwien.mmue_lm7.game.rendering.RenderSystem;
 import at.ac.tuwien.mmue_lm7.utils.Vec2;
@@ -34,6 +36,11 @@ public class GameObject {
      */
     private boolean initialized = false;
 
+    /**
+     * If this is set to true then this gameobject is registered at the wraparoundsystem
+     */
+    private boolean wrappable = false;
+
 
     //##################################
     //###   METHODS FOR OVERWRITING  ###
@@ -42,9 +49,14 @@ public class GameObject {
     /**
      * Called when first added to scene tree, can be overwritten by subclasses
      * can be used to set up game object, register callback functions, ...
-     * super.init() does not need to be called
+     * super.init() should be called
      */
+    @CallSuper
     public void init() {
+        if(!initialized && wrappable) {
+            Game.get().getWraparoundSystem().registerWrappable(this);
+        }
+
         //used for root game object
         initialized = true;
     }
@@ -70,9 +82,22 @@ public class GameObject {
     }
 
     /**
-     * called by the destroy method when
+     * called by the destroy method
+     * super.onDestroy() should be called
      */
+    @CallSuper
     protected void onDestroy() {
+        if(wrappable) {
+            Game.get().getWraparoundSystem().removeWrappable(this);
+        }
+    }
+
+    /**
+     * called by the wraparound system whenever this go has been wrapped around screen
+     */
+    @CallSuper
+    public void onWrap(Vec2 translation) {
+
     }
 
     //###############################
@@ -96,7 +121,6 @@ public class GameObject {
     private void initChildren() {
         for (GameObject child = firstChild; child != null; child = child.nextSibling) {
             if (!child.initialized) {
-                child.initialized = true;
                 child.init();
                 child.initChildren();
             }
@@ -152,7 +176,6 @@ public class GameObject {
     public final GameObject addChild(GameObject child) {
         //initialize child, if this game object is already part of the scene tree
         if (initialized && !child.initialized) {
-            child.initialized = true;
             child.init();
             child.initChildren();
         }
@@ -267,6 +290,21 @@ public class GameObject {
         }
 
         return global;
+    }
+
+    /**
+     * Changes whether or not the game object should wrap around screen
+     * @param wrappable
+     */
+    public void setWrappable(boolean wrappable) {
+        if(initialized) {
+            if(!this.wrappable && wrappable)
+                Game.get().getWraparoundSystem().registerWrappable(this);
+            if(this.wrappable && !wrappable)
+                Game.get().getWraparoundSystem().removeWrappable(this);
+        }
+
+        this.wrappable = wrappable;
     }
 
 

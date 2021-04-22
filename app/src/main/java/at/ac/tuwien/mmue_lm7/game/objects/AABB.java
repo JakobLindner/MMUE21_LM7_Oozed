@@ -77,11 +77,13 @@ public class AABB extends GameObject {
 
     @Override
     public void init() {
+        super.init();
         Game.get().getPhysicsSystem().addAABB(this);
     }
 
     @Override
     protected void onDestroy() {
+        super.onDestroy();
         Game.get().getPhysicsSystem().removeAABB(this);
     }
 

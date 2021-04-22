@@ -136,6 +136,15 @@ public class Jump {
         return parabola.a*2;
     }
 
+    /**
+     * Adds given vector to starting position
+     * @param translation !=null
+     */
+    public void translateStartingPosition(Vec2 translation) {
+        this.startPos.add(translation);
+        recalculatePosition();
+    }
+
     private void recalculatePosition() {
         //calculate parabola pos
         float x = parPos*negatedX;
