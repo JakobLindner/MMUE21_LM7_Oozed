@@ -1,6 +1,7 @@
 package at.ac.tuwien.mmue_lm7.game.objects;
 
 import android.util.Log;
+import android.view.KeyEvent;
 
 import at.ac.tuwien.mmue_lm7.game.Game;
 import at.ac.tuwien.mmue_lm7.game.SwipeEvent;
@@ -56,6 +57,10 @@ public class Player extends AABB {
      * Outer turn animation duration is measured in distance, so the turn is automatically performed faster when dashing
      */
     public static final float OUTER_TURN_DIST = 0.25f;
+
+    //input
+    public static final int JUMP_KEY = KeyEvent.KEYCODE_W;
+    public static final int DASH_KEY = KeyEvent.KEYCODE_D;
 
     public enum PlayerState {
         RUNNING,
@@ -141,6 +146,7 @@ public class Player extends AABB {
         onCollide.addListener(this::onCollide);
         Game.get().onTap.addListener(this::onTap);
         Game.get().onSwipe.addListener(this::onSwipe);
+        Game.get().onKeyDown.addListener(this::onKeyDown);
 
         //initialize jumps
         jump.setJump(NORMAL_JUMP_DISTANCE, JUMP_HEIGHT);
@@ -155,6 +161,7 @@ public class Player extends AABB {
         onCollide.removeListener(this::onCollide);
         Game.get().onTap.removeListener(this::onTap);
         Game.get().onSwipe.removeListener(this::onSwipe);
+        Game.get().onKeyDown.removeListener(this::onKeyDown);
     }
 
     @Override
@@ -369,6 +376,14 @@ public class Player extends AABB {
 
     private boolean onSwipe(SwipeEvent swipe) {
         dash();
+        return false;
+    }
+
+    private boolean onKeyDown(KeyEvent event) {
+        if(event.getKeyCode()==JUMP_KEY)
+            wantJump = true;
+        if(event.getKeyCode()==DASH_KEY)
+            wantDash = true;
         return false;
     }
 

@@ -3,6 +3,7 @@ package at.ac.tuwien.mmue_lm7.game;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.util.Log;
+import android.view.KeyEvent;
 
 import java.util.ArrayList;
 
@@ -21,10 +22,11 @@ import at.ac.tuwien.mmue_lm7.utils.Subject;
 import at.ac.tuwien.mmue_lm7.utils.Vec2;
 
 /**
- * Represents the main game
+ * Represents the main game, accessible globally via singleton pattern
  */
 public class Game {
     private static final String TAG = "Game";
+    private static final int DEBUG_TOGGLE_KEY = KeyEvent.KEYCODE_0;
 
     private static Game singleton = null;
     public static Game get() {
@@ -53,6 +55,8 @@ public class Game {
     ///////////////////////////////////////////////////////////////////////////
     public final Subject<TapEvent> onTap = new Subject<>();
     public final Subject<SwipeEvent> onSwipe = new Subject<>();
+    public final Subject<KeyEvent> onKeyDown = new Subject<>();
+    public final Subject<KeyEvent> onKeyUp = new Subject<>();
 
     ///////////////////////////////////////////////////////////////////////////
     // POOLS
@@ -174,6 +178,25 @@ public class Game {
     public void swipe(Vec2 position, Vec2 direction) {
         Log.d(TAG, String.format("Swipe starting at: %s, Direction: %s",position.toString(),direction.toString()));
         onSwipe.notify(new SwipeEvent(position,direction));
+    }
+
+    /**
+     * Called by GameSurfaceView whenever a key has been pressed
+     */
+    public void keyDown(KeyEvent event) {
+        Log.d(TAG, String.format("Key Down: %s",KeyEvent.keyCodeToString(event.getKeyCode())));
+        onKeyDown.notify(event);
+
+        if(event.getKeyCode()==DEBUG_TOGGLE_KEY)
+            toggleDebugRender();
+    }
+
+    /**
+     * Called by GameSurfaceView whenever a key has been pressed
+     */
+    public void keyUp(KeyEvent event) {
+        Log.d(TAG, String.format("Key Up: %s",KeyEvent.keyCodeToString(event.getKeyCode())));
+        onKeyUp.notify(event);
     }
 
     /**
