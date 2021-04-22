@@ -34,7 +34,7 @@ public class Sprite extends GameObject {
         render.drawSprite()
                 .at(getGlobalPosition())
                 .rotated(getGlobalRotation())
-                .mirrored(mirrored) // TODO global
+                .mirrored(getGlobalMirroring())
                 .spriteInfo(spriteInfo)
                 .frame(0);
     }

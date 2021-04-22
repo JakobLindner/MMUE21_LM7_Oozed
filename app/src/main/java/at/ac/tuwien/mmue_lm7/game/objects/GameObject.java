@@ -120,7 +120,6 @@ public class GameObject {
         for (GameObject child = firstChild; child != null; child = child.nextSibling) {
             child.render(render);
             child.renderChildren(render);
-
         }
     }
 
@@ -253,6 +252,23 @@ public class GameObject {
 
         return global;
     }
+
+    /**
+     * @return global mirroring of this object
+     */
+    //TODO optimization: if this is used often, then this should be stored in the Gameobject and marked dirty for recalculation if a parent changes position
+    public final boolean getGlobalMirroring() {
+        boolean global = mirrored;
+
+        GameObject go = parent;
+        while (go != null) {
+            global = go.mirrored != global;
+            go = go.parent;
+        }
+
+        return global;
+    }
+
 
     //maybe setParent method?
     //maybe removeChild method?

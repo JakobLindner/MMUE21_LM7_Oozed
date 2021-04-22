@@ -56,7 +56,7 @@ public class LevelFactories {
 
         // === PLATFORM 2 ===
         GameObject platform2 = ObjectFactories.makePlatform(12, 8);
-        platform2.addChild(ObjectFactories.makeBigPlatformTile(0, 0, ResourceSystem.SpriteEnum.bigPlatformGears));
+        platform2.addChild(ObjectFactories.makeBigPlatformTile(0, 0, 0, true, ResourceSystem.SpriteEnum.bigPlatformGears));
         platform2.addChild(ObjectFactories.makePlatformTile(2, 0, ResourceSystem.SpriteEnum.platformCircuit));
         platform2.addChild(ObjectFactories.makePlatformTile(3, 0, ResourceSystem.SpriteEnum.platformIce));
         platform2.addChild(ObjectFactories.makeBigPlatformTile(2, 1, ResourceSystem.SpriteEnum.bigPlatformGears));
