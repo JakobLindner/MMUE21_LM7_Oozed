@@ -27,6 +27,9 @@ public class GameConstants {
      */
     public static final float GAME_HEIGHT = GAME_RES_HEIGHT/(float)PIXELS_PER_UNIT;//=18
 
+    public static final float HALF_GAME_WIDTH = GAME_WIDTH/2f;
+    public static final float HALF_GAME_HEIGHT = GAME_HEIGHT/2f;
+
     /**
      * Prevent instantiation
      */

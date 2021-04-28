@@ -2,9 +2,13 @@ package at.ac.tuwien.mmue_lm7.game;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.util.Log;
 import android.view.KeyEvent;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 import at.ac.tuwien.mmue_lm7.game.objects.AABB;
@@ -28,6 +32,16 @@ import at.ac.tuwien.mmue_lm7.utils.Vec2;
 public class Game {
     private static final String TAG = "Game";
     private static final int DEBUG_TOGGLE_KEY = KeyEvent.KEYCODE_0;
+    private static final int PAUSE_TOGGLE_KEY = KeyEvent.KEYCODE_P;
+    /**
+     * Distance from top right corner in which a tap toggles the pause state
+     */
+    private static final float PAUSE_TOGGLE_RADIUS = 3;
+    /**
+     * While paused, a black rectangle with this alpha value is rendered on top of the scene
+     * This is to increase contrast between the game scene and the pause screen
+     */
+    private static final int PAUSE_SCREEN_OVERLAY_ALPHA = 180;
 
     private static Game singleton = null;
     public static Game get() {
@@ -48,6 +62,10 @@ public class Game {
      * if true, debugRender is called on all objects
      */
     private boolean renderDebug = false;
+    /**
+     * true if gameplay is paused, no gameobjects are updated and a pause screen is shown
+     */
+    private boolean paused = false;
 
     //TODO optimization: have object pools for all types of game objects, free in GameObject::destroy
 
@@ -129,17 +147,19 @@ public class Game {
      * Updates all game entities
      */
     public void update() {
-        //advance physics, calculate collisions, emit collision events
-        physicsSystem.update();
-        //update game world: players, entities, ...
-        root.updateChildren();
+        if(!paused) {
+            //advance physics, calculate collisions, emit collision events
+            physicsSystem.update();
+            //update game world: players, entities, ...
+            root.updateChildren();
 
-        //perform screen wrapping
-        wraparoundSystem.update();
-        //check loose win condition(s),
-        //are there still enemies left
-        //does the player have lives left?
-        //TODO maybe in own game object??
+            //perform screen wrapping
+            wraparoundSystem.update();
+            //check loose win condition(s),
+            //are there still enemies left
+            //does the player have lives left?
+            //TODO maybe in own game object??
+        }
 
         freeAllTmpVec();
     }
@@ -161,6 +181,34 @@ public class Game {
             renderSystem.render(canvas);
         }
 
+        if(paused) {
+            //draw overlay rect to darken game rendering
+            renderSystem.drawRect()
+                    .edges(0,GameConstants.GAME_WIDTH,0,GameConstants.GAME_HEIGHT)
+                    .color(Color.argb(PAUSE_SCREEN_OVERLAY_ALPHA,0,0,0))
+                    .style(Paint.Style.FILL);
+
+            //render text
+            renderSystem.drawText()
+                    .text("PAUSED")
+                    .at(tmpVec().set(GameConstants.HALF_GAME_WIDTH,GameConstants.HALF_GAME_HEIGHT))
+                    .typeFace(Typeface.DEFAULT)
+                    .align(Paint.Align.CENTER)
+                    .color(Color.WHITE)
+                    .size(32);//TODO remove magic number
+
+            renderSystem.drawText()
+                    .text("Tap top right corner to resume")
+                    .at(tmpVec().set(GameConstants.HALF_GAME_WIDTH, GameConstants.HALF_GAME_HEIGHT-1.5f))//TODO remove offset magic number
+                    .typeFace(Typeface.DEFAULT)
+                    .align(Paint.Align.CENTER)
+                    .color(Color.WHITE)
+                    .size(16);//TODO remove magic number
+
+            //render batched commands for pause screen
+            renderSystem.render(canvas);
+        }
+
         freeAllTmpVec();
     }
 
@@ -169,7 +217,14 @@ public class Game {
      */
     public void tap(Vec2 position) {
         Log.d(TAG, String.format("Tap at: %s",position.toString()));
-        onTap.notify(new TapEvent(position));
+
+        //if tap in top right corner -> toggle pause
+        if(tmpVec().set(GameConstants.GAME_WIDTH,GameConstants.GAME_HEIGHT).sub(position).len2()<PAUSE_TOGGLE_RADIUS*PAUSE_TOGGLE_RADIUS) {
+            Log.d(TAG, String.format("Tap close enough in upper right corner, toggle pause"));
+            togglePause();
+        }
+        else if(!paused) //forward inputs to scene only if game is not paused
+            onTap.notify(new TapEvent(position));
     }
 
     /**
@@ -178,7 +233,10 @@ public class Game {
      */
     public void swipe(Vec2 position, Vec2 direction) {
         Log.d(TAG, String.format("Swipe starting at: %s, Direction: %s",position.toString(),direction.toString()));
-        onSwipe.notify(new SwipeEvent(position,direction));
+
+        //forward inputs to scene only if game is not paused
+        if(!paused)
+            onSwipe.notify(new SwipeEvent(position,direction));
     }
 
     /**
@@ -247,5 +305,37 @@ public class Game {
 
     public void toggleDebugRender() {
         renderDebug = !renderDebug;
+    }
+
+    /**
+     * Pauses gameplay and shows pause screen
+     * Does nothing if game is already paused
+     */
+    public void pauseGame() {
+        if(!paused) {
+            //TODO play sound, ...
+        }
+        paused = true;
+    }
+
+    /**
+     * Resumes gameplay and removes pause screen
+     * Does nothing if game is not paused
+     */
+    public void resumeGame() {
+        if(paused) {
+            //TODO play sound, ...
+        }
+        paused = false;
+    }
+
+    /**
+     * Toggles the pause state
+     */
+    public void togglePause() {
+        if(paused)
+            resumeGame();
+        else
+            pauseGame();
     }
 }
