@@ -449,14 +449,7 @@ public class Player extends AABB {
      */
     private void updateOrientation() {
         //TODO implement via vector angle
-        if (dir == Direction.RIGHT)
-            rotation = 0;
-        else if (dir == Direction.DOWN)
-            rotation = 90;
-        else if (dir == Direction.LEFT)
-            rotation = 180;
-        else
-            rotation = 270;
+        rotation = dir.getRotation();
 
         mirrored = upDir.dir.isCCW(dir.dir);
         if (upDir.dir.isCCW(dir.dir) && dir.isHorizontal()) {

@@ -27,6 +27,12 @@ public class LevelFactories {
 
     public static void createLevel1(GameObject root) {
 
+        //TODO spike test plz delete
+        root.addChild(ObjectFactories.makeSpikes(2,2,Direction.UP));
+        root.addChild(ObjectFactories.makeSpikes(3,2,Direction.DOWN));
+        root.addChild(ObjectFactories.makeSpikes(4,2,Direction.LEFT));
+        root.addChild(ObjectFactories.makeSpikes(5,2,Direction.RIGHT));
+
         // === TEXT ===
         root.addChild(ObjectFactories.makeText(16, 5, "Tap to Jump!"));
         root.addChild(ObjectFactories.makeText(16, 3, "Swipe to Dash!"));

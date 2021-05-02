@@ -4,20 +4,21 @@ import android.util.Log;
 
 /**
  * Describes cardinal directions
+ *
  * @author simon
  */
 public enum Direction {
-    UP(new Vec2(0,1)),
-    DOWN(new Vec2(0,-1)),
-    LEFT(new Vec2(-1,0)),
-    RIGHT(new Vec2(1,0));
+    UP(new Vec2(0, 1)),
+    DOWN(new Vec2(0, -1)),
+    LEFT(new Vec2(-1, 0)),
+    RIGHT(new Vec2(1, 0));
 
     private static final String TAG = "Direction";
 
     public final Vec2 dir;
 
     public Direction rotateCCW() {
-        switch(this) {
+        switch (this) {
             case UP:
                 return LEFT;
             case DOWN:
@@ -27,13 +28,13 @@ public enum Direction {
             case RIGHT:
                 return UP;
             default:
-                Log.e(TAG,"Unknown Direction in rotateCCW");
+                Log.e(TAG, "Unknown Direction in rotateCCW");
                 return UP;
         }
     }
 
     public Direction rotateCW() {
-        switch(this) {
+        switch (this) {
             case UP:
                 return RIGHT;
             case DOWN:
@@ -43,7 +44,7 @@ public enum Direction {
             case RIGHT:
                 return DOWN;
             default:
-                Log.e(TAG,"Unknown Direction in rotateCW");
+                Log.e(TAG, "Unknown Direction in rotateCW");
                 return UP;
         }
     }
@@ -52,7 +53,7 @@ public enum Direction {
      * @return the opposite direction
      */
     public Direction opposite() {
-        switch(this) {
+        switch (this) {
             case UP:
                 return DOWN;
             case DOWN:
@@ -67,8 +68,19 @@ public enum Direction {
         }
     }
 
+    public int getRotation() {
+        if (this == Direction.RIGHT)
+            return 0;
+        else if (this == Direction.DOWN)
+            return 90;
+        else if (this == Direction.LEFT)
+            return 180;
+        else
+            return 270;
+    }
+
     public boolean isHorizontal() {
-        return this==LEFT || this==RIGHT;
+        return this == LEFT || this == RIGHT;
     }
 
     public boolean isVertical() {
@@ -87,21 +99,21 @@ public enum Direction {
 
         //check DOWN
         float dot = to.dot(DOWN.dir);
-        if(dot>maxDot) {
+        if (dot > maxDot) {
             maxDot = dot;
             best = DOWN;
         }
 
         //check LEFT
         dot = to.dot(LEFT.dir);
-        if(dot>maxDot) {
+        if (dot > maxDot) {
             maxDot = dot;
             best = LEFT;
         }
 
         //check RIGHT
         dot = to.dot(RIGHT.dir);
-        if(dot>maxDot) {
+        if (dot > maxDot) {
             maxDot = dot;
             best = RIGHT;
         }

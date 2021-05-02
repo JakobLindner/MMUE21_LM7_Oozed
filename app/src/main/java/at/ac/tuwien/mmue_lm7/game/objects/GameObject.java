@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import androidx.annotation.CallSuper;
 
 import at.ac.tuwien.mmue_lm7.game.Game;
+import at.ac.tuwien.mmue_lm7.game.rendering.Layers;
 import at.ac.tuwien.mmue_lm7.game.rendering.RenderSystem;
 import at.ac.tuwien.mmue_lm7.utils.Vec2;
 
@@ -41,6 +42,11 @@ public class GameObject {
      * If this is set to true then this gameobject is registered at the wraparoundsystem
      */
     private boolean wrappable = false;
+
+    /**
+     * The gameplay and rendering layer this object belongs to
+     */
+    public short layer = Layers.DEFAULT;
 
 
     //##################################
@@ -99,6 +105,14 @@ public class GameObject {
     @CallSuper
     public void onWrap(Vec2 translation) {
 
+    }
+
+    /**
+     * used for gameplay purposes, can be overwritten to make effects or custom behaviour
+     * per default it simply calls destroy()
+     */
+    public void kill() {
+        destroy();
     }
 
     //###############################

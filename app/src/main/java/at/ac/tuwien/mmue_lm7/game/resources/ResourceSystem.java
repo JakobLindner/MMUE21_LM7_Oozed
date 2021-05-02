@@ -17,6 +17,7 @@ import at.ac.tuwien.mmue_lm7.R;
  * @author jakob
  */
 public class ResourceSystem {
+    private static final String TAG = "Resources";
 
     private Context context;
     private BitmapFactory.Options options;
@@ -51,6 +52,8 @@ public class ResourceSystem {
         bitmaps.put(R.drawable.blocker, BitmapFactory.decodeResource(context.getResources(), R.drawable.blocker, options));
         bitmaps.put(R.drawable.platforms, BitmapFactory.decodeResource(context.getResources(), R.drawable.platforms, options));
         bitmaps.put(R.drawable.background, BitmapFactory.decodeResource(context.getResources(), R.drawable.background, options));
+        bitmaps.put(R.drawable.obstacles,BitmapFactory.decodeResource(context.getResources(),R.drawable.obstacles,options));
+        bitmaps.put(R.drawable.effects,BitmapFactory.decodeResource(context.getResources(),R.drawable.effects,options));
 
         isLoaded = true;
     }
@@ -119,8 +122,14 @@ public class ResourceSystem {
                 info.spriteSheetId = R.drawable.background;
                 info.size = 512;
                 break;
+            case spikes:
+                info.spriteSheetId = R.drawable.obstacles;
+                break;
+            case disappearEffect:
+                info.spriteSheetId = R.drawable.effects;
+                break;
             default:
-                Log.i("Resources", "spriteInfo: Sprite not found!");
+                Log.i(TAG, String.format("spriteInfo: Sprite %s not found!",spriteEnum.toString()));
                 return info;
         }
         spriteInfos.put(spriteEnum, info);
@@ -136,5 +145,7 @@ public class ResourceSystem {
         platformIce,
         bigPlatformGears,
         background,
+        spikes,
+        disappearEffect
     }
 }

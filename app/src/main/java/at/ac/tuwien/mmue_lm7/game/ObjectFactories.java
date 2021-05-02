@@ -2,12 +2,14 @@ package at.ac.tuwien.mmue_lm7.game;
 
 import at.ac.tuwien.mmue_lm7.game.objects.AABB;
 import at.ac.tuwien.mmue_lm7.game.objects.AnimatedSprite;
+import at.ac.tuwien.mmue_lm7.game.objects.DeadlyAABB;
 import at.ac.tuwien.mmue_lm7.game.objects.GameObject;
 import at.ac.tuwien.mmue_lm7.game.objects.Platform;
 import at.ac.tuwien.mmue_lm7.game.objects.Player;
 import at.ac.tuwien.mmue_lm7.game.objects.Sprite;
 import at.ac.tuwien.mmue_lm7.game.objects.Text;
 import at.ac.tuwien.mmue_lm7.game.physics.CollisionLayers;
+import at.ac.tuwien.mmue_lm7.game.rendering.Layers;
 import at.ac.tuwien.mmue_lm7.game.resources.ResourceSystem;
 import at.ac.tuwien.mmue_lm7.utils.Direction;
 
@@ -27,6 +29,26 @@ public class ObjectFactories {
         ooze.addChild(runningSprite);
 
         return ooze;
+    }
+
+    public static DeadlyAABB makeSpikes(int x, int y, Direction direction) {
+        final float SPIKE_HALF_WIDTH = 0.5f-GameConstants.UNITS_PER_PIXEL;
+        final float SPIKE_HALF_HEIGHT = 0.25f-GameConstants.UNITS_PER_PIXEL;
+        AABB box = new AABB(direction.isVertical()?SPIKE_HALF_WIDTH:SPIKE_HALF_HEIGHT,
+                                            direction.isHorizontal()?SPIKE_HALF_WIDTH:SPIKE_HALF_HEIGHT,
+                                            CollisionLayers.PLAYER,
+                                            CollisionLayers.DEADLY);
+        //position bounding box
+        box.position.add(direction.dir).scl(SPIKE_HALF_HEIGHT+2*GameConstants.UNITS_PER_PIXEL).inv();
+
+        DeadlyAABB spikes = new DeadlyAABB(box);
+        spikes.position.set(x,y);
+        spikes.rotation = (direction.getRotation()+90)%360;
+
+        spikes.addChild(box);
+        spikes.addChild(new Sprite(ResourceSystem.SpriteEnum.spikes));
+
+        return spikes;
     }
 
     public static GameObject makeBlocker(int x, int y, float rot, boolean lookingRight) {
