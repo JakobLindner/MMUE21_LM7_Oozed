@@ -26,8 +26,6 @@ public class ObjectFactories {
         runningSprite.position.set(0, 0);
         ooze.addChild(runningSprite);
 
-        // TODO Add AABB
-
         return ooze;
     }
 

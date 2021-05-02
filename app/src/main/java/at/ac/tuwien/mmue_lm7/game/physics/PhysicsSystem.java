@@ -4,6 +4,7 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
+import at.ac.tuwien.mmue_lm7.game.Game;
 import at.ac.tuwien.mmue_lm7.game.objects.AABB;
 import at.ac.tuwien.mmue_lm7.utils.BitUtils;
 import at.ac.tuwien.mmue_lm7.utils.ObjectPool;
@@ -278,15 +279,14 @@ public class PhysicsSystem {
         }
 
         //calculate intersections with the infinitely long axes of the edges and ray
-        //TODO pool vectors, prevent allocations
-        Vec2 scale = new Vec2(1 / ray.x, 1 / ray.y);
-        Vec2 sign = scale.copy().sign();
-        Vec2 edgePos = aabb.getHalfSize().copy().add(paddingX, paddingY).scl(sign);
+        Vec2 scale = Game.get().tmpVec().set(1 / ray.x, 1 / ray.y);
+        Vec2 sign = Game.get().tmpVec().set(scale).sign();
+        Vec2 edgePos = Game.get().tmpVec().set(aabb.getHalfSize()).add(paddingX, paddingY).scl(sign);
         //if ray.x>0 then left edge of aabb is near right is far
         //if ray.x<0 then right edge=near, left=far
         //vice versa for vertical
-        Vec2 near = globalPos.copy().sub(edgePos).sub(position).scl(scale);
-        Vec2 far = globalPos.copy().add(edgePos).sub(position).scl(scale);
+        Vec2 near = Game.get().tmpVec().set(globalPos).sub(edgePos).sub(position).scl(scale);
+        Vec2 far = Game.get().tmpVec().set(globalPos).add(edgePos).sub(position).scl(scale);
 
         //if intersection with near edge if further than intersection with opposite far edge -> no collision
         if (near.x > far.y || near.y > far.x)
@@ -403,8 +403,8 @@ public class PhysicsSystem {
             sweep.contact.box = aabb;
             sweep.time = Utils.clamp(sweep.contact.time - Utils.EPSILON, 0, 1);
             sweep.position.set(move).scl(sweep.time).add(aabbPos);
-            //TODO pool vector
-            Vec2 dir = move.copy().norm();
+
+            Vec2 dir = Game.get().tmpVec().set(move).norm();
             //undo the blow up
             sweep.contact.position.x = Utils.clamp(sweep.contact.position.x + dir.x * aabb.getHalfSize().x,
                     otherPos.x - other.getHalfSize().x, otherPos.x + other.getHalfSize().x);
