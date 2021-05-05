@@ -125,8 +125,8 @@ public class Player extends AABB {
     public Player(Direction startingDir, boolean runningCW) {
         super(PLAYER_HALF_SIZE,
                 PLAYER_HALF_SIZE,
-                CollisionLayers.PLAYER,
-                PLAYER_MASK);
+                PLAYER_MASK,
+                CollisionLayers.PLAYER);
 
         this.dir = startingDir;
         if (runningCW)
