@@ -42,7 +42,7 @@ public class ObjectFactories {
         box.position.add(direction.dir).scl(SPIKE_HALF_HEIGHT+2*GameConstants.UNITS_PER_PIXEL).inv();
 
         DeadlyAABB spikes = new DeadlyAABB(box);
-        spikes.position.set(x,y);
+        spikes.position.set(x + 0.5f,y + 0.5f);
         spikes.rotation = (direction.getRotation()+90)%360;
 
         spikes.addChild(box);
