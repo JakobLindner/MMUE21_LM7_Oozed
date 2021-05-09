@@ -11,6 +11,7 @@ import at.ac.tuwien.mmue_lm7.utils.Vec2;
 
 /**
  * Base class for every type of object in the game
+ *
  * @author simon & jakob
  */
 public class GameObject {
@@ -60,7 +61,7 @@ public class GameObject {
      */
     @CallSuper
     public void init() {
-        if(!initialized && wrappable) {
+        if (!initialized && wrappable) {
             Game.get().getWraparoundSystem().registerWrappable(this);
         }
 
@@ -94,7 +95,7 @@ public class GameObject {
      */
     @CallSuper
     protected void onDestroy() {
-        if(wrappable) {
+        if (wrappable) {
             Game.get().getWraparoundSystem().removeWrappable(this);
         }
     }
@@ -309,19 +310,31 @@ public class GameObject {
 
     /**
      * Changes whether or not the game object should wrap around screen
+     *
      * @param wrappable
      */
     public void setWrappable(boolean wrappable) {
-        if(initialized) {
-            if(!this.wrappable && wrappable)
+        if (initialized) {
+            if (!this.wrappable && wrappable)
                 Game.get().getWraparoundSystem().registerWrappable(this);
-            if(this.wrappable && !wrappable)
+            if (this.wrappable && !wrappable)
                 Game.get().getWraparoundSystem().removeWrappable(this);
         }
 
         this.wrappable = wrappable;
     }
 
+    /**
+     * sets the layer for this subtree in a recursive manner
+     *
+     * @param layer
+     */
+    public void setLayerRecursive(short layer) {
+        this.layer = layer;
+        for (GameObject child = firstChild; child != null; child = child.nextSibling) {
+            child.setLayerRecursive(layer);
+        }
+    }
 
     //maybe setParent method?
     //maybe removeChild method?

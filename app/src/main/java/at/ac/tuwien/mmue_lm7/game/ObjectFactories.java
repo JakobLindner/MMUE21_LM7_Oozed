@@ -29,6 +29,7 @@ public class ObjectFactories {
         runningSprite.position.set(0, 0);
         ooze.addChild(runningSprite);
 
+        ooze.setLayerRecursive(Layers.PLAYER);
         return ooze;
     }
 
@@ -49,6 +50,7 @@ public class ObjectFactories {
         spikes.addChild(box);
         spikes.addChild(new Sprite(ResourceSystem.SpriteEnum.spikes));
 
+        spikes.setLayerRecursive(Layers.OBSTACLES);
         return spikes;
     }
 
@@ -63,13 +65,15 @@ public class ObjectFactories {
         blocker.addChild(idleSprite);
 
         // TODO Add AABB
-
+        blocker.setLayerRecursive(Layers.ENEMY);
         return blocker;
     }
 
     public static GameObject makePlatform(int x, int y) {
         Platform platform = new Platform();
         platform.position.set(x, y);
+
+        platform.setLayerRecursive(Layers.TILES);
         return platform;
     }
 
@@ -88,6 +92,7 @@ public class ObjectFactories {
         AABB aabb = new AABB(0.5f, 0.5f,(short) 0, CollisionLayers.PLATFORM);
         tile.addChild(aabb);
 
+        tile.setLayerRecursive(Layers.TILES);
         return tile;
     }
 
@@ -106,6 +111,7 @@ public class ObjectFactories {
         AABB aabb = new AABB(1.0f, 1.0f,(short) 0, CollisionLayers.PLATFORM);
         tile.addChild(aabb);
 
+        tile.setLayerRecursive(Layers.TILES);
         return tile;
     }
 
@@ -121,15 +127,19 @@ public class ObjectFactories {
     public static GameObject makeText(int x, int y, String text) {
         Text t = new Text(text);
         t.position.set(x, y);
+
+        t.setLayerRecursive(Layers.UI);
         return t;
     }
 
     public static GameObject makeKilledEffect(float x, float y) {
-        final int EFFECT_DURATION = 60;//in frames
+        final int EFFECT_DURATION = 30;//in frames
         Lifetime object = new Lifetime(EFFECT_DURATION);
         object.position.set(x,y);
 
         object.addChild(new Sprite(ResourceSystem.SpriteEnum.disappearEffect));
+
+        object.setLayerRecursive(Layers.EFFECTS);
         return object;
     }
 }

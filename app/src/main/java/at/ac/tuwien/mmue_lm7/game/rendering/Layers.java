@@ -7,10 +7,13 @@ import at.ac.tuwien.mmue_lm7.game.physics.CollisionLayers;
  * @author simon
  */
 public class Layers {
-    //TODO do we need separate gameplay and collision layers?
-    public static final short DEFAULT = CollisionLayers.NONE;
-    public static final short PLAYER = CollisionLayers.PLAYER;
-    public static final short ENEMY = CollisionLayers.ENEMY;
+    public static final short DEFAULT = 0;
+    public static final short TILES = 5;
+    public static final short PLAYER = 10;
+    public static final short ENEMY = 20;
+    public static final short OBSTACLES = 25;
+    public static final short EFFECTS = 50;
+    public static final short UI = 100;
 
     //prevent instantiation
     private Layers() {
