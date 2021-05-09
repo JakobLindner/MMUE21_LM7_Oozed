@@ -4,6 +4,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 
 import at.ac.tuwien.mmue_lm7.game.Game;
+import at.ac.tuwien.mmue_lm7.game.ObjectFactories;
 import at.ac.tuwien.mmue_lm7.game.SwipeEvent;
 import at.ac.tuwien.mmue_lm7.game.TapEvent;
 import at.ac.tuwien.mmue_lm7.game.WraparoundSystem;
@@ -62,6 +63,8 @@ public class Player extends AABB {
     //input
     public static final int JUMP_KEY = KeyEvent.KEYCODE_W;
     public static final int DASH_KEY = KeyEvent.KEYCODE_D;
+
+    public static final int RESPAWN_DELAY = 60;
 
     public enum PlayerState {
         RUNNING,
@@ -347,6 +350,19 @@ public class Player extends AABB {
         wantJump = wantDash = false;
 
         //TODO based on state, set hitbox and sprite
+    }
+
+    @Override
+    public void kill() {
+        //create disappear effect
+        Vec2 pos = getGlobalPosition();
+        GameObject effect = ObjectFactories.makeKilledEffect(pos.x,pos.y);
+        Game.get().getRoot().addChild(effect);
+
+        //call respawn function delayed
+        Game.get().getTimingSystem().addDelayedAction(Game.get()::respawnPlayer,RESPAWN_DELAY);
+
+        super.kill();
     }
 
     @Override

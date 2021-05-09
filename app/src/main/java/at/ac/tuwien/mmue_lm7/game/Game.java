@@ -347,4 +347,13 @@ public class Game {
         else
             pauseGame();
     }
+
+    /**
+     * Respawns player if there are lifes left
+     * if lifes==0, then the game is lost
+     */
+    public void respawnPlayer() {
+        Log.d(TAG,"Respawn player");
+        //TODO
+    }
 }

@@ -4,6 +4,7 @@ import at.ac.tuwien.mmue_lm7.game.objects.AABB;
 import at.ac.tuwien.mmue_lm7.game.objects.AnimatedSprite;
 import at.ac.tuwien.mmue_lm7.game.objects.DeadlyAABB;
 import at.ac.tuwien.mmue_lm7.game.objects.GameObject;
+import at.ac.tuwien.mmue_lm7.game.objects.Lifetime;
 import at.ac.tuwien.mmue_lm7.game.objects.Platform;
 import at.ac.tuwien.mmue_lm7.game.objects.Player;
 import at.ac.tuwien.mmue_lm7.game.objects.Sprite;
@@ -121,5 +122,14 @@ public class ObjectFactories {
         Text t = new Text(text);
         t.position.set(x, y);
         return t;
+    }
+
+    public static GameObject makeKilledEffect(float x, float y) {
+        final int EFFECT_DURATION = 60;//in frames
+        Lifetime object = new Lifetime(EFFECT_DURATION);
+        object.position.set(x,y);
+
+        object.addChild(new Sprite(ResourceSystem.SpriteEnum.disappearEffect));
+        return object;
     }
 }
