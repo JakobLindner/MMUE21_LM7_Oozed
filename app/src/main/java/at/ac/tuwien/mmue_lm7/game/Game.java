@@ -57,6 +57,7 @@ public class Game {
     private final PhysicsSystem physicsSystem = new PhysicsSystem();
     private final ResourceSystem resourceSystem;
     private final WraparoundSystem wraparoundSystem = new WraparoundSystem();
+    private final TimingSystem timingSystem = new TimingSystem();
 
     /**
      * if true, debugRender is called on all objects
@@ -150,6 +151,10 @@ public class Game {
         if(!paused) {
             //advance physics, calculate collisions, emit collision events
             physicsSystem.update();
+
+            //update timers
+            timingSystem.update();
+
             //update game world: players, entities, ...
             root.updateChildren();
 
@@ -279,6 +284,10 @@ public class Game {
 
     public WraparoundSystem getWraparoundSystem() {
         return wraparoundSystem;
+    }
+
+    public TimingSystem getTimingSystem() {
+        return timingSystem;
     }
 
     /**
