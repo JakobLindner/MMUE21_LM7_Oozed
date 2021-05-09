@@ -253,6 +253,8 @@ public class Game {
 
         if(event.getKeyCode()==DEBUG_TOGGLE_KEY)
             toggleDebugRender();
+        else if(event.getKeyCode()==PAUSE_TOGGLE_KEY)
+            togglePause();
     }
 
     /**
