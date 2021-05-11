@@ -45,6 +45,11 @@ public class GameObject {
     private boolean wrappable = false;
 
     /**
+     * true when destroyed has been called
+     */
+    private boolean destroyed = false;
+
+    /**
      * The gameplay and rendering layer this object belongs to
      */
     public short layer = Layers.DEFAULT;
@@ -116,6 +121,10 @@ public class GameObject {
         destroy();
     }
 
+    public boolean isDestroyed() {
+        return destroyed;
+    }
+
     //###############################
     //#####  OTHER METHODS  #########
     //###############################
@@ -124,11 +133,13 @@ public class GameObject {
      * Removes the game object from the scene tree
      * calls destroy on all child objects
      */
+    //TODO mark as destroyed here, destroyed = true, register at game, game must cleanup marked entities on end of every update
     public final void destroy() {
+        destroyed = true;
         destroyChildren();
-
         onDestroy();
-        detachFromParent();
+
+        Game.get().markForRemoval(this);
     }
 
     /**
@@ -214,7 +225,7 @@ public class GameObject {
     /**
      * removes the game object from the scene tree
      */
-    private void detachFromParent() {
+    public void detachFromParent() {
         if (parent == null)
             return;
 

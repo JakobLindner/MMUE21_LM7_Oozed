@@ -1,14 +1,12 @@
 package at.ac.tuwien.mmue_lm7.game;
 
-import at.ac.tuwien.mmue_lm7.game.physics.CollisionLayers;
-
 /**
  * @author simon
  */
 public class GameConstants {
 
     public static final int PIXELS_PER_UNIT = 16;
-    public static final float UNITS_PER_PIXEL = 1/(float)PIXELS_PER_UNIT;
+    public static final float UNITS_PER_PIXEL = 1 / (float) PIXELS_PER_UNIT;
 
     /**
      * Resolution width of the game
@@ -21,17 +19,20 @@ public class GameConstants {
     /**
      * in units
      */
-    public static final float GAME_WIDTH = GAME_RES_WIDTH/(float)PIXELS_PER_UNIT;//=32
+    public static final float GAME_WIDTH = GAME_RES_WIDTH / (float) PIXELS_PER_UNIT;//=32
     /**
      * in units
      */
-    public static final float GAME_HEIGHT = GAME_RES_HEIGHT/(float)PIXELS_PER_UNIT;//=18
+    public static final float GAME_HEIGHT = GAME_RES_HEIGHT / (float) PIXELS_PER_UNIT;//=18
 
-    public static final float HALF_GAME_WIDTH = GAME_WIDTH/2f;
-    public static final float HALF_GAME_HEIGHT = GAME_HEIGHT/2f;
+    public static final float HALF_GAME_WIDTH = GAME_WIDTH / 2f;
+    public static final float HALF_GAME_HEIGHT = GAME_HEIGHT / 2f;
+
+    public static final int PLAYER_LIVES = 3;
 
     /**
      * Prevent instantiation
      */
-    private GameConstants(){}
+    private GameConstants() {
+    }
 }

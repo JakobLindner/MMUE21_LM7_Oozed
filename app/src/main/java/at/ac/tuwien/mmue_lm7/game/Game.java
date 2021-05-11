@@ -10,6 +10,7 @@ import android.view.KeyEvent;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.logging.Level;
 
 import at.ac.tuwien.mmue_lm7.game.objects.AABB;
 import at.ac.tuwien.mmue_lm7.game.objects.AnimatedSprite;
@@ -48,10 +49,18 @@ public class Game {
         return singleton;
     }
 
+    private int playerLives = GameConstants.PLAYER_LIVES;
+    private String currentLevel = "1";
+    private int lastMainLevel = 1;
+
     /**
      * Root object of the scene tree
      */
     private GameObject root = new GameObject();
+    /**
+     * Destroyed entities are added to this list and are removed from the scene tree at the end of the update
+     */
+    private ArrayList<GameObject> markedForRemoval = new ArrayList<GameObject>(16);
 
     private final RenderSystem renderSystem = new RenderSystem();
     private final PhysicsSystem physicsSystem = new PhysicsSystem();
@@ -164,6 +173,11 @@ public class Game {
             //are there still enemies left
             //does the player have lives left?
             //TODO maybe in own game object??
+
+            //remove all game objects, which have been destroyed this frame
+            for(GameObject gameObject : markedForRemoval)
+                gameObject.detachFromParent();
+            markedForRemoval.clear();
         }
 
         freeAllTmpVec();
@@ -351,11 +365,58 @@ public class Game {
     }
 
     /**
-     * Respawns player if there are lifes left
-     * if lifes==0, then the game is lost
+     * Respawns player if there are lives left
+     * if lives==0, then the game is lost
      */
     public void respawnPlayer() {
         Log.d(TAG,"Respawn player");
-        //TODO
+
+        if(playerLives==0) {
+            Log.d(TAG, "No lives left, show lost screen");
+            //TODO create lost screen
+        }
+        else {
+            //restart level
+            loadLevel();
+
+
+            //decrease lives
+            --playerLives;
+        }
+    }
+
+    /**
+     * Marks given gameobject for removal at the end of the frame, called by GameObject::destroy
+     * @param gameObject !=null
+     */
+    public void markForRemoval(GameObject gameObject) {
+        markedForRemoval.add(gameObject);
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    // Level/scene management
+    ///////////////////////////////////////////////////////////////////////////
+
+    private void advanceLevel() {
+        ++lastMainLevel;
+        currentLevel = Integer.toString(lastMainLevel);
+    }
+
+    /**
+     * loads currentLevel
+     */
+    private void loadLevel() {
+        loadLevel(currentLevel);
+    }
+
+    private void loadLevel(String level) {
+        //clear scene tree
+        root.destroy();
+        //TODO delete marked entities
+        //come and eat GC!!
+        root = new GameObject();
+        root.init();
+
+        LevelFactories.loadLevel(root,level);
     }
 }
