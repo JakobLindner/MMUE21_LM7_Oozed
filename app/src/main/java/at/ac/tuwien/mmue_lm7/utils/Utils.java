@@ -7,7 +7,7 @@ import at.ac.tuwien.mmue_lm7.game.GameConstants;
  * @author simon
  */
 public class Utils {
-    public static final float EPSILON = (float) 0.00001;//TODO find good epsilon
+    public static final float EPSILON = (float) 0.000001f;
 
     public static float clamp(float value, float min, float max) {
         if (value < min)

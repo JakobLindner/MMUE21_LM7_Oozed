@@ -55,13 +55,11 @@ public class ObjectFactories {
         return spikes;
     }
 
-    public static GameObject makeBlocker(int x, int y, float rot, boolean lookingRight) {
+    public static GameObject makeBlocker(int x, int y, Direction lookDir, boolean runningCW) {
         AABB box = new AABB(0.5f,0.5f,CollisionLayers.PLAYER, CollisionLayers.ENEMY);
 
-        Blocker blocker = new Blocker(box);
+        Blocker blocker = new Blocker(box, lookDir, runningCW);
         blocker.position.set(x + 0.5f, y + 0.5f);
-        blocker.rotation = rot;
-        blocker.mirrored = lookingRight;
 
         blocker.addChild(box);
 

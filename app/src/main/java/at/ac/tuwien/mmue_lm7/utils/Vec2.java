@@ -1,6 +1,7 @@
 package at.ac.tuwien.mmue_lm7.utils;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 /**
  * Simple 2d vector utility class
@@ -273,5 +274,9 @@ public class Vec2 implements ObjectPool.Poolable {
     @Override
     public String toString() {
         return String.format("(%f,%f)", x,y);
+    }
+
+    public boolean approxEquals(Vec2 other) {
+        return Math.abs(x-other.x)<Utils.EPSILON && Math.abs(y-other.y)<Utils.EPSILON;
     }
 }
