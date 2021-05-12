@@ -42,7 +42,7 @@ public class AnimatedSprite extends GameObject{
 
     @Override
     public void render(RenderSystem render) {
-        render.drawSprite()
+        render.drawSprite(layer)
                 .at(getGlobalPosition())
                 .rotated(getGlobalRotation())
                 .mirrored(getGlobalMirroring())
