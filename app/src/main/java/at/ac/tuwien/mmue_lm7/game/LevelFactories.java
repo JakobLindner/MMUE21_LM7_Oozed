@@ -43,9 +43,10 @@ public class LevelFactories {
         root.addChild(ObjectFactories.makeOoze(1, 9, Direction.RIGHT, true));
 
         // === ENEMIES ===
-        root.addChild(ObjectFactories.makeBlocker(13, 11, Direction.RIGHT, true));
+        root.addChild(ObjectFactories.makeBlocker(13, 11, Direction.LEFT, false));
         root.addChild(ObjectFactories.makeBlocker(22, 10, Direction.RIGHT, false));
-        root.addChild(ObjectFactories.makeBlocker(23, 14, Direction.RIGHT, false));
+        root.addChild(ObjectFactories.makeBlocker(23, 14, Direction.RIGHT, true));
+
 
         // === PLATFORM 1 ===
         GameObject platform1 = ObjectFactories.makePlatform(3, 12);

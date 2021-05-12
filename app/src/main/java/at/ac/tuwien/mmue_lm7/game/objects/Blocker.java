@@ -21,9 +21,9 @@ public class Blocker extends Enemy {
         this.box = box;
         this.dir = startingDir;
         if (runningCW)
-            upDir = startingDir.rotateCW();
-        else
             upDir = startingDir.rotateCCW();
+        else
+            upDir = startingDir.rotateCW();
     }
 
     @Override
@@ -69,8 +69,8 @@ public class Blocker extends Enemy {
         rotation = dir.getRotation()+180;
         rotation%=360;
 
-        mirrored = upDir.dir.isCCW(dir.dir);
-        if (upDir.dir.isCCW(dir.dir) && dir.isHorizontal()) {
+        mirrored = !upDir.dir.isCCW(dir.dir);
+        if (mirrored && dir.isHorizontal()) {
             rotation += 180;
             rotation %= 360;
         }
