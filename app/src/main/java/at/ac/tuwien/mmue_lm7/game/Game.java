@@ -10,6 +10,9 @@ import android.view.KeyEvent;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.logging.Level;
 
 import at.ac.tuwien.mmue_lm7.game.objects.AABB;
@@ -28,6 +31,7 @@ import at.ac.tuwien.mmue_lm7.utils.Vec2;
 
 /**
  * Represents the main game, accessible globally via singleton pattern
+ *
  * @author simon
  */
 public class Game {
@@ -45,6 +49,7 @@ public class Game {
     private static final int PAUSE_SCREEN_OVERLAY_ALPHA = 180;
 
     private static Game singleton = null;
+
     public static Game get() {
         return singleton;
     }
@@ -87,6 +92,11 @@ public class Game {
     public final Subject<KeyEvent> onKeyDown = new Subject<>();
     public final Subject<KeyEvent> onKeyUp = new Subject<>();
 
+    private BlockingQueue<TapEvent> tapQueue = new LinkedBlockingQueue<>();
+    private BlockingQueue<SwipeEvent> swipeQueue = new LinkedBlockingQueue<>();
+    private BlockingQueue<KeyEvent> keyDownQueue = new LinkedBlockingQueue<>();
+    private BlockingQueue<KeyEvent> keyUpQueue = new LinkedBlockingQueue<>();
+
     ///////////////////////////////////////////////////////////////////////////
     // POOLS
     ///////////////////////////////////////////////////////////////////////////
@@ -94,7 +104,7 @@ public class Game {
     /**
      * Pool for reusing vector objects, which can be used in temporary calculations, that are valid for a single update/render
      */
-    private final ObjectPool<Vec2> vectorPool = new ObjectPool<Vec2>(Vec2::new,VECTOR_POOL_SIZE);
+    private final ObjectPool<Vec2> vectorPool = new ObjectPool<Vec2>(Vec2::new, VECTOR_POOL_SIZE);
     private final ArrayList<Vec2> usedVectors = new ArrayList<Vec2>(VECTOR_POOL_SIZE);
 
     public Game(Context context) {
@@ -107,7 +117,7 @@ public class Game {
      * Allocates ressources
      */
     public void init() {
-        Log.i(TAG,"Initialize Game");
+        Log.i(TAG, "Initialize Game");
         //initialize singleton
         singleton = this;
 
@@ -131,7 +141,7 @@ public class Game {
      * Cleans up all resources
      */
     public void cleanup() {
-        Log.i(TAG,"Cleanup Game");
+        Log.i(TAG, "Cleanup Game");
         resourceSystem.releaseResources();
     }
 
@@ -140,7 +150,7 @@ public class Game {
      * releases all resources
      */
     public void pause() {
-        Log.i(TAG,"Pause Game");
+        Log.i(TAG, "Pause Game");
         resourceSystem.releaseResources();
     }
 
@@ -149,7 +159,7 @@ public class Game {
      * loads all resources which are released in pause
      */
     public void resume() {
-        Log.i(TAG,"Resume Game");
+        Log.i(TAG, "Resume Game");
         resourceSystem.loadResources();
     }
 
@@ -157,7 +167,10 @@ public class Game {
      * Updates all game entities
      */
     public void update() {
-        if(!paused) {
+        //process inputs
+        processInputs();
+
+        if (!paused) {
             //advance physics, calculate collisions, emit collision events
             physicsSystem.update();
 
@@ -175,7 +188,7 @@ public class Game {
             //TODO maybe in own game object??
 
             //remove all game objects, which have been destroyed this frame
-            for(GameObject gameObject : markedForRemoval)
+            for (GameObject gameObject : markedForRemoval)
                 gameObject.detachFromParent();
             markedForRemoval.clear();
         }
@@ -185,6 +198,7 @@ public class Game {
 
     /**
      * renders all game objects
+     *
      * @param canvas, not null
      */
     public void render(Canvas canvas) {
@@ -195,22 +209,22 @@ public class Game {
         renderSystem.render(canvas);
 
         //DEBUG RENDER
-        if(renderDebug) {
+        if (renderDebug) {
             root.debugRenderChildren(renderSystem);
             renderSystem.render(canvas);
         }
 
-        if(paused) {
+        if (paused) {
             //draw overlay rect to darken game rendering
             renderSystem.drawRect()
-                    .edges(0,GameConstants.GAME_WIDTH,0,GameConstants.GAME_HEIGHT)
-                    .color(Color.argb(PAUSE_SCREEN_OVERLAY_ALPHA,0,0,0))
+                    .edges(0, GameConstants.GAME_WIDTH, 0, GameConstants.GAME_HEIGHT)
+                    .color(Color.argb(PAUSE_SCREEN_OVERLAY_ALPHA, 0, 0, 0))
                     .style(Paint.Style.FILL);
 
             //render text
             renderSystem.drawText()
                     .text("PAUSED")
-                    .at(tmpVec().set(GameConstants.HALF_GAME_WIDTH,GameConstants.HALF_GAME_HEIGHT))
+                    .at(tmpVec().set(GameConstants.HALF_GAME_WIDTH, GameConstants.HALF_GAME_HEIGHT))
                     .typeFace(Typeface.DEFAULT)
                     .align(Paint.Align.CENTER)
                     .color(Color.WHITE)
@@ -218,7 +232,7 @@ public class Game {
 
             renderSystem.drawText()
                     .text("Tap top right corner to resume")
-                    .at(tmpVec().set(GameConstants.HALF_GAME_WIDTH, GameConstants.HALF_GAME_HEIGHT-1.5f))//TODO remove offset magic number
+                    .at(tmpVec().set(GameConstants.HALF_GAME_WIDTH, GameConstants.HALF_GAME_HEIGHT - 1.5f))//TODO remove offset magic number
                     .typeFace(Typeface.DEFAULT)
                     .align(Paint.Align.CENTER)
                     .color(Color.WHITE)
@@ -232,42 +246,78 @@ public class Game {
     }
 
     /**
-     * @param position in game units
+     * Processes all inputs that have been queued up
      */
-    public void tap(Vec2 position) {
-        Log.d(TAG, String.format("Tap at: %s",position.toString()));
+    private void processInputs() {
+        //taps
+        for (TapEvent tap = tapQueue.poll(); tap != null; tap = tapQueue.poll())
+            handleTap(tap);
 
-        //if tap in top right corner -> toggle pause
-        if(tmpVec().set(GameConstants.GAME_WIDTH,GameConstants.GAME_HEIGHT).sub(position).len2()<PAUSE_TOGGLE_RADIUS*PAUSE_TOGGLE_RADIUS) {
-            Log.d(TAG, String.format("Tap close enough in upper right corner, toggle pause"));
-            togglePause();
-        }
-        else if(!paused) //forward inputs to scene only if game is not paused
-            onTap.notify(new TapEvent(position));
+        //swipes
+        for (SwipeEvent swipe = swipeQueue.poll(); swipe != null; swipe = swipeQueue.poll())
+            handleSwipe(swipe);
+
+        //keyDown
+        for (KeyEvent keyDown = keyDownQueue.poll(); keyDown != null; keyDown = keyDownQueue.poll())
+            handleKeyDown(keyDown);
+
+        //keyup
+        for (KeyEvent keyUp = keyUpQueue.poll(); keyUp != null; keyUp = keyUpQueue.poll())
+            handleKeyUp(keyUp);
     }
 
     /**
-     * @param position where the swipe started in game units
+     * @param position in game units
+     */
+    public void tap(Vec2 position) {
+        Log.d(TAG, String.format("Tap at: %s", position.toString()));
+
+        //enqueue event for later processing
+        tapQueue.offer(new TapEvent(position));
+    }
+
+    private void handleTap(TapEvent event) {
+        //if tap in top right corner -> toggle pause
+        if (tmpVec().set(GameConstants.GAME_WIDTH, GameConstants.GAME_HEIGHT).sub(event.getPosition()).len2() < PAUSE_TOGGLE_RADIUS * PAUSE_TOGGLE_RADIUS) {
+            Log.d(TAG, String.format("Tap close enough in upper right corner, toggle pause"));
+            togglePause();
+        } else if (!paused) //forward inputs to scene only if game is not paused
+            onTap.notify(event);
+    }
+
+    /**
+     * @param position  where the swipe started in game units
      * @param direction should be normalized
      */
     public void swipe(Vec2 position, Vec2 direction) {
-        Log.d(TAG, String.format("Swipe starting at: %s, Direction: %s",position.toString(),direction.toString()));
+        Log.d(TAG, String.format("Swipe starting at: %s, Direction: %s", position.toString(), direction.toString()));
 
+        //enqueue swipe event
+        swipeQueue.offer(new SwipeEvent(position, direction));
+    }
+
+    private void handleSwipe(SwipeEvent event) {
         //forward inputs to scene only if game is not paused
-        if(!paused)
-            onSwipe.notify(new SwipeEvent(position,direction));
+        if (!paused)
+            onSwipe.notify(event);
     }
 
     /**
      * Called by GameSurfaceView whenever a key has been pressed
      */
     public void keyDown(KeyEvent event) {
-        Log.d(TAG, String.format("Key Down: %s",KeyEvent.keyCodeToString(event.getKeyCode())));
+        Log.d(TAG, String.format("Key Down: %s", KeyEvent.keyCodeToString(event.getKeyCode())));
+
+        //enqueue event for later processing
+        keyDownQueue.offer(event);
+    }
+
+    private void handleKeyDown(KeyEvent event) {
         onKeyDown.notify(event);
 
-        if(event.getKeyCode()==DEBUG_TOGGLE_KEY)
+        if (event.getKeyCode() == DEBUG_TOGGLE_KEY)
             toggleDebugRender();
-        else if(event.getKeyCode()==PAUSE_TOGGLE_KEY)
+        else if (event.getKeyCode() == PAUSE_TOGGLE_KEY)
             togglePause();
     }
 
@@ -275,7 +325,13 @@ public class Game {
      * Called by GameSurfaceView whenever a key has been pressed
      */
     public void keyUp(KeyEvent event) {
-        Log.d(TAG, String.format("Key Up: %s",KeyEvent.keyCodeToString(event.getKeyCode())));
+        Log.d(TAG, String.format("Key Up: %s", KeyEvent.keyCodeToString(event.getKeyCode())));
+
+        //enqueue event for later processing
+        keyDownQueue.offer(event);
+    }
+
+    private void handleKeyUp(KeyEvent event) {
         onKeyUp.notify(event);
     }
 
@@ -337,7 +393,7 @@ public class Game {
      * Does nothing if game is already paused
      */
     public void pauseGame() {
-        if(!paused) {
+        if (!paused) {
             //TODO play sound, ...
         }
         paused = true;
@@ -348,7 +404,7 @@ public class Game {
      * Does nothing if game is not paused
      */
     public void resumeGame() {
-        if(paused) {
+        if (paused) {
             //TODO play sound, ...
         }
         paused = false;
@@ -358,7 +414,7 @@ public class Game {
      * Toggles the pause state
      */
     public void togglePause() {
-        if(paused)
+        if (paused)
             resumeGame();
         else
             pauseGame();
@@ -369,13 +425,12 @@ public class Game {
      * if lives==0, then the game is lost
      */
     public void respawnPlayer() {
-        Log.d(TAG,"Respawn player");
+        Log.d(TAG, "Respawn player");
 
-        if(playerLives==0) {
+        if (playerLives == 0) {
             Log.d(TAG, "No lives left, show lost screen");
             //TODO create lost screen
-        }
-        else {
+        } else {
             //restart level
             loadLevel();
 
@@ -387,6 +442,7 @@ public class Game {
 
     /**
      * Marks given gameobject for removal at the end of the frame, called by GameObject::destroy
+     *
      * @param gameObject !=null
      */
     public void markForRemoval(GameObject gameObject) {
@@ -417,6 +473,6 @@ public class Game {
         root = new GameObject();
         root.init();
 
-        LevelFactories.loadLevel(root,level);
+        LevelFactories.loadLevel(root, level);
     }
 }
