@@ -79,7 +79,7 @@ public class TimingSystem {
         timedAction.action = action;
         timedAction.remainingFrames = frameDelay;
 
-        waitingActions.add(timedAction);
+        newActions.add(timedAction);
     }
 
     /**
