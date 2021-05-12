@@ -2,6 +2,7 @@ package at.ac.tuwien.mmue_lm7.game;
 
 import at.ac.tuwien.mmue_lm7.game.objects.AABB;
 import at.ac.tuwien.mmue_lm7.game.objects.AnimatedSprite;
+import at.ac.tuwien.mmue_lm7.game.objects.Blocker;
 import at.ac.tuwien.mmue_lm7.game.objects.DeadlyAABB;
 import at.ac.tuwien.mmue_lm7.game.objects.GameObject;
 import at.ac.tuwien.mmue_lm7.game.objects.Lifetime;
@@ -55,16 +56,19 @@ public class ObjectFactories {
     }
 
     public static GameObject makeBlocker(int x, int y, float rot, boolean lookingRight) {
-        GameObject blocker = new GameObject();
+        AABB box = new AABB(0.5f,0.5f,CollisionLayers.PLAYER, CollisionLayers.ENEMY);
+
+        Blocker blocker = new Blocker(box);
         blocker.position.set(x + 0.5f, y + 0.5f);
         blocker.rotation = rot;
         blocker.mirrored = lookingRight;
+
+        blocker.addChild(box);
 
         AnimatedSprite idleSprite = new AnimatedSprite(ResourceSystem.SpriteEnum.blockerIdle);
         idleSprite.position.set(0, 0);
         blocker.addChild(idleSprite);
 
-        // TODO Add AABB
         blocker.setLayerRecursive(Layers.ENEMY);
         return blocker;
     }

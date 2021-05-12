@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import at.ac.tuwien.mmue_lm7.game.objects.AABB;
 import at.ac.tuwien.mmue_lm7.game.objects.GameObject;
+import at.ac.tuwien.mmue_lm7.game.objects.KillEnemiesObjective;
 import at.ac.tuwien.mmue_lm7.game.physics.CollisionLayers;
 import at.ac.tuwien.mmue_lm7.game.resources.ResourceSystem;
 import at.ac.tuwien.mmue_lm7.utils.Direction;
@@ -27,7 +28,10 @@ public class LevelFactories {
 
     public static void createLevel1(GameObject root) {
 
-        //TODO spike test plz delete
+        // === OBJECTIVE ===
+        root.addChild(new KillEnemiesObjective());
+
+        // === OBSTACLES ===
         root.addChild(ObjectFactories.makeSpikes(15,0,Direction.DOWN));
 
 

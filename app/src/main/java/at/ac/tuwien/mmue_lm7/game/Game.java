@@ -8,20 +8,11 @@ import android.graphics.Typeface;
 import android.util.Log;
 import android.view.KeyEvent;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
-import java.util.logging.Level;
 
-import at.ac.tuwien.mmue_lm7.game.objects.AABB;
-import at.ac.tuwien.mmue_lm7.game.objects.AnimatedSprite;
 import at.ac.tuwien.mmue_lm7.game.objects.GameObject;
-import at.ac.tuwien.mmue_lm7.game.objects.Sprite;
-import at.ac.tuwien.mmue_lm7.game.objects.TestTouchRect;
-import at.ac.tuwien.mmue_lm7.game.objects.Text;
-import at.ac.tuwien.mmue_lm7.game.physics.CollisionLayers;
 import at.ac.tuwien.mmue_lm7.game.rendering.RenderSystem;
 import at.ac.tuwien.mmue_lm7.game.physics.PhysicsSystem;
 import at.ac.tuwien.mmue_lm7.game.resources.ResourceSystem;
@@ -72,6 +63,7 @@ public class Game {
     private final ResourceSystem resourceSystem;
     private final WraparoundSystem wraparoundSystem = new WraparoundSystem();
     private final TimingSystem timingSystem = new TimingSystem();
+    private final LevelStatusSystem levelStatusSystem = new LevelStatusSystem();
 
     /**
      * if true, debugRender is called on all objects
@@ -91,6 +83,7 @@ public class Game {
     public final Subject<SwipeEvent> onSwipe = new Subject<>();
     public final Subject<KeyEvent> onKeyDown = new Subject<>();
     public final Subject<KeyEvent> onKeyUp = new Subject<>();
+    public final Subject<LevelClearedEvent> onLevelCleared = new Subject<>();
 
     private BlockingQueue<TapEvent> tapQueue = new LinkedBlockingQueue<>();
     private BlockingQueue<SwipeEvent> swipeQueue = new LinkedBlockingQueue<>();
@@ -362,6 +355,10 @@ public class Game {
         return timingSystem;
     }
 
+    public LevelStatusSystem getLevelStatusSystem() {
+        return levelStatusSystem;
+    }
+
     /**
      * @return a temporary vector that may only be used in the same update or render, x=y=0
      */
@@ -474,5 +471,13 @@ public class Game {
         root.init();
 
         LevelFactories.loadLevel(root, level);
+    }
+
+    /**
+     * called when all objectives have been fulfilled
+     */
+    public void clearLevel() {
+        Log.i(TAG, "Level cleared!");
+        onLevelCleared.notify(new LevelClearedEvent(currentLevel));
     }
 }
