@@ -340,7 +340,8 @@ public class Player extends AABB {
     private boolean onCollide(PhysicsSystem.Contact contact) {
         if (contact.getOther().getCollisionLayer() == CollisionLayers.PLATFORM) {
             //resolve collision
-            position.add(Game.get().tmpVec().set(contact.getNormal()).scl(Utils.EPSILON));
+            //position.add(Game.get().tmpVec().set(contact.getNormal()).scl(Utils.EPSILON));
+            position.add(contact.getOverlap());
         }
         return false;
     }

@@ -36,7 +36,7 @@ public class LevelFactories {
         root.addChild(ObjectFactories.makeText(16, 3, "Swipe to Dash!"));
 
         // === OOZE ===
-        root.addChild(ObjectFactories.makeOoze(4, 13, Direction.RIGHT, true));
+        root.addChild(ObjectFactories.makeOoze(1, 9, Direction.RIGHT, true));
 
         // === ENEMIES ===
         root.addChild(ObjectFactories.makeBlocker(13, 11, 0, true));
