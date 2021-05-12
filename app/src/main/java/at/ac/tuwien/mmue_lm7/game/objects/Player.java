@@ -230,48 +230,7 @@ public class Player extends AABB {
                     //perform move
                     setGlobalPosition(movement.getPosition());
 
-                    //cast two raycast down(=inverse to upDir) to check if the end of the platform has been reached
-                    //rays are redone with a slight offset since there is a tiny chance that the rays slip exactly between two boxes
-                    ray.set(upDir.dir).inv().scl(RUNNING_RAY_CAST_LENGTH);
-                    move.set(dir.dir).scl(PLAYER_HALF_SIZE).add(movement.getPosition());
-                    PhysicsSystem.Contact frontRay = Game.get().getPhysicsSystem().raycast(move, ray, PLAYER_MOVEMENT_MASK);
-                    if (frontRay == null) {
-                        move.set(dir.dir).scl(PLAYER_HALF_SIZE - Utils.EPSILON).add(movement.getPosition());
-                        frontRay = Game.get().getPhysicsSystem().raycast(move, ray, PLAYER_MOVEMENT_MASK);
-                    }
-
-                    move.set(dir.dir).inv().scl(PLAYER_HALF_SIZE).add(movement.getPosition());
-                    PhysicsSystem.Contact backRay = Game.get().getPhysicsSystem().raycast(move, ray, PLAYER_MOVEMENT_MASK);
-                    if (backRay == null) {
-                        move.set(dir.dir).inv().scl(PLAYER_HALF_SIZE - Utils.EPSILON).add(movement.getPosition());
-                        backRay = Game.get().getPhysicsSystem().raycast(move, ray, PLAYER_MOVEMENT_MASK);
-                    }
-
-                    if (backRay != null) {
-                        //check if player is already partly over edge
-                        if (frontRay == null) {
-                            //determine how far the player is already over the edge
-
-                            //determine corner position
-                            AABB platform = backRay.getOther();
-                            cornerPos.set(dir.dir).add(upDir.dir).scl(platform.getHalfSize()).add(platform.getGlobalPosition());
-
-                            //determine how far player is peeking off the platform edge with the front edge
-                            //ray = overhang
-                            ray.set(getGlobalPosition())
-                                    .sub(cornerPos)
-                                    .scl(dir.dir);//take only relevant component
-                            float overhang = ray.x + ray.y + PLAYER_HALF_SIZE;
-
-                            //set remaining overhang, such that a state change can be triggered
-                            distUntilTurn = OVERHANG_PERCENT * 2 * PLAYER_HALF_SIZE - overhang;
-                        }
-                    } else {
-                        if (frontRay == null) {
-                            Log.e(TAG, "No collision for any ray detected");
-                            //TODO should player simply fall down?
-                        }
-                    }
+                    performRaycasts(movement.getPosition());
                 }
 
                 break;
@@ -412,6 +371,8 @@ public class Player extends AABB {
         if (state == to)
             return;
 
+        Log.d(TAG, String.format("Player State %-10s -> %s",state.toString(),to.toString()));
+
         switch (state) {
             case OUTER_TURN: {
                 //reset remaining over edge distance
@@ -424,6 +385,11 @@ public class Player extends AABB {
                 jump.setPositioningAndMirroring(dir, upDir, position, 0);
                 dashJump.setPositioningAndMirroring(dir, upDir, position, 0);
                 break;
+            }
+            case RUNNING: {
+                //check platform state before doing further moves
+                if(state== PlayerState.JUMPING)
+                    performRaycasts();
             }
         }
 
@@ -471,6 +437,58 @@ public class Player extends AABB {
         if (upDir.dir.isCCW(dir.dir) && dir.isHorizontal()) {
             rotation += 180;
             rotation %= 360;
+        }
+    }
+
+    private void performRaycasts() {
+        performRaycasts(getGlobalPosition());
+    }
+
+    /**
+     * cast two raycast down(=inverse to upDir) to check if the end of the platform has been reached
+     * rays are redone with a slight offset since there is a tiny chance that the rays slip exactly between two boxes
+     * @param globalPos is unchanged
+     */
+    private void performRaycasts(Vec2 globalPos) {
+        ray.set(upDir.dir).inv().scl(RUNNING_RAY_CAST_LENGTH);
+        move.set(dir.dir).scl(PLAYER_HALF_SIZE).add(globalPos);
+        PhysicsSystem.Contact frontRay = Game.get().getPhysicsSystem().raycast(move, ray, PLAYER_MOVEMENT_MASK);
+        if (frontRay == null) {
+            move.set(dir.dir).scl(PLAYER_HALF_SIZE - Utils.EPSILON).add(globalPos);
+            frontRay = Game.get().getPhysicsSystem().raycast(move, ray, PLAYER_MOVEMENT_MASK);
+        }
+
+        move.set(dir.dir).inv().scl(PLAYER_HALF_SIZE).add(globalPos);
+        PhysicsSystem.Contact backRay = Game.get().getPhysicsSystem().raycast(move, ray, PLAYER_MOVEMENT_MASK);
+        if (backRay == null) {
+            move.set(dir.dir).inv().scl(PLAYER_HALF_SIZE - Utils.EPSILON).add(globalPos);
+            backRay = Game.get().getPhysicsSystem().raycast(move, ray, PLAYER_MOVEMENT_MASK);
+        }
+
+        if (backRay != null) {
+            //check if player is already partly over edge
+            if (frontRay == null) {
+                //determine how far the player is already over the edge
+
+                //determine corner position
+                AABB platform = backRay.getOther();
+                cornerPos.set(dir.dir).add(upDir.dir).scl(platform.getHalfSize()).add(platform.getGlobalPosition());
+
+                //determine how far player is peeking off the platform edge with the front edge
+                //ray = overhang
+                ray.set(getGlobalPosition())
+                        .sub(cornerPos)
+                        .scl(dir.dir);//take only relevant component
+                float overhang = ray.x + ray.y + PLAYER_HALF_SIZE;
+
+                //set remaining overhang, such that a state change can be triggered
+                distUntilTurn = OVERHANG_PERCENT * 2 * PLAYER_HALF_SIZE - overhang;
+            }
+        } else {
+            if (frontRay == null) {
+                Log.e(TAG, "No collision for any ray detected");
+                //TODO should player simply fall down?
+            }
         }
     }
 }
