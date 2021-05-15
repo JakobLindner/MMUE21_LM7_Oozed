@@ -19,12 +19,12 @@ public class Blocker extends Enemy {
     /**
      * Delay before initiating turn
      */
-    private static final int TURN_DELAY = 60;
+    private static final int TURN_DELAY = 30;
     //private static final int TURN_DURATION = 30;
     /**
      * Delay before walking after turn
      */
-    private static final int TURN_POST_DELAY = 30;
+    private static final int TURN_POST_DELAY = 60;
 
     private static final short MOVEMENT_MASK = CollisionLayers.ENEMY | CollisionLayers.PLATFORM | CollisionLayers.DEADLY;
     private static final float WALKING_RAY_CAST_LENGTH = 1;
