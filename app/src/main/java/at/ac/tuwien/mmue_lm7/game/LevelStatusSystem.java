@@ -4,17 +4,25 @@ package at.ac.tuwien.mmue_lm7.game;
  * keeps track of some state of the current level, so it can be checked whether or not objectives have been fulfilled
  */
 public class LevelStatusSystem {
-    private int enemyCount = 0;
+    public static class LevelStatus {
+        private int enemyCount = 0;
+    }
+
+    private LevelStatus levelStatus = new LevelStatus();
+
+    public void clearLevelStatus() {
+        levelStatus = new LevelStatus();
+    }
 
     public int getEnemyCount() {
-        return enemyCount;
+        return levelStatus.enemyCount;
     }
 
     public void increaseEnemyCount() {
-        ++enemyCount;
+        ++levelStatus.enemyCount;
     }
 
     public void decreaseEnemyCount() {
-        --enemyCount;
+        --levelStatus.enemyCount;
     }
 }

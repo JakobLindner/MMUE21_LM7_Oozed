@@ -470,6 +470,8 @@ public class Game {
         root = new GameObject();
         root.init();
 
+        levelStatusSystem.clearLevelStatus();
+
         LevelFactories.loadLevel(root, level);
     }
 

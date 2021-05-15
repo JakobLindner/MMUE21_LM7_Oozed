@@ -451,14 +451,20 @@ public class Player extends AABB {
      * @param globalPos is unchanged
      */
     private void performRaycasts(Vec2 globalPos) {
+        //setup ray
         ray.set(upDir.dir).inv().scl(RUNNING_RAY_CAST_LENGTH);
+
+        //setup ray origin
         move.set(dir.dir).scl(PLAYER_HALF_SIZE).add(globalPos);
+        //perform front ray, possibly 2 times with a slight offset
         PhysicsSystem.Contact frontRay = Game.get().getPhysicsSystem().raycast(move, ray, PLAYER_MOVEMENT_MASK);
         if (frontRay == null) {
             move.set(dir.dir).scl(PLAYER_HALF_SIZE - Utils.EPSILON).add(globalPos);
             frontRay = Game.get().getPhysicsSystem().raycast(move, ray, PLAYER_MOVEMENT_MASK);
         }
 
+        //perform back ray, possibly 2 times with a slight offset
+        //adjust ray origin
         move.set(dir.dir).inv().scl(PLAYER_HALF_SIZE).add(globalPos);
         PhysicsSystem.Contact backRay = Game.get().getPhysicsSystem().raycast(move, ray, PLAYER_MOVEMENT_MASK);
         if (backRay == null) {

@@ -4,18 +4,54 @@ import android.util.Log;
 
 import at.ac.tuwien.mmue_lm7.game.Game;
 import at.ac.tuwien.mmue_lm7.game.ObjectFactories;
+import at.ac.tuwien.mmue_lm7.game.physics.CollisionLayers;
 import at.ac.tuwien.mmue_lm7.game.physics.PhysicsSystem;
 import at.ac.tuwien.mmue_lm7.game.rendering.Layers;
 import at.ac.tuwien.mmue_lm7.utils.Direction;
+import at.ac.tuwien.mmue_lm7.utils.Utils;
 import at.ac.tuwien.mmue_lm7.utils.Vec2;
 
 public class Blocker extends Enemy {
     private static final String TAG = "Blocker";
 
+    private static final float WALK_SPEED = 0.04f;
+    /**
+     * Delay before initiating turn
+     */
+    private static final int TURN_DELAY = 60;
+    //private static final int TURN_DURATION = 30;
+    /**
+     * Delay before walking after turn
+     */
+    private static final int TURN_POST_DELAY = 30;
+
+    private static final short MOVEMENT_MASK = CollisionLayers.ENEMY | CollisionLayers.PLATFORM;
+    private static final float WALKING_RAY_CAST_LENGTH = 1;
+    /**
+     * Mask used for checking whether end of platform has been reached
+     */
+    private static final short RAY_CAST_MASK = CollisionLayers.PLATFORM;
+
     private AABB box;
 
     private Direction dir;
     private Direction upDir;
+
+    ///////////////////////////////////////////////////////////////////////////
+    // STATE
+    ///////////////////////////////////////////////////////////////////////////
+    private enum BlockerState {
+        WALKING,
+        STANDING,//used before and after turning
+        TURNING
+    }
+
+    private BlockerState state = BlockerState.WALKING;
+
+    //vector instance reused for movement
+    //2 vectors are used almost every frame, so we keep them here as members for optimization
+    private Vec2 move = new Vec2();
+    private Vec2 ray = new Vec2();
 
     public Blocker(AABB box, Direction startingDir, boolean runningCW) {
         this.box = box;
@@ -32,6 +68,24 @@ public class Blocker extends Enemy {
         box.onCollide.addListener(this::onCollide);
 
         updateOrientation();
+    }
+
+    @Override
+    public void update() {
+        if(state==BlockerState.WALKING) {
+            //perform move
+            PhysicsSystem.Sweep movement = Game.get().getPhysicsSystem().move(box,
+                    move.set(dir.dir).scl(WALK_SPEED),
+                    MOVEMENT_MASK);
+            setGlobalPosition(movement.getPosition());
+
+            //check if there is a collision = obstacle in front of
+            if(movement.getContact()!=null || endOfPlatformReached(movement.getPosition())) {
+                Game.get().getTimingSystem().addDelayedAction(this::initTurning,TURN_DELAY);
+                state = BlockerState.STANDING;
+            }
+        }
+
     }
 
     @Override
@@ -74,6 +128,44 @@ public class Blocker extends Enemy {
             rotation += 180;
             rotation %= 360;
         }
+    }
+
+    private boolean endOfPlatformReached(Vec2 globalPos) {
+        float halfSize = dir.isHorizontal()?box.getHalfSize().x:box.getHalfSize().y;
+        //setup ray
+        ray.set(upDir.dir).inv().scl(WALKING_RAY_CAST_LENGTH);
+        //setup ray origin
+        move.set(dir.dir).scl(halfSize).add(globalPos);
+
+        //perform raycast, redo with a slight offset if nothing has been hit, since it might have been performed exactly between two blocks
+        PhysicsSystem.Contact frontRay = Game.get().getPhysicsSystem().raycast(move, ray, RAY_CAST_MASK);
+        if (frontRay == null) {
+            move.set(dir.dir).scl(halfSize - Utils.EPSILON).add(globalPos);
+            frontRay = Game.get().getPhysicsSystem().raycast(move, ray, RAY_CAST_MASK);
+        }
+
+        return frontRay==null;
+    }
+
+    private void initTurning() {
+        if(isDestroyed())
+            return;
+
+        //TODO animation
+        state = BlockerState.TURNING;
+
+        //TODO do this at end of turning animation
+        state = BlockerState.STANDING;
+        dir = dir.opposite();
+        updateOrientation();
+        Game.get().getTimingSystem().addDelayedAction(this::switchToWalking,TURN_POST_DELAY);
+    }
+
+    private void switchToWalking() {
+        if(isDestroyed())
+            return;
+
+        state = BlockerState.WALKING;
     }
 
 }
