@@ -32,19 +32,19 @@ public class LevelFactories {
         root.addChild(new KillEnemiesObjective());
 
         // === OBSTACLES ===
-        root.addChild(ObjectFactories.makeSpikes(15,0,Direction.DOWN));
-
+        root.addChild(ObjectFactories.makeSpikes(20,8,Direction.UP));
 
         // === TEXT ===
         root.addChild(ObjectFactories.makeText(16, 5, "Tap to Jump!"));
         root.addChild(ObjectFactories.makeText(16, 3, "Swipe to Dash!"));
 
         // === OOZE ===
-        root.addChild(ObjectFactories.makeOoze(1, 9, Direction.RIGHT, true));
+        root.addChild(ObjectFactories.makeOoze(1, 5, Direction.RIGHT, true));
 
         // === ENEMIES ===
-        root.addChild(ObjectFactories.makeBlocker(13, 11, Direction.LEFT, false));
-        root.addChild(ObjectFactories.makeBlocker(22, 10, Direction.RIGHT, false));
+        root.addChild(ObjectFactories.makeBlocker(18, 0, Direction.RIGHT, false));
+        root.addChild(ObjectFactories.makeBlocker(8, 0, Direction.LEFT, true));
+        root.addChild(ObjectFactories.makeBlocker(1, 7, Direction.LEFT, true));
         root.addChild(ObjectFactories.makeBlocker(23, 14, Direction.RIGHT, true));
 
 

@@ -3,6 +3,7 @@ package at.ac.tuwien.mmue_lm7.game.objects;
 import android.util.Log;
 
 import at.ac.tuwien.mmue_lm7.game.Game;
+import at.ac.tuwien.mmue_lm7.game.GameConstants;
 import at.ac.tuwien.mmue_lm7.game.ObjectFactories;
 import at.ac.tuwien.mmue_lm7.game.physics.CollisionLayers;
 import at.ac.tuwien.mmue_lm7.game.physics.PhysicsSystem;
@@ -25,8 +26,12 @@ public class Blocker extends Enemy {
      */
     private static final int TURN_POST_DELAY = 30;
 
-    private static final short MOVEMENT_MASK = CollisionLayers.ENEMY | CollisionLayers.PLATFORM;
+    private static final short MOVEMENT_MASK = CollisionLayers.ENEMY | CollisionLayers.PLATFORM | CollisionLayers.DEADLY;
     private static final float WALKING_RAY_CAST_LENGTH = 1;
+    /**
+     * Offset of raycast origin from center
+     */
+    private static final float WALKING_RAY_CAST_OFFSET = 0.5f- GameConstants.UNITS_PER_PIXEL;
     /**
      * Mask used for checking whether end of platform has been reached
      */
@@ -60,6 +65,8 @@ public class Blocker extends Enemy {
             upDir = startingDir.rotateCCW();
         else
             upDir = startingDir.rotateCW();
+
+        setWrappable(true);
     }
 
     @Override
@@ -131,16 +138,15 @@ public class Blocker extends Enemy {
     }
 
     private boolean endOfPlatformReached(Vec2 globalPos) {
-        float halfSize = dir.isHorizontal()?box.getHalfSize().x:box.getHalfSize().y;
         //setup ray
         ray.set(upDir.dir).inv().scl(WALKING_RAY_CAST_LENGTH);
         //setup ray origin
-        move.set(dir.dir).scl(halfSize).add(globalPos);
+        move.set(dir.dir).scl(WALKING_RAY_CAST_OFFSET).add(globalPos);
 
         //perform raycast, redo with a slight offset if nothing has been hit, since it might have been performed exactly between two blocks
         PhysicsSystem.Contact frontRay = Game.get().getPhysicsSystem().raycast(move, ray, RAY_CAST_MASK);
         if (frontRay == null) {
-            move.set(dir.dir).scl(halfSize - Utils.EPSILON).add(globalPos);
+            move.set(dir.dir).scl(WALKING_RAY_CAST_OFFSET - Utils.EPSILON).add(globalPos);
             frontRay = Game.get().getPhysicsSystem().raycast(move, ray, RAY_CAST_MASK);
         }
 
