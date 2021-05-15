@@ -141,10 +141,12 @@ public class Game {
     /**
      * Called when activity is paused
      * releases all resources
+     * pauses game
      */
     public void pause() {
         Log.i(TAG, "Pause Game");
         resourceSystem.releaseResources();
+        pauseGame();
     }
 
     /**
