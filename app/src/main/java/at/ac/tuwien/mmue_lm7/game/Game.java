@@ -48,6 +48,12 @@ public class Game {
     private int playerLives = GameConstants.PLAYER_LIVES;
     private String currentLevel = "1";
     private int lastMainLevel = 1;
+    /**
+     * The time in frames the game has been running
+     * this is stored in addition to the highscore, since when you clear all levels you can still try
+     * clearing the game faster
+     */
+    private int time = 0;
 
     /**
      * Root object of the scene tree
@@ -186,6 +192,9 @@ public class Game {
             for (GameObject gameObject : markedForRemoval)
                 gameObject.detachFromParent();
             markedForRemoval.clear();
+
+            //advance time
+            ++time;
         }
 
         freeAllTmpVec();
@@ -427,7 +436,7 @@ public class Game {
         Log.d(TAG, "Respawn player");
 
         if (playerLives == 0) {
-            Log.d(TAG, "No lives left, show lost screen");
+            Log.i(TAG, "No lives left, show lost screen");
             //TODO create lost screen
         } else {
             //restart level
@@ -474,7 +483,11 @@ public class Game {
 
         levelStatusSystem.clearLevelStatus();
 
-        LevelFactories.loadLevel(root, level);
+        if(!LevelFactories.loadLevel(root, level)) {
+            //TODO load win screen
+            Log.i(TAG, "All levels completed, show win screen");
+            
+        }
     }
 
     /**
@@ -483,5 +496,8 @@ public class Game {
     public void clearLevel() {
         Log.i(TAG, "Level cleared!");
         onLevelCleared.notify(new LevelClearedEvent(currentLevel));
+
+        advanceLevel();
+        loadLevel();
     }
 }

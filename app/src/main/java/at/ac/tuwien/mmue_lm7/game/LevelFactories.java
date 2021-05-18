@@ -11,6 +11,7 @@ import at.ac.tuwien.mmue_lm7.utils.Direction;
 
 /**
  * creates levels by creating and placing all game objects for them
+ *
  * @author jakob
  */
 public class LevelFactories {
@@ -19,10 +20,10 @@ public class LevelFactories {
         void create(GameObject root);
     }
 
-    public static HashMap<String,LevelFactory> levelsByName = new HashMap<String, LevelFactory>(){{
-        put("1",LevelFactories::createLevel1);
-        put("2",LevelFactories::createLevel2);
-    }} ;
+    public static HashMap<String, LevelFactory> levelsByName = new HashMap<String, LevelFactory>() {{
+        put("1", LevelFactories::createLevel1);
+        put("2", LevelFactories::createLevel2);
+    }};
 
     // TODO tutorial level
 
@@ -32,7 +33,7 @@ public class LevelFactories {
         root.addChild(new KillEnemiesObjective());
 
         // === OBSTACLES ===
-        root.addChild(ObjectFactories.makeSpikes(20,8,Direction.UP));
+        root.addChild(ObjectFactories.makeSpikes(20, 8, Direction.UP));
 
         // === TEXT ===
         root.addChild(ObjectFactories.makeText(16, 5, "Tap to Jump!"));
@@ -89,7 +90,7 @@ public class LevelFactories {
         root.addChild(platformWrap2_left);
 
         // === PLATFORM WRAP 2 Right ===
-        GameObject platformWrap2_right = ObjectFactories.makePlatform(32-6, 8);
+        GameObject platformWrap2_right = ObjectFactories.makePlatform(32 - 6, 8);
         platformWrap2_right.addChild(ObjectFactories.makePlatformTile(0, 0, ResourceSystem.SpriteEnum.platformPipe));
         platformWrap2_right.addChild(ObjectFactories.makePlatformTile(1, 0, ResourceSystem.SpriteEnum.platformPipeOpen));
         platformWrap2_right.addChild(ObjectFactories.makePlatformTile(2, 0, ResourceSystem.SpriteEnum.platformCircuit));
@@ -178,11 +179,21 @@ public class LevelFactories {
         root.addChild(ObjectFactories.makeOoze(3, 6, Direction.LEFT, false));
     }
 
-    public static void loadLevel(GameObject root, int id) {
-        loadLevel(root, "" + id);
+    public static boolean loadLevel(GameObject root, int id) {
+        return loadLevel(root, "" + id);
     }
 
-    public static void loadLevel(GameObject root, String name) {
+    /**
+     * @param root !=null
+     * @param name != null
+     * @return true if level could be loaded, false otherwise
+     */
+    public static boolean loadLevel(GameObject root, String name) {
+        if(!levelsByName.containsKey(name))
+            return false;
+
         levelsByName.get(name).create(root);
+        return true;
+
     }
 }
