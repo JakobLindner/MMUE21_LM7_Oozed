@@ -16,7 +16,8 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_game"
             android:screenOrientation="landscape"
-            android:theme="@style/Theme.MMUELM7.Fullscreen"></activity>
+            android:theme="@style/Theme.MMUELM7.Fullscreen"
+            android:alwaysRetainTaskState="true"></activity>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

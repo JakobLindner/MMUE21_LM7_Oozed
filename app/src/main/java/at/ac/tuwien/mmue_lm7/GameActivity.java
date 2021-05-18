@@ -2,11 +2,15 @@ package at.ac.tuwien.mmue_lm7;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 import android.view.View;
+
+import at.ac.tuwien.mmue_lm7.game.GameOverEvent;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -28,6 +32,7 @@ public class GameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game);
 
         gameView = findViewById(R.id.fullscreen_content);
+        gameView.getGame().onGameOver.addListener(this::onGameOver);
 
         //Schedule a delayed hide of system ui if user forces its appearance
         View decorView = getWindow().getDecorView();
@@ -96,5 +101,23 @@ public class GameActivity extends AppCompatActivity {
         super.onDestroy();
         Log.d(TAG, "onDestroy");
         gameView.onDestroy();
+
+        gameView.getGame().onGameOver.removeListener(this::onGameOver);
+    }
+
+    /**
+     * replaces this activity with game over activity
+     */
+    private boolean onGameOver(GameOverEvent event) {
+        //Switch to game over activity
+        Intent intent = new Intent(this, GameOver.class);
+        intent.putExtra(GameOver.SCORE_KEY,event.getScore());
+        intent.putExtra(GameOver.TIME_KEY,event.getTime());
+        intent.putExtra(GameOver.GAME_COMPLETED_KEY, event.gameCompleted());
+        //finish this activity first, so the game activity replaces this activity
+        this.finish();
+        startActivity(intent);
+
+        return true;
     }
 }

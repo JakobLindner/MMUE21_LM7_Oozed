@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
+import at.ac.tuwien.mmue_lm7.GameOver;
 import at.ac.tuwien.mmue_lm7.game.objects.GameObject;
 import at.ac.tuwien.mmue_lm7.game.rendering.RenderSystem;
 import at.ac.tuwien.mmue_lm7.game.physics.PhysicsSystem;
@@ -90,6 +91,7 @@ public class Game {
     public final Subject<KeyEvent> onKeyDown = new Subject<>();
     public final Subject<KeyEvent> onKeyUp = new Subject<>();
     public final Subject<LevelClearedEvent> onLevelCleared = new Subject<>();
+    public final Subject<GameOverEvent> onGameOver = new Subject<>();
 
     private BlockingQueue<TapEvent> tapQueue = new LinkedBlockingQueue<>();
     private BlockingQueue<SwipeEvent> swipeQueue = new LinkedBlockingQueue<>();
@@ -437,7 +439,7 @@ public class Game {
 
         if (playerLives == 0) {
             Log.i(TAG, "No lives left, show lost screen");
-            //TODO create lost screen
+            onGameOver.notify(new GameOverEvent(lastMainLevel,time,false));
         } else {
             //restart level
             loadLevel();
@@ -484,9 +486,8 @@ public class Game {
         levelStatusSystem.clearLevelStatus();
 
         if(!LevelFactories.loadLevel(root, level)) {
-            //TODO load win screen
             Log.i(TAG, "All levels completed, show win screen");
-            
+            onGameOver.notify(new GameOverEvent(lastMainLevel,time,true));
         }
     }
 
