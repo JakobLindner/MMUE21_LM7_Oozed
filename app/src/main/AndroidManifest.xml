@@ -9,13 +9,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MMUELM7">
+        <activity android:name=".GameOver"
+                android:screenOrientation="landscape"></activity>
         <activity
             android:name=".GameActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_game"
+            android:screenOrientation="landscape"
             android:theme="@style/Theme.MMUELM7.Fullscreen"
-            android:screenOrientation="landscape">
-        </activity>
+            android:alwaysRetainTaskState="true"></activity>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
