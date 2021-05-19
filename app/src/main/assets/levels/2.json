@@ -1,0 +1,152 @@
+{
+    "levelName": "2",
+    "tiles": [
+        {
+            "tileName": "Ooze",
+            "x": 10,
+            "y": 7,
+            "mirrored": false,
+            "rotation": 0
+        },
+        {
+            "tileName": "platformBigGears",
+            "x": 16,
+            "y": 5,
+            "mirrored": false,
+            "rotation": 0
+        },
+        {
+            "tileName": "platformBigGears",
+            "x": 18,
+            "y": 5,
+            "mirrored": false,
+            "rotation": 0
+        },
+        {
+            "tileName": "platformTubesOpen",
+            "x": 8,
+            "y": 6,
+            "mirrored": false,
+            "rotation": 0
+        },
+        {
+            "tileName": "platformCircuit",
+            "x": 12,
+            "y": 6,
+            "mirrored": false,
+            "rotation": 0
+        },
+        {
+            "tileName": "platformCircuit",
+            "x": 12,
+            "y": 4,
+            "mirrored": false,
+            "rotation": 0
+        },
+        {
+            "tileName": "platformCircuit",
+            "x": 11,
+            "y": 4,
+            "mirrored": false,
+            "rotation": 0
+        },
+        {
+            "tileName": "platformTubesOpen",
+            "x": 10,
+            "y": 4,
+            "mirrored": false,
+            "rotation": 0
+        },
+        {
+            "tileName": "platformTubes",
+            "x": 8,
+            "y": 5,
+            "mirrored": false,
+            "rotation": 0
+        },
+        {
+            "tileName": "platformTubes",
+            "x": 0,
+            "y": 0,
+            "mirrored": false,
+            "rotation": 0
+        },
+        {
+            "tileName": "platformTubes",
+            "x": 0,
+            "y": 1,
+            "mirrored": false,
+            "rotation": 0
+        },
+        {
+            "tileName": "platformTubes",
+            "x": 31,
+            "y": 1,
+            "mirrored": false,
+            "rotation": 0
+        },
+        {
+            "tileName": "platformTubes",
+            "x": 31,
+            "y": 0,
+            "mirrored": false,
+            "rotation": 0
+        },
+        {
+            "tileName": "platformTubes",
+            "x": 31,
+            "y": 17,
+            "mirrored": false,
+            "rotation": 0
+        },
+        {
+            "tileName": "platformTubes",
+            "x": 0,
+            "y": 17,
+            "mirrored": false,
+            "rotation": 0
+        },
+        {
+            "tileName": "platformTubes",
+            "x": 9,
+            "y": 5,
+            "mirrored": false,
+            "rotation": 0
+        },
+        {
+            "tileName": "Blocker",
+            "x": 17,
+            "y": 7,
+            "mirrored": false,
+            "rotation": 0
+        },
+        {
+            "tileName": "platformTubesOpen",
+            "x": 12,
+            "y": 5,
+            "mirrored": false,
+            "rotation": 0
+        },
+        {
+            "tileName": "platformCircuit",
+            "x": 9,
+            "y": 6,
+            "mirrored": false,
+            "rotation": 0
+        },
+        {
+            "tileName": "platformBigGears",
+            "x": 10,
+            "y": 5,
+            "mirrored": false,
+            "rotation": 0
+        },
+        {
+            "tileName": "Blocker",
+            "x": 20,
+            "y": 6,
+            "mirrored": true,
+            "rotation": 270
+        }
+    ]
+}

@@ -21,7 +21,6 @@ public class LevelFactories {
 
     public static HashMap<String,LevelFactory> levelsByName = new HashMap<String, LevelFactory>(){{
         put("1",LevelFactories::createLevel1);
-        put("2",LevelFactories::createLevel2);
     }} ;
 
     // TODO tutorial level
@@ -171,11 +170,6 @@ public class LevelFactories {
 
         // === BACKGROUND ===
         root.addChild(ObjectFactories.makeBackground());
-    }
-
-    public static void createLevel2(GameObject root) {
-        // === OOZE ===
-        root.addChild(ObjectFactories.makeOoze(3, 6, Direction.LEFT, false));
     }
 
     public static void loadLevel(GameObject root, int id) {
