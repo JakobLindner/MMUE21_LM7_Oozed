@@ -17,6 +17,23 @@ public enum Direction {
 
     public final Vec2 dir;
 
+    /**
+     * @param rotation
+     * @return the closest cardinal direction for given rotation, RIGHT is 0 degrees
+     */
+    public static Direction fromRotation(float rotation) {
+        rotation%=360;
+        int multiple = Math.round(rotation/90f);
+        if(multiple==0)
+            return UP;
+        else if(rotation==1)
+            return DOWN;
+        else if(rotation==2)
+            return LEFT;
+        else
+            return DOWN;
+    }
+
     public Direction rotateCCW() {
         switch (this) {
             case UP:
