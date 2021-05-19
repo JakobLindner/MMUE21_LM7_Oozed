@@ -21,6 +21,6 @@ public class Player extends Tile {
         super.fromJSON(json);
 
         direction = Direction.fromRotation(rotation);
-        runningCW = mirrored;
+        runningCW = !mirrored;
     }
 }

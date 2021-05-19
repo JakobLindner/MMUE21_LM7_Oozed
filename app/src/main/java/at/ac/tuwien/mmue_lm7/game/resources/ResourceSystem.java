@@ -1,13 +1,11 @@
 package at.ac.tuwien.mmue_lm7.game.resources;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
 
 import java.util.HashMap;
-import java.util.MissingResourceException;
 
 import at.ac.tuwien.mmue_lm7.R;
 
@@ -113,7 +111,7 @@ public class ResourceSystem {
                 info.spriteSheetId = R.drawable.platforms;
                 info.firstX = 48;
                 break;
-            case bigPlatformGears:
+            case platformBigGears:
                 info.spriteSheetId = R.drawable.platforms;
                 info.firstY = 16;
                 info.size = 32;
@@ -143,7 +141,7 @@ public class ResourceSystem {
         platformPipeOpen,
         platformCircuit,
         platformIce,
-        bigPlatformGears,
+        platformBigGears,
         background,
         spikes,
         disappearEffect

@@ -25,13 +25,13 @@ public enum Direction {
         rotation%=360;
         int multiple = Math.round(rotation/90f);
         if(multiple==0)
-            return UP;
+            return RIGHT;
         else if(rotation==1)
             return DOWN;
         else if(rotation==2)
             return LEFT;
         else
-            return DOWN;
+            return UP;
     }
 
     public Direction rotateCCW() {

@@ -8,7 +8,9 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import at.ac.tuwien.mmue_lm7.game.ObjectFactories;
 import at.ac.tuwien.mmue_lm7.game.objects.GameObject;
+import at.ac.tuwien.mmue_lm7.game.objects.KillEnemiesObjective;
 
 public class Level {
     private static final String TAG = "Level";
@@ -24,6 +26,12 @@ public class Level {
         for(Tile tile : objects) {
             tile.build(root);
         }
+
+        //add objective
+        root.addChild(new KillEnemiesObjective());
+
+        //add background
+        root.addChild(ObjectFactories.makeBackground());
     }
 
     public static Level fromJSON(JSONObject json) throws JSONException {

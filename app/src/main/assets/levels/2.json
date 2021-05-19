@@ -23,7 +23,7 @@
             "rotation": 0
         },
         {
-            "tileName": "platformTubesOpen",
+            "tileName": "platformPipeOpen",
             "x": 8,
             "y": 6,
             "mirrored": false,
@@ -51,63 +51,63 @@
             "rotation": 0
         },
         {
-            "tileName": "platformTubesOpen",
+            "tileName": "platformPipeOpen",
             "x": 10,
             "y": 4,
             "mirrored": false,
             "rotation": 0
         },
         {
-            "tileName": "platformTubes",
+            "tileName": "platformPipe",
             "x": 8,
             "y": 5,
             "mirrored": false,
             "rotation": 0
         },
         {
-            "tileName": "platformTubes",
+            "tileName": "platformPipe",
             "x": 0,
             "y": 0,
             "mirrored": false,
             "rotation": 0
         },
         {
-            "tileName": "platformTubes",
+            "tileName": "platformPipe",
             "x": 0,
             "y": 1,
             "mirrored": false,
             "rotation": 0
         },
         {
-            "tileName": "platformTubes",
+            "tileName": "platformPipe",
             "x": 31,
             "y": 1,
             "mirrored": false,
             "rotation": 0
         },
         {
-            "tileName": "platformTubes",
+            "tileName": "platformPipe",
             "x": 31,
             "y": 0,
             "mirrored": false,
             "rotation": 0
         },
         {
-            "tileName": "platformTubes",
+            "tileName": "platformPipe",
             "x": 31,
             "y": 17,
             "mirrored": false,
             "rotation": 0
         },
         {
-            "tileName": "platformTubes",
+            "tileName": "platformPipe",
             "x": 0,
             "y": 17,
             "mirrored": false,
             "rotation": 0
         },
         {
-            "tileName": "platformTubes",
+            "tileName": "platformPipe",
             "x": 9,
             "y": 5,
             "mirrored": false,
@@ -121,7 +121,7 @@
             "rotation": 0
         },
         {
-            "tileName": "platformTubesOpen",
+            "tileName": "platformPipeOpen",
             "x": 12,
             "y": 5,
             "mirrored": false,

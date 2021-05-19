@@ -1,11 +1,24 @@
 package at.ac.tuwien.mmue_lm7.game;
 
+import android.content.Context;
+import android.content.res.AssetManager;
+import android.util.Log;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.json.JSONTokener;
+
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 
-import at.ac.tuwien.mmue_lm7.game.objects.AABB;
+import at.ac.tuwien.mmue_lm7.game.level.Level;
 import at.ac.tuwien.mmue_lm7.game.objects.GameObject;
 import at.ac.tuwien.mmue_lm7.game.objects.KillEnemiesObjective;
-import at.ac.tuwien.mmue_lm7.game.physics.CollisionLayers;
 import at.ac.tuwien.mmue_lm7.game.resources.ResourceSystem;
 import at.ac.tuwien.mmue_lm7.utils.Direction;
 
@@ -14,14 +27,21 @@ import at.ac.tuwien.mmue_lm7.utils.Direction;
  *
  * @author jakob
  */
-public class LevelFactories {
+public class LevelLoader {
+    private static final String TAG = "LevelFactories";
+    private AssetManager assetManager;
+
+    public LevelLoader(Context context) {
+        this.assetManager = context.getAssets();
+    }
+
     @FunctionalInterface
     public interface LevelFactory {
         void create(GameObject root);
     }
 
     public static HashMap<String,LevelFactory> levelsByName = new HashMap<String, LevelFactory>(){{
-        put("1",LevelFactories::createLevel1);
+        put("1", LevelLoader::createLevel1);
     }} ;
 
 
@@ -57,7 +77,7 @@ public class LevelFactories {
         platform1.addChild(ObjectFactories.makePlatformTile(3, 0, ResourceSystem.SpriteEnum.platformIce));
         platform1.addChild(ObjectFactories.makePlatformTile(4, 0, ResourceSystem.SpriteEnum.platformPipe));
         platform1.addChild(ObjectFactories.makePlatformTile(5, 0, 180, false, ResourceSystem.SpriteEnum.platformCircuit));
-        platform1.addChild(ObjectFactories.makeBigPlatformTile(4, 1, 0, true, ResourceSystem.SpriteEnum.bigPlatformGears));
+        platform1.addChild(ObjectFactories.makeBigPlatformTile(4, 1, 0, true, ResourceSystem.SpriteEnum.platformBigGears));
         root.addChild(platform1);
 
         // === PLATFORM WRAP 1 ===
@@ -102,20 +122,20 @@ public class LevelFactories {
 
         // === PLATFORM 2 ===
         GameObject platform2 = ObjectFactories.makePlatform(12, 8);
-        platform2.addChild(ObjectFactories.makeBigPlatformTile(0, 0, 0, true, ResourceSystem.SpriteEnum.bigPlatformGears));
+        platform2.addChild(ObjectFactories.makeBigPlatformTile(0, 0, 0, true, ResourceSystem.SpriteEnum.platformBigGears));
         platform2.addChild(ObjectFactories.makePlatformTile(2, 0, ResourceSystem.SpriteEnum.platformCircuit));
         platform2.addChild(ObjectFactories.makePlatformTile(3, 0, ResourceSystem.SpriteEnum.platformIce));
-        platform2.addChild(ObjectFactories.makeBigPlatformTile(2, 1, ResourceSystem.SpriteEnum.bigPlatformGears));
+        platform2.addChild(ObjectFactories.makeBigPlatformTile(2, 1, ResourceSystem.SpriteEnum.platformBigGears));
         platform2.addChild(ObjectFactories.makePlatformTile(0, 2, ResourceSystem.SpriteEnum.platformPipeOpen));
         platform2.addChild(ObjectFactories.makePlatformTile(1, 2, ResourceSystem.SpriteEnum.platformPipe));
         root.addChild(platform2);
 
         // === PLATFORM 3 ===
         GameObject platform3 = ObjectFactories.makePlatform(20, 11);
-        platform3.addChild(ObjectFactories.makeBigPlatformTile(0, 0, ResourceSystem.SpriteEnum.bigPlatformGears));
+        platform3.addChild(ObjectFactories.makeBigPlatformTile(0, 0, ResourceSystem.SpriteEnum.platformBigGears));
         platform3.addChild(ObjectFactories.makePlatformTile(2, 0, ResourceSystem.SpriteEnum.platformCircuit));
         platform3.addChild(ObjectFactories.makePlatformTile(3, 0, ResourceSystem.SpriteEnum.platformIce));
-        platform3.addChild(ObjectFactories.makeBigPlatformTile(2, 1, ResourceSystem.SpriteEnum.bigPlatformGears));
+        platform3.addChild(ObjectFactories.makeBigPlatformTile(2, 1, ResourceSystem.SpriteEnum.platformBigGears));
         platform3.addChild(ObjectFactories.makePlatformTile(0, 2, ResourceSystem.SpriteEnum.platformPipeOpen));
         platform3.addChild(ObjectFactories.makePlatformTile(1, 2, ResourceSystem.SpriteEnum.platformPipe));
         root.addChild(platform3);
@@ -174,7 +194,7 @@ public class LevelFactories {
         root.addChild(ObjectFactories.makeBackground());
     }
 
-    public static boolean loadLevel(GameObject root, int id) {
+    public boolean loadLevel(GameObject root, int id) {
         return loadLevel(root, "" + id);
     }
 
@@ -183,9 +203,37 @@ public class LevelFactories {
      * @param name != null
      * @return true if level could be loaded, false otherwise
      */
-    public static boolean loadLevel(GameObject root, String name) {
-        if(!levelsByName.containsKey(name))
+    public boolean loadLevel(GameObject root, String name) {
+        //check if there is a level building procedure
+        if(!levelsByName.containsKey(name)) {
+            //check if there is a level json
+            try {
+                //loading text from asset: https://stackoverflow.com/a/16110044
+                InputStream is = assetManager.open(String.format("levels/%s.json",name));
+                StringBuilder sb = new StringBuilder();
+                BufferedReader br = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8 ));
+                String str;
+                while ((str = br.readLine()) != null) {
+                    sb.append(str);
+                }
+                br.close();
+
+                //deserialize level from json and load
+                try {
+                    JSONObject json = (JSONObject) new JSONTokener(sb.toString()).nextValue();
+                    Level level = Level.fromJSON(json);
+                    level.build(root);
+                    return true;
+                }
+                catch(JSONException e) {
+                    Log.e(TAG, "Unable to load level json", e);
+                    return false;
+                }
+            } catch (IOException e) {
+                Log.e(TAG,String.format("Exception while opening level %s",name),e);
+            }
             return false;
+        }
 
         levelsByName.get(name).create(root);
         return true;

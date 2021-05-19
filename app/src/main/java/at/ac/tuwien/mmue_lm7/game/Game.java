@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
-import at.ac.tuwien.mmue_lm7.GameOver;
 import at.ac.tuwien.mmue_lm7.game.objects.GameObject;
 import at.ac.tuwien.mmue_lm7.game.rendering.RenderSystem;
 import at.ac.tuwien.mmue_lm7.game.physics.PhysicsSystem;
@@ -71,6 +70,7 @@ public class Game {
     private final WraparoundSystem wraparoundSystem = new WraparoundSystem();
     private final TimingSystem timingSystem = new TimingSystem();
     private final LevelStatusSystem levelStatusSystem = new LevelStatusSystem();
+    private final LevelLoader levelLoader;
 
     /**
      * if true, debugRender is called on all objects
@@ -110,6 +110,7 @@ public class Game {
 
     public Game(Context context) {
         resourceSystem = new ResourceSystem(context);
+        levelLoader = new LevelLoader(context);
     }
 
 
@@ -131,7 +132,7 @@ public class Game {
 
         resourceSystem.loadResources();
 
-        LevelFactories.loadLevel(root, 1);
+        levelLoader.loadLevel(root, 1);
 
         //TestTouchRect testRect = new TestTouchRect();
         //testRect.position.set(1,1);
@@ -485,7 +486,7 @@ public class Game {
 
         levelStatusSystem.clearLevelStatus();
 
-        if(!LevelFactories.loadLevel(root, level)) {
+        if(!levelLoader.loadLevel(root, level)) {
             Log.i(TAG, "All levels completed, show win screen");
             onGameOver.notify(new GameOverEvent(lastMainLevel,time,true));
         }
