@@ -1,5 +1,7 @@
 package at.ac.tuwien.mmue_lm7.game.objects;
 
+import android.util.Log;
+
 import at.ac.tuwien.mmue_lm7.game.Game;
 
 /**
@@ -15,7 +17,8 @@ public class KillEnemiesObjective extends GameObject{
     }
 
     private void registerDelayedCheck() {
-        Game.get().getTimingSystem().addDelayedAction(this::checkEnemyCount,CHECK_INTERVAL);
+        if(!isDestroyed())
+            Game.get().getTimingSystem().addDelayedAction(this::checkEnemyCount,CHECK_INTERVAL);
     }
 
     private void checkEnemyCount() {

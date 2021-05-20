@@ -1,5 +1,7 @@
 package at.ac.tuwien.mmue_lm7.game;
 
+import android.util.Log;
+
 import java.util.Iterator;
 import java.util.LinkedList;
 
@@ -12,6 +14,7 @@ import at.ac.tuwien.mmue_lm7.utils.ObjectPool;
  * If the timer of a registered function reaches 0, it is executed
  */
 public class TimingSystem {
+    private static final String TAG = "TimingSystem";
 
     public static class TimedAction implements ObjectPool.Poolable {
 

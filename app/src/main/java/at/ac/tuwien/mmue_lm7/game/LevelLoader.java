@@ -63,10 +63,10 @@ public class LevelLoader {
         root.addChild(ObjectFactories.makeOoze(1, 5, Direction.RIGHT, true));
 
         // === ENEMIES ===
-        root.addChild(ObjectFactories.makeBlocker(18, 0, Direction.RIGHT, false));
-        root.addChild(ObjectFactories.makeBlocker(8, 0, Direction.LEFT, true));
+        //root.addChild(ObjectFactories.makeBlocker(18, 0, Direction.RIGHT, false));
+        //root.addChild(ObjectFactories.makeBlocker(8, 0, Direction.LEFT, true));
         root.addChild(ObjectFactories.makeBlocker(1, 7, Direction.LEFT, true));
-        root.addChild(ObjectFactories.makeBlocker(23, 14, Direction.RIGHT, true));
+        //root.addChild(ObjectFactories.makeBlocker(23, 14, Direction.RIGHT, true));
 
 
         // === PLATFORM 1 ===
