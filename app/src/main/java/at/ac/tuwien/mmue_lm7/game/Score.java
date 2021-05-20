@@ -1,24 +1,39 @@
 package at.ac.tuwien.mmue_lm7.game;
 
-public class GameOverEvent {
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity(tableName = "score")
+public class Score {
+
+    /**
+     * There is only one score so primary key can be constant
+     */
+    @PrimaryKey
+    public int id = 1;
     /**
      * Level reached
      */
-    private int score;
+    public int score;
     /**
      * time in frames
      */
-    private int time;
+    public int time;
     /**
      * true if all levels have been completed
      */
-    private boolean gameCompleted;
+    public boolean gameCompleted;
 
-    public GameOverEvent(int score, int time, boolean gameCompleted) {
+    public Score(int score, int time, boolean gameCompleted) {
         this.score = score;
         this.time = time;
         this.gameCompleted = gameCompleted;
     }
+
+    public int getId(){
+        return id;
+    }
+
 
     public int getScore() {
         return score;

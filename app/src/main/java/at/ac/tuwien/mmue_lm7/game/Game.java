@@ -91,7 +91,7 @@ public class Game {
     public final Subject<KeyEvent> onKeyDown = new Subject<>();
     public final Subject<KeyEvent> onKeyUp = new Subject<>();
     public final Subject<LevelClearedEvent> onLevelCleared = new Subject<>();
-    public final Subject<GameOverEvent> onGameOver = new Subject<>();
+    public final Subject<Score> onGameOver = new Subject<>();
 
     private BlockingQueue<TapEvent> tapQueue = new LinkedBlockingQueue<>();
     private BlockingQueue<SwipeEvent> swipeQueue = new LinkedBlockingQueue<>();
@@ -440,7 +440,7 @@ public class Game {
 
         if (playerLives == 0) {
             Log.i(TAG, "No lives left, show lost screen");
-            onGameOver.notify(new GameOverEvent(lastMainLevel,time,false));
+            onGameOver.notify(new Score(lastMainLevel,time,false));
         } else {
             //restart level
             loadLevel();
@@ -489,7 +489,7 @@ public class Game {
         if(!levelLoader.loadLevel(root, level)) {
             Log.i(TAG, "All levels completed, show win screen");
             //score is decreased by 1 since it has been incremented before
-            onGameOver.notify(new GameOverEvent(lastMainLevel-1,time,true));
+            onGameOver.notify(new Score(lastMainLevel-1,time,true));
         }
     }
 

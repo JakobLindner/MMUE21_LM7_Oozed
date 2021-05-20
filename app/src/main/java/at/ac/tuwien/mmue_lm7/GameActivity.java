@@ -2,7 +2,6 @@ package at.ac.tuwien.mmue_lm7;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -10,7 +9,7 @@ import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 
-import at.ac.tuwien.mmue_lm7.game.GameOverEvent;
+import at.ac.tuwien.mmue_lm7.game.Score;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -108,7 +107,7 @@ public class GameActivity extends AppCompatActivity {
     /**
      * replaces this activity with game over activity
      */
-    private boolean onGameOver(GameOverEvent event) {
+    private boolean onGameOver(Score event) {
         //Switch to game over activity
         Intent intent = new Intent(this, GameOver.class);
         intent.putExtra(GameOver.SCORE_KEY,event.getScore());

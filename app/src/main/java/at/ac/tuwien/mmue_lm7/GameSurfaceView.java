@@ -3,7 +3,6 @@ package at.ac.tuwien.mmue_lm7;
 import android.app.Activity;
 import android.content.Context;
 import android.content.ContextWrapper;
-import android.content.Intent;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -17,7 +16,6 @@ import androidx.core.view.GestureDetectorCompat;
 
 import at.ac.tuwien.mmue_lm7.game.Game;
 import at.ac.tuwien.mmue_lm7.game.GameConstants;
-import at.ac.tuwien.mmue_lm7.game.GameOverEvent;
 import at.ac.tuwien.mmue_lm7.utils.Utils;
 import at.ac.tuwien.mmue_lm7.utils.Vec2;
 
