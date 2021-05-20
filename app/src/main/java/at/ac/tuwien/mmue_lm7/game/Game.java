@@ -488,7 +488,8 @@ public class Game {
 
         if(!levelLoader.loadLevel(root, level)) {
             Log.i(TAG, "All levels completed, show win screen");
-            onGameOver.notify(new GameOverEvent(lastMainLevel,time,true));
+            //score is decreased by 1 since it has been incremented before
+            onGameOver.notify(new GameOverEvent(lastMainLevel-1,time,true));
         }
     }
 

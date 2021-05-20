@@ -23,6 +23,12 @@ public class GameOver extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_over);
 
+        int score = getIntent().getIntExtra(SCORE_KEY,0);
+
+        //set score text
+        TextView scoreText = findViewById(R.id.score);
+        scoreText.setText(getResources().getString(R.string.your_score,score));
+
         //set highscore text
         TextView highscore = findViewById(R.id.highscore);
         highscore.setText(getResources().getString(R.string.highscore,123));//TODO replace 123 with real highscore

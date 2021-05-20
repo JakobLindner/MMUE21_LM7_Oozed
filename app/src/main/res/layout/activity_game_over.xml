@@ -20,6 +20,13 @@
             android:textAlignment="center" />
 
         <TextView
+            android:id="@+id/score"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/your_score"
+            android:textAlignment="center" />
+
+        <TextView
             android:id="@+id/new_highscore"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

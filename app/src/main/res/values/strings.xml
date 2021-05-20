@@ -4,6 +4,7 @@
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="game_over">Game Over!</string>
+    <string name="your_score">Your Score: %1$d</string>
     <string name="new_highscore">New Highscore!</string>
     <string name="highscore">Highscore: %1$d</string>
     <string name="main_menu">Main Menu</string>
