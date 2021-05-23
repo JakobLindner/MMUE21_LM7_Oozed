@@ -78,11 +78,12 @@ public class GameOver extends AppCompatActivity {
             });
         }
         else {
-            //TODO make "New Highscore" text invisible if no new highscore has been achieved
+            //make "New Highscore" text invisible if no new highscore has been achieved
+            newHighScoreText.setVisibility(View.INVISIBLE);
         }
 
         //set highscore text
-        highscoreText.setText(getResources().getString(R.string.highscore,highscore.getScore()));//TODO replace 123 with real highscore
+        highscoreText.setText(getResources().getString(R.string.highscore,highscore.getScore()));
     }
 
     public void onMainMenuButtonClicked(View view) {
