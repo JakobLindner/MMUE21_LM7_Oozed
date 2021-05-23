@@ -186,10 +186,6 @@ public class Game {
 
             //perform screen wrapping
             wraparoundSystem.update();
-            //check loose win condition(s),
-            //are there still enemies left
-            //does the player have lives left?
-            //TODO maybe in own game object??
 
             //remove all game objects, which have been destroyed this frame
             for (GameObject gameObject : markedForRemoval)
