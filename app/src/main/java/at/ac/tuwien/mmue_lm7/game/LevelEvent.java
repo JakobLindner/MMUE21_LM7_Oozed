@@ -1,12 +1,13 @@
 package at.ac.tuwien.mmue_lm7.game;
 
 /**
- * Fired when all level objectives have been fulfilled
+ * Used for various level events (e.g. cleared, loaded, ...)
+ * @author simon
  */
-public class LevelClearedEvent {
+public class LevelEvent {
     private String level;
 
-    public LevelClearedEvent(String level) {
+    public LevelEvent(String level) {
         this.level = level;
     }
 

@@ -9,6 +9,7 @@ import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 
+import at.ac.tuwien.mmue_lm7.game.LevelEvent;
 import at.ac.tuwien.mmue_lm7.game.Score;
 
 /**
@@ -32,6 +33,7 @@ public class GameActivity extends AppCompatActivity {
 
         gameView = findViewById(R.id.fullscreen_content);
         gameView.getGame().onGameOver.addListener(this::onGameOver);
+        gameView.getGame().onLevelLoaded.addListener(this::onLevelLoaded);
 
         //Schedule a delayed hide of system ui if user forces its appearance
         View decorView = getWindow().getDecorView();
@@ -102,6 +104,7 @@ public class GameActivity extends AppCompatActivity {
         gameView.onDestroy();
 
         gameView.getGame().onGameOver.removeListener(this::onGameOver);
+        gameView.getGame().onLevelLoaded.removeListener(this::onLevelLoaded);
     }
 
     /**
@@ -117,6 +120,17 @@ public class GameActivity extends AppCompatActivity {
         this.finish();
         startActivity(intent);
 
+        return true;
+    }
+
+    /**
+     * Creates LiveActivity to show current lives
+     */
+    private boolean onLevelLoaded(LevelEvent event) {
+        Intent intent = new Intent(this, LivesActivity.class);
+        intent.putExtra(LivesActivity.LIVES_KEY,gameView.getGame().getPlayerLives());
+        intent.putExtra(LivesActivity.LEVEL_KEY,event.getLevel());
+        startActivity(intent);
         return true;
     }
 }

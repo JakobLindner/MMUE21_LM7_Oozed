@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
+import at.ac.tuwien.mmue_lm7.game.level.Level;
 import at.ac.tuwien.mmue_lm7.game.objects.GameObject;
 import at.ac.tuwien.mmue_lm7.game.rendering.RenderSystem;
 import at.ac.tuwien.mmue_lm7.game.physics.PhysicsSystem;
@@ -90,7 +91,8 @@ public class Game {
     public final Subject<SwipeEvent> onSwipe = new Subject<>();
     public final Subject<KeyEvent> onKeyDown = new Subject<>();
     public final Subject<KeyEvent> onKeyUp = new Subject<>();
-    public final Subject<LevelClearedEvent> onLevelCleared = new Subject<>();
+    public final Subject<LevelEvent> onLevelLoaded = new Subject<>();
+    public final Subject<LevelEvent> onLevelCleared = new Subject<>();
     public final Subject<Score> onGameOver = new Subject<>();
 
     private BlockingQueue<TapEvent> tapQueue = new LinkedBlockingQueue<>();
@@ -133,6 +135,7 @@ public class Game {
         resourceSystem.loadResources();
 
         levelLoader.loadLevel(root, 1);
+        onLevelLoaded.notify(new LevelEvent("1"));
 
         //TestTouchRect testRect = new TestTouchRect();
         //testRect.position.set(1,1);
@@ -369,6 +372,10 @@ public class Game {
         return levelStatusSystem;
     }
 
+    public int getPlayerLives() {
+        return playerLives;
+    }
+
     /**
      * @return a temporary vector that may only be used in the same update or render, x=y=0
      */
@@ -487,6 +494,10 @@ public class Game {
             //score is decreased by 1 since it has been incremented before
             onGameOver.notify(new Score(lastMainLevel-1,time,true));
         }
+        else {
+            Log.i(TAG, String.format("Loaded level '%s'",level));
+            onLevelLoaded.notify(new LevelEvent(level));
+        }
     }
 
     /**
@@ -494,7 +505,7 @@ public class Game {
      */
     public void clearLevel() {
         Log.i(TAG, "Level cleared!");
-        onLevelCleared.notify(new LevelClearedEvent(currentLevel));
+        onLevelCleared.notify(new LevelEvent(currentLevel));
 
         advanceLevel();
         loadLevel();

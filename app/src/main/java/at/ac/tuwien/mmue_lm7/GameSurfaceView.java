@@ -32,6 +32,8 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
 
     private GestureDetectorCompat gestureDetector;
 
+    private boolean surfaceCreatedOnce = false;
+
     public GameSurfaceView(Context context, AttributeSet attrs) {
         super(context, attrs);
         getHolder().addCallback(this);
@@ -39,7 +41,6 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
 
         //TODO pass parameters to game coming from somewhere
         game = new Game(context);
-        game.init();
         gestureDetector = new GestureDetectorCompat(context,new GameGestureListener());
         Log.d(TAG, "Initialize GameSurfaceView");
     }
@@ -83,6 +84,10 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
         Log.d(TAG, "Surface created");
+        if(!surfaceCreatedOnce) {
+            game.init();
+            surfaceCreatedOnce = true;
+        }
         resumeGame(holder);
     }
 
