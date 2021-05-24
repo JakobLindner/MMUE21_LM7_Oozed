@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -17,49 +17,59 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/game_over"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:textAppearance="@style/Theme.MMUELM7.Heading" />
 
         <TextView
             android:id="@+id/score"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/your_score"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:textAppearance="@style/Theme.MMUELM7.Heading2" />
 
         <TextView
             android:id="@+id/new_highscore"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/new_highscore"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:textAppearance="@style/Theme.MMUELM7.Heading2" />
 
         <TextView
             android:id="@+id/highscore"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/highscore"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:textAppearance="@style/Theme.MMUELM7.Heading2" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
             android:orientation="horizontal">
 
             <Button
                 android:id="@+id/main_menu_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="0"
                 android:onClick="onMainMenuButtonClicked"
                 android:text="@string/main_menu" />
+
+            <Space
+                android:layout_width="24dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0" />
 
             <Button
                 android:id="@+id/retry_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="0"
                 android:onClick="onRetryButtonClicked"
                 android:text="@string/retry" />
         </LinearLayout>
     </LinearLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>
