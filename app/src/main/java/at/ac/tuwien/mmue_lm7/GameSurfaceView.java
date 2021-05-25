@@ -57,9 +57,8 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
         try {
             gameMainThread.join();
         } catch (InterruptedException e) {
-            Log.e("Error", e.getMessage());
+            Log.e("Error", e.getMessage(),e);
         }
-
         game.pause();
     }
 

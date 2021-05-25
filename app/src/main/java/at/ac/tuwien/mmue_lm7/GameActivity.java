@@ -26,6 +26,12 @@ public class GameActivity extends AppCompatActivity {
     private final Handler hideDelayed = new Handler(Looper.getMainLooper());
     private GameSurfaceView gameView;
 
+    /**
+     * True when lives activity has been started and is on top of this activity
+     * if true, then game is automatically resumed when onResume is called
+     */
+    private boolean livesActivityOnTop = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,15 +92,32 @@ public class GameActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        Log.d(TAG,"onStart");
+    }
+
+    @Override
     protected void onPause() {
         super.onPause();
         Log.d(TAG, "onPause");
+        gameView.getGame().pauseGame();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         Log.d(TAG, "onResume");
+        if(livesActivityOnTop) {
+            gameView.getGame().resumeGame();
+            livesActivityOnTop = false;
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.d(TAG, "onStop");
     }
 
     @Override
@@ -131,6 +154,7 @@ public class GameActivity extends AppCompatActivity {
         intent.putExtra(LivesActivity.LIVES_KEY,gameView.getGame().getPlayerLives());
         intent.putExtra(LivesActivity.LEVEL_KEY,event.getLevel());
         startActivity(intent);
+        livesActivityOnTop = true;
         return true;
     }
 }

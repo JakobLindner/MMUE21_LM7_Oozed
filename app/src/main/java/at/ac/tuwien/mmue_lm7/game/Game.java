@@ -158,7 +158,6 @@ public class Game {
     public void pause() {
         Log.i(TAG, "Pause Game");
         resourceSystem.releaseResources();
-        pauseGame();
     }
 
     /**

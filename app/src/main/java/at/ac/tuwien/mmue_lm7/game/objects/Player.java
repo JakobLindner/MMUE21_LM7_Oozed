@@ -372,7 +372,7 @@ public class Player extends AABB {
         if (state == to)
             return;
 
-        Log.d(TAG, String.format("Player State %-10s -> %s",state.toString(),to.toString()));
+        //Log.d(TAG, String.format("Player State %-10s -> %s",state.toString(),to.toString()));
 
         switch (state) {
             case OUTER_TURN: {

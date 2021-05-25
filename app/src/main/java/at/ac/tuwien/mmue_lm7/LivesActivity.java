@@ -21,7 +21,7 @@ public class LivesActivity extends AppCompatActivity {
     public static final String LEVEL_KEY = "level";
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lives);
 
