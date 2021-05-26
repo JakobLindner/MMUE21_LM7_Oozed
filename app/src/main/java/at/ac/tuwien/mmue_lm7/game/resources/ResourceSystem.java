@@ -50,7 +50,6 @@ public class ResourceSystem {
         bitmaps.put(R.drawable.blocker, BitmapFactory.decodeResource(context.getResources(), R.drawable.blocker, options));
         bitmaps.put(R.drawable.platforms, BitmapFactory.decodeResource(context.getResources(), R.drawable.platforms, options));
         bitmaps.put(R.drawable.background, BitmapFactory.decodeResource(context.getResources(), R.drawable.background, options));
-        bitmaps.put(R.drawable.obstacles,BitmapFactory.decodeResource(context.getResources(),R.drawable.obstacles,options));
         bitmaps.put(R.drawable.effects,BitmapFactory.decodeResource(context.getResources(),R.drawable.effects,options));
 
         isLoaded = true;
