@@ -47,19 +47,19 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
 
     private void resumeGame(SurfaceHolder holder) {
         game.resume();
-        gameLoop = new GameLoop(holder, this, game);
-        gameMainThread = new Thread(gameLoop);
-        gameMainThread.start();
+
+        if(gameLoop==null) {
+            gameLoop = new GameLoop(holder, this, game);
+            gameMainThread = new Thread(gameLoop);
+            gameMainThread.start();
+        }
+        else {
+            gameLoop.setPaused(false);
+        }
     }
 
     private void pauseGame() {
-        gameLoop.setRunning(false);
-        try {
-            gameMainThread.join();
-        } catch (InterruptedException e) {
-            Log.e("Error", e.getMessage(),e);
-        }
-        game.pause();
+        gameLoop.setPaused(true);
     }
 
     @Override
@@ -105,7 +105,7 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
      * called by activity to signal that the game should be cleaned up
      */
     public void onDestroy() {
-        game.cleanup();
+        gameLoop.setRunning(false);
     }
 
     /**

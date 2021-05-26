@@ -16,7 +16,7 @@ import android.widget.TextView;
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  */
-public class LivesActivity extends AppCompatActivity {
+public class LivesActivity extends FullscreenActivity {
     public static final String LIVES_KEY = "lives";
     public static final String LEVEL_KEY = "level";
 

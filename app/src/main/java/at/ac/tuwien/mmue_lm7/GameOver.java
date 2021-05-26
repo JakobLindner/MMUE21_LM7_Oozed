@@ -4,8 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 import java.util.concurrent.ExecutorService;
@@ -20,14 +22,24 @@ import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
 /**
  * Shows highscore and buttons to navigate to a new game activity or root main activity
  */
-public class GameOver extends AppCompatActivity {
+public class GameOver extends FullscreenActivity {
     //Names for the expected data input
     public static final String SCORE_KEY = "score";
     public static final String TIME_KEY = "time";
     public static final String GAME_COMPLETED_KEY = "gameCompleted";
 
+    //views
+    private TextView titleText;
     private TextView highscoreText;
+    private TextView scoreText;
     private TextView newHighScoreText;
+    private View buttonGroup;
+
+    //animations
+    private Animation titleAnim;
+    private Animation newHighscoreAnim;
+    private Animation gameOverButtonsAnim;
+    private AnimationSet animations;
 
     //data input
     private int score;
@@ -50,12 +62,27 @@ public class GameOver extends AppCompatActivity {
         gameCompleted = getIntent().getBooleanExtra(GAME_COMPLETED_KEY,false);
 
         //set score text
-        TextView scoreText = findViewById(R.id.score);
+        scoreText = findViewById(R.id.score);
         scoreText.setText(getResources().getString(R.string.your_score,score));
 
-        //get highscore text
+        //get views
+        titleText = findViewById(R.id.game_over_title);
         highscoreText = findViewById(R.id.highscore);
         newHighScoreText = findViewById(R.id.new_highscore);
+        buttonGroup = findViewById(R.id.game_over_button_group);
+
+        //load animations
+        titleAnim = AnimationUtils.loadAnimation(this,R.anim.game_over_title);
+        newHighscoreAnim = AnimationUtils.loadAnimation(this,R.anim.new_highscore);
+        gameOverButtonsAnim = AnimationUtils.loadAnimation(this,R.anim.game_over_button);
+
+        scoreText.setAnimation(titleAnim);
+        highscoreText.setAnimation(gameOverButtonsAnim);
+        buttonGroup.setAnimation(gameOverButtonsAnim);
+
+        animations = new AnimationSet(false);
+        animations.addAnimation(titleAnim);
+        animations.addAnimation(gameOverButtonsAnim);
 
         //access score database
         db = ScoreDatabase.get(getApplicationContext());
@@ -76,14 +103,23 @@ public class GameOver extends AppCompatActivity {
                 scoreDAO.clearScore();
                 scoreDAO.insertScore(new Score(score,time,gameCompleted));
             });
+
+            //add animations
+            newHighScoreText.setAnimation(newHighscoreAnim);
+            animations.addAnimation(newHighscoreAnim);
         }
         else {
             //make "New Highscore" text invisible if no new highscore has been achieved
             newHighScoreText.setVisibility(View.INVISIBLE);
+
+            //decrease game over button start offset
+            gameOverButtonsAnim.setStartOffset(gameOverButtonsAnim.getStartOffset()-newHighscoreAnim.getStartOffset());
         }
 
         //set highscore text
         highscoreText.setText(getResources().getString(R.string.highscore,highscore.getScore()));
+
+        animations.start();
     }
 
     public void onMainMenuButtonClicked(View view) {

@@ -16,6 +16,9 @@
         <item name="android:textAppearanceLarge">@style/Theme.MMUELM7.Heading</item>
 
         <item name="android:colorBackground">@color/black</item>
+
+        <!-- Disable activity transitions -->
+        <item name="android:windowAnimationStyle">@null</item>
     </style>
 
     <style name="Theme.MMUELM7.Fullscreen" parent="Theme.MMUELM7">

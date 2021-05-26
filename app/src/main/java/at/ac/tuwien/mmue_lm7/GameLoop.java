@@ -6,6 +6,7 @@ import android.graphics.Paint;
 import android.graphics.PaintFlagsDrawFilter;
 import android.graphics.Rect;
 import android.os.SystemClock;
+import android.util.Log;
 import android.view.SurfaceHolder;
 
 import at.ac.tuwien.mmue_lm7.game.Game;
@@ -21,10 +22,13 @@ import static at.ac.tuwien.mmue_lm7.Constants.UPDATE_TIME_ACCUM_MAX_MS;
  * @author simon
  */
 public class GameLoop implements Runnable {
+    private static final String TAG = "GameLoop";
 
     private SurfaceHolder surfaceHolder;
     private GameSurfaceView gameSurfaceView;
     private boolean running;
+    private boolean paused = false;
+    private Object pauseLock = new Object();
     private Game game;
     /**
      * The bitmap the game is rendered onto
@@ -59,6 +63,25 @@ public class GameLoop implements Runnable {
 
     public void setRunning(boolean running) {
         this.running = running;
+
+        if(!running) {
+            synchronized (pauseLock) {
+                pauseLock.notify();
+            }
+        }
+    }
+
+    public boolean isPaused() {
+        return paused;
+    }
+
+    public void setPaused(boolean paused) {
+        this.paused = paused;
+        if(!paused) {
+            synchronized (pauseLock) {
+                pauseLock.notify();
+            }
+        }
     }
 
     @Override
@@ -71,29 +94,44 @@ public class GameLoop implements Runnable {
         long delta = 0;
 
         while (running){
-            //calculate delta time
-            currentTime = getTime();
-            delta = currentTime-lastTime;
-            lastTime = currentTime;
+            while(!paused && running) {
+                //calculate delta time
+                currentTime = getTime();
+                delta = currentTime - lastTime;
+                lastTime = currentTime;
 
-            //increase accumulator
-            accumulator +=delta;
+                //increase accumulator
+                accumulator += delta;
 
-            //cap accumulated time to prevent spiral of death (=cannot keep up with target update rate)
-            if(accumulator>UPDATE_TIME_ACCUM_MAX_MS)
-                accumulator = UPDATE_TIME_ACCUM_MAX_MS;
+                //cap accumulated time to prevent spiral of death (=cannot keep up with target update rate)
+                if (accumulator > UPDATE_TIME_ACCUM_MAX_MS)
+                    accumulator = UPDATE_TIME_ACCUM_MAX_MS;
 
-            //do update if necessary
-            boolean redraw = accumulator>=FIXED_DELTA_MS;
-            while(accumulator>=FIXED_DELTA_MS)
-            {
-                game.update();
-                accumulator-=FIXED_DELTA_MS;
+                //do update if necessary
+                boolean redraw = accumulator >= FIXED_DELTA_MS;
+                while (accumulator >= FIXED_DELTA_MS) {
+                    game.update();
+                    accumulator -= FIXED_DELTA_MS;
+                }
+
+                if (redraw)
+                    render();
             }
+            game.pause();
 
-            if(redraw)
-                render();
+            if(running) {
+                try {
+                    synchronized (pauseLock) {
+                        pauseLock.wait();
+                    }
+                } catch (InterruptedException e) {
+                    Log.e(TAG, "Interrupted game loop", e);
+                    break;
+                }
+            }
         }
+
+        game.cleanup();
     }
 
     //@SuppressLint("WrongCall")
