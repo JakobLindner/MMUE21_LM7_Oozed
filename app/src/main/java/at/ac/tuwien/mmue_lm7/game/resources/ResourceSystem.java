@@ -133,6 +133,9 @@ public class ResourceSystem {
             case disappearEffect:
                 info.spriteSheetId = R.drawable.effects;
                 break;
+            case heart:
+                info.spriteSheetId = R.drawable.heart;
+                break;
             default:
                 Log.i(TAG, String.format("spriteInfo: Sprite %s not found!",spriteEnum.toString()));
                 return info;
@@ -152,6 +155,7 @@ public class ResourceSystem {
         platformBigPlate,
         background,
         spikes,
-        disappearEffect
+        disappearEffect,
+        heart,
     }
 }
