@@ -116,12 +116,19 @@ public class ResourceSystem {
                 info.firstY = 16;
                 info.size = 32;
                 break;
+            case platformBigPlate:
+                info.spriteSheetId = R.drawable.platforms;
+                info.firstX = 32;
+                info.firstY = 16;
+                info.size = 32;
+                break;
             case background:
                 info.spriteSheetId = R.drawable.background;
                 info.size = 512;
                 break;
             case spikes:
-                info.spriteSheetId = R.drawable.obstacles;
+                info.spriteSheetId = R.drawable.platforms;
+                info.firstY = 48;
                 break;
             case disappearEffect:
                 info.spriteSheetId = R.drawable.effects;
@@ -142,6 +149,7 @@ public class ResourceSystem {
         platformCircuit,
         platformIce,
         platformBigGears,
+        platformBigPlate,
         background,
         spikes,
         disappearEffect

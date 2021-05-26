@@ -8,7 +8,7 @@ import at.ac.tuwien.mmue_lm7.game.objects.GameObject;
 import at.ac.tuwien.mmue_lm7.utils.Direction;
 
 public class Spikes extends Tile{
-    public Direction direction;
+    public Direction direction = Direction.UP;
 
     @Override
     public void build(GameObject root) {
@@ -18,6 +18,6 @@ public class Spikes extends Tile{
     @Override
     public void fromJSON(JSONObject json) throws JSONException {
         super.fromJSON(json);
-        Direction direction = Direction.fromRotation(rotation).rotateCCW();
+        direction = Direction.fromRotation(rotation).rotateCCW();
     }
 }

@@ -26,9 +26,9 @@ public enum Direction {
         int multiple = Math.round(rotation/90f);
         if(multiple==0)
             return RIGHT;
-        else if(rotation==1)
+        else if(multiple==1)
             return DOWN;
-        else if(rotation==2)
+        else if(multiple==2)
             return LEFT;
         else
             return UP;

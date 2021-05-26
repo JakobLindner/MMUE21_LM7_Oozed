@@ -21,6 +21,9 @@ public class Blocker extends Tile {
         super.fromJSON(json);
 
         direction = Direction.fromRotation(rotation);
+        if (mirrored) {
+            direction = direction.opposite();
+        }
         runningCW = !mirrored;
     }
 }

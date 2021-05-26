@@ -15,7 +15,7 @@ public class PlatformTile extends Tile{
 
     @Override
     public void build(GameObject root) {
-        if(sprite== ResourceSystem.SpriteEnum.platformBigGears)
+        if(sprite== ResourceSystem.SpriteEnum.platformBigGears || sprite == ResourceSystem.SpriteEnum.platformBigPlate)
             root.addChild(ObjectFactories.makeBigPlatformTile(x,y,rotation,mirrored,sprite));
         else
             root.addChild(ObjectFactories.makePlatformTile(x,y,rotation,mirrored, sprite));
