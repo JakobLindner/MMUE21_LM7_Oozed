@@ -12,11 +12,13 @@ import java.util.ArrayList;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
+import at.ac.tuwien.mmue_lm7.R;
 import at.ac.tuwien.mmue_lm7.game.level.Level;
 import at.ac.tuwien.mmue_lm7.game.objects.GameObject;
 import at.ac.tuwien.mmue_lm7.game.rendering.RenderSystem;
 import at.ac.tuwien.mmue_lm7.game.physics.PhysicsSystem;
 import at.ac.tuwien.mmue_lm7.game.resources.ResourceSystem;
+import at.ac.tuwien.mmue_lm7.game.resources.SoundSystem;
 import at.ac.tuwien.mmue_lm7.utils.ObjectPool;
 import at.ac.tuwien.mmue_lm7.utils.Subject;
 import at.ac.tuwien.mmue_lm7.utils.Vec2;
@@ -65,6 +67,7 @@ public class Game {
      */
     private ArrayList<GameObject> markedForRemoval = new ArrayList<GameObject>(16);
 
+    private final Context context;
     private final RenderSystem renderSystem = new RenderSystem();
     private final PhysicsSystem physicsSystem = new PhysicsSystem();
     private final ResourceSystem resourceSystem;
@@ -111,6 +114,8 @@ public class Game {
     private final ArrayList<Vec2> usedVectors = new ArrayList<Vec2>(VECTOR_POOL_SIZE);
 
     public Game(Context context) {
+        this.context = context;
+
         resourceSystem = new ResourceSystem(context);
         levelLoader = new LevelLoader(context);
     }
@@ -148,6 +153,7 @@ public class Game {
     public void cleanup() {
         Log.i(TAG, "Cleanup Game");
         resourceSystem.releaseResources();
+        SoundSystem.get(context).stopMusic();
     }
 
     /**
@@ -167,6 +173,7 @@ public class Game {
     public void resume() {
         Log.i(TAG, "Resume Game");
         resourceSystem.loadResources();
+        SoundSystem.get(context).playMusic(R.raw.retro_platformer_5);
     }
 
     /**

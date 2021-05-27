@@ -3,7 +3,13 @@ package at.ac.tuwien.mmue_lm7.game.resources;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.AudioAttributes;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
+import android.os.Build;
 import android.util.Log;
+
+import androidx.annotation.RequiresApi;
 
 import java.util.HashMap;
 
@@ -45,6 +51,7 @@ public class ResourceSystem {
         if (isLoaded)
             return;
 
+        //load bitmaps
         bitmaps = new HashMap<>();
         bitmaps.put(R.drawable.ooze, BitmapFactory.decodeResource(context.getResources(), R.drawable.ooze, options));
         bitmaps.put(R.drawable.blocker, BitmapFactory.decodeResource(context.getResources(), R.drawable.blocker, options));

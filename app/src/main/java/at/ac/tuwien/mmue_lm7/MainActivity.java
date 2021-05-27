@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import at.ac.tuwien.mmue_lm7.game.ScoreDatabase;
+import at.ac.tuwien.mmue_lm7.game.resources.SoundSystem;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -17,6 +18,9 @@ public class MainActivity extends AppCompatActivity {
 
         //open database for later use
         ScoreDatabase.get(getApplicationContext());
+
+        //initialize sound system
+        SoundSystem.get(getApplicationContext());
     }
 
     public void onStartButtonClicked(View view) {
