@@ -140,6 +140,5 @@ public class GameOver extends FullscreenActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        db.close();
     }
 }
