@@ -5,9 +5,11 @@ import android.util.Log;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import at.ac.tuwien.mmue_lm7.game.GameConstants;
 import at.ac.tuwien.mmue_lm7.game.ObjectFactories;
 import at.ac.tuwien.mmue_lm7.game.objects.GameObject;
 import at.ac.tuwien.mmue_lm7.game.resources.ResourceSystem;
+import at.ac.tuwien.mmue_lm7.game.resources.SpriteInfo;
 
 public class PlatformTile extends Tile{
     private static final String TAG = "PlatformTile";
@@ -15,10 +17,9 @@ public class PlatformTile extends Tile{
 
     @Override
     public void build(GameObject root) {
-        if(sprite== ResourceSystem.SpriteEnum.platformBigGears || sprite == ResourceSystem.SpriteEnum.platformBigPlate)
-            root.addChild(ObjectFactories.makeBigPlatformTile(x,y,rotation,mirrored,sprite));
-        else
-            root.addChild(ObjectFactories.makePlatformTile(x,y,rotation,mirrored, sprite));
+        SpriteInfo info = ResourceSystem.spriteInfo(sprite);
+        int platformSize = info.size/ GameConstants.PIXELS_PER_UNIT;
+        root.addChild(ObjectFactories.makePlatformTile(x,y,platformSize,platformSize,rotation,mirrored,sprite));
     }
 
     @Override

@@ -79,38 +79,40 @@ public class ObjectFactories {
         return platform;
     }
 
+    /**
+     * @return platform with width and height = 1
+     */
     public static GameObject makePlatformTile(int x, int y, ResourceSystem.SpriteEnum sprite) {
-        return makePlatformTile(x, y, 0, false, sprite);
+        return makePlatformTile(x, y, 1,1,0, false, sprite);
     }
 
     public static GameObject makePlatformTile(int x, int y, float rot, boolean mir, ResourceSystem.SpriteEnum sprite) {
-        GameObject tile = new GameObject();
-        tile.position.set(x + 0.5f, y + 0.5f);
-        tile.rotation = rot;
-        tile.mirrored = mir;
-
-        tile.addChild(new Sprite(sprite));
-
-        AABB aabb = new AABB(0.5f, 0.5f,(short) 0, CollisionLayers.PLATFORM);
-        tile.addChild(aabb);
-
-        tile.setLayerRecursive(Layers.TILES);
-        return tile;
+        return makePlatformTile(x,y,1,1,rot,mir,sprite);
     }
 
+    /**
+     * @return platform with width = height = 2
+     */
     public static GameObject makeBigPlatformTile(int x, int y, ResourceSystem.SpriteEnum sprite) {
-        return makeBigPlatformTile(x, y, 0, false, sprite);
+        return makePlatformTile(x, y,2,2, 0, false, sprite);
     }
 
     public static GameObject makeBigPlatformTile(int x, int y, float rot, boolean mir, ResourceSystem.SpriteEnum sprite) {
+        return makePlatformTile(x,y,2,2,rot,mir,sprite);
+    }
+
+    public static GameObject makePlatformTile(int x, int y, int width, int height, float rot, boolean mir, ResourceSystem.SpriteEnum sprite) {
+        float halfWidth = width*0.5f;
+        float halfHeight = height*0.5f;
+
         GameObject tile = new GameObject();
-        tile.position.set(x + 1.0f, y + 1.0f);
+        tile.position.set(x + halfWidth, y + halfHeight);
         tile.rotation = rot;
         tile.mirrored = mir;
 
         tile.addChild(new Sprite(sprite));
 
-        AABB aabb = new AABB(1.0f, 1.0f,(short) 0, CollisionLayers.PLATFORM);
+        AABB aabb = new AABB(halfWidth, halfHeight,(short) 0, CollisionLayers.PLATFORM);
         tile.addChild(aabb);
 
         tile.setLayerRecursive(Layers.TILES);
