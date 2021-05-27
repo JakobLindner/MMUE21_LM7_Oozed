@@ -451,12 +451,11 @@ public class Game {
             Log.i(TAG, "No lives left, show lost screen");
             onGameOver.notify(new Score(lastMainLevel,time,false));
         } else {
-            //restart level
-            loadLevel();
-
-
             //decrease lives
             --playerLives;
+
+            //restart level
+            loadLevel();
         }
     }
 
