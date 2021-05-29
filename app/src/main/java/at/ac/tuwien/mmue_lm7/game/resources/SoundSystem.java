@@ -4,6 +4,7 @@ import android.content.Context;
 import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.media.SoundPool;
 import android.os.Build;
 import android.util.Log;
 
@@ -13,14 +14,25 @@ public class SoundSystem {
     private static final String TAG = "SoundSystem";
     private static SoundSystem INSTANCE;
 
-    public static SoundSystem get(Context context) {
-        if (INSTANCE == null) {
+
+    public static void load(Context context) {
+        if(INSTANCE!=null)
+            Log.w(TAG,"SoundSystem has already been loaded");
+        else
             INSTANCE = new SoundSystem(context);
-        }
+    }
+
+    public static SoundSystem get() {
         return INSTANCE;
     }
 
     public static final float DEFAULT_MUSIC_VOLUME = 0.1f;
+    public static final float DEFAULT_SOUND_VOLUME = 0.5f;
+    public static final int SOUND_PRIORITY = 1;//same value as in lecture slides
+    /**
+     * Max number of sounds, that can be played in parallel
+     */
+    public static final int MAX_SOUNDS = 5;
 
     private Context context;
 
@@ -32,6 +44,9 @@ public class SoundSystem {
     private int currentMusicId = -1;
     private boolean muted = false;
 
+    private SoundPool soundPool;
+    private float soundVolume = DEFAULT_SOUND_VOLUME;
+
     //prevent instantiations
     private SoundSystem(Context context) {
         this.context = context;
@@ -40,6 +55,25 @@ public class SoundSystem {
         setMusicVolume(DEFAULT_MUSIC_VOLUME);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
             loadAudioAttributes();
+
+        initSoundPool();
+    }
+
+    private void initSoundPool() {
+        if(soundPool!=null) {
+            Log.w(TAG, "Sound pool already initialized");
+            return;
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            soundPool = new SoundPool.Builder()
+                    .setAudioAttributes(soundAttributes)
+                    .setMaxStreams(MAX_SOUNDS)
+                    .build();
+        }
+        else {
+            soundPool = new SoundPool(MAX_SOUNDS,AudioManager.STREAM_MUSIC,0);
+        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -55,6 +89,25 @@ public class SoundSystem {
                 .build();
 
         audioSessionId = audioManager.generateAudioSessionId();
+    }
+
+    /**
+     * Loads given sound
+     * @return sound id that can be used for playback and unloading
+     */
+    public int loadSound(int resId) {
+        return soundPool.load(context,resId,SOUND_PRIORITY);
+    }
+
+    public void unloadSound(int soundId) {
+        soundPool.unload(soundId);
+    }
+
+    /**
+     * Plays sound with given sound id loaded with loadSound
+     */
+    public void playSound(int soundId) {
+        soundPool.play(soundId,soundVolume,soundVolume,SOUND_PRIORITY,0,1);
     }
 
     public void playMusic(int id) {
@@ -125,7 +178,7 @@ public class SoundSystem {
      * @param volume in percent, this is clamped between to [0,1]
      */
     public void setSoundVolume(float volume) {
-        //TODO
+        this.soundVolume = volume;
     }
 
     private void setVolume(int streamType, float volume) {

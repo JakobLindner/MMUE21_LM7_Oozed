@@ -3,13 +3,7 @@ package at.ac.tuwien.mmue_lm7.game.resources;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.AudioAttributes;
-import android.media.AudioManager;
-import android.media.MediaPlayer;
-import android.os.Build;
 import android.util.Log;
-
-import androidx.annotation.RequiresApi;
 
 import java.util.HashMap;
 
@@ -28,6 +22,8 @@ public class ResourceSystem {
 
     private HashMap<Integer, Bitmap> bitmaps = null;
     private static HashMap<SpriteEnum, SpriteInfo> spriteInfos = new HashMap<>();
+
+    private HashMap<Sound,Integer> soundIds = new HashMap<>();
 
     /**
      * true if resources are loaded
@@ -59,6 +55,10 @@ public class ResourceSystem {
         bitmaps.put(R.drawable.background, BitmapFactory.decodeResource(context.getResources(), R.drawable.background, options));
         bitmaps.put(R.drawable.effects,BitmapFactory.decodeResource(context.getResources(),R.drawable.effects,options));
 
+        //load sounds
+        for(Sound sound : Sound.values())
+            soundIds.put(sound,SoundSystem.get().loadSound(sound.resId));
+
         isLoaded = true;
     }
 
@@ -70,6 +70,10 @@ public class ResourceSystem {
         for (int key : bitmaps.keySet()) {
             bitmaps.get(key).recycle();
         }
+
+        //unload sounds
+        for(Integer soundId : soundIds.values())
+            SoundSystem.get().unloadSound(soundId);
 
         isLoaded = false;
     }
@@ -150,6 +154,11 @@ public class ResourceSystem {
         return info;
     }
 
+    public void playSound(Sound sound) {
+        if(soundIds.containsKey(sound))
+            SoundSystem.get().playSound(soundIds.get(sound));
+    }
+
     public enum SpriteEnum {
         oozeRun,
         blockerIdle,
@@ -163,5 +172,14 @@ public class ResourceSystem {
         spikes,
         disappearEffect,
         heart,
+    }
+
+    public enum Sound {
+        oozeJump(R.raw.ooze_jump);
+
+        private int resId;
+        Sound(int resId) {
+            this.resId = resId;
+        }
     }
 }

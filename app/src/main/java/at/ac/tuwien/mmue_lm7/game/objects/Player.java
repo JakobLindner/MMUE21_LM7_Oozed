@@ -10,6 +10,7 @@ import at.ac.tuwien.mmue_lm7.game.TapEvent;
 import at.ac.tuwien.mmue_lm7.game.WraparoundSystem;
 import at.ac.tuwien.mmue_lm7.game.physics.CollisionLayers;
 import at.ac.tuwien.mmue_lm7.game.physics.PhysicsSystem;
+import at.ac.tuwien.mmue_lm7.game.resources.ResourceSystem;
 import at.ac.tuwien.mmue_lm7.utils.Direction;
 import at.ac.tuwien.mmue_lm7.utils.Jump;
 import at.ac.tuwien.mmue_lm7.utils.Utils;
@@ -385,6 +386,9 @@ public class Player extends AABB {
                 //position jump parabolas
                 jump.setPositioningAndMirroring(dir, upDir, position, 0);
                 dashJump.setPositioningAndMirroring(dir, upDir, position, 0);
+
+                //play sound
+                Game.get().getResourceSystem().playSound(ResourceSystem.Sound.oozeJump);
                 break;
             }
             case RUNNING: {

@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
         ScoreDatabase.get(getApplicationContext());
 
         //initialize sound system
-        SoundSystem.get(getApplicationContext());
+        SoundSystem.load(getApplicationContext());
     }
 
     public void onStartButtonClicked(View view) {

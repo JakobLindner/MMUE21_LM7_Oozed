@@ -153,7 +153,7 @@ public class Game {
     public void cleanup() {
         Log.i(TAG, "Cleanup Game");
         resourceSystem.releaseResources();
-        SoundSystem.get(context).stopMusic();
+        SoundSystem.get().stopMusic();
     }
 
     /**
@@ -173,7 +173,8 @@ public class Game {
     public void resume() {
         Log.i(TAG, "Resume Game");
         resourceSystem.loadResources();
-        SoundSystem.get(context).playMusic(R.raw.retro_platformer_5);
+
+        SoundSystem.get().playMusic(R.raw.retro_platformer_5);
     }
 
     /**
