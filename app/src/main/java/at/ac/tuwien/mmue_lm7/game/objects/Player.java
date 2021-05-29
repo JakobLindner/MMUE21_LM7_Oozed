@@ -7,7 +7,6 @@ import at.ac.tuwien.mmue_lm7.game.Game;
 import at.ac.tuwien.mmue_lm7.game.ObjectFactories;
 import at.ac.tuwien.mmue_lm7.game.SwipeEvent;
 import at.ac.tuwien.mmue_lm7.game.TapEvent;
-import at.ac.tuwien.mmue_lm7.game.WraparoundSystem;
 import at.ac.tuwien.mmue_lm7.game.physics.CollisionLayers;
 import at.ac.tuwien.mmue_lm7.game.physics.PhysicsSystem;
 import at.ac.tuwien.mmue_lm7.game.resources.ResourceSystem;
@@ -179,6 +178,9 @@ public class Player extends AABB {
         if (wantDash && state == PlayerState.RUNNING) {
             dashDuration = PLAYER_DASH_DURATION;
             dashing = true;
+
+            //play dash sound
+            Game.get().getResourceSystem().playSound(ResourceSystem.Sound.PLAYER_DASH);
         }
 
         //handle current state
@@ -319,6 +321,9 @@ public class Player extends AABB {
         GameObject effect = ObjectFactories.makeKilledEffect(pos.x,pos.y);
         Game.get().getRoot().addChild(effect);
 
+        //play sound
+        Game.get().getResourceSystem().playSound(ResourceSystem.Sound.PLAYER_DEATH);
+
         //call respawn function delayed
         Game.get().getTimingSystem().addDelayedAction(Game.get()::respawnPlayer,RESPAWN_DELAY);
 
@@ -388,7 +393,7 @@ public class Player extends AABB {
                 dashJump.setPositioningAndMirroring(dir, upDir, position, 0);
 
                 //play sound
-                Game.get().getResourceSystem().playSound(ResourceSystem.Sound.oozeJump);
+                Game.get().getResourceSystem().playSound(ResourceSystem.Sound.OOZE_JUMP);
                 break;
             }
             case RUNNING: {

@@ -175,7 +175,10 @@ public class ResourceSystem {
     }
 
     public enum Sound {
-        oozeJump(R.raw.ooze_jump);
+        OOZE_JUMP(R.raw.ooze_jump),
+        PLAYER_DEATH(R.raw.player_death),
+        PLAYER_DASH(R.raw.player_dash),
+        ENEMY_DEATH(R.raw.enemy_death);
 
         private int resId;
         Sound(int resId) {

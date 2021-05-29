@@ -27,7 +27,7 @@ public class SoundSystem {
     }
 
     public static final float DEFAULT_MUSIC_VOLUME = 0.1f;
-    public static final float DEFAULT_SOUND_VOLUME = 0.5f;
+    public static final float DEFAULT_SOUND_VOLUME = 1f;
     public static final int SOUND_PRIORITY = 1;//same value as in lecture slides
     /**
      * Max number of sounds, that can be played in parallel
