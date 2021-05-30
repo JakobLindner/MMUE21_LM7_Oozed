@@ -13,4 +13,5 @@
     <string name="level">Level %1$s</string>
     <string name="lives">x %1$d</string>
     <string name="tap_to_start">TAP to Start!</string>
+    <string name="pause_screen_title">PAUSED</string>
 </resources>

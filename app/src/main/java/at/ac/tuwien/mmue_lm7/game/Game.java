@@ -36,11 +36,6 @@ public class Game {
      * Distance from top right corner in which a tap toggles the pause state
      */
     private static final float PAUSE_TOGGLE_RADIUS = 3;
-    /**
-     * While paused, a black rectangle with this alpha value is rendered on top of the scene
-     * This is to increase contrast between the game scene and the pause screen
-     */
-    private static final int PAUSE_SCREEN_OVERLAY_ALPHA = 180;
 
     private static Game singleton = null;
 
@@ -62,6 +57,7 @@ public class Game {
      * Root object of the scene tree
      */
     private GameObject root = new GameObject();
+    private GameObject pauseRoot = new GameObject();
     /**
      * Destroyed entities are added to this list and are removed from the scene tree at the end of the update
      */
@@ -228,28 +224,7 @@ public class Game {
         }
 
         if (paused) {
-            //draw overlay rect to darken game rendering
-            renderSystem.drawRect()
-                    .edges(0, GameConstants.GAME_WIDTH, 0, GameConstants.GAME_HEIGHT)
-                    .color(Color.argb(PAUSE_SCREEN_OVERLAY_ALPHA, 0, 0, 0))
-                    .style(Paint.Style.FILL);
-
-            //render text
-            renderSystem.drawText()
-                    .text("PAUSED")
-                    .at(tmpVec().set(GameConstants.HALF_GAME_WIDTH, GameConstants.HALF_GAME_HEIGHT))
-                    .typeFace(Typeface.DEFAULT)
-                    .align(Paint.Align.CENTER)
-                    .color(Color.WHITE)
-                    .size(32);//TODO remove magic number
-
-            renderSystem.drawText()
-                    .text("Tap top right corner to resume")
-                    .at(tmpVec().set(GameConstants.HALF_GAME_WIDTH, GameConstants.HALF_GAME_HEIGHT - 1.5f))//TODO remove offset magic number
-                    .typeFace(Typeface.DEFAULT)
-                    .align(Paint.Align.CENTER)
-                    .color(Color.WHITE)
-                    .size(16);//TODO remove magic number
+            pauseRoot.renderChildren(renderSystem);
 
             //render batched commands for pause screen
             renderSystem.render(canvas);
@@ -415,6 +390,7 @@ public class Game {
      */
     public void pauseGame() {
         if (!paused) {
+            pauseRoot = ObjectFactories.makePauseScreen(context.getResources().getString(R.string.pause_screen_title));
             //TODO play sound, ...
         }
         paused = true;
@@ -426,6 +402,8 @@ public class Game {
      */
     public void resumeGame() {
         if (paused) {
+            pauseRoot.destroy();
+            pauseRoot = null;
             //TODO play sound, ...
         }
         paused = false;
@@ -450,7 +428,7 @@ public class Game {
 
         if (playerLives == 0) {
             Log.i(TAG, "No lives left, show lost screen");
-            onGameOver.notify(new Score(lastMainLevel,time,false));
+            onGameOver.notify(new Score(lastMainLevel, time, false));
         } else {
             //decrease lives
             --playerLives;
@@ -495,13 +473,12 @@ public class Game {
 
         levelStatusSystem.clearLevelStatus();
 
-        if(!levelLoader.loadLevel(root, level)) {
+        if (!levelLoader.loadLevel(root, level)) {
             Log.i(TAG, "All levels completed, show win screen");
             //score is decreased by 1 since it has been incremented before
-            onGameOver.notify(new Score(lastMainLevel-1,time,true));
-        }
-        else {
-            Log.i(TAG, String.format("Loaded level '%s'",level));
+            onGameOver.notify(new Score(lastMainLevel - 1, time, true));
+        } else {
+            Log.i(TAG, String.format("Loaded level '%s'", level));
             onLevelLoaded.notify(new LevelEvent(level));
         }
     }
