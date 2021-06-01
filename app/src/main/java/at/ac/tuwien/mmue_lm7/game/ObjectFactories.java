@@ -13,6 +13,7 @@ import at.ac.tuwien.mmue_lm7.game.objects.Button;
 import at.ac.tuwien.mmue_lm7.game.objects.DeadlyAABB;
 import at.ac.tuwien.mmue_lm7.game.objects.GameObject;
 import at.ac.tuwien.mmue_lm7.game.objects.Lifetime;
+import at.ac.tuwien.mmue_lm7.game.objects.MuteButton;
 import at.ac.tuwien.mmue_lm7.game.objects.Platform;
 import at.ac.tuwien.mmue_lm7.game.objects.Player;
 import at.ac.tuwien.mmue_lm7.game.objects.Rect;
@@ -23,6 +24,7 @@ import at.ac.tuwien.mmue_lm7.game.physics.CollisionLayers;
 import at.ac.tuwien.mmue_lm7.game.rendering.Layers;
 import at.ac.tuwien.mmue_lm7.game.resources.ResourceSystem;
 import at.ac.tuwien.mmue_lm7.game.resources.SoundSystem;
+import at.ac.tuwien.mmue_lm7.game.resources.SpriteInfo;
 import at.ac.tuwien.mmue_lm7.utils.Direction;
 import at.ac.tuwien.mmue_lm7.utils.Vec2;
 
@@ -184,6 +186,21 @@ public class ObjectFactories {
         return container;
     }
 
+    public static GameObject makeMuteButton(float x, float y, float halfWidth, float halfHeight) {
+        SpriteInfo muted = ResourceSystem.spriteInfo(ResourceSystem.SpriteEnum.muted);
+        SpriteInfo notMuted = ResourceSystem.spriteInfo(ResourceSystem.SpriteEnum.notMuted);
+
+        Sprite sprite  = new Sprite(ResourceSystem.SpriteEnum.muted);
+
+        MuteButton button = new MuteButton(new Vec2(halfWidth, halfHeight),sprite,muted,notMuted);
+        button.position.set(x,y);
+
+        button.addChild(sprite);
+
+        button.setLayerRecursive(Layers.UI);
+        return button;
+    }
+
     public static GameObject makePauseScreen(String titleString) {
         /**
          * While paused, a black rectangle with this alpha value is rendered on top of the scene
@@ -200,9 +217,7 @@ public class ObjectFactories {
         pauseScreen.addChild(title);
 
         //mute button
-        GameObject muteButton = makeImageButton(-2,-1,1,1, ResourceSystem.SpriteEnum.muted,button -> {
-            SoundSystem.get().toggleMuted();
-        });
+        GameObject muteButton = makeMuteButton(-2,-1,1,1);
         pauseScreen.addChild(muteButton);
 
         //resume button

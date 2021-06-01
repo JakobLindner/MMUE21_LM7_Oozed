@@ -18,7 +18,7 @@ public class Button extends GameObject {
     /**
      * Action performed on press
      */
-    private Action action;
+    protected Action action;
 
     public Button(Vec2 halfSize, Action action) {
         this.halfSize = halfSize;
