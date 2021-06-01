@@ -54,6 +54,7 @@ public class ResourceSystem {
         bitmaps.put(R.drawable.platforms, BitmapFactory.decodeResource(context.getResources(), R.drawable.platforms, options));
         bitmaps.put(R.drawable.background, BitmapFactory.decodeResource(context.getResources(), R.drawable.background, options));
         bitmaps.put(R.drawable.effects,BitmapFactory.decodeResource(context.getResources(),R.drawable.effects,options));
+        bitmaps.put(R.drawable.ui, BitmapFactory.decodeResource(context.getResources(),R.drawable.ui,options));
 
         //load sounds
         for(Sound sound : Sound.values())
@@ -146,6 +147,23 @@ public class ResourceSystem {
             case heart:
                 info.spriteSheetId = R.drawable.heart;
                 break;
+            case muted:
+                info.spriteSheetId = R.drawable.ui;
+                info.firstY = 16;
+                info.firstX = 16;
+                break;
+            case notMuted:
+                info.spriteSheetId = R.drawable.ui;
+                info.firstY = 16;
+                break;
+            case pause:
+                info.spriteSheetId = R.drawable.ui;
+                info.firstX = 80;
+                break;
+            case resume:
+                info.spriteSheetId = R.drawable.ui;
+                info.firstX = 16;
+                break;
             default:
                 Log.i(TAG, String.format("spriteInfo: Sprite %s not found!",spriteEnum.toString()));
                 return info;
@@ -172,6 +190,10 @@ public class ResourceSystem {
         spikes,
         disappearEffect,
         heart,
+        muted,
+        notMuted,
+        pause,
+        resume
     }
 
     public enum Sound {

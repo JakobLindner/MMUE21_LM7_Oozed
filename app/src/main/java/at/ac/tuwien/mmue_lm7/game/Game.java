@@ -32,10 +32,6 @@ public class Game {
     private static final String TAG = "Game";
     private static final int DEBUG_TOGGLE_KEY = KeyEvent.KEYCODE_0;
     private static final int PAUSE_TOGGLE_KEY = KeyEvent.KEYCODE_P;
-    /**
-     * Distance from top right corner in which a tap toggles the pause state
-     */
-    private static final float PAUSE_TOGGLE_RADIUS = 3;
 
     private static Game singleton = null;
 
@@ -136,6 +132,7 @@ public class Game {
         resourceSystem.loadResources();
 
         levelLoader.loadLevel(root, 1);
+        root.addChild(ObjectFactories.makeIngameUI());
         onLevelLoaded.notify(new LevelEvent("1"));
 
         //TestTouchRect testRect = new TestTouchRect();
@@ -265,12 +262,7 @@ public class Game {
     }
 
     private void handleTap(TapEvent event) {
-        //if tap in top right corner -> toggle pause
-        if (tmpVec().set(GameConstants.GAME_WIDTH, GameConstants.GAME_HEIGHT).sub(event.getPosition()).len2() < PAUSE_TOGGLE_RADIUS * PAUSE_TOGGLE_RADIUS) {
-            Log.d(TAG, String.format("Tap close enough in upper right corner, toggle pause"));
-            togglePause();
-        } else
-            onTap.notify(event);
+        onTap.notify(event);
     }
 
     /**
@@ -477,6 +469,9 @@ public class Game {
             //score is decreased by 1 since it has been incremented before
             onGameOver.notify(new Score(lastMainLevel - 1, time, true));
         } else {
+            //add ingame ui
+            root.addChild(ObjectFactories.makeIngameUI());
+
             Log.i(TAG, String.format("Loaded level '%s'", level));
             onLevelLoaded.notify(new LevelEvent(level));
         }

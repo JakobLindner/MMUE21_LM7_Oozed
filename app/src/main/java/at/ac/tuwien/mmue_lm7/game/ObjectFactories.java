@@ -175,10 +175,8 @@ public class ObjectFactories {
         Button button = new Button(new Vec2(halfWidth, halfHeight),action);
         container.addChild(button);
 
-        Rect rect = new Rect(new Vec2(halfWidth, halfHeight), Color.WHITE, Paint.Style.FILL);
-        container.addChild(rect);
-
-        //TODO add image
+        Sprite s  = new Sprite(sprite);
+        container.addChild(s);
 
         container.setLayerRecursive(Layers.UI);
         return container;
@@ -200,11 +198,19 @@ public class ObjectFactories {
         pauseScreen.addChild(title);
 
         //mute button
-        GameObject muteButton = makeImageButton(-GameConstants.HALF_GAME_WIDTH+1,GameConstants.HALF_GAME_HEIGHT-1,1,1, ResourceSystem.SpriteEnum.heart,button -> {
+        GameObject muteButton = makeImageButton(-2,-1,1,1, ResourceSystem.SpriteEnum.muted,button -> {
             SoundSystem.get().toggleMuted();
         });
         pauseScreen.addChild(muteButton);
 
+        //resume button
+        GameObject resumeButton = makeImageButton(2, -1,1,1,
+                ResourceSystem.SpriteEnum.resume,
+                button -> {
+                    Game.get().resumeGame();
+                });
+        pauseScreen.addChild(resumeButton);
+        
         //renderSystem.drawText()
         //        .text("Tap top right corner to resume")
          //       .at(tmpVec().set(GameConstants.HALF_GAME_WIDTH, GameConstants.HALF_GAME_HEIGHT - 1.5f))//TODO remove offset magic number
@@ -225,6 +231,21 @@ public class ObjectFactories {
         pauseScreen.addChild(filter);
 
         return pauseScreen;
+    }
+
+    public static GameObject makeIngameUI() {
+        GameObject ui = new GameObject();
+
+        //pausebutton in top right corner
+        GameObject pauseButton = makeImageButton(GameConstants.GAME_WIDTH-1, GameConstants.GAME_HEIGHT-1,1,1,
+                ResourceSystem.SpriteEnum.pause,
+                button -> {
+            Game.get().pauseGame();
+        });
+        ui.addChild(pauseButton);
+
+        ui.setLayerRecursive(Layers.UI);
+        return ui;
     }
 
     public static GameObject makeKilledEffect(float x, float y) {
