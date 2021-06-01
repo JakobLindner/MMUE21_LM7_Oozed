@@ -148,9 +148,10 @@ public class ObjectFactories {
     }
 
     public static GameObject makeTextButton(float x, float y, String text, Button.Action action) {
-        final float HALF_WIDTH = 4;
-        final float HALF_HEIGHT = 2;
+        final float HALF_WIDTH = 3;
+        final float HALF_HEIGHT = 1;
         final float TEXT_SIZE = 16;
+        final float TEXT_OFFSET = -0.25f;
 
         GameObject container = new GameObject();
         container.position.set(x,y);
@@ -158,11 +159,12 @@ public class ObjectFactories {
         Button button = new Button(new Vec2(HALF_WIDTH, HALF_HEIGHT),action);
         container.addChild(button);
 
+        Text t = new Text(text,Color.BLACK,TEXT_SIZE);
+        t.position.set(0,TEXT_OFFSET);
+        container.addChild(t);
+
         Rect rect = new Rect(new Vec2(HALF_WIDTH, HALF_HEIGHT), Color.WHITE, Paint.Style.FILL);
         container.addChild(rect);
-
-        Text t = new Text(text,Color.BLACK,TEXT_SIZE);
-        container.addChild(t);
 
         container.setLayerRecursive(Layers.UI);
         return container;
@@ -210,7 +212,12 @@ public class ObjectFactories {
                     Game.get().resumeGame();
                 });
         pauseScreen.addChild(resumeButton);
-        
+
+        //main menu button
+        //GameObject mainMenuButton = makeTextButton(0,-3.5f,"Main Menu", button -> {
+            //TODO do we even need this?
+        //});
+        //pauseScreen.addChild(mainMenuButton);
         //renderSystem.drawText()
         //        .text("Tap top right corner to resume")
          //       .at(tmpVec().set(GameConstants.HALF_GAME_WIDTH, GameConstants.HALF_GAME_HEIGHT - 1.5f))//TODO remove offset magic number
