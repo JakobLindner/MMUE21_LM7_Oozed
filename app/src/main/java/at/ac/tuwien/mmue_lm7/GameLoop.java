@@ -19,6 +19,7 @@ import static at.ac.tuwien.mmue_lm7.Constants.UPDATE_TIME_ACCUM_MAX_MS;
 /**
  * Thread for updating a game instance
  * renders game on own lowres bitmap, which is then rendered onto the whole game surface view
+ *
  * @author simon
  */
 public class GameLoop implements Runnable {
@@ -41,14 +42,14 @@ public class GameLoop implements Runnable {
      * Canvas used for rendering onto gameBitmap
      */
     private Canvas gameCanvas;
-    private PaintFlagsDrawFilter noAntiAliasingFlags = new PaintFlagsDrawFilter(Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG | Paint.FILTER_BITMAP_FLAG,0);
+    private PaintFlagsDrawFilter noAntiAliasingFlags = new PaintFlagsDrawFilter(Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG | Paint.FILTER_BITMAP_FLAG, 0);
 
     public GameLoop(SurfaceHolder surfaceHolder, GameSurfaceView gameSurfaceView, Game game) {
         this.surfaceHolder = surfaceHolder;
         this.gameSurfaceView = gameSurfaceView;
         this.game = game;
-        this.gameBitmap = Bitmap.createBitmap(GameConstants.GAME_RES_WIDTH,GameConstants.GAME_RES_HEIGHT, Bitmap.Config.ARGB_8888);
-        this.gameBitmapSrc = new Rect(0,0,gameBitmap.getWidth(),gameBitmap.getHeight());
+        this.gameBitmap = Bitmap.createBitmap(GameConstants.GAME_RES_WIDTH, GameConstants.GAME_RES_HEIGHT, Bitmap.Config.ARGB_8888);
+        this.gameBitmapSrc = new Rect(0, 0, gameBitmap.getWidth(), gameBitmap.getHeight());
         this.gameCanvas = new Canvas(this.gameBitmap);
         this.gameCanvas.setDrawFilter(noAntiAliasingFlags);
 
@@ -64,7 +65,7 @@ public class GameLoop implements Runnable {
     public void setRunning(boolean running) {
         this.running = running;
 
-        if(!running) {
+        if (!running) {
             synchronized (pauseLock) {
                 pauseLock.notify();
             }
@@ -76,9 +77,9 @@ public class GameLoop implements Runnable {
     }
 
     public void setPaused(boolean paused) {
-        this.paused = paused;
-        if(!paused) {
-            synchronized (pauseLock) {
+        synchronized (pauseLock) {
+            this.paused = paused;
+            if (!paused) {
                 pauseLock.notify();
             }
         }
@@ -93,8 +94,8 @@ public class GameLoop implements Runnable {
         long accumulator = FIXED_DELTA_MS;
         long delta = 0;
 
-        while (running){
-            while(!paused && running) {
+        while (running) {
+            while (!paused && running) {
                 //calculate delta time
                 currentTime = getTime();
                 delta = currentTime - lastTime;
@@ -119,10 +120,11 @@ public class GameLoop implements Runnable {
             }
             game.pause();
 
-            if(running) {
+            if (running) {
                 try {
                     synchronized (pauseLock) {
-                        pauseLock.wait();
+                        if (paused && running)
+                            pauseLock.wait();
                     }
                 } catch (InterruptedException e) {
                     Log.e(TAG, "Interrupted game loop", e);
@@ -137,20 +139,22 @@ public class GameLoop implements Runnable {
     //@SuppressLint("WrongCall")
     private void render() {
         Canvas canvas = null;
-        try{
+        try {
             canvas = surfaceHolder.lockCanvas();
-            synchronized (surfaceHolder){
-                if(canvas == null) return;
+            synchronized (surfaceHolder) {
+                if (canvas == null) return;
 
                 //render game onto bitmap
                 gameSurfaceView.draw(gameCanvas);
 
                 //render bitmap onto view
-                gameBitmapDst.set(0,0,canvas.getWidth(),canvas.getHeight());
-                canvas.drawBitmap(gameBitmap,gameBitmapSrc,gameBitmapDst,gameBitmapPaint);
+                gameBitmapDst.set(0, 0, canvas.getWidth(), canvas.getHeight());
+                canvas.drawBitmap(gameBitmap, gameBitmapSrc, gameBitmapDst, gameBitmapPaint);
             }
+        } catch(Exception e) {
+            Log.e(TAG,"Error while rendering", e);
         } finally {
-            if(canvas != null) surfaceHolder.unlockCanvasAndPost(canvas);
+            if (canvas != null) surfaceHolder.unlockCanvasAndPost(canvas);
         }
 
     }
@@ -159,7 +163,7 @@ public class GameLoop implements Runnable {
      * @return current time in ms
      */
     private static long getTime() {
-       return SystemClock.uptimeMillis();
+        return SystemClock.uptimeMillis();
     }
 
 }
