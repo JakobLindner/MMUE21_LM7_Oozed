@@ -34,8 +34,8 @@ public class GameActivity extends FullscreenActivity {
         setContentView(R.layout.activity_game);
 
         gameView = findViewById(R.id.fullscreen_content);
-        gameView.getGame().onGameOver.addListener(this::onGameOver);
-        gameView.getGame().onLevelLoaded.addListener(this::onLevelLoaded);
+        gameView.getGame().onGameOver.addListener(this,this::onGameOver);
+        gameView.getGame().onLevelLoaded.addListener(this,this::onLevelLoaded);
     }
 
     @Override
@@ -73,8 +73,8 @@ public class GameActivity extends FullscreenActivity {
         Log.d(TAG, "onDestroy");
         gameView.onDestroy();
 
-        gameView.getGame().onGameOver.removeListener(this::onGameOver);
-        gameView.getGame().onLevelLoaded.removeListener(this::onLevelLoaded);
+        gameView.getGame().onGameOver.removeListener(this);
+        gameView.getGame().onLevelLoaded.removeListener(this);
     }
 
     /**

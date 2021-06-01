@@ -34,15 +34,15 @@ public class TestTouchRect extends AABB {
         super.init();
         getGlobalPosition(targetPos);
 
-        Game.get().onTap.addListener(this::onTap);
-        super.onCollide.addListener(this::onCollide);
+        Game.get().onTap.addListener(this,this::onTap);
+        super.onCollide.addListener(this,this::onCollide);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Game.get().onTap.removeListener(this::onTap);
-        super.onCollide.removeListener(this::onCollide);
+        Game.get().onTap.removeListener(this);
+        super.onCollide.removeListener(this);
     }
 
     @Override

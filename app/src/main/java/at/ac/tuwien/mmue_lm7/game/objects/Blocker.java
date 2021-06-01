@@ -72,7 +72,7 @@ public class Blocker extends Enemy {
     @Override
     public void init() {
         super.init();
-        box.onCollide.addListener(this::onCollide);
+        box.onCollide.addListener(this,this::onCollide);
 
         updateOrientation();
     }
@@ -108,7 +108,7 @@ public class Blocker extends Enemy {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        box.onCollide.removeListener(this::onCollide);
+        box.onCollide.removeListener(this);
     }
 
     private boolean onCollide(PhysicsSystem.Contact contact) {

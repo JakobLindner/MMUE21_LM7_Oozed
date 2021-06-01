@@ -17,13 +17,13 @@ public class DeadlyAABB extends GameObject{
     @Override
     public void init() {
         super.init();
-        aabb.onCollide.addListener(this::onCollide);
+        aabb.onCollide.addListener(this,this::onCollide);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        aabb.onCollide.removeListener(this::onCollide);
+        aabb.onCollide.removeListener(this);
     }
 
     private boolean onCollide(PhysicsSystem.Contact contact) {

@@ -16,8 +16,8 @@ public class SoundSystem {
 
 
     public static void load(Context context) {
-        if(INSTANCE!=null)
-            Log.w(TAG,"SoundSystem has already been loaded");
+        if (INSTANCE != null)
+            Log.w(TAG, "SoundSystem has already been loaded");
         else
             INSTANCE = new SoundSystem(context);
     }
@@ -60,7 +60,7 @@ public class SoundSystem {
     }
 
     private void initSoundPool() {
-        if(soundPool!=null) {
+        if (soundPool != null) {
             Log.w(TAG, "Sound pool already initialized");
             return;
         }
@@ -70,9 +70,8 @@ public class SoundSystem {
                     .setAudioAttributes(soundAttributes)
                     .setMaxStreams(MAX_SOUNDS)
                     .build();
-        }
-        else {
-            soundPool = new SoundPool(MAX_SOUNDS,AudioManager.STREAM_MUSIC,0);
+        } else {
+            soundPool = new SoundPool(MAX_SOUNDS, AudioManager.STREAM_MUSIC, 0);
         }
     }
 
@@ -93,10 +92,11 @@ public class SoundSystem {
 
     /**
      * Loads given sound
+     *
      * @return sound id that can be used for playback and unloading
      */
     public int loadSound(int resId) {
-        return soundPool.load(context,resId,SOUND_PRIORITY);
+        return soundPool.load(context, resId, SOUND_PRIORITY);
     }
 
     public void unloadSound(int soundId) {
@@ -107,7 +107,7 @@ public class SoundSystem {
      * Plays sound with given sound id loaded with loadSound
      */
     public void playSound(int soundId) {
-        soundPool.play(soundId,soundVolume,soundVolume,SOUND_PRIORITY,0,1);
+        soundPool.play(soundId, soundVolume, soundVolume, SOUND_PRIORITY, 0, 1);
     }
 
     public void playMusic(int id) {
@@ -148,10 +148,9 @@ public class SoundSystem {
     }
 
     public void stopMusic() {
-        if(currentMusic == null) {
+        if (currentMusic == null) {
             Log.w(TAG, "No music loaded to stop");
-        }
-        else {
+        } else {
             currentMusic.stop();
             currentMusicId = -1;
             currentMusic = null;
@@ -164,6 +163,14 @@ public class SoundSystem {
 
     public void toggleMuted() {
         muted = !muted;
+
+        //pause or resume music
+        if (currentMusic != null) {
+            if (muted)
+                currentMusic.pause();
+            else
+                currentMusic.start();
+        }
     }
 
 

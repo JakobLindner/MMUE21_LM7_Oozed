@@ -269,7 +269,7 @@ public class Game {
         if (tmpVec().set(GameConstants.GAME_WIDTH, GameConstants.GAME_HEIGHT).sub(event.getPosition()).len2() < PAUSE_TOGGLE_RADIUS * PAUSE_TOGGLE_RADIUS) {
             Log.d(TAG, String.format("Tap close enough in upper right corner, toggle pause"));
             togglePause();
-        } else if (!paused) //forward inputs to scene only if game is not paused
+        } else
             onTap.notify(event);
     }
 
@@ -285,9 +285,7 @@ public class Game {
     }
 
     private void handleSwipe(SwipeEvent event) {
-        //forward inputs to scene only if game is not paused
-        if (!paused)
-            onSwipe.notify(event);
+        onSwipe.notify(event);
     }
 
     /**
@@ -390,7 +388,8 @@ public class Game {
      */
     public void pauseGame() {
         if (!paused) {
-            pauseRoot = ObjectFactories.makePauseScreen(context.getResources().getString(R.string.pause_screen_title));
+            pauseRoot.init();
+            pauseRoot.addChild(ObjectFactories.makePauseScreen(context.getResources().getString(R.string.pause_screen_title)));
             //TODO play sound, ...
         }
         paused = true;
@@ -403,7 +402,7 @@ public class Game {
     public void resumeGame() {
         if (paused) {
             pauseRoot.destroy();
-            pauseRoot = null;
+            pauseRoot = new GameObject();
             //TODO play sound, ...
         }
         paused = false;

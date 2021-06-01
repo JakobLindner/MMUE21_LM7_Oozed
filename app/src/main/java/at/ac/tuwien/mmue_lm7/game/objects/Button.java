@@ -2,6 +2,7 @@ package at.ac.tuwien.mmue_lm7.game.objects;
 
 import at.ac.tuwien.mmue_lm7.game.Game;
 import at.ac.tuwien.mmue_lm7.game.TapEvent;
+import at.ac.tuwien.mmue_lm7.game.rendering.Layers;
 import at.ac.tuwien.mmue_lm7.utils.Vec2;
 
 /**
@@ -28,14 +29,14 @@ public class Button extends GameObject {
     public void init() {
         super.init();
 
-        Game.get().onTap.addListener(this::onTap);
+        Game.get().onTap.addListener(this,this::onTap, Layers.UI);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
 
-        Game.get().onTap.addListener(this::onTap);
+        Game.get().onTap.removeListener(this);
     }
 
     private boolean onTap(TapEvent event) {

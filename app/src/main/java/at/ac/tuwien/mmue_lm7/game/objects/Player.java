@@ -147,10 +147,10 @@ public class Player extends AABB {
         super.init();
 
         //register to events and systems
-        onCollide.addListener(this::onCollide);
-        Game.get().onTap.addListener(this::onTap);
-        Game.get().onSwipe.addListener(this::onSwipe);
-        Game.get().onKeyDown.addListener(this::onKeyDown);
+        onCollide.addListener(this,this::onCollide);
+        Game.get().onTap.addListener(this,this::onTap);
+        Game.get().onSwipe.addListener(this,this::onSwipe);
+        Game.get().onKeyDown.addListener(this,this::onKeyDown);
 
         //initialize jumps
         jump.setJump(NORMAL_JUMP_DISTANCE, JUMP_HEIGHT);
@@ -162,10 +162,10 @@ public class Player extends AABB {
         super.onDestroy();
 
         //deregister from events and systems
-        onCollide.removeListener(this::onCollide);
-        Game.get().onTap.removeListener(this::onTap);
-        Game.get().onSwipe.removeListener(this::onSwipe);
-        Game.get().onKeyDown.removeListener(this::onKeyDown);
+        onCollide.removeListener(this);
+        Game.get().onTap.removeListener(this);
+        Game.get().onSwipe.removeListener(this);
+        Game.get().onKeyDown.removeListener(this);
     }
 
     @Override

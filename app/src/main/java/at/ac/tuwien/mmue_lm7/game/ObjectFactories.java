@@ -18,9 +18,11 @@ import at.ac.tuwien.mmue_lm7.game.objects.Player;
 import at.ac.tuwien.mmue_lm7.game.objects.Rect;
 import at.ac.tuwien.mmue_lm7.game.objects.Sprite;
 import at.ac.tuwien.mmue_lm7.game.objects.Text;
+import at.ac.tuwien.mmue_lm7.game.objects.TouchEventFilter;
 import at.ac.tuwien.mmue_lm7.game.physics.CollisionLayers;
 import at.ac.tuwien.mmue_lm7.game.rendering.Layers;
 import at.ac.tuwien.mmue_lm7.game.resources.ResourceSystem;
+import at.ac.tuwien.mmue_lm7.game.resources.SoundSystem;
 import at.ac.tuwien.mmue_lm7.utils.Direction;
 import at.ac.tuwien.mmue_lm7.utils.Vec2;
 
@@ -162,7 +164,23 @@ public class ObjectFactories {
         Text t = new Text(text,Color.BLACK,TEXT_SIZE);
         container.addChild(t);
 
-        t.setLayerRecursive(Layers.UI);
+        container.setLayerRecursive(Layers.UI);
+        return container;
+    }
+
+    public static GameObject makeImageButton(float x, float y, float halfWidth, float halfHeight, ResourceSystem.SpriteEnum sprite, Button.Action action) {
+        GameObject container = new GameObject();
+        container.position.set(x,y);
+
+        Button button = new Button(new Vec2(halfWidth, halfHeight),action);
+        container.addChild(button);
+
+        Rect rect = new Rect(new Vec2(halfWidth, halfHeight), Color.WHITE, Paint.Style.FILL);
+        container.addChild(rect);
+
+        //TODO add image
+
+        container.setLayerRecursive(Layers.UI);
         return container;
     }
 
@@ -181,6 +199,12 @@ public class ObjectFactories {
         Text title = new Text(titleString,Color.WHITE,TITLE_SIZE);
         pauseScreen.addChild(title);
 
+        //mute button
+        GameObject muteButton = makeImageButton(-GameConstants.HALF_GAME_WIDTH+1,GameConstants.HALF_GAME_HEIGHT-1,1,1, ResourceSystem.SpriteEnum.heart,button -> {
+            SoundSystem.get().toggleMuted();
+        });
+        pauseScreen.addChild(muteButton);
+
         //renderSystem.drawText()
         //        .text("Tap top right corner to resume")
          //       .at(tmpVec().set(GameConstants.HALF_GAME_WIDTH, GameConstants.HALF_GAME_HEIGHT - 1.5f))//TODO remove offset magic number
@@ -194,6 +218,11 @@ public class ObjectFactories {
                 Color.argb(PAUSE_SCREEN_OVERLAY_ALPHA, 0, 0, 0),
                 Paint.Style.FILL);
         pauseScreen.addChild(background);
+
+        //filter touch inputs
+        TouchEventFilter filter = new TouchEventFilter();
+        filter.layer = Layers.UI-1;
+        pauseScreen.addChild(filter);
 
         return pauseScreen;
     }
