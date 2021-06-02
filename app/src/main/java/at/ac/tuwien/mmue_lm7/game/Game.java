@@ -122,18 +122,13 @@ public class Game {
         //initialize singleton
         singleton = this;
 
-        //initialize root, so that every object added to scene tree gets automatically initialized
-        root.init();
-
         //initialize systems
         physicsSystem.init();
         renderSystem.init();
 
         resourceSystem.loadResources();
 
-        levelLoader.loadLevel(root, 1);
-        root.addChild(ObjectFactories.makeIngameUI());
-        onLevelLoaded.notify(new LevelEvent("1"));
+        loadLevel("1");
 
         //TestTouchRect testRect = new TestTouchRect();
         //testRect.position.set(1,1);
@@ -460,7 +455,8 @@ public class Game {
 
     private void loadLevel(String level) {
         //clear scene tree
-        root.destroy();
+        if(root!=null)
+            root.destroy();
         //TODO delete marked entities
         //come and eat GC!!
         root = new GameObject();

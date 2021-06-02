@@ -293,13 +293,13 @@ public class ObjectFactories {
         Text livesText = new Text(Game.get().getContext().getString(R.string.lives, lives),
                 Color.WHITE,
                 TEXT_SIZE);
-        livesText.position.set(1, 0);
+        livesText.position.set(0.75f, -0.4f);
         lifeScreen.addChild(livesText);
 
         Text instruction = new Text(Game.get().getContext().getString(R.string.tap_to_start),
                         Color.WHITE,
                         TEXT_SIZE);
-        instruction.position.set(0, -1);
+        instruction.position.set(0, -2);
         lifeScreen.addChild(instruction);
 
         //draw overlay rect to darken game rendering
