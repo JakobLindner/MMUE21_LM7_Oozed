@@ -32,6 +32,8 @@ public class Game {
     private static final String TAG = "Game";
     private static final int DEBUG_TOGGLE_KEY = KeyEvent.KEYCODE_0;
     private static final int PAUSE_TOGGLE_KEY = KeyEvent.KEYCODE_P;
+    //delays level load after clearing a level
+    private static final int CLEAR_DELAY = 60;
 
     private static Game singleton = null;
 
@@ -65,6 +67,8 @@ public class Game {
     private final ResourceSystem resourceSystem;
     private final WraparoundSystem wraparoundSystem = new WraparoundSystem();
     private final TimingSystem timingSystem = new TimingSystem();
+    //always active, also during pause
+    private final TimingSystem pauselessTimingSystem = new TimingSystem();
     private final LevelStatusSystem levelStatusSystem = new LevelStatusSystem();
     private final LevelLoader levelLoader;
 
@@ -129,10 +133,6 @@ public class Game {
         resourceSystem.loadResources();
 
         loadLevel("1");
-
-        //TestTouchRect testRect = new TestTouchRect();
-        //testRect.position.set(1,1);
-        //root.addChild(testRect);
     }
 
     /**
@@ -193,6 +193,8 @@ public class Game {
             //advance time
             ++time;
         }
+
+        pauselessTimingSystem.update();
 
         freeAllTmpVec();
     }
@@ -489,7 +491,15 @@ public class Game {
         Log.i(TAG, "Level cleared!");
         onLevelCleared.notify(new LevelEvent(currentLevel));
 
+        //play sound
+        resourceSystem.playSound(ResourceSystem.Sound.LEVEL_CLEAR);
+
         advanceLevel();
-        loadLevel();
+        paused = true;
+        pauselessTimingSystem.addDelayedAction(() -> {
+            resumeGame();
+            loadLevel();
+        },CLEAR_DELAY);
+
     }
 }
