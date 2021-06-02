@@ -35,7 +35,7 @@ public class GameActivity extends FullscreenActivity {
 
         gameView = findViewById(R.id.fullscreen_content);
         gameView.getGame().onGameOver.addListener(this,this::onGameOver);
-        gameView.getGame().onLevelLoaded.addListener(this,this::onLevelLoaded);
+        //gameView.getGame().onLevelLoaded.addListener(this,this::onLevelLoaded);
     }
 
     @Override
@@ -74,7 +74,7 @@ public class GameActivity extends FullscreenActivity {
         gameView.onDestroy();
 
         gameView.getGame().onGameOver.removeListener(this);
-        gameView.getGame().onLevelLoaded.removeListener(this);
+        //gameView.getGame().onLevelLoaded.removeListener(this);
     }
 
     /**

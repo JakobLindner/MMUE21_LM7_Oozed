@@ -348,6 +348,10 @@ public class Game {
         return playerLives;
     }
 
+    public Context getContext() {
+        return context;
+    }
+
     /**
      * @return a temporary vector that may only be used in the same update or render, x=y=0
      */
@@ -474,6 +478,11 @@ public class Game {
 
             Log.i(TAG, String.format("Loaded level '%s'", level));
             onLevelLoaded.notify(new LevelEvent(level));
+
+            //pause game and show lives screen
+            paused = true;
+            pauseRoot.init();
+            pauseRoot.addChild(ObjectFactories.makeLifeScreen(level,playerLives));
         }
     }
 

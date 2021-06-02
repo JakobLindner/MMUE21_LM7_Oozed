@@ -55,6 +55,7 @@ public class ResourceSystem {
         bitmaps.put(R.drawable.background, BitmapFactory.decodeResource(context.getResources(), R.drawable.background, options));
         bitmaps.put(R.drawable.effects,BitmapFactory.decodeResource(context.getResources(),R.drawable.effects,options));
         bitmaps.put(R.drawable.ui, BitmapFactory.decodeResource(context.getResources(),R.drawable.ui,options));
+        bitmaps.put(R.drawable.heart, BitmapFactory.decodeResource(context.getResources(),R.drawable.heart,options));
 
         //load sounds
         for(Sound sound : Sound.values())

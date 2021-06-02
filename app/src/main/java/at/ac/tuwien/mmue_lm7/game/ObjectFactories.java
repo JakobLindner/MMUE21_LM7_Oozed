@@ -31,6 +31,7 @@ import at.ac.tuwien.mmue_lm7.utils.Vec2;
 /**
  * creates all game objects for easy instanciation from the LevelFactories
  * all x and y parameters are the lower left corner of the object
+ *
  * @author jakob
  */
 public class ObjectFactories {
@@ -48,18 +49,18 @@ public class ObjectFactories {
     }
 
     public static DeadlyAABB makeSpikes(int x, int y, Direction direction) {
-        final float SPIKE_HALF_WIDTH = 0.5f-GameConstants.UNITS_PER_PIXEL;
-        final float SPIKE_HALF_HEIGHT = 0.25f-GameConstants.UNITS_PER_PIXEL;
-        AABB box = new AABB(direction.isVertical()?SPIKE_HALF_WIDTH:SPIKE_HALF_HEIGHT,
-                                            direction.isHorizontal()?SPIKE_HALF_WIDTH:SPIKE_HALF_HEIGHT,
-                                            CollisionLayers.PLAYER,
-                                            CollisionLayers.DEADLY);
+        final float SPIKE_HALF_WIDTH = 0.5f - GameConstants.UNITS_PER_PIXEL;
+        final float SPIKE_HALF_HEIGHT = 0.25f - GameConstants.UNITS_PER_PIXEL;
+        AABB box = new AABB(direction.isVertical() ? SPIKE_HALF_WIDTH : SPIKE_HALF_HEIGHT,
+                direction.isHorizontal() ? SPIKE_HALF_WIDTH : SPIKE_HALF_HEIGHT,
+                CollisionLayers.PLAYER,
+                CollisionLayers.DEADLY);
         //position bounding box
-        box.position.add(direction.dir).scl(SPIKE_HALF_HEIGHT+2*GameConstants.UNITS_PER_PIXEL).inv();
+        box.position.add(direction.dir).scl(SPIKE_HALF_HEIGHT + 2 * GameConstants.UNITS_PER_PIXEL).inv();
 
         DeadlyAABB spikes = new DeadlyAABB(box);
-        spikes.position.set(x + 0.5f,y + 0.5f);
-        spikes.rotation = (direction.getRotation()+90)%360;
+        spikes.position.set(x + 0.5f, y + 0.5f);
+        spikes.rotation = (direction.getRotation() + 90) % 360;
 
         spikes.addChild(box);
         spikes.addChild(new Sprite(ResourceSystem.SpriteEnum.spikes));
@@ -69,7 +70,7 @@ public class ObjectFactories {
     }
 
     public static GameObject makeBlocker(int x, int y, Direction lookDir, boolean runningCW) {
-        AABB box = new AABB(0.5f,0.5f,CollisionLayers.PLAYER, CollisionLayers.ENEMY);
+        AABB box = new AABB(0.5f, 0.5f, CollisionLayers.PLAYER, CollisionLayers.ENEMY);
 
         Blocker blocker = new Blocker(box, lookDir, runningCW);
         blocker.position.set(x + 0.5f, y + 0.5f);
@@ -96,27 +97,27 @@ public class ObjectFactories {
      * @return platform with width and height = 1
      */
     public static GameObject makePlatformTile(int x, int y, ResourceSystem.SpriteEnum sprite) {
-        return makePlatformTile(x, y, 1,1,0, false, sprite);
+        return makePlatformTile(x, y, 1, 1, 0, false, sprite);
     }
 
     public static GameObject makePlatformTile(int x, int y, float rot, boolean mir, ResourceSystem.SpriteEnum sprite) {
-        return makePlatformTile(x,y,1,1,rot,mir,sprite);
+        return makePlatformTile(x, y, 1, 1, rot, mir, sprite);
     }
 
     /**
      * @return platform with width = height = 2
      */
     public static GameObject makeBigPlatformTile(int x, int y, ResourceSystem.SpriteEnum sprite) {
-        return makePlatformTile(x, y,2,2, 0, false, sprite);
+        return makePlatformTile(x, y, 2, 2, 0, false, sprite);
     }
 
     public static GameObject makeBigPlatformTile(int x, int y, float rot, boolean mir, ResourceSystem.SpriteEnum sprite) {
-        return makePlatformTile(x,y,2,2,rot,mir,sprite);
+        return makePlatformTile(x, y, 2, 2, rot, mir, sprite);
     }
 
     public static GameObject makePlatformTile(int x, int y, int width, int height, float rot, boolean mir, ResourceSystem.SpriteEnum sprite) {
-        float halfWidth = width*0.5f;
-        float halfHeight = height*0.5f;
+        float halfWidth = width * 0.5f;
+        float halfHeight = height * 0.5f;
 
         GameObject tile = new GameObject();
         tile.position.set(x + halfWidth, y + halfHeight);
@@ -125,7 +126,7 @@ public class ObjectFactories {
 
         tile.addChild(new Sprite(sprite));
 
-        AABB aabb = new AABB(halfWidth, halfHeight,(short) 0, CollisionLayers.PLATFORM);
+        AABB aabb = new AABB(halfWidth, halfHeight, (short) 0, CollisionLayers.PLATFORM);
         tile.addChild(aabb);
 
         tile.setLayerRecursive(Layers.TILES);
@@ -156,13 +157,13 @@ public class ObjectFactories {
         final float TEXT_OFFSET = -0.25f;
 
         GameObject container = new GameObject();
-        container.position.set(x,y);
+        container.position.set(x, y);
 
-        Button button = new Button(new Vec2(HALF_WIDTH, HALF_HEIGHT),action);
+        Button button = new Button(new Vec2(HALF_WIDTH, HALF_HEIGHT), action);
         container.addChild(button);
 
-        Text t = new Text(text,Color.BLACK,TEXT_SIZE);
-        t.position.set(0,TEXT_OFFSET);
+        Text t = new Text(text, Color.BLACK, TEXT_SIZE);
+        t.position.set(0, TEXT_OFFSET);
         container.addChild(t);
 
         Rect rect = new Rect(new Vec2(HALF_WIDTH, HALF_HEIGHT), Color.WHITE, Paint.Style.FILL);
@@ -174,12 +175,12 @@ public class ObjectFactories {
 
     public static GameObject makeImageButton(float x, float y, float halfWidth, float halfHeight, ResourceSystem.SpriteEnum sprite, Button.Action action) {
         GameObject container = new GameObject();
-        container.position.set(x,y);
+        container.position.set(x, y);
 
-        Button button = new Button(new Vec2(halfWidth, halfHeight),action);
+        Button button = new Button(new Vec2(halfWidth, halfHeight), action);
         container.addChild(button);
 
-        Sprite s  = new Sprite(sprite);
+        Sprite s = new Sprite(sprite);
         container.addChild(s);
 
         container.setLayerRecursive(Layers.UI);
@@ -190,10 +191,10 @@ public class ObjectFactories {
         SpriteInfo muted = ResourceSystem.spriteInfo(ResourceSystem.SpriteEnum.muted);
         SpriteInfo notMuted = ResourceSystem.spriteInfo(ResourceSystem.SpriteEnum.notMuted);
 
-        Sprite sprite  = new Sprite(ResourceSystem.SpriteEnum.muted);
+        Sprite sprite = new Sprite(ResourceSystem.SpriteEnum.muted);
 
-        MuteButton button = new MuteButton(new Vec2(halfWidth, halfHeight),sprite,muted,notMuted);
-        button.position.set(x,y);
+        MuteButton button = new MuteButton(new Vec2(halfWidth, halfHeight), sprite, muted, notMuted);
+        button.position.set(x, y);
 
         button.addChild(sprite);
 
@@ -210,18 +211,18 @@ public class ObjectFactories {
         final float TITLE_SIZE = 32;
 
         GameObject pauseScreen = new GameObject();
-        pauseScreen.position.set(GameConstants.HALF_GAME_WIDTH,GameConstants.HALF_GAME_HEIGHT);
+        pauseScreen.position.set(GameConstants.HALF_GAME_WIDTH, GameConstants.HALF_GAME_HEIGHT);
 
         //render text
-        Text title = new Text(titleString,Color.WHITE,TITLE_SIZE);
+        Text title = new Text(titleString, Color.WHITE, TITLE_SIZE);
         pauseScreen.addChild(title);
 
         //mute button
-        GameObject muteButton = makeMuteButton(-2,-1,1,1);
+        GameObject muteButton = makeMuteButton(-2, -1, 1, 1);
         pauseScreen.addChild(muteButton);
 
         //resume button
-        GameObject resumeButton = makeImageButton(2, -1,1,1,
+        GameObject resumeButton = makeImageButton(2, -1, 1, 1,
                 ResourceSystem.SpriteEnum.resume,
                 button -> {
                     Game.get().resumeGame();
@@ -230,26 +231,26 @@ public class ObjectFactories {
 
         //main menu button
         //GameObject mainMenuButton = makeTextButton(0,-3.5f,"Main Menu", button -> {
-            //TODO do we even need this?
+        //TODO do we even need this?
         //});
         //pauseScreen.addChild(mainMenuButton);
         //renderSystem.drawText()
         //        .text("Tap top right corner to resume")
-         //       .at(tmpVec().set(GameConstants.HALF_GAME_WIDTH, GameConstants.HALF_GAME_HEIGHT - 1.5f))//TODO remove offset magic number
-          //      .typeFace(Typeface.DEFAULT)
-           //     .align(Paint.Align.CENTER)
-           //     .color(Color.WHITE)
-           //     .size(16);
+        //       .at(tmpVec().set(GameConstants.HALF_GAME_WIDTH, GameConstants.HALF_GAME_HEIGHT - 1.5f))//TODO remove offset magic number
+        //      .typeFace(Typeface.DEFAULT)
+        //     .align(Paint.Align.CENTER)
+        //     .color(Color.WHITE)
+        //     .size(16);
 
         //draw overlay rect to darken game rendering
-        Rect background = new Rect(new Vec2(GameConstants.HALF_GAME_WIDTH,GameConstants.HALF_GAME_HEIGHT),
+        Rect background = new Rect(new Vec2(GameConstants.HALF_GAME_WIDTH, GameConstants.HALF_GAME_HEIGHT),
                 Color.argb(PAUSE_SCREEN_OVERLAY_ALPHA, 0, 0, 0),
                 Paint.Style.FILL);
         pauseScreen.addChild(background);
 
         //filter touch inputs
         TouchEventFilter filter = new TouchEventFilter();
-        filter.layer = Layers.UI-1;
+        filter.layer = Layers.UI - 1;
         pauseScreen.addChild(filter);
 
         return pauseScreen;
@@ -259,21 +260,68 @@ public class ObjectFactories {
         GameObject ui = new GameObject();
 
         //pausebutton in top right corner
-        GameObject pauseButton = makeImageButton(GameConstants.GAME_WIDTH-1, GameConstants.GAME_HEIGHT-1,1,1,
+        GameObject pauseButton = makeImageButton(GameConstants.GAME_WIDTH - 1, GameConstants.GAME_HEIGHT - 1, 1, 1,
                 ResourceSystem.SpriteEnum.pause,
                 button -> {
-            Game.get().pauseGame();
-        });
+                    Game.get().pauseGame();
+                });
         ui.addChild(pauseButton);
 
         ui.setLayerRecursive(Layers.UI);
         return ui;
     }
 
+    public static GameObject makeLifeScreen(String level, int lives) {
+        final float TITLE_SIZE = 32;
+        final float TEXT_SIZE = 16;
+
+        GameObject lifeScreen = new GameObject();
+        lifeScreen.position.set(GameConstants.HALF_GAME_WIDTH, GameConstants.HALF_GAME_HEIGHT);
+
+        //render level text
+        Text title = new Text(Game.get().getContext().getString(R.string.level, level),
+                Color.WHITE,
+                TITLE_SIZE);
+        title.position.set(0, 1);
+        lifeScreen.addChild(title);
+
+        //show lives
+        Sprite heart = new Sprite(ResourceSystem.SpriteEnum.heart);
+        heart.position.set(-1, 0);
+        lifeScreen.addChild(heart);
+
+        Text livesText = new Text(Game.get().getContext().getString(R.string.lives, lives),
+                Color.WHITE,
+                TEXT_SIZE);
+        livesText.position.set(1, 0);
+        lifeScreen.addChild(livesText);
+
+        Text instruction = new Text(Game.get().getContext().getString(R.string.tap_to_start),
+                        Color.WHITE,
+                        TEXT_SIZE);
+        instruction.position.set(0, -1);
+        lifeScreen.addChild(instruction);
+
+        //draw overlay rect to darken game rendering
+        Rect background = new Rect(new Vec2(GameConstants.HALF_GAME_WIDTH, GameConstants.HALF_GAME_HEIGHT),
+                Color.BLACK,
+                Paint.Style.FILL);
+        lifeScreen.addChild(background);
+
+        //full screen button to resume game
+        Button button = new Button(new Vec2(GameConstants.HALF_GAME_WIDTH,GameConstants.HALF_GAME_HEIGHT),button1 -> {
+            Game.get().resumeGame();
+        });
+        button.layer = Layers.UI;
+        lifeScreen.addChild(button);
+
+        return lifeScreen;
+    }
+
     public static GameObject makeKilledEffect(float x, float y) {
         final int EFFECT_DURATION = 30;//in frames
         Lifetime object = new Lifetime(EFFECT_DURATION);
-        object.position.set(x,y);
+        object.position.set(x, y);
 
         object.addChild(new Sprite(ResourceSystem.SpriteEnum.disappearEffect));
 
