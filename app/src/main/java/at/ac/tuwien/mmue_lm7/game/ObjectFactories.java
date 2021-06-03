@@ -153,7 +153,7 @@ public class ObjectFactories {
     public static GameObject makeTextButton(float x, float y, String text, Button.Action action) {
         final float HALF_WIDTH = 3;
         final float HALF_HEIGHT = 1;
-        final float TEXT_SIZE = 16;
+        final float TEXT_SIZE = 18;
         final float TEXT_OFFSET = -0.25f;
 
         GameObject container = new GameObject();
@@ -208,7 +208,7 @@ public class ObjectFactories {
          * This is to increase contrast between the game scene and the pause screen
          */
         final int PAUSE_SCREEN_OVERLAY_ALPHA = 180;
-        final float TITLE_SIZE = 32;
+        final float TITLE_SIZE = 36;
 
         GameObject pauseScreen = new GameObject();
         pauseScreen.position.set(GameConstants.HALF_GAME_WIDTH, GameConstants.HALF_GAME_HEIGHT);
@@ -272,8 +272,8 @@ public class ObjectFactories {
     }
 
     public static GameObject makeLifeScreen(String level, int lives) {
-        final float TITLE_SIZE = 32;
-        final float TEXT_SIZE = 16;
+        final float TITLE_SIZE = 36;
+        final float TEXT_SIZE = 18;
 
         GameObject lifeScreen = new GameObject();
         lifeScreen.position.set(GameConstants.HALF_GAME_WIDTH, GameConstants.HALF_GAME_HEIGHT);
@@ -293,7 +293,7 @@ public class ObjectFactories {
         Text livesText = new Text(Game.get().getContext().getString(R.string.lives, lives),
                 Color.WHITE,
                 TEXT_SIZE);
-        livesText.position.set(0.75f, -0.4f);
+        livesText.position.set(0.85f, -0.4f);
         lifeScreen.addChild(livesText);
 
         Text instruction = new Text(Game.get().getContext().getString(R.string.tap_to_start),

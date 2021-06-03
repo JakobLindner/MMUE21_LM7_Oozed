@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 
+import at.ac.tuwien.mmue_lm7.game.Game;
 import at.ac.tuwien.mmue_lm7.game.rendering.RenderSystem;
 
 /**
@@ -11,7 +12,7 @@ import at.ac.tuwien.mmue_lm7.game.rendering.RenderSystem;
  * @author simon
  */
 public class Text extends GameObject {
-    private static final float DEFAULT_TEXT_SIZE = 32;
+    private static final float DEFAULT_TEXT_SIZE = 18;
 
     public String text;
     public Paint.Align align = Paint.Align.CENTER;
@@ -38,7 +39,7 @@ public class Text extends GameObject {
                 .at(getGlobalPosition())
                 .text(text)
                 .align(align)
-                .typeFace(Typeface.DEFAULT)
+                .typeFace(Game.get().getResourceSystem().getFont())
                 .color(color)
                 .size(textSize);
     }

@@ -53,6 +53,7 @@
 
             <Button
                 android:id="@+id/main_menu_button"
+                style="@style/Widget.Theme.MMUELM7.Button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0"
@@ -66,6 +67,7 @@
 
             <Button
                 android:id="@+id/retry_button"
+                style="@style/Widget.Theme.MMUELM7.Button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0"

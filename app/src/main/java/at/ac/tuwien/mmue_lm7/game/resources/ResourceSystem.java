@@ -3,7 +3,10 @@ package at.ac.tuwien.mmue_lm7.game.resources;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Typeface;
 import android.util.Log;
+
+import androidx.core.content.res.ResourcesCompat;
 
 import java.util.HashMap;
 
@@ -24,6 +27,8 @@ public class ResourceSystem {
     private static HashMap<SpriteEnum, SpriteInfo> spriteInfos = new HashMap<>();
 
     private HashMap<Sound,Integer> soundIds = new HashMap<>();
+
+    private Typeface font;
 
     /**
      * true if resources are loaded
@@ -60,6 +65,8 @@ public class ResourceSystem {
         //load sounds
         for(Sound sound : Sound.values())
             soundIds.put(sound,SoundSystem.get().loadSound(sound.resId));
+
+        font = ResourcesCompat.getFont(context,R.font.monogram);
 
         isLoaded = true;
     }
@@ -176,6 +183,10 @@ public class ResourceSystem {
     public void playSound(Sound sound) {
         if(soundIds.containsKey(sound))
             SoundSystem.get().playSound(soundIds.get(sound));
+    }
+
+    public Typeface getFont() {
+        return font;
     }
 
     public enum SpriteEnum {

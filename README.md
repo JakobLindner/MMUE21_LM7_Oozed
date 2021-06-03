@@ -10,3 +10,7 @@ Simon Reiser  11777770
 To start the game execute the .apk file on an android phone
 
 The javadoc can be found in the "javadoc" folder
+
+## Attribution
+**Font**: [https://datagoblin.itch.io/monogram](https://datagoblin.itch.io/monogram)
+**Sounds**: made with [rFXGen](https://raylibtech.itch.io/rfxgen)
