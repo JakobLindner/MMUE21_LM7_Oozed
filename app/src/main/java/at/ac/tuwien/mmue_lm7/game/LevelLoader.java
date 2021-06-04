@@ -201,9 +201,14 @@ public class LevelLoader {
                 .platform()
                     .at(10, 10)
                     .size(8, 3)
-                    .pattern("PCIOG#II" +
-                             "G#PO##OP" +
-                             "##COPIOP")
+                    .pattern("PCIO##II" +
+                             "##POG#OP" +
+                             "G#COPIOP")
+                .platform().at(0,0).sprite(ResourceSystem.SpriteEnum.platformBigGears)
+                .platform().at(30,0).sprite(ResourceSystem.SpriteEnum.platformBigGears)
+                .platform().at(0,16).sprite(ResourceSystem.SpriteEnum.platformBigPlate)
+                .platform().at(30,16).sprite(ResourceSystem.SpriteEnum.platformBigPlate)
+                .platform().at(31,10)
                 .player()
                     .at(12, 13)
                     .orient(Direction.UP, true)

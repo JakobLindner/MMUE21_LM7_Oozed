@@ -67,8 +67,20 @@ public class PlatformBuilder extends LevelPartBuilder {
                     sprite = getSpriteFromChar(Character.toUpperCase(c));
                 }
 
-                if(sprite!=null)
-                    level.addTile(generateTile(sprite,x,y));
+                if(sprite!=null) {
+                    int size = ResourceSystem.spriteInfo(sprite).size/GameConstants.PIXELS_PER_UNIT;
+                    PlatformTile tile = generateTile(sprite, x, y);
+                    level.addTile(tile);
+                    //if tile is on edge of screen, then extend it
+                    if(this.x+x==0)
+                        level.addTile(generateTile(sprite,x-size,y));
+                    else if(this.x+x+size==GameConstants.GAME_WIDTH)
+                        level.addTile(generateTile(sprite,x+size,y));
+                    if(this.y+y==0)
+                        level.addTile(generateTile(sprite,x,y-size));
+                    else if(this.y+y+size==GameConstants.GAME_HEIGHT)
+                        level.addTile(generateTile(sprite,x,y+size));
+                }
 
                 ++patternIndex;
             }
@@ -90,9 +102,8 @@ public class PlatformBuilder extends LevelPartBuilder {
 
     private PlatformTile generateTile(ResourceSystem.SpriteEnum sprite,int offsetX,int offsetY) {
         PlatformTile tile = new PlatformTile();
-        SpriteInfo info = ResourceSystem.spriteInfo(sprite);
         tile.x = this.x+offsetX;
-        tile.y = this.y+offsetY-(info.size / GameConstants.PIXELS_PER_UNIT - 1);
+        tile.y = this.y+offsetY;
         tile.sprite = sprite;
 
         return tile;
