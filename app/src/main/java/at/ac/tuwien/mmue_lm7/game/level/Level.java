@@ -22,6 +22,14 @@ public class Level {
 
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void addTile(Tile tile) {
+        objects.add(tile);
+    }
+
     public void build(GameObject root) {
         for(Tile tile : objects) {
             tile.build(root);

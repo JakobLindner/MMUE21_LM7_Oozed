@@ -17,6 +17,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 
 import at.ac.tuwien.mmue_lm7.game.level.Level;
+import at.ac.tuwien.mmue_lm7.game.level.builder.LevelBuilder;
 import at.ac.tuwien.mmue_lm7.game.objects.GameObject;
 import at.ac.tuwien.mmue_lm7.game.objects.KillEnemiesObjective;
 import at.ac.tuwien.mmue_lm7.game.resources.ResourceSystem;
@@ -42,6 +43,7 @@ public class LevelLoader {
 
     public static HashMap<String,LevelFactory> levelsByName = new HashMap<String, LevelFactory>(){{
         put("1", LevelLoader::createLevel1);
+        put("2", LevelLoader::createLevel2);
     }} ;
 
 
@@ -192,6 +194,36 @@ public class LevelLoader {
 
         // === BACKGROUND ===
         root.addChild(ObjectFactories.makeBackground());
+    }
+
+    public static void createLevel2(GameObject root) {
+        Level level = new LevelBuilder("2")
+                .platform().at(10,10)
+                .platform().at(11,10)
+                .platform().at(12,10)
+                .platform().at(13,10)
+                .platform().at(14,10)
+                .platform().at(15,10)
+                .platform().at(16,10)
+                .platform().at(10,11)
+                .platform().at(11,11)
+                .platform().at(12,11)
+                .platform().at(13,11)
+                .platform().at(14,11)
+                .platform().at(15,11)
+                .platform().at(16,11)
+                .player()
+                    .at(12,12)
+                    .orient(Direction.UP,true)
+                .blocker()
+                    .at(15,9)
+                    .orient(Direction.DOWN, false)
+                .spikes()
+                    .at(13,9)
+                    .dir(Direction.DOWN)
+                .build();
+
+        level.build(root);
     }
 
     public boolean loadLevel(GameObject root, int id) {

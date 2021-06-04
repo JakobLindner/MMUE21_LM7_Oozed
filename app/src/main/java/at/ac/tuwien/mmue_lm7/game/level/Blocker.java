@@ -8,8 +8,8 @@ import at.ac.tuwien.mmue_lm7.game.objects.GameObject;
 import at.ac.tuwien.mmue_lm7.utils.Direction;
 
 public class Blocker extends Tile {
-    private Direction direction;
-    private boolean runningCW;
+    public Direction direction;
+    public boolean runningCW;
 
     @Override
     public void build(GameObject root) {
