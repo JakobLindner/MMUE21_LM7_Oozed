@@ -14,10 +14,9 @@
         <item name="android:buttonBarStyle">?android:attr/buttonBarStyle</item>
     </style>
 
-    <style name="Widget.Theme.MMUELM7.Button" parent="Widget.MaterialComponents.Button">
+    <style name="Widget.Theme.MMUELM7.Button" parent="Widget.AppCompat.Button">
         <item name="fontFamily">@font/monogram</item>
         <item name="android:fontFamily">@font/monogram</item>
-        <item name="android:typeface">@font/monogram</item>
         <item name="android:textSize">9pt</item>
         <item name="android:textAllCaps">false</item>
     </style>
