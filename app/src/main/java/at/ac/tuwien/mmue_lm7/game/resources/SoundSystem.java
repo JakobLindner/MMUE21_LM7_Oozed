@@ -111,8 +111,12 @@ public class SoundSystem {
     }
 
     public void playMusic(int id) {
-        if (currentMusicId == id)
+        if (currentMusicId == id) {
+            //resume if paused
+            if(!currentMusic.isPlaying())
+                currentMusic.start();
             return;
+        }
 
         this.currentMusicId = id;
         //stop current music
