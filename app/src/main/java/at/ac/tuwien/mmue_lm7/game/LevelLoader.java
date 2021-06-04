@@ -41,10 +41,10 @@ public class LevelLoader {
         void create(GameObject root);
     }
 
-    public static HashMap<String,LevelFactory> levelsByName = new HashMap<String, LevelFactory>(){{
+    public static HashMap<String, LevelFactory> levelsByName = new HashMap<String, LevelFactory>() {{
         put("1", LevelLoader::createLevel1);
         put("2", LevelLoader::createLevel2);
-    }} ;
+    }};
 
 
     // TODO tutorial level
@@ -198,28 +198,20 @@ public class LevelLoader {
 
     public static void createLevel2(GameObject root) {
         Level level = new LevelBuilder("2")
-                .platform().at(10,10)
-                .platform().at(11,10)
-                .platform().at(12,10)
-                .platform().at(13,10)
-                .platform().at(14,10)
-                .platform().at(15,10)
-                .platform().at(16,10)
-                .platform().at(10,11)
-                .platform().at(11,11)
-                .platform().at(12,11)
-                .platform().at(13,11)
-                .platform().at(14,11)
-                .platform().at(15,11)
-                .platform().at(16,11)
+                .platform()
+                    .at(10, 10)
+                    .size(8, 3)
+                    .pattern("PCIOG#II" +
+                             "G#PO##OP" +
+                             "##COPIOP")
                 .player()
-                    .at(12,12)
-                    .orient(Direction.UP,true)
+                    .at(12, 13)
+                    .orient(Direction.UP, true)
                 .blocker()
-                    .at(15,9)
+                    .at(15, 9)
                     .orient(Direction.DOWN, false)
                 .spikes()
-                    .at(13,9)
+                    .at(13, 9)
                     .dir(Direction.DOWN)
                 .build();
 
@@ -237,13 +229,13 @@ public class LevelLoader {
      */
     public boolean loadLevel(GameObject root, String name) {
         //check if there is a level building procedure
-        if(!levelsByName.containsKey(name)) {
+        if (!levelsByName.containsKey(name)) {
             //check if there is a level json
             try {
                 //loading text from asset: https://stackoverflow.com/a/16110044
-                InputStream is = assetManager.open(String.format("levels/%s.json",name));
+                InputStream is = assetManager.open(String.format("levels/%s.json", name));
                 StringBuilder sb = new StringBuilder();
-                BufferedReader br = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8 ));
+                BufferedReader br = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
                 String str;
                 while ((str = br.readLine()) != null) {
                     sb.append(str);
@@ -256,13 +248,12 @@ public class LevelLoader {
                     Level level = Level.fromJSON(json);
                     level.build(root);
                     return true;
-                }
-                catch(JSONException e) {
+                } catch (JSONException e) {
                     Log.e(TAG, "Unable to load level json", e);
                     return false;
                 }
             } catch (IOException e) {
-                Log.e(TAG,String.format("Exception while opening level %s",name),e);
+                Log.e(TAG, String.format("Exception while opening level %s", name), e);
             }
             return false;
         }
