@@ -22,6 +22,7 @@ import at.ac.tuwien.mmue_lm7.utils.Vec2;
  * since every frame two rays are performed down at the front and back of the player to
  * detect the start of running off the edge
  * Dashing can only end while running, so the player won't suddenly become slower in midair
+ *
  * @author simon
  */
 public class Player extends GameObject {
@@ -57,7 +58,7 @@ public class Player extends GameObject {
 
     public static final float PLAYER_HALF_SIZE = 0.5f;
     //Bounding box
-    public static final float HALF_WIDTH = 0.5f- 2 * GameConstants.UNITS_PER_PIXEL;
+    public static final float HALF_WIDTH = 0.5f - 2 * GameConstants.UNITS_PER_PIXEL;
     public static final float HALF_HEIGHT = 0.25f;
     public static final short PLAYER_MASK = CollisionLayers.ENEMY | CollisionLayers.PLATFORM;
     public static final short PLAYER_MOVEMENT_MASK = CollisionLayers.PLATFORM;
@@ -147,15 +148,15 @@ public class Player extends GameObject {
         super.init();
 
         //register to events and systems
-        box.onCollide.addListener(this,this::onCollide);
-        box.onKilled.addListener(this,this::onBoxKilled);
-        Game.get().onTap.addListener(this,this::onTap);
-        Game.get().onSwipe.addListener(this,this::onSwipe);
-        Game.get().onKeyDown.addListener(this,this::onKeyDown);
+        box.onCollide.addListener(this, this::onCollide);
+        box.onKilled.addListener(this, this::onBoxKilled);
+        Game.get().onTap.addListener(this, this::onTap);
+        Game.get().onSwipe.addListener(this, this::onSwipe);
+        Game.get().onKeyDown.addListener(this, this::onKeyDown);
 
         //initialize jumps
         jump.setJump(NORMAL_JUMP_DISTANCE, JUMP_HEIGHT);
-        dashJump.setJump(PLAYER_DASH_SPEED*NORMAL_JUMP_DISTANCE/PLAYER_SPEED, JUMP_HEIGHT);
+        dashJump.setJump(PLAYER_DASH_SPEED * NORMAL_JUMP_DISTANCE / PLAYER_SPEED, JUMP_HEIGHT);
     }
 
     @Override
@@ -218,6 +219,9 @@ public class Player extends GameObject {
                         //resolve collision
                         updatePos(movement.getPosition());
 
+                        //align player sprite with edge
+                        alignPlayerWithEdge(dir);
+
                         //rotate player
                         if (dir.dir.isCCW(upDir.dir)) {
                             dir = dir.rotateCCW();
@@ -249,6 +253,7 @@ public class Player extends GameObject {
 
                 //perform sweep
                 PhysicsSystem.Sweep movement = Game.get().getPhysicsSystem().move(box, move, PLAYER_MOVEMENT_MASK);
+
                 //updatePosition
                 updatePos(movement.getPosition());
 
@@ -258,7 +263,10 @@ public class Player extends GameObject {
 
                     //recalculate direction and up vector
                     //set up vector to most similar inverse cardinal direction to normal
-                    upDir = Direction.getClosest(contact.getNormal());
+                    Direction normalDir = Direction.getClosest(contact.getNormal());
+                    //align player sprite with edge before rotating
+                    alignPlayerWithEdge(normalDir.opposite());
+                    upDir = normalDir;
 
                     //dir = most similar direction to move, which is perpendicular to up
                     if (upDir.dir.isCCW(move))
@@ -320,14 +328,14 @@ public class Player extends GameObject {
     public void kill() {
         //create disappear effect
         Vec2 pos = getGlobalPosition();
-        GameObject effect = ObjectFactories.makeKilledEffect(pos.x,pos.y);
+        GameObject effect = ObjectFactories.makeKilledEffect(pos.x, pos.y);
         Game.get().getRoot().addChild(effect);
 
         //play sound
         Game.get().getResourceSystem().playSound(ResourceSystem.Sound.PLAYER_DEATH);
 
         //call respawn function delayed
-        Game.get().getTimingSystem().addDelayedAction(Game.get()::respawnPlayer,RESPAWN_DELAY);
+        Game.get().getTimingSystem().addDelayedAction(Game.get()::respawnPlayer, RESPAWN_DELAY);
 
         super.kill();
     }
@@ -370,9 +378,9 @@ public class Player extends GameObject {
     }
 
     private boolean onKeyDown(KeyEvent event) {
-        if(event.getKeyCode()==JUMP_KEY)
+        if (event.getKeyCode() == JUMP_KEY)
             wantJump = true;
-        if(event.getKeyCode()==DASH_KEY)
+        if (event.getKeyCode() == DASH_KEY)
             wantDash = true;
         return false;
     }
@@ -405,7 +413,7 @@ public class Player extends GameObject {
             }
             case RUNNING: {
                 //check platform state before doing further moves
-                if(state== PlayerState.JUMPING)
+                if (state == PlayerState.JUMPING)
                     performRaycasts();
             }
         }
@@ -444,6 +452,17 @@ public class Player extends GameObject {
     }
 
     /**
+     * Aligns player sprite bounds with given edge of bounding box
+     * @param edge
+     */
+    private void alignPlayerWithEdge(Direction edge) {
+        float currentSize = edge.isVertical() == upDir.isVertical() ? HALF_HEIGHT : HALF_WIDTH;
+        float diff = (currentSize-PLAYER_HALF_SIZE)+ (edge.dir.x+edge.dir.y)*(edge.isHorizontal()?box.position.x:box.position.y);
+
+        position.add(posUpdate.set(edge.dir).scl(diff));
+    }
+
+    /**
      * Updates rotation and mirroring based on dir and updir
      * updates bounding box to reflect current rotation
      */
@@ -462,19 +481,21 @@ public class Player extends GameObject {
     }
 
     private void updateBox() {
-        box.position.set(Game.get().tmpVec().set(upDir.dir).inv().scl(PLAYER_HALF_SIZE-HALF_HEIGHT));
+        box.position.set(Game.get().tmpVec().set(upDir.dir).inv().scl(PLAYER_HALF_SIZE - HALF_HEIGHT));
 
-        float width = upDir.isVertical()?HALF_WIDTH:HALF_HEIGHT;
-        float height = upDir.isVertical()?HALF_HEIGHT:HALF_WIDTH;
-        box.halfSize.set(width,height);
+        float width = upDir.isVertical() ? HALF_WIDTH : HALF_HEIGHT;
+        float height = upDir.isVertical() ? HALF_HEIGHT : HALF_WIDTH;
+        box.halfSize.set(width, height);
     }
 
     /**
      * Updates player position such that the bounding box has given global position
+     *
      * @param boxPos is unchanged
      */
     //helper vector
     private Vec2 posUpdate = new Vec2();
+
     private void updatePos(Vec2 boxPos) {
         setGlobalPosition(posUpdate.set(boxPos).sub(box.position));
     }
@@ -486,6 +507,7 @@ public class Player extends GameObject {
     /**
      * cast two raycast down(=inverse to upDir) to check if the end of the platform has been reached
      * rays are redone with a slight offset since there is a tiny chance that the rays slip exactly between two boxes
+     *
      * @param globalPos is unchanged
      */
     private void performRaycasts(Vec2 globalPos) {

@@ -212,7 +212,7 @@ public class LevelLoader {
                              "G#PO##OP" +
                              "##COPIOP")
                 .player()
-                    .at(12, 13)
+                    .at(12, 14)
                     .orient(Direction.UP, true)
                 .blocker()
                     .at(15, 10)
