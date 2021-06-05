@@ -206,7 +206,7 @@ public class LevelLoader {
                     .horizontalPattern("G#")
                     .verticalPattern("B###")
                 .platform()
-                    .at(10, 10)
+                    .at(10, 11)
                     .size(8, 3)
                     .pattern("PCIOG#II" +
                              "G#PO##OP" +
@@ -215,7 +215,7 @@ public class LevelLoader {
                     .at(12, 13)
                     .orient(Direction.UP, true)
                 .blocker()
-                    .at(15, 9)
+                    .at(15, 10)
                     .orient(Direction.DOWN, false)
                 //.spikes()
                 //    .at(13, 9)
