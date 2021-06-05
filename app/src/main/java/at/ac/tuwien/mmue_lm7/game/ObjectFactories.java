@@ -73,14 +73,15 @@ public class ObjectFactories {
         return spikes;
     }
 
-    public static GameObject makeBlocker(int x, int y, Direction lookDir, boolean runningCW) {
+    public static GameObject makeBlocker(int x, int y, Direction lookDir, boolean runningCW, boolean dynamic) {
         AABB box = new AABB(0.5f, 0.5f, CollisionLayers.PLAYER, CollisionLayers.ENEMY);
 
-        Blocker blocker = new Blocker(box, lookDir, runningCW);
+        Blocker blocker = new Blocker(box, lookDir, runningCW, dynamic);
         blocker.position.set(x + 0.5f, y + 0.5f);
 
         blocker.addChild(box);
 
+        //TODO different sprite for static blocker
         AnimatedSprite idleSprite = new AnimatedSprite(ResourceSystem.SpriteEnum.blockerIdle);
         idleSprite.position.set(0, 0);
         blocker.addChild(idleSprite);

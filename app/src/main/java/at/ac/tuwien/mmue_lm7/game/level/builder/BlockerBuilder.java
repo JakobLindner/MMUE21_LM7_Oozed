@@ -23,6 +23,11 @@ public class BlockerBuilder extends LevelPartBuilder<BlockerBuilder>{
         return this;
     }
 
+    public BlockerBuilder dynamic(boolean dynamic) {
+        blocker.dynamic = dynamic;
+        return this;
+    }
+
     @Override
     public BlockerBuilder copy() {
         super.copy();

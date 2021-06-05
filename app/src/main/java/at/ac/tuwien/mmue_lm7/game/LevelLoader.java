@@ -68,7 +68,7 @@ public class LevelLoader {
         // === ENEMIES ===
         //root.addChild(ObjectFactories.makeBlocker(18, 0, Direction.RIGHT, false));
         //root.addChild(ObjectFactories.makeBlocker(8, 0, Direction.LEFT, true));
-        root.addChild(ObjectFactories.makeBlocker(1, 7, Direction.LEFT, true));
+        root.addChild(ObjectFactories.makeBlocker(1, 7, Direction.LEFT, true, true));
         //root.addChild(ObjectFactories.makeBlocker(23, 14, Direction.RIGHT, true));
 
 
@@ -216,7 +216,8 @@ public class LevelLoader {
                     .orient(Direction.UP, true)
                 .blocker()
                     .at(15, 10)
-                    .orient(Direction.DOWN, false)
+                    .orient(Direction.DOWN, true)
+                    .dynamic(false)
                 //.spikes()
                 //    .at(13, 9)
                 //    .dir(Direction.DOWN)

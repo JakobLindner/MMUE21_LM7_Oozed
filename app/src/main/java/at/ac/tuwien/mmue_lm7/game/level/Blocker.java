@@ -10,17 +10,21 @@ import at.ac.tuwien.mmue_lm7.utils.Direction;
 public class Blocker extends Tile {
     public Direction direction;
     public boolean runningCW;
+    public boolean dynamic = true;
+
+    //TODO way to configure dynamic field via json
 
     public Blocker(){}
     public Blocker(Blocker other) {
         super(other);
         this.direction = other.direction;
         this.runningCW = other.runningCW;
+        this.dynamic = other.dynamic;
     }
 
     @Override
     public void build(GameObject root) {
-        root.addChild(ObjectFactories.makeBlocker(x, y, direction, runningCW));
+        root.addChild(ObjectFactories.makeBlocker(x, y, direction, runningCW, dynamic));
     }
 
     @Override

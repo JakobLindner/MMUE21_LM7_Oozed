@@ -31,13 +31,13 @@ public class Blocker extends Enemy {
     /**
      * Offset of raycast origin from center
      */
-    private static final float WALKING_RAY_CAST_OFFSET = 0.5f- GameConstants.UNITS_PER_PIXEL;
+    private static final float WALKING_RAY_CAST_OFFSET = 0.5f - GameConstants.UNITS_PER_PIXEL;
     /**
      * Mask used for checking whether end of platform has been reached
      */
     private static final short RAY_CAST_MASK = CollisionLayers.PLATFORM;
     private static final float HALF_WIDTH = 0.5f;
-    private static final float HALF_HEIGHT = 0.5f-GameConstants.UNITS_PER_PIXEL;
+    private static final float HALF_HEIGHT = 0.5f - GameConstants.UNITS_PER_PIXEL;
     private static final float BLOCKER_HALF_SIZE = 0.5f;
 
     private AABB box;
@@ -61,7 +61,7 @@ public class Blocker extends Enemy {
     private Vec2 move = new Vec2();
     private Vec2 ray = new Vec2();
 
-    public Blocker(AABB box, Direction startingDir, boolean runningCW) {
+    public Blocker(AABB box, Direction startingDir, boolean runningCW, boolean dynamic) {
         this.box = box;
         this.dir = startingDir;
         if (runningCW)
@@ -69,20 +69,22 @@ public class Blocker extends Enemy {
         else
             upDir = startingDir.rotateCW();
 
-        setWrappable(true);
+        setWrappable(dynamic);
+
+        state = dynamic ? BlockerState.WALKING : BlockerState.STANDING;
     }
 
     @Override
     public void init() {
         super.init();
-        box.onCollide.addListener(this,this::onCollide);
+        box.onCollide.addListener(this, this::onCollide);
 
         updateOrientation();
     }
 
     @Override
     public void update() {
-        if(state==BlockerState.WALKING) {
+        if (state == BlockerState.WALKING) {
             //perform move
             PhysicsSystem.Sweep movement = Game.get().getPhysicsSystem().move(box,
                     move.set(dir.dir).scl(WALK_SPEED),
@@ -90,8 +92,8 @@ public class Blocker extends Enemy {
             setGlobalPosition(move.set(movement.getPosition()).sub(box.position));
 
             //check if there is a collision = obstacle in front of
-            if(movement.getContact()!=null || endOfPlatformReached(movement.getPosition())) {
-                Game.get().getTimingSystem().addDelayedAction(this::initTurning,TURN_DELAY);
+            if (movement.getContact() != null || endOfPlatformReached(movement.getPosition())) {
+                Game.get().getTimingSystem().addDelayedAction(this::initTurning, TURN_DELAY);
                 state = BlockerState.STANDING;
             }
         }
@@ -117,7 +119,7 @@ public class Blocker extends Enemy {
     private boolean onCollide(PhysicsSystem.Contact contact) {
         if (contact.getOther().layer == Layers.PLAYER) {
             //check side of collision
-            if(contact.getNormal().approxEquals(dir.opposite().dir))
+            if (contact.getNormal().approxEquals(dir.opposite().dir))
                 contact.getOther().kill();//kill player
             else
                 kill();//get killed by player
@@ -130,8 +132,8 @@ public class Blocker extends Enemy {
      */
     private void updateOrientation() {
         //TODO implement via vector angle
-        rotation = dir.getRotation()+180;
-        rotation%=360;
+        rotation = dir.getRotation() + 180;
+        rotation %= 360;
 
         mirrored = !upDir.dir.isCCW(dir.dir);
         if (mirrored && dir.isHorizontal()) {
@@ -140,10 +142,10 @@ public class Blocker extends Enemy {
         }
 
         //update bounding box
-        float width = upDir.isVertical()?HALF_WIDTH:HALF_HEIGHT;
-        float height = upDir.isVertical()?HALF_HEIGHT:HALF_WIDTH;
-        box.halfSize.set(width,height);
-        box.position.set(upDir.dir).inv().scl(BLOCKER_HALF_SIZE-HALF_HEIGHT);
+        float width = upDir.isVertical() ? HALF_WIDTH : HALF_HEIGHT;
+        float height = upDir.isVertical() ? HALF_HEIGHT : HALF_WIDTH;
+        box.halfSize.set(width, height);
+        box.position.set(upDir.dir).inv().scl(BLOCKER_HALF_SIZE - HALF_HEIGHT);
     }
 
     private boolean endOfPlatformReached(Vec2 globalPos) {
@@ -159,11 +161,11 @@ public class Blocker extends Enemy {
             frontRay = Game.get().getPhysicsSystem().raycast(move, ray, RAY_CAST_MASK);
         }
 
-        return frontRay==null;
+        return frontRay == null;
     }
 
     private void initTurning() {
-        if(isDestroyed())
+        if (isDestroyed())
             return;
 
         //TODO animation
@@ -173,11 +175,11 @@ public class Blocker extends Enemy {
         state = BlockerState.STANDING;
         dir = dir.opposite();
         updateOrientation();
-        Game.get().getTimingSystem().addDelayedAction(this::switchToWalking,TURN_POST_DELAY);
+        Game.get().getTimingSystem().addDelayedAction(this::switchToWalking, TURN_POST_DELAY);
     }
 
     private void switchToWalking() {
-        if(isDestroyed())
+        if (isDestroyed())
             return;
 
         state = BlockerState.WALKING;
