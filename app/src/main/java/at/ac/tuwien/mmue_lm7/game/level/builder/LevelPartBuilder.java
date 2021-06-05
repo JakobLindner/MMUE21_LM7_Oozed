@@ -41,6 +41,12 @@ public abstract class LevelPartBuilder implements LevelBaseBuilder {
     }
 
     @Override
+    public OuterWallBuilder outerWall() {
+        finish();
+        return parent.outerWall();
+    }
+
+    @Override
     public Level build() {
         finish();
         return parent.build();

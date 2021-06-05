@@ -198,17 +198,18 @@ public class LevelLoader {
 
     public static void createLevel2(GameObject root) {
         Level level = new LevelBuilder("2")
+                .outerWall()
+                    .thickness(2)
+                    .holeX(6,7,24,25)
+                    .holeY(8,9)
+                    .horizontalPattern("G#")
+                    .verticalPattern("B###")
                 .platform()
                     .at(10, 10)
                     .size(8, 3)
-                    .pattern("PCIO##II" +
-                             "##POG#OP" +
-                             "G#COPIOP")
-                .platform().at(0,0).sprite(ResourceSystem.SpriteEnum.platformBigGears)
-                .platform().at(30,0).sprite(ResourceSystem.SpriteEnum.platformBigGears)
-                .platform().at(0,16).sprite(ResourceSystem.SpriteEnum.platformBigPlate)
-                .platform().at(30,16).sprite(ResourceSystem.SpriteEnum.platformBigPlate)
-                .platform().at(31,10)
+                    .pattern("PCIOG#II" +
+                             "G#PO##OP" +
+                             "##COPIOP")
                 .player()
                     .at(12, 13)
                     .orient(Direction.UP, true)

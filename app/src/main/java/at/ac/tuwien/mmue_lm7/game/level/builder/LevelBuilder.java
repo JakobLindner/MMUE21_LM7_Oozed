@@ -34,4 +34,9 @@ public class LevelBuilder implements LevelBaseBuilder{
     public SpikeBuilder spikes() {
         return new SpikeBuilder(level, this);
     }
+
+    @Override
+    public OuterWallBuilder outerWall() {
+        return new OuterWallBuilder(level,this);
+    }
 }

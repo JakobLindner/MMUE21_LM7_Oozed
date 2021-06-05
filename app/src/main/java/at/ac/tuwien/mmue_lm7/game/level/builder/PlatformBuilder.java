@@ -57,8 +57,8 @@ public class PlatformBuilder extends LevelPartBuilder {
     @Override
     protected void finish() {
         int patternIndex = 0;
-        for (int y = height - 1; y >= 0; --y) {
-            for (int x = 0; x < width; ++x) {
+        for (int offsetY = height - 1; offsetY >= 0; --offsetY) {
+            for (int offsetX = 0; offsetX < width; ++offsetX) {
                 //get sprite
                 ResourceSystem.SpriteEnum sprite = this.sprite;
                 if (!pattern.isEmpty()) {
@@ -69,17 +69,21 @@ public class PlatformBuilder extends LevelPartBuilder {
 
                 if(sprite!=null) {
                     int size = ResourceSystem.spriteInfo(sprite).size/GameConstants.PIXELS_PER_UNIT;
-                    PlatformTile tile = generateTile(sprite, x, y);
-                    level.addTile(tile);
-                    //if tile is on edge of screen, then extend it
-                    if(this.x+x==0)
-                        level.addTile(generateTile(sprite,x-size,y));
-                    else if(this.x+x+size==GameConstants.GAME_WIDTH)
-                        level.addTile(generateTile(sprite,x+size,y));
-                    if(this.y+y==0)
-                        level.addTile(generateTile(sprite,x,y-size));
-                    else if(this.y+y+size==GameConstants.GAME_HEIGHT)
-                        level.addTile(generateTile(sprite,x,y+size));
+                    //check if tile does not extend platform size
+                    if(offsetX+size<=width && offsetY-(size-1)>=0) {
+                        int patternOffset = pattern.isEmpty() ? 0 : 1-size;
+                        PlatformTile tile = generateTile(sprite, offsetX, offsetY+patternOffset);
+                        level.addTile(tile);
+                        //if tile is on edge of screen, then extend it
+                        if (this.x + offsetX == 0)
+                            level.addTile(generateTile(sprite, offsetX - size, offsetY + patternOffset));
+                        else if (this.x + offsetX + size == GameConstants.GAME_WIDTH)
+                            level.addTile(generateTile(sprite, offsetX + size, offsetY + patternOffset));
+                        if (this.y + offsetY + patternOffset == 0)
+                            level.addTile(generateTile(sprite, offsetX, offsetY - size + patternOffset));
+                        else if (this.y + offsetY + 1 == GameConstants.GAME_HEIGHT)
+                            level.addTile(generateTile(sprite, offsetX, offsetY + size + patternOffset));
+                    }
                 }
 
                 ++patternIndex;
@@ -88,7 +92,7 @@ public class PlatformBuilder extends LevelPartBuilder {
 
     }
 
-    private ResourceSystem.SpriteEnum getSpriteFromChar(char c) {
+    public static ResourceSystem.SpriteEnum getSpriteFromChar(char c) {
         switch(c) {
             case 'P':return ResourceSystem.SpriteEnum.platformPipe;
             case 'O':return ResourceSystem.SpriteEnum.platformPipeOpen;
