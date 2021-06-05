@@ -8,7 +8,7 @@ import at.ac.tuwien.mmue_lm7.game.level.PlatformTile;
 import at.ac.tuwien.mmue_lm7.game.resources.ResourceSystem;
 import at.ac.tuwien.mmue_lm7.game.resources.SpriteInfo;
 
-public class PlatformBuilder extends LevelPartBuilder {
+public class PlatformBuilder extends LevelPartBuilder<PlatformBuilder> {
     private static final String TAG = "PlatformBuilder";
 
     int x = 0;

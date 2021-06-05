@@ -44,6 +44,7 @@ public class LevelLoader {
     public static HashMap<String, LevelFactory> levelsByName = new HashMap<String, LevelFactory>() {{
         put("1", LevelLoader::createLevel1);
         put("2", LevelLoader::createLevel2);
+        put("3", LevelLoader::fivePlatforms);
     }};
 
 
@@ -219,6 +220,41 @@ public class LevelLoader {
                 //.spikes()
                 //    .at(13, 9)
                 //    .dir(Direction.DOWN)
+                .build();
+
+        level.build(root);
+    }
+
+    public static void fivePlatforms(GameObject root) {
+        final int D = 3;//corner platform dist
+        Level level = new LevelBuilder("Five platforms")
+                .outerWall()
+                .platform()
+                    .at(D,D)
+                    .size(6,3)
+                    .pattern("CIOPG#"+
+                             "G#IO##"+
+                             "##PICC")
+                .copy()
+                    .at(32-D-6,18-D-3)
+                .platform()
+                    .at(32-D-6,D)
+                    .size(6,3)
+                    .pattern("B#PIOP"+
+                             "##CIB#"+
+                             "OOPC##")
+                .copy()
+                    .at(D,18-D-3)
+                .platform()
+                    .at(8,8)
+                    .size(16,2)
+                    .pattern("POICO")
+                .player()
+                    .at(5,1)
+                    .orient(Direction.UP,true)
+                .blocker()
+                    .at(15,7)
+                    .orient(Direction.DOWN,false)
                 .build();
 
         level.build(root);

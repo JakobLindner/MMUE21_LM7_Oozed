@@ -10,6 +10,12 @@ import at.ac.tuwien.mmue_lm7.utils.Direction;
 public class Spikes extends Tile{
     public Direction direction = Direction.UP;
 
+    public Spikes() {}
+    public Spikes(Spikes other) {
+        super(other);
+        this.direction = other.direction;
+    }
+
     @Override
     public void build(GameObject root) {
         root.addChild(ObjectFactories.makeSpikes(x,y,direction));

@@ -1,8 +1,10 @@
 package at.ac.tuwien.mmue_lm7.game.level.builder;
 
+import androidx.annotation.CallSuper;
+
 import at.ac.tuwien.mmue_lm7.game.level.Level;
 
-public abstract class LevelPartBuilder implements LevelBaseBuilder {
+public abstract class LevelPartBuilder<SubBuilder extends LevelPartBuilder> implements LevelBaseBuilder {
     protected Level level;
     protected LevelBuilder parent;
 
@@ -44,6 +46,12 @@ public abstract class LevelPartBuilder implements LevelBaseBuilder {
     public OuterWallBuilder outerWall() {
         finish();
         return parent.outerWall();
+    }
+
+    @CallSuper
+    public SubBuilder copy() {
+        finish();
+        return (SubBuilder) this;
     }
 
     @Override

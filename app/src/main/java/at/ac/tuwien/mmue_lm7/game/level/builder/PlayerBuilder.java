@@ -4,7 +4,7 @@ import at.ac.tuwien.mmue_lm7.game.level.Level;
 import at.ac.tuwien.mmue_lm7.game.level.Player;
 import at.ac.tuwien.mmue_lm7.utils.Direction;
 
-public class PlayerBuilder extends LevelPartBuilder{
+public class PlayerBuilder extends LevelPartBuilder<PlayerBuilder>{
     private Player player = new Player();
 
     public PlayerBuilder(Level level, LevelBuilder parent) {
@@ -20,6 +20,13 @@ public class PlayerBuilder extends LevelPartBuilder{
     public PlayerBuilder orient(Direction upDir, boolean clockwise) {
         player.direction = upDir.rotateCW();
         player.runningCW = clockwise;
+        return this;
+    }
+
+    @Override
+    public PlayerBuilder copy() {
+        super.copy();
+        player = new Player(player);
         return this;
     }
 

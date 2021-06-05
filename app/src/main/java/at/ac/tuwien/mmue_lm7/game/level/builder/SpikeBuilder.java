@@ -4,7 +4,7 @@ import at.ac.tuwien.mmue_lm7.game.level.Level;
 import at.ac.tuwien.mmue_lm7.game.level.Spikes;
 import at.ac.tuwien.mmue_lm7.utils.Direction;
 
-public class SpikeBuilder extends LevelPartBuilder{
+public class SpikeBuilder extends LevelPartBuilder<SpikeBuilder>{
     private Spikes spikes = new Spikes();
 
     public SpikeBuilder(Level level, LevelBuilder parent) {
@@ -19,6 +19,13 @@ public class SpikeBuilder extends LevelPartBuilder{
 
     public SpikeBuilder dir(Direction dir) {
         spikes.direction = dir;
+        return this;
+    }
+
+    @Override
+    public SpikeBuilder copy() {
+        super.copy();
+        spikes = new Spikes(spikes);
         return this;
     }
 

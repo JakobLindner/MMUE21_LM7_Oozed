@@ -16,6 +16,15 @@ public abstract class Tile {
 
     public abstract void build(GameObject root);
 
+    public Tile(){}
+    public Tile(Tile tile) {
+        this.tileName = tile.tileName;
+        this.x = tile.x;
+        this.y = tile.y;
+        this.rotation = tile.rotation;
+        this.mirrored = tile.mirrored;
+    }
+
     @CallSuper
     public void fromJSON(JSONObject json) throws JSONException {
         tileName = json.getString("tileName");

@@ -11,6 +11,13 @@ public class Player extends Tile {
     public Direction direction;
     public boolean runningCW;
 
+    public Player(){}
+    public Player(Player other) {
+        super(other);
+        this.direction = other.direction;
+        this.runningCW = other.runningCW;
+    }
+
     @Override
     public void build(GameObject root) {
         root.addChild(ObjectFactories.makeOoze(x,y,direction,runningCW));

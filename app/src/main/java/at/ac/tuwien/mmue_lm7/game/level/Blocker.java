@@ -11,6 +11,13 @@ public class Blocker extends Tile {
     public Direction direction;
     public boolean runningCW;
 
+    public Blocker(){}
+    public Blocker(Blocker other) {
+        super(other);
+        this.direction = other.direction;
+        this.runningCW = other.runningCW;
+    }
+
     @Override
     public void build(GameObject root) {
         root.addChild(ObjectFactories.makeBlocker(x, y, direction, runningCW));
