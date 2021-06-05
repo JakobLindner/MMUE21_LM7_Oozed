@@ -33,20 +33,17 @@ public class Player extends GameObject {
     /**
      * per frame
      */
-    public static final float PLAYER_SPEED = 0.075f;
-    public static final float PLAYER_DASH_SPEED = 0.2f;
+    public static final float PLAYER_SPEED = 0.1f;
+    public static final float PLAYER_DASH_SPEED = 0.25f;
     /**
      * in frames
      */
-    public static final float PLAYER_DASH_DURATION = 60;
+    public static final float PLAYER_DASH_DURATION = 30;
     /**
      * Jump distance for normal jump
      */
     public static final float NORMAL_JUMP_DISTANCE = 4;
-    /**
-     * Jump height for
-     */
-    public static final float JUMP_HEIGHT = 2;
+    public static final float JUMP_HEIGHT = 2.5f;
     //assuming platforms are at least 1 in width & height
     public static final float RUNNING_RAY_CAST_LENGTH = 1;
     /**
