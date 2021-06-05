@@ -37,8 +37,12 @@ import at.ac.tuwien.mmue_lm7.utils.Vec2;
 public class ObjectFactories {
 
     public static Player makeOoze(int x, int y, Direction direction, boolean runningCW) {
-        Player ooze = new Player(direction, runningCW);//TODO horizontally flip this or ooze sprites
+        AABB box = new AABB(1,1,Player.PLAYER_MASK,CollisionLayers.PLAYER);
+
+        Player ooze = new Player(direction, runningCW, box);//TODO horizontally flip this or ooze sprites
         ooze.position.set(x + 0.5f, y + 0.5f);
+
+        ooze.addChild(box);
 
         AnimatedSprite runningSprite = new AnimatedSprite(ResourceSystem.SpriteEnum.oozeRun);
         runningSprite.position.set(0, 0);

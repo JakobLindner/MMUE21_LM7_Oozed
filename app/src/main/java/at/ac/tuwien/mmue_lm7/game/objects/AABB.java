@@ -26,7 +26,7 @@ public class AABB extends GameObject {
     /**
      * half Size of the bounding box, components must be >=0
      */
-    private Vec2 halfSize = new Vec2();
+    public Vec2 halfSize = new Vec2();
     /**
      * Defines the layer this AABB is scanning collisions for
      */

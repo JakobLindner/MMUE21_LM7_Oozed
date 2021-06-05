@@ -4,6 +4,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 
 import at.ac.tuwien.mmue_lm7.game.Game;
+import at.ac.tuwien.mmue_lm7.game.GameConstants;
 import at.ac.tuwien.mmue_lm7.game.ObjectFactories;
 import at.ac.tuwien.mmue_lm7.game.SwipeEvent;
 import at.ac.tuwien.mmue_lm7.game.TapEvent;
@@ -23,7 +24,7 @@ import at.ac.tuwien.mmue_lm7.utils.Vec2;
  * Dashing can only end while running, so the player won't suddenly become slower in midair
  * @author simon
  */
-public class Player extends AABB {
+public class Player extends GameObject {
     private static final String TAG = "Player";
 
     ///////////////////////////////////////////////////////////////////////////
@@ -38,9 +39,6 @@ public class Player extends AABB {
      * in frames
      */
     public static final float PLAYER_DASH_DURATION = 60;
-    public static final float PLAYER_HALF_SIZE = 0.5f;
-    public static final short PLAYER_MASK = CollisionLayers.ENEMY | CollisionLayers.PLATFORM;
-    public static final short PLAYER_MOVEMENT_MASK = CollisionLayers.PLATFORM;
     /**
      * Jump distance for normal jump
      */
@@ -60,11 +58,20 @@ public class Player extends AABB {
      */
     public static final float OUTER_TURN_DIST = 0.25f;
 
+    public static final float PLAYER_HALF_SIZE = 0.5f;
+    //Bounding box
+    public static final float HALF_WIDTH = 0.5f- 2 * GameConstants.UNITS_PER_PIXEL;
+    public static final float HALF_HEIGHT = 0.25f;
+    public static final short PLAYER_MASK = CollisionLayers.ENEMY | CollisionLayers.PLATFORM;
+    public static final short PLAYER_MOVEMENT_MASK = CollisionLayers.PLATFORM;
+
     //input
     public static final int JUMP_KEY = KeyEvent.KEYCODE_W;
     public static final int DASH_KEY = KeyEvent.KEYCODE_D;
 
     public static final int RESPAWN_DELAY = 60;
+
+    private AABB box;
 
     public enum PlayerState {
         RUNNING,
@@ -95,7 +102,7 @@ public class Player extends AABB {
      */
     private Direction upDir;
 
-    /**
+    /*
      * Vectors reused for movement operations
      */
     private Vec2 move = new Vec2();
@@ -125,17 +132,13 @@ public class Player extends AABB {
     private Vec2 cornerPos = new Vec2();
     private float coveredTurnDist;
 
-    public Player(Direction startingDir, boolean runningCW) {
-        super(PLAYER_HALF_SIZE,
-                PLAYER_HALF_SIZE,
-                PLAYER_MASK,
-                CollisionLayers.PLAYER);
-
+    public Player(Direction startingDir, boolean runningCW, AABB box) {
         this.dir = startingDir;
         if (runningCW)
             this.upDir = this.dir.rotateCCW();
         else
             this.upDir = this.dir.rotateCW();
+        this.box = box;
 
         updateOrientation();
 
@@ -147,7 +150,8 @@ public class Player extends AABB {
         super.init();
 
         //register to events and systems
-        onCollide.addListener(this,this::onCollide);
+        box.onCollide.addListener(this,this::onCollide);
+        box.onKilled.addListener(this,this::onBoxKilled);
         Game.get().onTap.addListener(this,this::onTap);
         Game.get().onSwipe.addListener(this,this::onSwipe);
         Game.get().onKeyDown.addListener(this,this::onKeyDown);
@@ -162,7 +166,8 @@ public class Player extends AABB {
         super.onDestroy();
 
         //deregister from events and systems
-        onCollide.removeListener(this);
+        box.onCollide.removeListener(this);
+        box.onKilled.removeListener(this);
         Game.get().onTap.removeListener(this);
         Game.get().onSwipe.removeListener(this);
         Game.get().onKeyDown.removeListener(this);
@@ -200,7 +205,7 @@ public class Player extends AABB {
                 }
 
                 //perform movement
-                PhysicsSystem.Sweep movement = Game.get().getPhysicsSystem().move(this,
+                PhysicsSystem.Sweep movement = Game.get().getPhysicsSystem().move(box,
                         move.set(dir.dir).scl(getCurrentSpeed()),
                         PLAYER_MOVEMENT_MASK);
 
@@ -214,7 +219,7 @@ public class Player extends AABB {
                         position.add(upDir.dir.x * Utils.EPSILON, upDir.dir.y * Utils.EPSILON);
                     } else {
                         //resolve collision
-                        setGlobalPosition(movement.getPosition());
+                        updatePos(movement.getPosition());
 
                         //rotate player
                         if (dir.dir.isCCW(upDir.dir)) {
@@ -231,7 +236,7 @@ public class Player extends AABB {
                     //TODO should player need time for rotating (e.g playing animation?
                 } else {
                     //perform move
-                    setGlobalPosition(movement.getPosition());
+                    updatePos(movement.getPosition());
 
                     performRaycasts(movement.getPosition());
                 }
@@ -246,9 +251,9 @@ public class Player extends AABB {
                 move.sub(position);
 
                 //perform sweep
-                PhysicsSystem.Sweep movement = Game.get().getPhysicsSystem().move(this, move, PLAYER_MOVEMENT_MASK);
+                PhysicsSystem.Sweep movement = Game.get().getPhysicsSystem().move(box, move, PLAYER_MOVEMENT_MASK);
                 //updatePosition
-                setGlobalPosition(movement.getPosition());
+                updatePos(movement.getPosition());
 
                 //check if there was a collision
                 if (movement.getContact() != null) {
@@ -352,6 +357,11 @@ public class Player extends AABB {
         return false;
     }
 
+    private boolean onBoxKilled(GameObject box) {
+        kill();
+        return false;
+    }
+
     private boolean onTap(TapEvent tap) {
         jump();
         return false;
@@ -438,6 +448,7 @@ public class Player extends AABB {
 
     /**
      * Updates rotation and mirroring based on dir and updir
+     * updates bounding box to reflect current rotation
      */
     private void updateOrientation() {
         //TODO implement via vector angle
@@ -448,6 +459,27 @@ public class Player extends AABB {
             rotation += 180;
             rotation %= 360;
         }
+
+        //update box position and size
+        updateBox();
+    }
+
+    private void updateBox() {
+        box.position.set(Game.get().tmpVec().set(upDir.dir).inv().scl(PLAYER_HALF_SIZE-HALF_HEIGHT));
+
+        float width = upDir.isVertical()?HALF_WIDTH:HALF_HEIGHT;
+        float height = upDir.isVertical()?HALF_HEIGHT:HALF_WIDTH;
+        box.halfSize.set(width,height);
+    }
+
+    /**
+     * Updates player position such that the bounding box has given global position
+     * @param boxPos is unchanged
+     */
+    //helper vector
+    private Vec2 posUpdate = new Vec2();
+    private void updatePos(Vec2 boxPos) {
+        setGlobalPosition(posUpdate.set(boxPos).sub(box.position));
     }
 
     private void performRaycasts() {
@@ -464,20 +496,20 @@ public class Player extends AABB {
         ray.set(upDir.dir).inv().scl(RUNNING_RAY_CAST_LENGTH);
 
         //setup ray origin
-        move.set(dir.dir).scl(PLAYER_HALF_SIZE).add(globalPos);
+        move.set(dir.dir).scl(HALF_WIDTH).add(globalPos);
         //perform front ray, possibly 2 times with a slight offset
         PhysicsSystem.Contact frontRay = Game.get().getPhysicsSystem().raycast(move, ray, PLAYER_MOVEMENT_MASK);
         if (frontRay == null) {
-            move.set(dir.dir).scl(PLAYER_HALF_SIZE - Utils.EPSILON).add(globalPos);
+            move.set(dir.dir).scl(HALF_WIDTH - Utils.EPSILON).add(globalPos);
             frontRay = Game.get().getPhysicsSystem().raycast(move, ray, PLAYER_MOVEMENT_MASK);
         }
 
         //perform back ray, possibly 2 times with a slight offset
         //adjust ray origin
-        move.set(dir.dir).inv().scl(PLAYER_HALF_SIZE).add(globalPos);
+        move.set(dir.dir).inv().scl(HALF_WIDTH).add(globalPos);
         PhysicsSystem.Contact backRay = Game.get().getPhysicsSystem().raycast(move, ray, PLAYER_MOVEMENT_MASK);
         if (backRay == null) {
-            move.set(dir.dir).inv().scl(PLAYER_HALF_SIZE - Utils.EPSILON).add(globalPos);
+            move.set(dir.dir).inv().scl(HALF_WIDTH - Utils.EPSILON).add(globalPos);
             backRay = Game.get().getPhysicsSystem().raycast(move, ray, PLAYER_MOVEMENT_MASK);
         }
 
@@ -495,10 +527,10 @@ public class Player extends AABB {
                 ray.set(getGlobalPosition())
                         .sub(cornerPos)
                         .scl(dir.dir);//take only relevant component
-                float overhang = ray.x + ray.y + PLAYER_HALF_SIZE;
+                float overhang = ray.x + ray.y + HALF_WIDTH;
 
                 //set remaining overhang, such that a state change can be triggered
-                distUntilTurn = OVERHANG_PERCENT * 2 * PLAYER_HALF_SIZE - overhang;
+                distUntilTurn = OVERHANG_PERCENT * 2 * HALF_WIDTH - overhang;
             }
         } else {
             if (frontRay == null) {

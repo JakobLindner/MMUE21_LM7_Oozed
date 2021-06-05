@@ -7,6 +7,7 @@ import androidx.annotation.CallSuper;
 import at.ac.tuwien.mmue_lm7.game.Game;
 import at.ac.tuwien.mmue_lm7.game.rendering.Layers;
 import at.ac.tuwien.mmue_lm7.game.rendering.RenderSystem;
+import at.ac.tuwien.mmue_lm7.utils.Subject;
 import at.ac.tuwien.mmue_lm7.utils.Vec2;
 
 /**
@@ -54,6 +55,11 @@ public class GameObject {
      */
     public short layer = Layers.DEFAULT;
 
+    ///////////////////////////////////////////////////////////////////////////
+    // EVENTS
+    ///////////////////////////////////////////////////////////////////////////
+    //passes this when kill() is called
+    protected final Subject<GameObject> onKilled = new Subject<>();
 
     //##################################
     //###   METHODS FOR OVERWRITING  ###
@@ -115,9 +121,11 @@ public class GameObject {
 
     /**
      * used for gameplay purposes, can be overwritten to make effects or custom behaviour
-     * per default it simply calls destroy()
+     * calls destroy()
      */
+    @CallSuper
     public void kill() {
+        onKilled.notify(this);
         destroy();
     }
 

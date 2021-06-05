@@ -216,9 +216,9 @@ public class LevelLoader {
                 .blocker()
                     .at(15, 9)
                     .orient(Direction.DOWN, false)
-                .spikes()
-                    .at(13, 9)
-                    .dir(Direction.DOWN)
+                //.spikes()
+                //    .at(13, 9)
+                //    .dir(Direction.DOWN)
                 .build();
 
         level.build(root);

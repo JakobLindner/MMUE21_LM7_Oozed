@@ -36,6 +36,9 @@ public class Blocker extends Enemy {
      * Mask used for checking whether end of platform has been reached
      */
     private static final short RAY_CAST_MASK = CollisionLayers.PLATFORM;
+    private static final float HALF_WIDTH = 0.5f;
+    private static final float HALF_HEIGHT = 0.5f-GameConstants.UNITS_PER_PIXEL;
+    private static final float BLOCKER_HALF_SIZE = 0.5f;
 
     private AABB box;
 
@@ -84,7 +87,7 @@ public class Blocker extends Enemy {
             PhysicsSystem.Sweep movement = Game.get().getPhysicsSystem().move(box,
                     move.set(dir.dir).scl(WALK_SPEED),
                     MOVEMENT_MASK);
-            setGlobalPosition(movement.getPosition());
+            setGlobalPosition(move.set(movement.getPosition()).sub(box.position));
 
             //check if there is a collision = obstacle in front of
             if(movement.getContact()!=null || endOfPlatformReached(movement.getPosition())) {
@@ -135,6 +138,12 @@ public class Blocker extends Enemy {
             rotation += 180;
             rotation %= 360;
         }
+
+        //update bounding box
+        float width = upDir.isVertical()?HALF_WIDTH:HALF_HEIGHT;
+        float height = upDir.isVertical()?HALF_HEIGHT:HALF_WIDTH;
+        box.halfSize.set(width,height);
+        box.position.set(upDir.dir).inv().scl(BLOCKER_HALF_SIZE-HALF_HEIGHT);
     }
 
     private boolean endOfPlatformReached(Vec2 globalPos) {
