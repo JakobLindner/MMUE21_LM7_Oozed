@@ -29,6 +29,9 @@ public class AnimatedSprite extends GameObject{
 
     public void setSpriteInfo(SpriteInfo spriteInfo) {
         this.spriteInfo = spriteInfo;
+        //reset animation state
+        updateCount = 0;
+        frame = 0;
     }
 
     @Override

@@ -96,15 +96,15 @@ public class ObjectFactories {
     public static GameObject makeJumper(int x, int y, Direction upDir) {
         AABB box = new AABB(0.5f, 0.5f, CollisionLayers.PLAYER, CollisionLayers.ENEMY);
 
-        Jumper jumper = new Jumper(box, upDir);
+        AnimatedSprite sprite = new AnimatedSprite(ResourceSystem.SpriteEnum.jumperIdle);
+
+        Jumper jumper = new Jumper(box, sprite, upDir);
         jumper.position.set(x + 0.5f, y + 0.5f);
 
         jumper.addChild(box);
 
-        //TODO different sprite for static blocker
-        //AnimatedSprite idleSprite = new AnimatedSprite(ResourceSystem.SpriteEnum.blockerIdle);
-        //idleSprite.position.set(0, 0);
-        //jumper.addChild(idleSprite);
+        sprite.position.set(0, 0);
+        jumper.addChild(sprite);
 
         jumper.setLayerRecursive(Layers.ENEMY);
         return jumper;

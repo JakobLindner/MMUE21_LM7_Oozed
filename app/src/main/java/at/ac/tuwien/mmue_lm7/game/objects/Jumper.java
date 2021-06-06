@@ -8,6 +8,7 @@ import at.ac.tuwien.mmue_lm7.game.physics.CollisionLayers;
 import at.ac.tuwien.mmue_lm7.game.physics.PhysicsSystem;
 import at.ac.tuwien.mmue_lm7.game.rendering.Layers;
 import at.ac.tuwien.mmue_lm7.game.rendering.RenderSystem;
+import at.ac.tuwien.mmue_lm7.game.resources.ResourceSystem;
 import at.ac.tuwien.mmue_lm7.utils.Direction;
 import at.ac.tuwien.mmue_lm7.utils.Jump;
 import at.ac.tuwien.mmue_lm7.utils.Vec2;
@@ -38,6 +39,7 @@ public class Jumper extends Enemy {
     private JumperState state = JumperState.STANDING;
 
     private AABB box;
+    private AnimatedSprite sprite;
     private Direction upDir;
 
     private Jump jump = new Jump();
@@ -46,9 +48,10 @@ public class Jumper extends Enemy {
     //helper vector to prevent allocations
     private Vec2 move = new Vec2();
 
-    public Jumper(AABB box, Direction upDir) {
+    public Jumper(AABB box, AnimatedSprite sprite, Direction upDir) {
         this.box = box;
         this.upDir = upDir;
+        this.sprite = sprite;
 
         jump.setJump(JUMP_DURATION,JUMP_HEIGHT);
 
@@ -104,7 +107,13 @@ public class Jumper extends Enemy {
             }
         }
         else if(state == JumperState.STANDING) {
+            boolean anticipating = isAnticipating();
             --timeTilljump;
+
+            //switch animation if it is anticipating now
+            if(!anticipating && isAnticipating()) {
+                sprite.setSpriteInfo(ResourceSystem.spriteInfo(ResourceSystem.SpriteEnum.jumperJump));
+            }
 
             if(timeTilljump<=0) {
                 changeState(JumperState.JUMPING);
@@ -151,12 +160,19 @@ public class Jumper extends Enemy {
         position.add(move.set(edge.dir).scl(diff));
     }
 
+    private boolean isAnticipating() {
+        return state == JumperState.STANDING && timeTilljump<=ANTICIPATION_TIME;
+    }
+
     private void changeState(JumperState to) {
         if(state==to)
             return;
 
         if(to==JumperState.JUMPING) {
             jump.setPositioningAndMirroring(upDir.rotateCW(),upDir,position,0);
+
+            //change sprite
+            sprite.setSpriteInfo(ResourceSystem.spriteInfo(ResourceSystem.SpriteEnum.jumperIdle));
 
             //TODO play sound?
         } else if(to==JumperState.STANDING) {
@@ -176,14 +192,5 @@ public class Jumper extends Enemy {
 
         }
         return false;
-    }
-
-    private Vec2 hs = new Vec2(HALF_SIZE,HALF_SIZE);
-    @Override
-    public void render(RenderSystem render) {
-        render.drawRect()
-                .at(getGlobalPosition())
-                .halfSize(hs)
-                .color((state==JumperState.JUMPING || timeTilljump>ANTICIPATION_TIME)?Color.GREEN: Color.RED);
     }
 }
