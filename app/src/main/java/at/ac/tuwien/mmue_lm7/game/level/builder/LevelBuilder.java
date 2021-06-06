@@ -1,6 +1,7 @@
 package at.ac.tuwien.mmue_lm7.game.level.builder;
 
 import at.ac.tuwien.mmue_lm7.game.level.Level;
+import at.ac.tuwien.mmue_lm7.game.objects.Copter;
 
 public class LevelBuilder implements LevelBaseBuilder{
     private Level level = new Level();
@@ -43,5 +44,10 @@ public class LevelBuilder implements LevelBaseBuilder{
     @Override
     public JumperBuilder jumper() {
         return new JumperBuilder(level,this);
+    }
+
+    @Override
+    public CopterBuilder copter() {
+        return new CopterBuilder(level, this);
     }
 }

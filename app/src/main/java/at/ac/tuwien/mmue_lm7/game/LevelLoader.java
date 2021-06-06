@@ -261,6 +261,7 @@ public class LevelLoader {
                 .jumper()
                     .at(16,10)
                     .orient(Direction.UP)
+                .copter().at(20,2)
                 .build();
 
         level.build(root);

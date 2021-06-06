@@ -54,6 +54,12 @@ public abstract class LevelPartBuilder<SubBuilder extends LevelPartBuilder> impl
         return parent.jumper();
     }
 
+    @Override
+    public CopterBuilder copter() {
+        finish();
+        return parent.copter();
+    }
+
     @CallSuper
     public SubBuilder copy() {
         finish();

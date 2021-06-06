@@ -10,6 +10,7 @@ import at.ac.tuwien.mmue_lm7.game.objects.AABB;
 import at.ac.tuwien.mmue_lm7.game.objects.AnimatedSprite;
 import at.ac.tuwien.mmue_lm7.game.objects.Blocker;
 import at.ac.tuwien.mmue_lm7.game.objects.Button;
+import at.ac.tuwien.mmue_lm7.game.objects.Copter;
 import at.ac.tuwien.mmue_lm7.game.objects.DeadlyAABB;
 import at.ac.tuwien.mmue_lm7.game.objects.GameObject;
 import at.ac.tuwien.mmue_lm7.game.objects.Jumper;
@@ -36,6 +37,7 @@ import at.ac.tuwien.mmue_lm7.utils.Vec2;
  * @author jakob
  */
 public class ObjectFactories {
+    public static final float U = GameConstants.UNITS_PER_PIXEL;
 
     public static Player makeOoze(int x, int y, Direction upDir, boolean runningCW) {
         AABB box = new AABB(1,1,Player.PLAYER_MASK,CollisionLayers.PLAYER);
@@ -54,14 +56,14 @@ public class ObjectFactories {
     }
 
     public static DeadlyAABB makeSpikes(int x, int y, Direction direction) {
-        final float SPIKE_HALF_WIDTH = 0.5f - GameConstants.UNITS_PER_PIXEL;
-        final float SPIKE_HALF_HEIGHT = 0.25f - GameConstants.UNITS_PER_PIXEL;
+        final float SPIKE_HALF_WIDTH = 0.5f - U;
+        final float SPIKE_HALF_HEIGHT = 0.25f - U;
         AABB box = new AABB(direction.isVertical() ? SPIKE_HALF_WIDTH : SPIKE_HALF_HEIGHT,
                 direction.isHorizontal() ? SPIKE_HALF_WIDTH : SPIKE_HALF_HEIGHT,
                 CollisionLayers.PLAYER,
                 CollisionLayers.DEADLY);
         //position bounding box
-        box.position.add(direction.dir).scl(SPIKE_HALF_HEIGHT + 2 * GameConstants.UNITS_PER_PIXEL).inv();
+        box.position.add(direction.dir).scl(SPIKE_HALF_HEIGHT + 2 * U).inv();
 
         DeadlyAABB spikes = new DeadlyAABB(box);
         spikes.position.set(x + 0.5f, y + 0.5f);
@@ -106,6 +108,35 @@ public class ObjectFactories {
 
         jumper.setLayerRecursive(Layers.ENEMY);
         return jumper;
+    }
+
+    public static GameObject makeCopter(int x, int y) {
+        final float COPTER_WIDTH = 0.5f-2*U;
+        final float COPTER_HEIGHT = U;
+        final float COPTER_OFFSET = 4*U;
+        final float BODY_WIDTH = 4*U;
+        final float BODY_HEIGHT = BODY_WIDTH;
+        final float BODY_OFFSET = -2*U;
+        AABB copterBox = new AABB(COPTER_WIDTH, COPTER_HEIGHT, CollisionLayers.PLAYER, CollisionLayers.ENEMY);
+        AABB bodyBox = new AABB(BODY_WIDTH, BODY_HEIGHT, CollisionLayers.PLAYER, CollisionLayers.ENEMY);
+
+
+        Copter copter = new Copter(copterBox, bodyBox);
+        copter.position.set(x + 0.5f, y + 0.5f);
+
+        copterBox.position.set(0,COPTER_OFFSET);
+        copter.addChild(copterBox);
+
+        bodyBox.position.set(0,BODY_OFFSET);
+        copter.addChild(bodyBox);
+
+        //TODO different sprite for static blocker
+        AnimatedSprite idleSprite = new AnimatedSprite(ResourceSystem.SpriteEnum.flyerIdle);
+        idleSprite.position.set(0, 0);
+        copter.addChild(idleSprite);
+
+        copter.setLayerRecursive(Layers.ENEMY);
+        return copter;
     }
 
     public static GameObject makePlatform(int x, int y) {

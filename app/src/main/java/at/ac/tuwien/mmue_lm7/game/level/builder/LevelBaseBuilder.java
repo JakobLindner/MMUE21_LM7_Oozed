@@ -8,6 +8,7 @@ public interface LevelBaseBuilder {
     BlockerBuilder blocker();
     SpikeBuilder spikes();
     JumperBuilder jumper();
+    CopterBuilder copter();
     OuterWallBuilder outerWall();
     Level build();
 }

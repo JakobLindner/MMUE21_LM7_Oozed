@@ -119,7 +119,8 @@ public class ResourceSystem {
             case flyerIdle:
                 info.spriteSheetId = R.drawable.flyer;
                 info.animationLength = 6;
-                info.frameDuration = 10;
+                info.frameDuration = 4;
+                break;
             case platformPipe:
                 info.spriteSheetId = R.drawable.platforms;
                 break;
