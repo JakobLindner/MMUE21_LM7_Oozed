@@ -258,6 +258,9 @@ public class LevelLoader {
                 .blocker()
                     .at(15,7)
                     .orient(Direction.DOWN,false)
+                .jumper()
+                    .at(16,10)
+                    .orient(Direction.UP)
                 .build();
 
         level.build(root);

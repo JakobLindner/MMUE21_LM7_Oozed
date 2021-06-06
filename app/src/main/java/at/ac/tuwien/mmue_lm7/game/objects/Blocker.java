@@ -101,16 +101,6 @@ public class Blocker extends Enemy {
     }
 
     @Override
-    public void kill() {
-        super.kill();
-
-        //create disappear effect
-        Vec2 pos = getGlobalPosition();
-        GameObject effect = ObjectFactories.makeKilledEffect(pos.x, pos.y);
-        Game.get().getRoot().addChild(effect);
-    }
-
-    @Override
     protected void onDestroy() {
         super.onDestroy();
         box.onCollide.removeListener(this);

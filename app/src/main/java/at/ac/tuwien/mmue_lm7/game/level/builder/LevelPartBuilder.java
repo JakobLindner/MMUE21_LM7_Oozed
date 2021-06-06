@@ -48,6 +48,12 @@ public abstract class LevelPartBuilder<SubBuilder extends LevelPartBuilder> impl
         return parent.outerWall();
     }
 
+    @Override
+    public JumperBuilder jumper() {
+        finish();
+        return parent.jumper();
+    }
+
     @CallSuper
     public SubBuilder copy() {
         finish();

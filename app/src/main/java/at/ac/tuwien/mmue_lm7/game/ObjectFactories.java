@@ -12,6 +12,7 @@ import at.ac.tuwien.mmue_lm7.game.objects.Blocker;
 import at.ac.tuwien.mmue_lm7.game.objects.Button;
 import at.ac.tuwien.mmue_lm7.game.objects.DeadlyAABB;
 import at.ac.tuwien.mmue_lm7.game.objects.GameObject;
+import at.ac.tuwien.mmue_lm7.game.objects.Jumper;
 import at.ac.tuwien.mmue_lm7.game.objects.Lifetime;
 import at.ac.tuwien.mmue_lm7.game.objects.MuteButton;
 import at.ac.tuwien.mmue_lm7.game.objects.Platform;
@@ -88,6 +89,23 @@ public class ObjectFactories {
 
         blocker.setLayerRecursive(Layers.ENEMY);
         return blocker;
+    }
+
+    public static GameObject makeJumper(int x, int y, Direction upDir) {
+        AABB box = new AABB(0.5f, 0.5f, CollisionLayers.PLAYER, CollisionLayers.ENEMY);
+
+        Jumper jumper = new Jumper(box, upDir);
+        jumper.position.set(x + 0.5f, y + 0.5f);
+
+        jumper.addChild(box);
+
+        //TODO different sprite for static blocker
+        //AnimatedSprite idleSprite = new AnimatedSprite(ResourceSystem.SpriteEnum.blockerIdle);
+        //idleSprite.position.set(0, 0);
+        //jumper.addChild(idleSprite);
+
+        jumper.setLayerRecursive(Layers.ENEMY);
+        return jumper;
     }
 
     public static GameObject makePlatform(int x, int y) {

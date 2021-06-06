@@ -39,4 +39,9 @@ public class LevelBuilder implements LevelBaseBuilder{
     public OuterWallBuilder outerWall() {
         return new OuterWallBuilder(level,this);
     }
+
+    @Override
+    public JumperBuilder jumper() {
+        return new JumperBuilder(level,this);
+    }
 }

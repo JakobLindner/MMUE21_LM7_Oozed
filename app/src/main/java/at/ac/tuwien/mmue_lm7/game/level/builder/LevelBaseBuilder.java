@@ -7,6 +7,7 @@ public interface LevelBaseBuilder {
     PlayerBuilder player();
     BlockerBuilder blocker();
     SpikeBuilder spikes();
+    JumperBuilder jumper();
     OuterWallBuilder outerWall();
     Level build();
 }

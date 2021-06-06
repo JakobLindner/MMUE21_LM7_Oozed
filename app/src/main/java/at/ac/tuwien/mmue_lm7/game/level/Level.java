@@ -70,6 +70,9 @@ public class Level {
         else if(tileName.equalsIgnoreCase("blocker")) {
             tile = new Blocker();
         }
+        else if(tileName.equalsIgnoreCase("jumper")) {
+            tile = new Jumper();
+        }
         else {
             Log.e(TAG, String.format("Invalid Tile: %s",tileName));
         }
