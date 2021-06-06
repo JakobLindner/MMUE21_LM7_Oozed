@@ -121,6 +121,17 @@ public class ResourceSystem {
                 info.animationLength = 6;
                 info.frameDuration = 4;
                 break;
+            case jumperIdle:
+                info.spriteSheetId = R.drawable.jumper;
+                info.animationLength = 6;
+                info.frameDuration = 10;
+                break;
+            case jumperJump:
+                info.spriteSheetId = R.drawable.jumper;
+                info.animationLength = 6;
+                info.frameDuration = 10;
+                info.firstY = 16;
+                break;
             case platformPipe:
                 info.spriteSheetId = R.drawable.platforms;
                 break;
@@ -199,6 +210,8 @@ public class ResourceSystem {
         oozeRun,
         blockerIdle,
         flyerIdle,
+        jumperIdle,
+        jumperJump,
         platformPipe,
         platformPipeOpen,
         platformCircuit,
