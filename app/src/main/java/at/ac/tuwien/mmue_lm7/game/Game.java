@@ -109,11 +109,18 @@ public class Game {
     private final ObjectPool<Vec2> vectorPool = new ObjectPool<Vec2>(Vec2::new, VECTOR_POOL_SIZE);
     private final ArrayList<Vec2> usedVectors = new ArrayList<Vec2>(VECTOR_POOL_SIZE);
 
-    public Game(Context context) {
+    public Game(Context context, String startLevel) {
         this.context = context;
 
         resourceSystem = new ResourceSystem(context);
         levelLoader = new LevelLoader(context);
+
+        currentLevel = startLevel;
+        try {
+            lastMainLevel = Integer.parseInt(startLevel);
+        } catch(NumberFormatException e) {
+            lastMainLevel = 0;
+        }
     }
 
 
@@ -132,7 +139,7 @@ public class Game {
 
         resourceSystem.loadResources();
 
-        loadLevel("1");
+        loadLevel(currentLevel);
     }
 
     /**

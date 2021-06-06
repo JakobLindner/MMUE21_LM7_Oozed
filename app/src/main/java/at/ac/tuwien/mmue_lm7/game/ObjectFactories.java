@@ -36,10 +36,10 @@ import at.ac.tuwien.mmue_lm7.utils.Vec2;
  */
 public class ObjectFactories {
 
-    public static Player makeOoze(int x, int y, Direction direction, boolean runningCW) {
+    public static Player makeOoze(int x, int y, Direction upDir, boolean runningCW) {
         AABB box = new AABB(1,1,Player.PLAYER_MASK,CollisionLayers.PLAYER);
 
-        Player ooze = new Player(direction, runningCW, box);//TODO horizontally flip this or ooze sprites
+        Player ooze = new Player(upDir, runningCW, box);//TODO horizontally flip this or ooze sprites
         ooze.position.set(x + 0.5f, y + 0.5f);
 
         ooze.addChild(box);
@@ -73,10 +73,10 @@ public class ObjectFactories {
         return spikes;
     }
 
-    public static GameObject makeBlocker(int x, int y, Direction lookDir, boolean runningCW, boolean dynamic) {
+    public static GameObject makeBlocker(int x, int y, Direction upDir, boolean runningCW, boolean dynamic) {
         AABB box = new AABB(0.5f, 0.5f, CollisionLayers.PLAYER, CollisionLayers.ENEMY);
 
-        Blocker blocker = new Blocker(box, lookDir, runningCW, dynamic);
+        Blocker blocker = new Blocker(box, upDir, runningCW, dynamic);
         blocker.position.set(x + 0.5f, y + 0.5f);
 
         blocker.addChild(box);

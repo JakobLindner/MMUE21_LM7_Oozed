@@ -14,7 +14,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.stream.Stream;
 
 import at.ac.tuwien.mmue_lm7.game.level.Level;
 import at.ac.tuwien.mmue_lm7.game.level.builder.LevelBuilder;
@@ -30,7 +32,7 @@ import at.ac.tuwien.mmue_lm7.utils.Direction;
  */
 public class LevelLoader {
     private static final String TAG = "LevelFactories";
-    private AssetManager assetManager;
+    private final AssetManager assetManager;
 
     public LevelLoader(Context context) {
         this.assetManager = context.getAssets();
@@ -63,12 +65,12 @@ public class LevelLoader {
         root.addChild(ObjectFactories.makeText(16, 3, "Swipe to Dash!"));
 
         // === OOZE ===
-        root.addChild(ObjectFactories.makeOoze(1, 5, Direction.RIGHT, true));
+        root.addChild(ObjectFactories.makeOoze(1, 5, Direction.UP, true));
 
         // === ENEMIES ===
         //root.addChild(ObjectFactories.makeBlocker(18, 0, Direction.RIGHT, false));
         //root.addChild(ObjectFactories.makeBlocker(8, 0, Direction.LEFT, true));
-        root.addChild(ObjectFactories.makeBlocker(1, 7, Direction.LEFT, true, true));
+        root.addChild(ObjectFactories.makeBlocker(1, 7, Direction.DOWN, true, true));
         //root.addChild(ObjectFactories.makeBlocker(23, 14, Direction.RIGHT, true));
 
 
@@ -212,8 +214,8 @@ public class LevelLoader {
                              "G#PO##OP" +
                              "##COPIOP")
                 .player()
-                    .at(12, 14)
-                    .orient(Direction.UP, true)
+                    .at(18, 11)
+                    .orient(Direction.RIGHT, false)
                 .blocker()
                     .at(15, 10)
                     .orient(Direction.DOWN, true)

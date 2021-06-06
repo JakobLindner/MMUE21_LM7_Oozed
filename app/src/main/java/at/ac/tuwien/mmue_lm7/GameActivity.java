@@ -20,6 +20,8 @@ import at.ac.tuwien.mmue_lm7.game.Score;
 public class GameActivity extends FullscreenActivity {
     private static final String TAG = "GameActivity";
 
+    public static final String START_LEVEL_KEY = "startLevel";
+
     private GameSurfaceView gameView;
 
     /**

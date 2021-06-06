@@ -18,7 +18,7 @@ public class PlayerBuilder extends LevelPartBuilder<PlayerBuilder>{
     }
 
     public PlayerBuilder orient(Direction upDir, boolean clockwise) {
-        player.direction = upDir.rotateCW();
+        player.upDir = upDir;
         player.runningCW = clockwise;
         return this;
     }

@@ -39,8 +39,8 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
         getHolder().addCallback(this);
         setFocusable(true);
 
-        //TODO pass parameters to game coming from somewhere
-        game = new Game(context);
+        String startLevel = getActivity().getIntent().getStringExtra(GameActivity.START_LEVEL_KEY);
+        game = new Game(context,startLevel==null||startLevel.isEmpty()?"1":startLevel);
         gestureDetector = new GestureDetectorCompat(context,new GameGestureListener());
         Log.d(TAG, "Initialize GameSurfaceView");
     }

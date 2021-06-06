@@ -130,12 +130,12 @@ public class Player extends GameObject {
     private Vec2 cornerPos = new Vec2();
     private float coveredTurnDist;
 
-    public Player(Direction startingDir, boolean runningCW, AABB box) {
-        this.dir = startingDir;
+    public Player(Direction upDir, boolean runningCW, AABB box) {
+        this.upDir = upDir;
         if (runningCW)
-            this.upDir = this.dir.rotateCCW();
+            this.dir = upDir.rotateCW();
         else
-            this.upDir = this.dir.rotateCW();
+            this.dir = upDir.rotateCCW();
         this.box = box;
 
         updateOrientation();

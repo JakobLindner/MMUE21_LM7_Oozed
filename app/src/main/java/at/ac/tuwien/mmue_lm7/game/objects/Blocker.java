@@ -61,13 +61,13 @@ public class Blocker extends Enemy {
     private Vec2 move = new Vec2();
     private Vec2 ray = new Vec2();
 
-    public Blocker(AABB box, Direction startingDir, boolean runningCW, boolean dynamic) {
+    public Blocker(AABB box, Direction upDir, boolean runningCW, boolean dynamic) {
         this.box = box;
-        this.dir = startingDir;
+        this.upDir = upDir;
         if (runningCW)
-            upDir = startingDir.rotateCCW();
+            this.dir = upDir.rotateCW();
         else
-            upDir = startingDir.rotateCW();
+            this.dir = upDir.rotateCCW();
 
         setWrappable(dynamic);
 

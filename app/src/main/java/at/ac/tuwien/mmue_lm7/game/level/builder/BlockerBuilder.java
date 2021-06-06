@@ -18,8 +18,8 @@ public class BlockerBuilder extends LevelPartBuilder<BlockerBuilder>{
     }
 
     public BlockerBuilder orient(Direction upDir, boolean clockwise) {
-        blocker.direction = upDir.rotateCW();
-        blocker.runningCW = !clockwise;
+        blocker.upDir = upDir;
+        blocker.runningCW = clockwise;
         return this;
     }
 
