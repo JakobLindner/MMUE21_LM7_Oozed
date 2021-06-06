@@ -171,6 +171,8 @@ public class Player extends GameObject {
         Game.get().onKeyDown.removeListener(this);
     }
 
+    private Vec2 lastPos = new Vec2();
+    private PlayerState lastState = PlayerState.RUNNING;
     @Override
     public void update() {
 
@@ -321,7 +323,14 @@ public class Player extends GameObject {
         //reset inputs
         wantJump = wantDash = false;
 
-        //TODO based on state, set hitbox and sprite
+        //TODO debug plz remove
+        if(lastPos.sub(position).len2()>PLAYER_DASH_SPEED*PLAYER_DASH_SPEED*2) {
+           lastPos.add(position);
+           Log.w(TAG,String.format("Pos reset, %s -> %s | %s -> %s",lastPos.toString(),position.toString(),lastState.toString(),state.toString()));
+        }
+
+        lastPos.set(position);
+        lastState = state;
     }
 
     @Override
@@ -393,7 +402,7 @@ public class Player extends GameObject {
         if (state == to)
             return;
 
-        //Log.d(TAG, String.format("Player State %-10s -> %s",state.toString(),to.toString()));
+        Log.d(TAG, String.format("Player State %-10s -> %s",state.toString(),to.toString()));
 
         switch (state) {
             case OUTER_TURN: {
