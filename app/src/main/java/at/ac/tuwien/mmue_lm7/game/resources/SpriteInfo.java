@@ -13,7 +13,7 @@ public class SpriteInfo {
     public int firstX = 0;
     public int firstY = 0;
     public int animationLength = 1;
-    public int frameDuration = 30;
+    public int frameDuration = 30; // in frames
 
     public SpriteInfo() {
 

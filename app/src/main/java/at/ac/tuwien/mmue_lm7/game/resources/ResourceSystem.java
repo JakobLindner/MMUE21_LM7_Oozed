@@ -56,6 +56,7 @@ public class ResourceSystem {
         bitmaps = new HashMap<>();
         bitmaps.put(R.drawable.ooze, BitmapFactory.decodeResource(context.getResources(), R.drawable.ooze, options));
         bitmaps.put(R.drawable.blocker, BitmapFactory.decodeResource(context.getResources(), R.drawable.blocker, options));
+        bitmaps.put(R.drawable.flyer, BitmapFactory.decodeResource(context.getResources(), R.drawable.flyer, options));
         bitmaps.put(R.drawable.platforms, BitmapFactory.decodeResource(context.getResources(), R.drawable.platforms, options));
         bitmaps.put(R.drawable.background, BitmapFactory.decodeResource(context.getResources(), R.drawable.background, options));
         bitmaps.put(R.drawable.effects,BitmapFactory.decodeResource(context.getResources(),R.drawable.effects,options));
@@ -115,6 +116,10 @@ public class ResourceSystem {
                 info.animationLength = 4;
                 info.frameDuration = 20;
                 break;
+            case flyerIdle:
+                info.spriteSheetId = R.drawable.flyer;
+                info.animationLength = 6;
+                info.frameDuration = 10;
             case platformPipe:
                 info.spriteSheetId = R.drawable.platforms;
                 break;
@@ -192,6 +197,7 @@ public class ResourceSystem {
     public enum SpriteEnum {
         oozeRun,
         blockerIdle,
+        flyerIdle,
         platformPipe,
         platformPipeOpen,
         platformCircuit,
