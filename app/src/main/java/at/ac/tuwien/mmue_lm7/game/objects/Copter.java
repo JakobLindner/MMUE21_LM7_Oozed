@@ -4,6 +4,7 @@ import at.ac.tuwien.mmue_lm7.game.GameConstants;
 import at.ac.tuwien.mmue_lm7.game.physics.CollisionLayers;
 import at.ac.tuwien.mmue_lm7.game.physics.PhysicsSystem;
 import at.ac.tuwien.mmue_lm7.game.rendering.Layers;
+import at.ac.tuwien.mmue_lm7.utils.Utils;
 import at.ac.tuwien.mmue_lm7.utils.Vec2;
 
 public class Copter extends Enemy {
@@ -40,8 +41,7 @@ public class Copter extends Enemy {
         hover += hoverInc;
 
         float t = (float)hover/(float)HOVER_DURATION;
-        //ease out quad
-        t = 1 - (1-t) * (1-t);
+        t = Utils.easeInOutSine(t);
         t-=0.5f;
 
         position.y = initialPos.y+HOVER_DIST*t;

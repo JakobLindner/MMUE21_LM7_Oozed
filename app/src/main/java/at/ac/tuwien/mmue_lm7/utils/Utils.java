@@ -4,6 +4,7 @@ import at.ac.tuwien.mmue_lm7.game.GameConstants;
 
 /**
  * utility functions that have no other place
+ *
  * @author simon
  */
 public class Utils {
@@ -39,6 +40,7 @@ public class Utils {
 
     /**
      * Transforms given world coordinates to screen space
+     *
      * @param worldCoords !=null, changed by this method to be in screen space
      */
     public static void worldToScreen(Vec2 worldCoords) {
@@ -50,6 +52,7 @@ public class Utils {
 
     /**
      * Transforms given x world coordinate to screen space
+     *
      * @param x in world space
      * @return the transformed x coordinate in screen space
      */
@@ -59,12 +62,32 @@ public class Utils {
 
     /**
      * Transforms given y world coordinate to screen space
+     *
      * @param y in world space
      * @return the transformed y coordinate in screen space
      */
     public static float worldToScreenY(float y) {
-        y = GameConstants.GAME_HEIGHT-y;
+        y = GameConstants.GAME_HEIGHT - y;
         return y * GameConstants.PIXELS_PER_UNIT;
+    }
+
+    /**
+     * https://github.com/acron0/Easings/blob/master/Easings.cs
+     */
+    public static float easeInOutQuad(float t) {
+        if (t < 0.5f) {
+            return 4 * t * t * t;
+        } else {
+            float f = ((2 * t) - 2);
+            return 0.5f * f * f * f + 1;
+        }
+    }
+
+    /**
+     * https://github.com/acron0/Easings/blob/master/Easings.cs
+     */
+    public static float easeInOutSine(float t) {
+        return 0.5f * (float)(1 - Math.cos(t * Math.PI));
     }
 
     //prevent instantiation

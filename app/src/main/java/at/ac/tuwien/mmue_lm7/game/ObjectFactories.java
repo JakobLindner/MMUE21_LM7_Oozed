@@ -113,9 +113,9 @@ public class ObjectFactories {
     public static GameObject makeCopter(int x, int y) {
         final float COPTER_WIDTH = 0.5f-2*U;
         final float COPTER_HEIGHT = U;
-        final float COPTER_OFFSET = 4*U;
-        final float BODY_WIDTH = 4*U;
-        final float BODY_HEIGHT = BODY_WIDTH;
+        final float COPTER_OFFSET = 6*U;
+        final float BODY_WIDTH = 0.5f;
+        final float BODY_HEIGHT = 4*U;
         final float BODY_OFFSET = -2*U;
         AABB copterBox = new AABB(COPTER_WIDTH, COPTER_HEIGHT, CollisionLayers.PLAYER, CollisionLayers.ENEMY);
         AABB bodyBox = new AABB(BODY_WIDTH, BODY_HEIGHT, CollisionLayers.PLAYER, CollisionLayers.ENEMY);
