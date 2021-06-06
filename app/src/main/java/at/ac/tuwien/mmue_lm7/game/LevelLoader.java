@@ -47,6 +47,7 @@ public class LevelLoader {
         put("1", LevelLoader::createLevel1);
         put("2", LevelLoader::createLevel2);
         put("3", LevelLoader::fivePlatforms);
+        put("5", LevelLoader::tightSlalom);
     }};
 
 
@@ -253,15 +254,80 @@ public class LevelLoader {
                     .size(16,2)
                     .pattern("POICO")
                 .player()
-                    .at(5,1)
+                    .at(5,6)
                     .orient(Direction.UP,true)
                 .blocker()
                     .at(15,7)
                     .orient(Direction.DOWN,false)
+                .blocker()
+                    .at(32-5,6)
+                    .orient(Direction.UP,true)
+                    .dynamic(false)
+                .copy()
+                    .at(6,15)
+                .blocker()
+                    .at(22,4)
+                    .orient(Direction.LEFT,false)
+                    .dynamic(false)
+                .blocker()
+                    .at(9,18-6)
+                    .orient(Direction.RIGHT,false)
+                    .dynamic(false)
                 .jumper()
-                    .at(16,10)
+                    .at(18,10)
                     .orient(Direction.UP)
-                .copter().at(20,2)
+                .jumper()
+                    .at(12,18-2)
+                    .orient(Direction.DOWN)
+                //.copter().at(20,2)
+                .spikes()
+                    .at(14,1)
+                    .dir(Direction.UP)
+                .copy().at(15,1)
+                .build();
+
+        level.build(root);
+    }
+
+    public static void tightSlalom(GameObject root) {
+        Level level = new LevelBuilder("Tight Slalom")
+                .outerWall()
+                    .thickness(2)
+                    .horizontalPattern("B#")
+                    .verticalPattern("B###")
+                .platform()
+                    .at(6,2)
+                    .size(32-8,2)
+                    .pattern("B#")
+                .copy().at(6,4)
+                .copy().at(6,6)
+                .copy()
+                    .at(2,14)
+                    .size(32-4,2)
+                .copy().at(2,12)
+                .copy().at(2,10)
+                .platform()
+                    .at(3,4)
+                    .size(2,2)
+                    .pattern("G")
+                //.platform()
+                //    .at(2,6)
+                //    .size(32-4,1)
+                //    .pattern("P")
+                //.copy().at(2,11)
+                .player()
+                    .at(3,3)
+                    .orient(Direction.DOWN,false)
+                .blocker()
+                    .at(15,8)
+                    .orient(Direction.UP,false)
+                    .dynamic(false)
+                .copy().at(25,8)
+                .blocker()
+                    .at(10,9)
+                    .orient(Direction.DOWN, true)
+                    .dynamic(false)
+                .copy().at(20,9)
                 .build();
 
         level.build(root);
