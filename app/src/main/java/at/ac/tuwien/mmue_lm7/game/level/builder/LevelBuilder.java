@@ -1,9 +1,14 @@
 package at.ac.tuwien.mmue_lm7.game.level.builder;
 
+import android.util.Log;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import at.ac.tuwien.mmue_lm7.game.level.Level;
-import at.ac.tuwien.mmue_lm7.game.objects.Copter;
 
 public class LevelBuilder implements LevelBaseBuilder{
+    public static final String TAG = "LevelBuilder";
     private Level level = new Level();
 
     public LevelBuilder(String name) {
@@ -49,5 +54,20 @@ public class LevelBuilder implements LevelBaseBuilder{
     @Override
     public CopterBuilder copter() {
         return new CopterBuilder(level, this);
+    }
+
+    @Override
+    public LevelBaseBuilder json(JSONObject json) {
+        try {
+            level.loadJSON(json);
+        } catch (JSONException e) {
+            Log.w(TAG,"Could not load from json", e);
+        }
+        return this;
+    }
+
+    @Override
+    public TextBuilder text(String text) {
+        return new TextBuilder(level,this).content(text);
     }
 }

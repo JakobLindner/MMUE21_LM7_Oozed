@@ -14,4 +14,6 @@
     <string name="lives">x %1$d</string>
     <string name="tap_to_start">TAP to Start!</string>
     <string name="pause_screen_title">PAUSED</string>
+    <string name="tap_to_jump">Tap to Jump!</string>
+    <string name="swipe_to_dash">Swipe to Dash!</string>
 </resources>

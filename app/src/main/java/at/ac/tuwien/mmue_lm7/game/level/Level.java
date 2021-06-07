@@ -14,6 +14,7 @@ import at.ac.tuwien.mmue_lm7.game.objects.KillEnemiesObjective;
 
 public class Level {
     private static final String TAG = "Level";
+    private static final String LEVEL_NAME_KEY = "levelName";
 
     private String name;
     private ArrayList<Tile> objects = new ArrayList<Tile>();
@@ -42,16 +43,20 @@ public class Level {
         root.addChild(ObjectFactories.makeBackground());
     }
 
-    public static Level fromJSON(JSONObject json) throws JSONException {
-        Level level = new Level();
-        level.name = json.getString("levelName");
+    public void loadJSON(JSONObject json) throws JSONException {
+        if(json.has(LEVEL_NAME_KEY))
+            this.name = json.getString(LEVEL_NAME_KEY);
 
         JSONArray tiles = json.getJSONArray("tiles");
         for(int i = 0;i<tiles.length();++i) {
             JSONObject jsonTile = tiles.getJSONObject(i);
-            level.objects.add(getTileFromJSON(jsonTile));
+            this.objects.add(getTileFromJSON(jsonTile));
         }
+    }
 
+    public static Level fromJSON(JSONObject json) throws JSONException {
+        Level level = new Level();
+        level.loadJSON(json);
         return level;
     }
 
@@ -75,6 +80,9 @@ public class Level {
         }
         else if(tileName.equalsIgnoreCase("copter")) {
             tile = new Copter();
+        }
+        else if(tileName.equalsIgnoreCase("text")) {
+            tile = new Text();
         }
         else {
             Log.e(TAG, String.format("Invalid Tile: %s",tileName));

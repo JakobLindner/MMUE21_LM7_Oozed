@@ -1,7 +1,6 @@
 package at.ac.tuwien.mmue_lm7.game;
 
 import android.content.Context;
-import android.content.res.AssetManager;
 import android.util.Log;
 
 import org.json.JSONException;
@@ -15,6 +14,7 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 
+import at.ac.tuwien.mmue_lm7.R;
 import at.ac.tuwien.mmue_lm7.game.level.Level;
 import at.ac.tuwien.mmue_lm7.game.level.builder.LevelBuilder;
 import at.ac.tuwien.mmue_lm7.game.objects.GameObject;
@@ -29,28 +29,38 @@ import at.ac.tuwien.mmue_lm7.utils.Direction;
  */
 public class LevelLoader {
     private static final String TAG = "LevelFactories";
-    private final AssetManager assetManager;
+    private final Context context;
 
     public LevelLoader(Context context) {
-        this.assetManager = context.getAssets();
+        this.context = context;
     }
 
     @FunctionalInterface
     public interface LevelFactory {
-        void create(GameObject root);
+        void create(GameObject root, Context context);
     }
 
     public static HashMap<String, LevelFactory> levelsByName = new HashMap<String, LevelFactory>() {{
+        put("1", LevelLoader::movementTutorial);
         put("7", LevelLoader::createLevel1);
         put("2", LevelLoader::createLevel2);
         put("3", LevelLoader::fivePlatforms);
         put("5", LevelLoader::tightSlalom);
     }};
 
+    public static void movementTutorial(GameObject root, Context context) {
+        Level level = new LevelBuilder("Movement Tutorial")
+                .json(getJSON(context,"1"))
+                .text(context.getString(R.string.tap_to_jump))
+                    .at(16,5)
+                .text(context.getString(R.string.swipe_to_dash))
+                    .at(16,3)
+                .build();
 
-    // TODO tutorial level
+        level.build(root);
+    }
 
-    public static void createLevel1(GameObject root) {
+    public static void createLevel1(GameObject root, Context context) {
 
         // === OBJECTIVE ===
         root.addChild(new KillEnemiesObjective());
@@ -197,27 +207,27 @@ public class LevelLoader {
         root.addChild(ObjectFactories.makeBackground());
     }
 
-    public static void createLevel2(GameObject root) {
+    public static void createLevel2(GameObject root, Context context) {
         Level level = new LevelBuilder("2")
                 .outerWall()
-                    .thickness(2)
-                    .holeX(6,7,24,25)
-                    .holeY(8,9)
-                    .horizontalPattern("G#")
-                    .verticalPattern("B###")
+                .thickness(2)
+                .holeX(6, 7, 24, 25)
+                .holeY(8, 9)
+                .horizontalPattern("G#")
+                .verticalPattern("B###")
                 .platform()
-                    .at(10, 11)
-                    .size(8, 3)
-                    .pattern("PCIOG#II" +
-                             "G#PO##OP" +
-                             "##COPIOP")
+                .at(10, 11)
+                .size(8, 3)
+                .pattern("PCIOG#II" +
+                         "G#PO##OP" +
+                         "##COPIOP")
                 .player()
-                    .at(18, 11)
-                    .orient(Direction.RIGHT, false)
+                .at(18, 11)
+                .orient(Direction.RIGHT, false)
                 .blocker()
-                    .at(15, 10)
-                    .orient(Direction.DOWN, true)
-                    .dynamic(false)
+                .at(15, 10)
+                .orient(Direction.DOWN, true)
+                .dynamic(false)
                 //.spikes()
                 //    .at(13, 9)
                 //    .dir(Direction.DOWN)
@@ -226,105 +236,105 @@ public class LevelLoader {
         level.build(root);
     }
 
-    public static void fivePlatforms(GameObject root) {
+    public static void fivePlatforms(GameObject root, Context context) {
         final int D = 3;//corner platform dist
         Level level = new LevelBuilder("Five platforms")
                 .outerWall()
                 .platform()
-                    .at(D,D)
-                    .size(6,3)
-                    .pattern("CIOPG#"+
-                             "G#IO##"+
-                             "##PICC")
+                .at(D, D)
+                .size(6, 3)
+                .pattern("CIOPG#" +
+                         "G#IO##" +
+                         "##PICC")
                 .copy()
-                    .at(32-D-6,18-D-3)
+                .at(32 - D - 6, 18 - D - 3)
                 .platform()
-                    .at(32-D-6,D)
-                    .size(6,3)
-                    .pattern("B#PIOP"+
-                             "##CIB#"+
-                             "OOPC##")
+                .at(32 - D - 6, D)
+                .size(6, 3)
+                .pattern("B#PIOP" +
+                         "##CIB#" +
+                         "OOPC##")
                 .copy()
-                    .at(D,18-D-3)
+                .at(D, 18 - D - 3)
                 .platform()
-                    .at(8,8)
-                    .size(16,2)
-                    .pattern("POICO")
+                .at(8, 8)
+                .size(16, 2)
+                .pattern("POICO")
                 .player()
-                    .at(5,6)
-                    .orient(Direction.UP,true)
+                .at(5, 6)
+                .orient(Direction.UP, true)
                 .blocker()
-                    .at(15,7)
-                    .orient(Direction.DOWN,false)
+                .at(15, 7)
+                .orient(Direction.DOWN, false)
                 .blocker()
-                    .at(32-5,6)
-                    .orient(Direction.UP,true)
-                    .dynamic(false)
+                .at(32 - 5, 6)
+                .orient(Direction.UP, true)
+                .dynamic(false)
                 .copy()
-                    .at(4,15)
+                .at(4, 15)
                 .blocker()
-                    .at(22,4)
-                    .orient(Direction.LEFT,false)
-                    .dynamic(false)
+                .at(22, 4)
+                .orient(Direction.LEFT, false)
+                .dynamic(false)
                 .blocker()
-                    .at(9,18-6)
-                    .orient(Direction.RIGHT,false)
-                    .dynamic(false)
+                .at(9, 18 - 6)
+                .orient(Direction.RIGHT, false)
+                .dynamic(false)
                 .jumper()
-                    .at(18,10)
-                    .orient(Direction.UP)
+                .at(18, 10)
+                .orient(Direction.UP)
                 .jumper()
-                    .at(12,18-2)
-                    .orient(Direction.DOWN)
+                .at(12, 18 - 2)
+                .orient(Direction.DOWN)
                 //.copter().at(20,2)
                 .spikes()
-                    .at(14,1)
-                    .dir(Direction.UP)
-                .copy().at(15,1)
+                .at(14, 1)
+                .dir(Direction.UP)
+                .copy().at(15, 1)
                 .build();
 
         level.build(root);
     }
 
-    public static void tightSlalom(GameObject root) {
+    public static void tightSlalom(GameObject root, Context context) {
         Level level = new LevelBuilder("Tight Slalom")
                 .outerWall()
-                    .thickness(2)
-                    .horizontalPattern("B#")
-                    .verticalPattern("B###")
+                .thickness(2)
+                .horizontalPattern("B#")
+                .verticalPattern("B###")
                 .platform()
-                    .at(6,2)
-                    .size(32-8,2)
-                    .pattern("B#")
-                .copy().at(6,4)
-                .copy().at(6,6)
+                .at(6, 2)
+                .size(32 - 8, 2)
+                .pattern("B#")
+                .copy().at(6, 4)
+                .copy().at(6, 6)
                 .copy()
-                    .at(2,14)
-                    .size(32-4,2)
-                .copy().at(2,12)
-                .copy().at(2,10)
+                .at(2, 14)
+                .size(32 - 4, 2)
+                .copy().at(2, 12)
+                .copy().at(2, 10)
                 .platform()
-                    .at(3,4)
-                    .size(2,2)
-                    .pattern("G")
+                .at(3, 4)
+                .size(2, 2)
+                .pattern("G")
                 //.platform()
                 //    .at(2,6)
                 //    .size(32-4,1)
                 //    .pattern("P")
                 //.copy().at(2,11)
                 .player()
-                    .at(3,3)
-                    .orient(Direction.DOWN,false)
+                .at(3, 3)
+                .orient(Direction.DOWN, false)
                 .blocker()
-                    .at(15,8)
-                    .orient(Direction.UP,false)
-                    .dynamic(false)
-                .copy().at(25,8)
+                .at(15, 8)
+                .orient(Direction.UP, false)
+                .dynamic(false)
+                .copy().at(25, 8)
                 .blocker()
-                    .at(10,9)
-                    .orient(Direction.DOWN, true)
-                    .dynamic(false)
-                .copy().at(20,9)
+                .at(10, 9)
+                .orient(Direction.DOWN, true)
+                .dynamic(false)
+                .copy().at(20, 9)
                 .build();
 
         level.build(root);
@@ -343,51 +353,46 @@ public class LevelLoader {
         //check if there is a level building procedure
         if (!levelsByName.containsKey(name)) {
             //check if there is a level json
-            try {
-                //loading text from asset: https://stackoverflow.com/a/16110044
-                InputStream is = assetManager.open(String.format("levels/%s.json", name));
-                StringBuilder sb = new StringBuilder();
-                BufferedReader br = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
-                String str;
-                while ((str = br.readLine()) != null) {
-                    sb.append(str);
-                }
-                br.close();
 
-                //deserialize level from json and load
-                try {
-                    JSONObject json = (JSONObject) new JSONTokener(sb.toString()).nextValue();
-                    Level level = Level.fromJSON(json);
-                    addText(root, name);
-                    level.build(root);
-                    return true;
-                } catch (JSONException e) {
-                    Log.e(TAG, "Unable to load level json", e);
-                    return false;
-                }
-            } catch (IOException e) {
-                Log.e(TAG, String.format("Exception while opening level %s", name), e);
+            //deserialize level from json and load
+            try {
+                JSONObject json = getJSON(context, name);
+                Level level = Level.fromJSON(json);
+                level.build(root);
+                return true;
+            } catch (JSONException e) {
+                Log.e(TAG, "Unable to load level json", e);
+                return false;
             }
-            return false;
         }
 
-        levelsByName.get(name).create(root);
+        levelsByName.get(name).create(root, context);
         return true;
     }
 
-    /**
-     * add help dialog text to specified levels
-     * @param root
-     * @param name
-     * @return true if something was added
-     */
-    private boolean addText(GameObject root, String name) {
-        if (name.contentEquals("1")) {
-            root.addChild(ObjectFactories.makeText(16, 5, "Tap to Jump!"));
-            root.addChild(ObjectFactories.makeText(16, 3, "Swipe to Dash!"));
-            return true;
+    public static JSONObject getJSON(Context context, String levelName) {
+        String fileContent = "{}";
+        try {
+            //loading text from asset: https://stackoverflow.com/a/16110044
+            InputStream is = context.getAssets().open(String.format("levels/%s.json", levelName));
+            StringBuilder sb = new StringBuilder();
+            BufferedReader br = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
+            String str;
+            while ((str = br.readLine()) != null) {
+                sb.append(str);
+            }
+            br.close();
+
+            fileContent = sb.toString();
+        } catch (IOException e) {
+            Log.e(TAG, String.format("Exception while opening level %s", levelName), e);
         }
-        
-        return false;
+
+        try {
+            return (JSONObject) new JSONTokener(fileContent).nextValue();
+        } catch (JSONException e) {
+            Log.e(TAG, "Unable to load level json", e);
+            return new JSONObject();
+        }
     }
 }

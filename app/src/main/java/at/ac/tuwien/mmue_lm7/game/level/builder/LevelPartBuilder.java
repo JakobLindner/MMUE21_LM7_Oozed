@@ -2,6 +2,8 @@ package at.ac.tuwien.mmue_lm7.game.level.builder;
 
 import androidx.annotation.CallSuper;
 
+import org.json.JSONObject;
+
 import at.ac.tuwien.mmue_lm7.game.level.Level;
 
 public abstract class LevelPartBuilder<SubBuilder extends LevelPartBuilder> implements LevelBaseBuilder {
@@ -64,6 +66,18 @@ public abstract class LevelPartBuilder<SubBuilder extends LevelPartBuilder> impl
     public SubBuilder copy() {
         finish();
         return (SubBuilder) this;
+    }
+
+    @Override
+    public LevelBaseBuilder json(JSONObject json) {
+        finish();
+        return parent.json(json);
+    }
+
+    @Override
+    public TextBuilder text(String text) {
+        finish();
+        return parent.text(text);
     }
 
     @Override

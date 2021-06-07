@@ -8,6 +8,8 @@ import at.ac.tuwien.mmue_lm7.game.objects.GameObject;
 import at.ac.tuwien.mmue_lm7.utils.Direction;
 
 public class Blocker extends Tile {
+    public static final String DYNAMIC_KEY = "dynamic";
+
     public Direction upDir;
     public boolean runningCW;
     public boolean dynamic = true;
@@ -30,6 +32,9 @@ public class Blocker extends Tile {
     @Override
     public void fromJSON(JSONObject json) throws JSONException {
         super.fromJSON(json);
+
+        if(json.has(DYNAMIC_KEY))
+            dynamic = json.getBoolean(DYNAMIC_KEY);
 
         upDir = Direction.fromRotation(rotation).rotateCCW();
         runningCW = !mirrored;

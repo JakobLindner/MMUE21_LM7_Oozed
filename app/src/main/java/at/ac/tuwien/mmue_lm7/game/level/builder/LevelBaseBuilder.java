@@ -1,5 +1,7 @@
 package at.ac.tuwien.mmue_lm7.game.level.builder;
 
+import org.json.JSONObject;
+
 import at.ac.tuwien.mmue_lm7.game.level.Level;
 
 public interface LevelBaseBuilder {
@@ -10,5 +12,7 @@ public interface LevelBaseBuilder {
     JumperBuilder jumper();
     CopterBuilder copter();
     OuterWallBuilder outerWall();
+    LevelBaseBuilder json(JSONObject json);
+    TextBuilder text(String text);
     Level build();
 }

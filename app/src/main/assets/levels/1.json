@@ -796,8 +796,9 @@
             "tileName": "Blocker",
             "x": 21,
             "y": 11,
-            "mirrored": false,
-            "rotation": 180
+            "mirrored": true,
+            "rotation": 180,
+            "dynamic": false
         },
         {
             "tileName": "spikes",
