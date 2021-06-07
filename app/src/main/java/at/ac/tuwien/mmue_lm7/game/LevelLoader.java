@@ -28,6 +28,10 @@ import at.ac.tuwien.mmue_lm7.utils.Direction;
  * @author jakob
  */
 public class LevelLoader {
+    //public constant shortcuts
+    public static final int W = (int)GameConstants.GAME_WIDTH;
+    public static final int H = (int) GameConstants.GAME_HEIGHT;
+
     private static final String TAG = "LevelFactories";
     private final Context context;
 
@@ -42,10 +46,11 @@ public class LevelLoader {
 
     public static HashMap<String, LevelFactory> levelsByName = new HashMap<String, LevelFactory>() {{
         put("1", LevelLoader::movementTutorial);
-        put("7", LevelLoader::createLevel1);
+        //put("7", LevelLoader::createLevel1);
         put("2", LevelLoader::createLevel2);
         put("3", LevelLoader::fivePlatforms);
         put("5", LevelLoader::tightSlalom);
+        put("Dash",LevelLoader::dashJumpTutorial);
     }};
 
     public static void movementTutorial(GameObject root, Context context) {
@@ -55,6 +60,55 @@ public class LevelLoader {
                     .at(16,5)
                 .text(context.getString(R.string.swipe_to_dash))
                     .at(16,3)
+                .build();
+
+        level.build(root,context);
+    }
+
+    public static void dashJumpTutorial(GameObject root, Context context) {
+        final int WIDTH = 12;
+        final int HEIGHT = 5;
+        final int SPIKE_HEIGHT = 4;
+        Level level = new LevelBuilder("Dash-Jump Tutorial")
+                .platform()
+                    .at(0,3)
+                    .size(WIDTH,HEIGHT)
+                .copy()
+                    .at(W-WIDTH,3)
+                .platform()
+                    .at(W/2-1,SPIKE_HEIGHT)
+                    .sprite(ResourceSystem.SpriteEnum.platformHugePlate)
+                .player()
+                    .at(1,3+HEIGHT)
+                    .orient(Direction.UP,true)
+                .copter()
+                    .at(W/2,10)
+                //top spikes
+                .spikes()
+                    .at(W/2,SPIKE_HEIGHT+3)
+                    .dir(Direction.UP)
+                .copy().x(W/2-1)
+                .copy().x(W/2+1)
+                //bottom spikes
+                .spikes()
+                    .at(W/2,SPIKE_HEIGHT-1)
+                    .dir(Direction.DOWN)
+                .copy().x(W/2-1)
+                .copy().x(W/2+1)
+                //left spikes
+                .spikes()
+                    .at(W/2-2,SPIKE_HEIGHT)
+                    .dir(Direction.LEFT)
+                .copy().y(SPIKE_HEIGHT+1)
+                .copy().y(SPIKE_HEIGHT+2)
+                //right spikes
+                .spikes()
+                    .at(W/2+2,SPIKE_HEIGHT)
+                    .dir(Direction.RIGHT)
+                .copy().y(SPIKE_HEIGHT+1)
+                .copy().y(SPIKE_HEIGHT+2)
+                .text(context.getString(R.string.dash_and_jump))
+                    .at(W/2,H-4)
                 .build();
 
         level.build(root,context);

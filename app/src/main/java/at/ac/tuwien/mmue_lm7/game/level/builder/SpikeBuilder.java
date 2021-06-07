@@ -11,6 +11,16 @@ public class SpikeBuilder extends LevelPartBuilder<SpikeBuilder>{
         super(level, parent);
     }
 
+    public SpikeBuilder x(int x) {
+        spikes.x = x;
+        return this;
+    }
+
+    public SpikeBuilder y(int y) {
+        spikes.y = y;
+        return this;
+    }
+
     public SpikeBuilder at(int x, int y) {
         spikes.x = x;
         spikes.y = y;

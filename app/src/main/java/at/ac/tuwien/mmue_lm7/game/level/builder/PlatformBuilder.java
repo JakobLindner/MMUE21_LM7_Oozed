@@ -43,6 +43,7 @@ public class PlatformBuilder extends LevelPartBuilder<PlatformBuilder> {
 
     public PlatformBuilder sprite(ResourceSystem.SpriteEnum sprite) {
         this.sprite = sprite;
+        this.width = this.height = ResourceSystem.spriteInfo(sprite).size/GameConstants.PIXELS_PER_UNIT;
         return this;
     }
 
@@ -68,7 +69,7 @@ public class PlatformBuilder extends LevelPartBuilder<PlatformBuilder> {
                     int size = ResourceSystem.spriteInfo(sprite).size/GameConstants.PIXELS_PER_UNIT;
                     //check if tile does not extend platform size
                     if(offsetX+size<=width && offsetY-(size-1)>=0) {
-                        int patternOffset = pattern.isEmpty() ? 0 : 1-size;
+                        int patternOffset = 1-size;
                         PlatformTile tile = generateTile(sprite, offsetX, offsetY+patternOffset);
                         level.addTile(tile);
                         //if tile is on edge of screen, then extend it
