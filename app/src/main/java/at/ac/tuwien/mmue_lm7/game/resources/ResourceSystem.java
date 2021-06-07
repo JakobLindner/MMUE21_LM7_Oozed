@@ -163,7 +163,7 @@ public class ResourceSystem {
                 info.firstX = 32;
                 info.firstY = 80;
                 break;
-            case PlatformPipeDR:
+            case platformPipeDR:
                 info.spriteSheetId = R.drawable.platforms;
                 info.firstY = 64;
                 break;
@@ -219,12 +219,12 @@ public class ResourceSystem {
             case platformHugePlate:
                 info.spriteSheetId = R.drawable.platforms;
                 info.firstX = 64;
-                info.firstY = 32;
                 info.size = 48;
                 break;
             case platformHugeSphere:
                 info.spriteSheetId = R.drawable.platforms;
                 info.firstX = 64;
+                info.firstY = 48;
                 info.size = 48;
                 break;
             case background:
@@ -289,7 +289,7 @@ public class ResourceSystem {
         platformPipeOpen,
         platformPipeHor,
         platformPipeVer,
-        PlatformPipeDR, // connects: D = down, U = up, R = right, L = left
+        platformPipeDR, // connects: D = down, U = up, R = right, L = left
         platformPipeDL,
         platformPipeUR,
         platformPipeUL,

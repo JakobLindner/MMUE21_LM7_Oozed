@@ -1,0 +1,243 @@
+{
+    "levelName": "6",
+    "tiles": [
+        {
+            "tileName": "Ooze",
+            "x": 10,
+            "y": 7,
+            "mirrored": false,
+            "rotation": 360
+        },
+        {
+            "tileName": "Blocker",
+            "x": 17,
+            "y": 7,
+            "mirrored": false,
+            "rotation": 360
+        },
+        {
+            "tileName": "platformHugeSphere",
+            "x": 22,
+            "y": 4,
+            "mirrored": false,
+            "rotation": 360
+        },
+        {
+            "tileName": "platformHugePlate",
+            "x": 16,
+            "y": 4,
+            "mirrored": false,
+            "rotation": 360
+        },
+        {
+            "tileName": "platformHugePlate",
+            "x": 19,
+            "y": 4,
+            "mirrored": false,
+            "rotation": 360
+        },
+        {
+            "tileName": "spikes",
+            "x": 23,
+            "y": 7,
+            "mirrored": false,
+            "rotation": 360
+        },
+        {
+            "tileName": "platformPipeOpen",
+            "x": 12,
+            "y": 4,
+            "mirrored": false,
+            "rotation": 360
+        },
+        {
+            "tileName": "platformPipeCross",
+            "x": 11,
+            "y": 4,
+            "mirrored": false,
+            "rotation": 360
+        },
+        {
+            "tileName": "platformBigPipes",
+            "x": 11,
+            "y": 5,
+            "mirrored": false,
+            "rotation": 360
+        },
+        {
+            "tileName": "platformBigCross",
+            "x": 9,
+            "y": 5,
+            "mirrored": false,
+            "rotation": 360
+        },
+        {
+            "tileName": "platformBigPipes",
+            "x": 9,
+            "y": 3,
+            "mirrored": false,
+            "rotation": 360
+        },
+        {
+            "tileName": "platformPipeOpen",
+            "x": 8,
+            "y": 3,
+            "mirrored": false,
+            "rotation": 360
+        },
+        {
+            "tileName": "platformHugeSphere",
+            "x": 5,
+            "y": 4,
+            "mirrored": false,
+            "rotation": 360
+        },
+        {
+            "tileName": "platformCircuit",
+            "x": 13,
+            "y": 13,
+            "mirrored": false,
+            "rotation": 360
+        },
+        {
+            "tileName": "platformBigPlate",
+            "x": 15,
+            "y": 12,
+            "mirrored": false,
+            "rotation": 360
+        },
+        {
+            "tileName": "platformPlate",
+            "x": 14,
+            "y": 12,
+            "mirrored": false,
+            "rotation": 360
+        },
+        {
+            "tileName": "platformMonitor",
+            "x": 13,
+            "y": 12,
+            "mirrored": false,
+            "rotation": 360
+        },
+        {
+            "tileName": "platformCircuit",
+            "x": 12,
+            "y": 12,
+            "mirrored": false,
+            "rotation": 360
+        },
+        {
+            "tileName": "platformPlate",
+            "x": 14,
+            "y": 13,
+            "mirrored": false,
+            "rotation": 360
+        },
+        {
+            "tileName": "platformPlate",
+            "x": 12,
+            "y": 13,
+            "mirrored": false,
+            "rotation": 360
+        },
+        {
+            "tileName": "platformMonitor",
+            "x": 5,
+            "y": 3,
+            "mirrored": false,
+            "rotation": 360
+        },
+        {
+            "tileName": "platformPipeHor",
+            "x": 7,
+            "y": 3,
+            "mirrored": false,
+            "rotation": 360
+        },
+        {
+            "tileName": "platformPipeDR",
+            "x": 8,
+            "y": 6,
+            "mirrored": false,
+            "rotation": 360
+        },
+        {
+            "tileName": "platformPipeVer",
+            "x": 8,
+            "y": 4,
+            "mirrored": false,
+            "rotation": 360
+        },
+        {
+            "tileName": "platformPipeCross",
+            "x": 8,
+            "y": 5,
+            "mirrored": false,
+            "rotation": 360
+        },
+        {
+            "tileName": "platformPipeUR",
+            "x": 6,
+            "y": 3,
+            "mirrored": false,
+            "rotation": 360
+        },
+        {
+            "tileName": "platformPipeUR",
+            "x": 22,
+            "y": 9,
+            "mirrored": false,
+            "rotation": 360
+        },
+        {
+            "tileName": "platformPipeUL",
+            "x": 24,
+            "y": 9,
+            "mirrored": false,
+            "rotation": 360
+        },
+        {
+            "tileName": "platformPipeHor",
+            "x": 23,
+            "y": 9,
+            "mirrored": false,
+            "rotation": 360
+        },
+        {
+            "tileName": "platformPipeVer",
+            "x": 24,
+            "y": 10,
+            "mirrored": false,
+            "rotation": 360
+        },
+        {
+            "tileName": "platformPipeVer",
+            "x": 22,
+            "y": 10,
+            "mirrored": false,
+            "rotation": 360
+        },
+        {
+            "tileName": "platformPipeDL",
+            "x": 24,
+            "y": 11,
+            "mirrored": false,
+            "rotation": 360
+        },
+        {
+            "tileName": "platformPipeDR",
+            "x": 22,
+            "y": 11,
+            "mirrored": false,
+            "rotation": 360
+        },
+        {
+            "tileName": "platformPipeHor",
+            "x": 23,
+            "y": 11,
+            "mirrored": false,
+            "rotation": 360
+        }
+    ]
+}
