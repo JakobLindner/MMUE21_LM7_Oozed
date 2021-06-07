@@ -41,7 +41,7 @@ public class LevelLoader {
     }
 
     public static HashMap<String, LevelFactory> levelsByName = new HashMap<String, LevelFactory>() {{
-        put("1", LevelLoader::createLevel1);
+        put("7", LevelLoader::createLevel1);
         put("2", LevelLoader::createLevel2);
         put("3", LevelLoader::fivePlatforms);
         put("5", LevelLoader::tightSlalom);
@@ -358,6 +358,7 @@ public class LevelLoader {
                 try {
                     JSONObject json = (JSONObject) new JSONTokener(sb.toString()).nextValue();
                     Level level = Level.fromJSON(json);
+                    addText(root, name);
                     level.build(root);
                     return true;
                 } catch (JSONException e) {
@@ -372,6 +373,21 @@ public class LevelLoader {
 
         levelsByName.get(name).create(root);
         return true;
+    }
 
+    /**
+     * add help dialog text to specified levels
+     * @param root
+     * @param name
+     * @return true if something was added
+     */
+    private boolean addText(GameObject root, String name) {
+        if (name.contentEquals("1")) {
+            root.addChild(ObjectFactories.makeText(16, 5, "Tap to Jump!"));
+            root.addChild(ObjectFactories.makeText(16, 3, "Swipe to Dash!"));
+            return true;
+        }
+        
+        return false;
     }
 }

@@ -74,7 +74,7 @@ public class Level {
             tile = new Jumper();
         }
         else if(tileName.equalsIgnoreCase("copter")) {
-            tile = new Jumper();
+            tile = new Copter();
         }
         else {
             Log.e(TAG, String.format("Invalid Tile: %s",tileName));
