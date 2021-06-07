@@ -261,7 +261,7 @@ public class LevelLoader {
                     .orient(Direction.UP,true)
                     .dynamic(false)
                 .copy()
-                    .at(6,15)
+                    .at(4,15)
                 .blocker()
                     .at(22,4)
                     .orient(Direction.LEFT,false)
