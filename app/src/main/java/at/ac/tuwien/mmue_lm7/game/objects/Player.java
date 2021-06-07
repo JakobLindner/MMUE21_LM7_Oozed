@@ -74,7 +74,6 @@ public class Player extends GameObject {
     public enum PlayerState {
         RUNNING,
         JUMPING,
-        //TODO OUTER_TURN custom hitbox and turn animation
         OUTER_TURN,
     }
 
@@ -321,7 +320,14 @@ public class Player extends GameObject {
         //reset inputs
         wantJump = wantDash = false;
 
-        //TODO based on state, set hitbox and sprite
+        //debug tools
+        /*if(lastPos.sub(position).len2()>PLAYER_DASH_SPEED*PLAYER_DASH_SPEED*4) {
+           lastPos.add(position);
+           Log.w(TAG,String.format("Pos reset, %s -> %s | %s -> %s | Corner: %s",lastPos.toString(),position.toString(),lastState.toString(),state.toString(),cornerPos.toString()));
+        }
+
+        lastPos.set(position);
+        lastState = state;*/
     }
 
     @Override
@@ -396,10 +402,7 @@ public class Player extends GameObject {
         //Log.d(TAG, String.format("Player State %-10s -> %s",state.toString(),to.toString()));
 
         switch (state) {
-            case OUTER_TURN: {
-                //reset remaining over edge distance
-                distUntilTurn = PLAYER_DASH_SPEED * 2;
-            }
+
         }
         switch (to) {
             case JUMPING: {
@@ -412,6 +415,8 @@ public class Player extends GameObject {
                 break;
             }
             case RUNNING: {
+                //reset remaining over edge distance
+                distUntilTurn = PLAYER_DASH_SPEED * 2;
                 //check platform state before doing further moves
                 if (state == PlayerState.JUMPING)
                     performRaycasts();

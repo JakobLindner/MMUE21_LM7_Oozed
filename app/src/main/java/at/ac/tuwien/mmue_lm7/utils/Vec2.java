@@ -273,7 +273,7 @@ public class Vec2 implements ObjectPool.Poolable {
     @NonNull
     @Override
     public String toString() {
-        return String.format("(%f,%f)", x,y);
+        return String.format("(%f;%f)", x,y);
     }
 
     public boolean approxEquals(Vec2 other) {
