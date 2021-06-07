@@ -8,6 +8,8 @@ import at.ac.tuwien.mmue_lm7.game.ObjectFactories;
 import at.ac.tuwien.mmue_lm7.game.physics.CollisionLayers;
 import at.ac.tuwien.mmue_lm7.game.physics.PhysicsSystem;
 import at.ac.tuwien.mmue_lm7.game.rendering.Layers;
+import at.ac.tuwien.mmue_lm7.game.resources.ResourceSystem;
+import at.ac.tuwien.mmue_lm7.game.resources.SpriteInfo;
 import at.ac.tuwien.mmue_lm7.utils.Direction;
 import at.ac.tuwien.mmue_lm7.utils.Utils;
 import at.ac.tuwien.mmue_lm7.utils.Vec2;
@@ -41,6 +43,7 @@ public class Blocker extends Enemy {
     private static final float BLOCKER_HALF_SIZE = 0.5f;
 
     private AABB box;
+    private AnimatedSprite sprite;
 
     private Direction dir;
     private Direction upDir;
@@ -61,9 +64,10 @@ public class Blocker extends Enemy {
     private Vec2 move = new Vec2();
     private Vec2 ray = new Vec2();
 
-    public Blocker(AABB box, Direction upDir, boolean runningCW, boolean dynamic) {
+    public Blocker(AABB box, AnimatedSprite sprite, Direction upDir, boolean runningCW, boolean dynamic) {
         this.box = box;
         this.upDir = upDir;
+        this.sprite = sprite;
         if (runningCW)
             this.dir = upDir.rotateCW();
         else
@@ -80,6 +84,7 @@ public class Blocker extends Enemy {
         box.onCollide.addListener(this, this::onCollide);
 
         updateOrientation();
+        updateSprite();
     }
 
     @Override
@@ -94,7 +99,7 @@ public class Blocker extends Enemy {
             //check if there is a collision = obstacle in front of
             if (movement.getContact() != null || endOfPlatformReached(movement.getPosition())) {
                 Game.get().getTimingSystem().addDelayedAction(this::initTurning, TURN_DELAY);
-                state = BlockerState.STANDING;
+                changeState(BlockerState.STANDING);
             }
         }
 
@@ -159,20 +164,41 @@ public class Blocker extends Enemy {
             return;
 
         //TODO animation
-        state = BlockerState.TURNING;
+        changeState(BlockerState.TURNING);
 
         //TODO do this at end of turning animation
-        state = BlockerState.STANDING;
+        changeState(BlockerState.STANDING);
         dir = dir.opposite();
         updateOrientation();
         Game.get().getTimingSystem().addDelayedAction(this::switchToWalking, TURN_POST_DELAY);
+    }
+
+    private void changeState(BlockerState to) {
+        if(state == to)
+            return;
+
+        state = to;
+
+        updateSprite();
+    }
+
+    private void updateSprite() {
+        ResourceSystem.SpriteEnum nextSprite;
+        if(state == BlockerState.WALKING)
+            nextSprite = ResourceSystem.SpriteEnum.blockerRun;
+        else
+            nextSprite = ResourceSystem.SpriteEnum.blockerIdle;
+
+        SpriteInfo si = ResourceSystem.spriteInfo(nextSprite);
+        if(sprite.getSpriteInfo()!=si)
+            sprite.setSpriteInfo(si);
     }
 
     private void switchToWalking() {
         if (isDestroyed())
             return;
 
-        state = BlockerState.WALKING;
+        changeState(BlockerState.WALKING);
     }
 
 }

@@ -27,6 +27,10 @@ public class AnimatedSprite extends GameObject{
         this.spriteInfo = ResourceSystem.spriteInfo(sprite);
     }
 
+    public SpriteInfo getSpriteInfo() {
+        return spriteInfo;
+    }
+
     public void setSpriteInfo(SpriteInfo spriteInfo) {
         this.spriteInfo = spriteInfo;
         //reset animation state

@@ -78,16 +78,16 @@ public class ObjectFactories {
 
     public static GameObject makeBlocker(int x, int y, Direction upDir, boolean runningCW, boolean dynamic) {
         AABB box = new AABB(0.5f, 0.5f, CollisionLayers.PLAYER, CollisionLayers.ENEMY);
+        AnimatedSprite sprite = new AnimatedSprite(ResourceSystem.SpriteEnum.blockerRun);
 
-        Blocker blocker = new Blocker(box, upDir, runningCW, dynamic);
+        Blocker blocker = new Blocker(box, sprite, upDir, runningCW, dynamic);
         blocker.position.set(x + 0.5f, y + 0.5f);
 
         blocker.addChild(box);
 
         //TODO different sprite for static blocker
-        AnimatedSprite idleSprite = new AnimatedSprite(ResourceSystem.SpriteEnum.blockerRun);
-        idleSprite.position.set(0, 0);
-        blocker.addChild(idleSprite);
+        sprite.position.set(0, 0);
+        blocker.addChild(sprite);
 
         blocker.setLayerRecursive(Layers.ENEMY);
         return blocker;
