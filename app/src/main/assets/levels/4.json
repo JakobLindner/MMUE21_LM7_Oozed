@@ -58,56 +58,56 @@
             "rotation": 360
         },
         {
-            "tileName": "platformPipe",
+            "tileName": "platformPipeCross",
             "x": 8,
             "y": 5,
             "mirrored": false,
             "rotation": 360
         },
         {
-            "tileName": "platformPipe",
+            "tileName": "platformPipeCross",
             "x": 0,
             "y": 0,
             "mirrored": false,
             "rotation": 360
         },
         {
-            "tileName": "platformPipe",
+            "tileName": "platformPipeCross",
             "x": 0,
             "y": 1,
             "mirrored": false,
             "rotation": 360
         },
         {
-            "tileName": "platformPipe",
+            "tileName": "platformPipeCross",
             "x": 31,
             "y": 1,
             "mirrored": false,
             "rotation": 360
         },
         {
-            "tileName": "platformPipe",
+            "tileName": "platformPipeCross",
             "x": 31,
             "y": 0,
             "mirrored": false,
             "rotation": 360
         },
         {
-            "tileName": "platformPipe",
+            "tileName": "platformPipeCross",
             "x": 31,
             "y": 17,
             "mirrored": false,
             "rotation": 360
         },
         {
-            "tileName": "platformPipe",
+            "tileName": "platformPipeCross",
             "x": 0,
             "y": 17,
             "mirrored": false,
             "rotation": 360
         },
         {
-            "tileName": "platformPipe",
+            "tileName": "platformPipeCross",
             "x": 9,
             "y": 5,
             "mirrored": false,
@@ -142,70 +142,70 @@
             "rotation": 360
         },
         {
-            "tileName": "platformPipe",
+            "tileName": "platformPipeCross",
             "x": 31,
             "y": 18,
             "mirrored": false,
             "rotation": 360
         },
         {
-            "tileName": "platformPipe",
+            "tileName": "platformPipeCross",
             "x": 32,
             "y": 17,
             "mirrored": false,
             "rotation": 360
         },
         {
-            "tileName": "platformPipe",
+            "tileName": "platformPipeCross",
             "x": -1,
             "y": 17,
             "mirrored": false,
             "rotation": 360
         },
         {
-            "tileName": "platformPipe",
+            "tileName": "platformPipeCross",
             "x": 0,
             "y": 18,
             "mirrored": false,
             "rotation": 360
         },
         {
-            "tileName": "platformPipe",
+            "tileName": "platformPipeCross",
             "x": 0,
             "y": -1,
             "mirrored": false,
             "rotation": 360
         },
         {
-            "tileName": "platformPipe",
+            "tileName": "platformPipeCross",
             "x": -1,
             "y": 0,
             "mirrored": false,
             "rotation": 360
         },
         {
-            "tileName": "platformPipe",
+            "tileName": "platformPipeCross",
             "x": -1,
             "y": 1,
             "mirrored": false,
             "rotation": 360
         },
         {
-            "tileName": "platformPipe",
+            "tileName": "platformPipeCross",
             "x": 32,
             "y": 1,
             "mirrored": false,
             "rotation": 360
         },
         {
-            "tileName": "platformPipe",
+            "tileName": "platformPipeCross",
             "x": 32,
             "y": 0,
             "mirrored": false,
             "rotation": 360
         },
         {
-            "tileName": "platformPipe",
+            "tileName": "platformPipeCross",
             "x": 31,
             "y": -1,
             "mirrored": false,
@@ -289,14 +289,14 @@
             "rotation": 360
         },
         {
-            "tileName": "platformPipe",
+            "tileName": "platformPipeCross",
             "x": 1,
             "y": 1,
             "mirrored": false,
             "rotation": 360
         },
         {
-            "tileName": "platformPipe",
+            "tileName": "platformPipeCross",
             "x": 1,
             "y": 0,
             "mirrored": false,
@@ -310,23 +310,30 @@
             "rotation": 180
         },
         {
-            "tileName": "platformPipe",
+            "tileName": "platformPipeCross",
             "x": 1,
             "y": -1,
             "mirrored": false,
             "rotation": 360
         },
         {
-            "tileName": "platformPipe",
+            "tileName": "platformPipeCross",
             "x": 1,
             "y": 17,
             "mirrored": false,
             "rotation": 360
         },
         {
-            "tileName": "platformPipe",
+            "tileName": "platformPipeCross",
             "x": 1,
             "y": 18,
+            "mirrored": false,
+            "rotation": 360
+        },
+        {
+            "tileName": "platformPipeCross",
+            "x": 5,
+            "y": 11,
             "mirrored": false,
             "rotation": 360
         }

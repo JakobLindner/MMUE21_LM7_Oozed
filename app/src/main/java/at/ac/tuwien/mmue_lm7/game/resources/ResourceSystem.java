@@ -139,31 +139,93 @@ public class ResourceSystem {
                 info.frameDuration = 10;
                 info.firstY = 16;
                 break;
-            case platformPipe:
+            case platformPlate:
                 info.spriteSheetId = R.drawable.platforms;
+                info.firstX = 112;
+                break;
+            case platformPipeCross:
+                info.spriteSheetId = R.drawable.platforms;
+                info.firstX = 48;
+                info.firstY = 64;
                 break;
             case platformPipeOpen:
                 info.spriteSheetId = R.drawable.platforms;
+                info.firstX = 48;
+                info.firstY = 80;
+                break;
+            case platformPipeHor:
+                info.spriteSheetId = R.drawable.platforms;
+                info.firstX = 32;
+                info.firstY = 64;
+                break;
+            case platformPipeVer:
+                info.spriteSheetId = R.drawable.platforms;
+                info.firstX = 32;
+                info.firstY = 80;
+                break;
+            case PlatformPipeDR:
+                info.spriteSheetId = R.drawable.platforms;
+                info.firstY = 64;
+                break;
+            case platformPipeDL:
+                info.spriteSheetId = R.drawable.platforms;
                 info.firstX = 16;
+                info.firstY = 64;
+                break;
+            case platformPipeUR:
+                info.spriteSheetId = R.drawable.platforms;
+                info.firstY = 80;
+                break;
+            case platformPipeUL:
+                info.spriteSheetId = R.drawable.platforms;
+                info.firstX = 16;
+                info.firstY = 80;
                 break;
             case platformCircuit:
                 info.spriteSheetId = R.drawable.platforms;
-                info.firstX = 32;
+                info.firstX = 112;
+                info.firstY = 32;
+                break;
+            case platformMonitor:
+                info.spriteSheetId = R.drawable.platforms;
+                info.firstX = 112;
+                info.firstY = 48;
                 break;
             case platformIce:
                 info.spriteSheetId = R.drawable.platforms;
-                info.firstX = 48;
+                info.firstX = 112;
+                info.firstY = 64;
                 break;
             case platformBigGears:
                 info.spriteSheetId = R.drawable.platforms;
-                info.firstY = 16;
+                info.firstX = 32;
                 info.size = 32;
                 break;
             case platformBigPlate:
                 info.spriteSheetId = R.drawable.platforms;
-                info.firstX = 32;
-                info.firstY = 16;
                 info.size = 32;
+                break;
+            case platformBigPipes:
+                info.spriteSheetId = R.drawable.platforms;
+                info.firstY = 32;
+                info.size = 32;
+                break;
+            case platformBigCross:
+                info.spriteSheetId = R.drawable.platforms;
+                info.firstX = 32;
+                info.firstY = 32;
+                info.size = 32;
+                break;
+            case platformHugePlate:
+                info.spriteSheetId = R.drawable.platforms;
+                info.firstX = 64;
+                info.firstY = 32;
+                info.size = 48;
+                break;
+            case platformHugeSphere:
+                info.spriteSheetId = R.drawable.platforms;
+                info.firstX = 64;
+                info.size = 48;
                 break;
             case background:
                 info.spriteSheetId = R.drawable.background;
@@ -171,7 +233,8 @@ public class ResourceSystem {
                 break;
             case spikes:
                 info.spriteSheetId = R.drawable.platforms;
-                info.firstY = 48;
+                info.firstX = 112;
+                info.firstY = 16;
                 break;
             case disappearEffect:
                 info.spriteSheetId = R.drawable.effects;
@@ -221,12 +284,24 @@ public class ResourceSystem {
         flyerIdle,
         jumperIdle,
         jumperJump,
-        platformPipe,
+        platformPlate, // NONE = 1x1
+        platformPipeCross,
         platformPipeOpen,
+        platformPipeHor,
+        platformPipeVer,
+        PlatformPipeDR, // connects: D = down, U = up, R = right, L = left
+        platformPipeDL,
+        platformPipeUR,
+        platformPipeUL,
         platformCircuit,
+        platformMonitor,
         platformIce,
+        platformBigPlate, // BIG = 2x2
         platformBigGears,
-        platformBigPlate,
+        platformBigPipes,
+        platformBigCross,
+        platformHugePlate, // HUGE = 3x3
+        platformHugeSphere,
         background,
         spikes,
         disappearEffect,

@@ -1,12 +1,9 @@
 package at.ac.tuwien.mmue_lm7.game.level.builder;
 
-import android.util.Log;
-
 import at.ac.tuwien.mmue_lm7.game.GameConstants;
 import at.ac.tuwien.mmue_lm7.game.level.Level;
 import at.ac.tuwien.mmue_lm7.game.level.PlatformTile;
 import at.ac.tuwien.mmue_lm7.game.resources.ResourceSystem;
-import at.ac.tuwien.mmue_lm7.game.resources.SpriteInfo;
 
 public class PlatformBuilder extends LevelPartBuilder<PlatformBuilder> {
     private static final String TAG = "PlatformBuilder";
@@ -94,7 +91,7 @@ public class PlatformBuilder extends LevelPartBuilder<PlatformBuilder> {
 
     public static ResourceSystem.SpriteEnum getSpriteFromChar(char c) {
         switch(c) {
-            case 'P':return ResourceSystem.SpriteEnum.platformPipe;
+            case 'P':return ResourceSystem.SpriteEnum.platformPipeCross;
             case 'O':return ResourceSystem.SpriteEnum.platformPipeOpen;
             case 'I':return ResourceSystem.SpriteEnum.platformIce;
             case 'G':return ResourceSystem.SpriteEnum.platformBigGears;
