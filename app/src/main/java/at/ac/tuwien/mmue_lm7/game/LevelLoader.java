@@ -57,7 +57,7 @@ public class LevelLoader {
                     .at(16,3)
                 .build();
 
-        level.build(root);
+        level.build(root,context);
     }
 
     public static void createLevel1(GameObject root, Context context) {
@@ -233,7 +233,7 @@ public class LevelLoader {
                 //    .dir(Direction.DOWN)
                 .build();
 
-        level.build(root);
+        level.build(root,context);
     }
 
     public static void fivePlatforms(GameObject root, Context context) {
@@ -293,7 +293,7 @@ public class LevelLoader {
                 .copy().at(15, 1)
                 .build();
 
-        level.build(root);
+        level.build(root,context);
     }
 
     public static void tightSlalom(GameObject root, Context context) {
@@ -337,7 +337,7 @@ public class LevelLoader {
                 .copy().at(20, 9)
                 .build();
 
-        level.build(root);
+        level.build(root,context);
     }
 
     public boolean loadLevel(GameObject root, int id) {
@@ -358,7 +358,7 @@ public class LevelLoader {
             try {
                 JSONObject json = getJSON(context, name);
                 Level level = Level.fromJSON(json);
-                level.build(root);
+                level.build(root,context);
                 return true;
             } catch (JSONException e) {
                 Log.e(TAG, "Unable to load level json", e);

@@ -1,5 +1,7 @@
 package at.ac.tuwien.mmue_lm7.game.level;
 
+import android.content.Context;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -19,7 +21,7 @@ public class Player extends Tile {
     }
 
     @Override
-    public void build(GameObject root) {
+    public void build(GameObject root, Context context) {
         root.addChild(ObjectFactories.makeOoze(x,y, upDir,runningCW));
     }
 

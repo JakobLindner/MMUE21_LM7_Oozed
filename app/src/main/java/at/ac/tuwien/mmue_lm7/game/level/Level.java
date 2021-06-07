@@ -1,5 +1,6 @@
 package at.ac.tuwien.mmue_lm7.game.level;
 
+import android.content.Context;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -31,9 +32,9 @@ public class Level {
         objects.add(tile);
     }
 
-    public void build(GameObject root) {
+    public void build(GameObject root, Context context) {
         for(Tile tile : objects) {
-            tile.build(root);
+            tile.build(root, context);
         }
 
         //add objective

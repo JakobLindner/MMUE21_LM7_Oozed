@@ -1,5 +1,7 @@
 package at.ac.tuwien.mmue_lm7.game.level;
 
+import android.content.Context;
+
 import androidx.annotation.CallSuper;
 
 import org.json.JSONException;
@@ -14,7 +16,7 @@ public abstract class Tile {
     public int rotation;
     public boolean mirrored;
 
-    public abstract void build(GameObject root);
+    public abstract void build(GameObject root, Context context);
 
     public Tile(){}
     public Tile(Tile tile) {

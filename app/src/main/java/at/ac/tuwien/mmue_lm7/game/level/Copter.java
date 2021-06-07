@@ -1,11 +1,12 @@
 package at.ac.tuwien.mmue_lm7.game.level;
 
+import android.content.Context;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import at.ac.tuwien.mmue_lm7.game.ObjectFactories;
 import at.ac.tuwien.mmue_lm7.game.objects.GameObject;
-import at.ac.tuwien.mmue_lm7.utils.Direction;
 
 public class Copter extends Tile {
 
@@ -16,7 +17,7 @@ public class Copter extends Tile {
     }
 
     @Override
-    public void build(GameObject root) {
+    public void build(GameObject root, Context context) {
         root.addChild(ObjectFactories.makeCopter(x,y));
     }
 

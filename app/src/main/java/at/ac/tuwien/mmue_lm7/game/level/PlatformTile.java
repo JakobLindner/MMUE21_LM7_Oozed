@@ -1,5 +1,6 @@
 package at.ac.tuwien.mmue_lm7.game.level;
 
+import android.content.Context;
 import android.util.Log;
 
 import org.json.JSONException;
@@ -16,7 +17,7 @@ public class PlatformTile extends Tile{
     public ResourceSystem.SpriteEnum sprite = ResourceSystem.SpriteEnum.platformPipeOpen;
 
     @Override
-    public void build(GameObject root) {
+    public void build(GameObject root, Context context) {
         SpriteInfo info = ResourceSystem.spriteInfo(sprite);
         int platformSize = info.size/ GameConstants.PIXELS_PER_UNIT;
         root.addChild(ObjectFactories.makePlatformTile(x,y,platformSize,platformSize,rotation,mirrored,sprite));
