@@ -85,7 +85,7 @@ public class ObjectFactories {
         blocker.addChild(box);
 
         //TODO different sprite for static blocker
-        AnimatedSprite idleSprite = new AnimatedSprite(ResourceSystem.SpriteEnum.blockerIdle);
+        AnimatedSprite idleSprite = new AnimatedSprite(ResourceSystem.SpriteEnum.blockerRun);
         idleSprite.position.set(0, 0);
         blocker.addChild(idleSprite);
 

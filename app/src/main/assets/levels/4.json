@@ -142,13 +142,6 @@
             "rotation": 360
         },
         {
-            "tileName": "Blocker",
-            "x": 20,
-            "y": 6,
-            "mirrored": true,
-            "rotation": 90
-        },
-        {
             "tileName": "platformPipe",
             "x": 31,
             "y": 18,
@@ -254,13 +247,6 @@
             "rotation": 360
         },
         {
-            "tileName": "spikes",
-            "x": 29,
-            "y": 9,
-            "mirrored": false,
-            "rotation": 90
-        },
-        {
             "tileName": "platformBigPlate",
             "x": 18,
             "y": 13,
@@ -290,24 +276,31 @@
         },
         {
             "tileName": "Blocker",
+            "x": 15,
+            "y": 15,
+            "mirrored": false,
+            "rotation": 360
+        },
+        {
+            "tileName": "Blocker",
             "x": 13,
             "y": 15,
             "mirrored": false,
             "rotation": 360
         },
         {
-            "tileName": "Blocker",
-            "x": 15,
-            "y": 15,
+            "tileName": "platformPipe",
+            "x": 1,
+            "y": 1,
             "mirrored": false,
             "rotation": 360
         },
         {
-            "tileName": "Blocker",
-            "x": 15,
-            "y": 12,
+            "tileName": "platformPipe",
+            "x": 1,
+            "y": 0,
             "mirrored": false,
-            "rotation": 180
+            "rotation": 360
         },
         {
             "tileName": "spikes",
@@ -317,18 +310,25 @@
             "rotation": 180
         },
         {
-            "tileName": "Blocker",
-            "x": 11,
-            "y": 13,
+            "tileName": "platformPipe",
+            "x": 1,
+            "y": -1,
             "mirrored": false,
-            "rotation": 270
+            "rotation": 360
         },
         {
-            "tileName": "spikes",
-            "x": 24,
-            "y": 9,
+            "tileName": "platformPipe",
+            "x": 1,
+            "y": 17,
             "mirrored": false,
-            "rotation": 270
+            "rotation": 360
+        },
+        {
+            "tileName": "platformPipe",
+            "x": 1,
+            "y": 18,
+            "mirrored": false,
+            "rotation": 360
         }
     ]
 }

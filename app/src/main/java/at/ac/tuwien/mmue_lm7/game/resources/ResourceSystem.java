@@ -114,8 +114,14 @@ public class ResourceSystem {
                 break;
             case blockerIdle:
                 info.spriteSheetId = R.drawable.blocker;
-                info.animationLength = 4;
-                info.frameDuration = 20;
+                info.animationLength = 6;
+                info.frameDuration = 10;
+                break;
+            case blockerRun:
+                info.spriteSheetId = R.drawable.blocker;
+                info.animationLength = 6;
+                info.frameDuration = 10;
+                info.firstY = 16;
                 break;
             case flyerIdle:
                 info.spriteSheetId = R.drawable.flyer;
@@ -175,16 +181,17 @@ public class ResourceSystem {
                 break;
             case muted:
                 info.spriteSheetId = R.drawable.ui;
-                info.firstY = 16;
-                info.firstX = 16;
+                //info.firstY = 16;
+                info.firstX = 48;
                 break;
             case notMuted:
                 info.spriteSheetId = R.drawable.ui;
-                info.firstY = 16;
+                //info.firstY = 16;
+                info.firstX = 32;
                 break;
             case pause:
                 info.spriteSheetId = R.drawable.ui;
-                info.firstX = 80;
+                //info.firstX = 80;
                 break;
             case resume:
                 info.spriteSheetId = R.drawable.ui;
@@ -210,6 +217,7 @@ public class ResourceSystem {
     public enum SpriteEnum {
         oozeRun,
         blockerIdle,
+        blockerRun,
         flyerIdle,
         jumperIdle,
         jumperJump,
