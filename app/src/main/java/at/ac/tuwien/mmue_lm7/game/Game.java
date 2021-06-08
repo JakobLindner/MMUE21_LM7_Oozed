@@ -32,6 +32,7 @@ public class Game {
     private static final String TAG = "Game";
     private static final int DEBUG_TOGGLE_KEY = KeyEvent.KEYCODE_0;
     private static final int PAUSE_TOGGLE_KEY = KeyEvent.KEYCODE_P;
+    private static final int WIN_TRIGGER_KEY = KeyEvent.KEYCODE_O;
     //delays level load after clearing a level
     private static final int CLEAR_DELAY = 60;
 
@@ -303,6 +304,9 @@ public class Game {
             toggleDebugRender();
         else if (event.getKeyCode() == PAUSE_TOGGLE_KEY)
             togglePause();
+        else if(event.getKeyCode() == WIN_TRIGGER_KEY){
+            onGameOver.notify(new Score(lastMainLevel,time,true));
+        }
     }
 
     /**
