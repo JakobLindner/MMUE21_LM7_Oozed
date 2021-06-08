@@ -322,7 +322,8 @@ public class ResourceSystem {
         PLAYER_DEATH(R.raw.player_death),
         PLAYER_DASH(R.raw.player_dash),
         ENEMY_DEATH(R.raw.enemy_death),
-        LEVEL_CLEAR(R.raw.level_clear);
+        LEVEL_CLEAR(R.raw.level_clear),
+        BUTTON(R.raw.button);
 
         private int resId;
         Sound(int resId) {

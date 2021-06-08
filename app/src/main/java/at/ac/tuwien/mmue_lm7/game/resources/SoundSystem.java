@@ -11,6 +11,8 @@ import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 
+import at.ac.tuwien.mmue_lm7.R;
+
 public class SoundSystem {
     private static final String TAG = "SoundSystem";
     private static SoundSystem INSTANCE;

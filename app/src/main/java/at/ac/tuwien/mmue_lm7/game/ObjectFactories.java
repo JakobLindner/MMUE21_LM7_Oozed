@@ -279,6 +279,7 @@ public class ObjectFactories {
         GameObject resumeButton = makeImageButton(4, -2, 1, 1,
                 ResourceSystem.SpriteEnum.resume,
                 button -> {
+                    Game.get().getResourceSystem().playSound(ResourceSystem.Sound.BUTTON);
                     Game.get().resumeGame();
                 });
         pauseScreen.addChild(resumeButton);
@@ -286,6 +287,7 @@ public class ObjectFactories {
         GameObject mainMenuButton = makeImageButton(-4, -2, 1, 1,
                 ResourceSystem.SpriteEnum.house,
                 button -> {
+                    Game.get().getResourceSystem().playSound(ResourceSystem.Sound.BUTTON);
                     Game.get().quitGame();
                 });
         pauseScreen.addChild(mainMenuButton);
@@ -324,6 +326,7 @@ public class ObjectFactories {
         GameObject pauseButton = makeImageButton(GameConstants.GAME_WIDTH - 1, GameConstants.GAME_HEIGHT - 1, 1, 1,
                 ResourceSystem.SpriteEnum.pause,
                 button -> {
+                    Game.get().getResourceSystem().playSound(ResourceSystem.Sound.BUTTON);
                     Game.get().pauseGame();
                 });
         ui.addChild(pauseButton);

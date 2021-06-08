@@ -14,6 +14,7 @@ import java.util.concurrent.Executors;
 import at.ac.tuwien.mmue_lm7.game.Score;
 import at.ac.tuwien.mmue_lm7.game.ScoreDAO;
 import at.ac.tuwien.mmue_lm7.game.ScoreDatabase;
+import at.ac.tuwien.mmue_lm7.game.resources.SoundSystem;
 
 import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
 
@@ -48,6 +49,8 @@ public class GameOver extends FullscreenActivity {
     private ExecutorService es;
     private ScoreDAO scoreDAO;
     private ScoreDatabase db;
+
+    private int buttonSoundId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,6 +93,8 @@ public class GameOver extends FullscreenActivity {
             Score s = scoreDAO.getScore();
             runOnUiThread(() -> loadHighscore(s));
         });
+
+        buttonSoundId = SoundSystem.get().loadSound(R.raw.button);
     }
 
     private void loadHighscore(Score highscore) {
@@ -125,6 +130,8 @@ public class GameOver extends FullscreenActivity {
         Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
+
+        SoundSystem.get().playSound(buttonSoundId);
     }
 
     public void onRetryButtonClicked(View view) {
@@ -133,10 +140,14 @@ public class GameOver extends FullscreenActivity {
         //finish this activity first, so the game activity replaces this activity
         this.finish();
         startActivity(intent);
+
+        SoundSystem.get().playSound(buttonSoundId);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+
+        SoundSystem.get().unloadSound(R.raw.button);
     }
 }

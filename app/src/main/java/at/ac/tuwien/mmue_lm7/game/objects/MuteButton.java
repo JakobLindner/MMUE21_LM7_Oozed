@@ -1,5 +1,7 @@
 package at.ac.tuwien.mmue_lm7.game.objects;
 
+import at.ac.tuwien.mmue_lm7.game.Game;
+import at.ac.tuwien.mmue_lm7.game.resources.ResourceSystem;
 import at.ac.tuwien.mmue_lm7.game.resources.SoundSystem;
 import at.ac.tuwien.mmue_lm7.game.resources.SpriteInfo;
 import at.ac.tuwien.mmue_lm7.utils.Vec2;
@@ -27,6 +29,7 @@ public class MuteButton extends Button {
     }
 
     private void press(Button button) {
+        Game.get().getResourceSystem().playSound(ResourceSystem.Sound.BUTTON);
         SoundSystem.get().toggleMuted();
         updateSprite();
     }
