@@ -6,6 +6,8 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import at.ac.tuwien.mmue_lm7.game.resources.SoundSystem;
+
 import static at.ac.tuwien.mmue_lm7.GameOver.GAME_COMPLETED_KEY;
 import static at.ac.tuwien.mmue_lm7.GameOver.SCORE_KEY;
 import static at.ac.tuwien.mmue_lm7.GameOver.TIME_KEY;
@@ -15,11 +17,16 @@ import static at.ac.tuwien.mmue_lm7.GameOver.TIME_KEY;
  * status bar and navigation/system bar) with user interaction.
  */
 public class WinActivity extends AppCompatActivity {
+
+    private int buttonSoundId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_win);
+
+        buttonSoundId = SoundSystem.get().loadSound(R.raw.button);
     }
 
     public void onContinueButtonClicked(View view) {
@@ -31,5 +38,14 @@ public class WinActivity extends AppCompatActivity {
         //finish this activity first, so the game over activity replaces this activity
         this.finish();
         startActivity(intent);
+
+        SoundSystem.get().playSound(buttonSoundId);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        SoundSystem.get().unloadSound(R.raw.button);
     }
 }

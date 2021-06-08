@@ -18,6 +18,7 @@ import at.ac.tuwien.mmue_lm7.game.resources.SoundSystem;
 public class MainActivity extends AppCompatActivity {
     public static final String TAG = "MainActivity";
 
+    private int buttonSoundId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,10 +49,13 @@ public class MainActivity extends AppCompatActivity {
                 list.addView(button);
             }
         }
+
+        buttonSoundId = SoundSystem.get().loadSound(R.raw.button);
     }
 
     public void onStartButtonClicked(View view) {
         startGame("1");
+        SoundSystem.get().playSound(buttonSoundId);
     }
 
     private void startGame(String startLevel) {
@@ -84,5 +88,11 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return combined;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        SoundSystem.get().unloadSound(R.raw.button);
     }
 }
