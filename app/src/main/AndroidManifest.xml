@@ -9,6 +9,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MMUELM7">
+        <activity android:name=".VideoActivity"
+            android:screenOrientation="landscape"
+            android:theme="@style/Theme.MMUELM7.Fullscreen"
+            android:noHistory="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".WinActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -19,7 +29,7 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_lives"
             android:screenOrientation="landscape"
-            android:theme="@style/Theme.MMUELM7.Fullscreen"></activity>
+            android:theme="@style/Theme.MMUELM7.Fullscreen" />
         <activity
             android:name=".GameOver"
             android:screenOrientation="landscape"
@@ -31,7 +41,9 @@
             android:label="@string/title_activity_game"
             android:screenOrientation="landscape"
             android:theme="@style/Theme.MMUELM7.Fullscreen" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+            android:screenOrientation="landscape"
+            android:theme="@style/Theme.MMUELM7.Fullscreen" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
