@@ -51,7 +51,69 @@ public class LevelLoader {
         put("3", LevelLoader::fivePlatforms);
         put("5", LevelLoader::tightSlalom);
         put("Dash",LevelLoader::dashJumpTutorial);
+        put("Climb",LevelLoader::theClimb);
     }};
+
+    public static void theClimb(GameObject root, Context context) {
+        final int JUMPER_PLATFORM_HEIGHT = 11;
+        Level level = new LevelBuilder("The Climb")
+                //ground
+                .platform()
+                    .at(0,0)
+                    .size(W,2)
+                    .pattern("P#")
+                //spike walls
+                .platform()
+                    .at(0,4)
+                    .size(2,H-4-2)
+                    .pattern("p>")
+                .copy()
+                    .at(W-2,4)
+                    .pattern("<p")
+                .platform()
+                    .at(0,H-1)
+                    .size(W,1)
+                    .pattern("p")
+                .platform()
+                    .at(1,H-2)
+                    .size(W-14,1)
+                    .pattern("v")
+                //bottom platforms
+                .platform()
+                    .at(4,4)
+                    .size(4,2)
+                .copy().x(W-4-4)
+                //middle platform
+                .platform()
+                    .at(12,8)
+                    .size(3,2)
+                .copy().at(6,11)
+                //middle spike platforms
+                .platform()
+                    .at(W/2-3,JUMPER_PLATFORM_HEIGHT)
+                    .size(5,3)
+                    .pattern("#^^^#"+
+                             "<ppp>"+
+                             "#vvv#")
+                .platform()
+                    .at(19, JUMPER_PLATFORM_HEIGHT-3)
+                    .size(3,2)
+                    .pattern("ppp"+
+                             "vvv")
+                //jumper platform
+                .platform()
+                    .at(19,JUMPER_PLATFORM_HEIGHT)
+                    .size(10,2)
+                .player()
+                    .at(28,2)
+                    .orient(Direction.UP,false)
+                .jumper()
+                    .at(24,JUMPER_PLATFORM_HEIGHT+2)
+                    .orient(Direction.UP)
+                .build();
+
+        level.build(root,context);
+    }
 
     public static void movementTutorial(GameObject root, Context context) {
         Level level = new LevelBuilder("Movement Tutorial")
@@ -268,13 +330,13 @@ public class LevelLoader {
                 .holeX(6, 7, 24, 25)
                 .holeY(8, 9)
                 .horizontalPattern("G#")
-                .verticalPattern("B###")
+                .verticalPattern("P###")
                 .platform()
                 .at(10, 11)
                 .size(8, 3)
-                .pattern("PCIOG#II" +
-                         "G#PO##OP" +
-                         "##COPIOP")
+                .pattern("+CIOG#II" +
+                         "G#+O##O+" +
+                         "##CO+IO+")
                 .player()
                 .at(18, 11)
                 .orient(Direction.RIGHT, false)
@@ -297,23 +359,23 @@ public class LevelLoader {
                 .platform()
                 .at(D, D)
                 .size(6, 3)
-                .pattern("CIOPG#" +
+                .pattern("CIO+G#" +
                          "G#IO##" +
-                         "##PICC")
+                         "##+ICC")
                 .copy()
                 .at(32 - D - 6, 18 - D - 3)
                 .platform()
                 .at(32 - D - 6, D)
                 .size(6, 3)
-                .pattern("B#PIOP" +
-                         "##CIB#" +
+                .pattern("P#+IO+" +
+                         "##CIP#" +
                          "OOPC##")
                 .copy()
                 .at(D, 18 - D - 3)
                 .platform()
                 .at(8, 8)
                 .size(16, 2)
-                .pattern("POICO")
+                .pattern("+OICO")
                 .player()
                 .at(5, 6)
                 .orient(Direction.UP, true)
@@ -354,12 +416,12 @@ public class LevelLoader {
         Level level = new LevelBuilder("Tight Slalom")
                 .outerWall()
                 .thickness(2)
-                .horizontalPattern("B#")
-                .verticalPattern("B###")
+                .horizontalPattern("P#")
+                .verticalPattern("P###")
                 .platform()
                 .at(6, 2)
                 .size(32 - 8, 2)
-                .pattern("B#")
+                .pattern("P#")
                 .copy().at(6, 4)
                 .copy().at(6, 6)
                 .copy()
