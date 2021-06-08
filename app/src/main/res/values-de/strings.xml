@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">MMUE-LM7</string>
+    <string name="app_name">Oozed</string>
     <string name="game_over">Spiel vorbei!</string>
     <string name="your_score">Punktestand: %1$d</string>
     <string name="highscore">Bestpunktestand: %1$d</string>
