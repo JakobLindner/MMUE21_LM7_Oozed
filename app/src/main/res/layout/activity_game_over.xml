@@ -13,7 +13,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/game_over_title"
+            android:id="@+id/win_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/game_over"
@@ -52,7 +52,7 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/main_menu_button"
+                android:id="@+id/continue_button"
                 style="@style/Widget.Theme.MMUELM7.Button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

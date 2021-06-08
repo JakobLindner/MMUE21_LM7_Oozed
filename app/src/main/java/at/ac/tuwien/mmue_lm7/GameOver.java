@@ -1,7 +1,5 @@
 package at.ac.tuwien.mmue_lm7;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -66,7 +64,7 @@ public class GameOver extends FullscreenActivity {
         scoreText.setText(getResources().getString(R.string.your_score,score));
 
         //get views
-        titleText = findViewById(R.id.game_over_title);
+        titleText = findViewById(R.id.win_title);
         highscoreText = findViewById(R.id.highscore);
         newHighScoreText = findViewById(R.id.new_highscore);
         buttonGroup = findViewById(R.id.game_over_button_group);

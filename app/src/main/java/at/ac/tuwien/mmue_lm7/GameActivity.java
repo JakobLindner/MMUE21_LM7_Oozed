@@ -84,7 +84,7 @@ public class GameActivity extends FullscreenActivity {
      */
     private boolean onGameOver(Score event) {
         //Switch to game over activity
-        Intent intent = new Intent(this, GameOver.class);
+        Intent intent = new Intent(this, event.gameCompleted()?WinActivity.class:GameOver.class);
         intent.putExtra(GameOver.SCORE_KEY,event.getScore());
         intent.putExtra(GameOver.TIME_KEY,event.getTime());
         intent.putExtra(GameOver.GAME_COMPLETED_KEY, event.gameCompleted());

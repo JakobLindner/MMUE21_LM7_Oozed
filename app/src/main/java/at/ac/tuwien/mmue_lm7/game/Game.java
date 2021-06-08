@@ -477,8 +477,7 @@ public class Game {
 
         if (!levelLoader.loadLevel(root, level)) {
             Log.i(TAG, "All levels completed, show win screen");
-            //score is decreased by 1 since it has been incremented before
-            onGameOver.notify(new Score(lastMainLevel - 1, time, true));
+            onGameOver.notify(new Score(lastMainLevel, time, true));
         } else {
             //add ingame ui
             root.addChild(ObjectFactories.makeIngameUI());

@@ -10,19 +10,20 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MMUELM7">
         <activity
+            android:name=".WinActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="landscape"
+            android:theme="@style/Theme.MMUELM7.Fullscreen" />
+        <activity
             android:name=".LivesActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_lives"
             android:screenOrientation="landscape"
-            android:theme="@style/Theme.MMUELM7.Fullscreen">
-
-        </activity>
+            android:theme="@style/Theme.MMUELM7.Fullscreen"></activity>
         <activity
             android:name=".GameOver"
             android:screenOrientation="landscape"
-            android:theme="@style/Theme.MMUELM7.Fullscreen"
-            />
-        <!--alwaysRetainTaskState: dont let system kill state of this activity after some time-->
+            android:theme="@style/Theme.MMUELM7.Fullscreen" /> <!-- alwaysRetainTaskState: dont let system kill state of this activity after some time -->
         <activity
             android:name=".GameActivity"
             android:alwaysRetainTaskState="true"
