@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MMUE-LM7</string>
+    <string name="game_over">Spiel vorbei!</string>
+    <string name="your_score">Punktestand: %1$d</string>
+    <string name="highscore">Bestpunktestand: %1$d</string>
+    <string name="new_highscore">Neuer Bestpunktestand!</string>
+    <string name="main_menu">Hauptmenü</string>
+    <string name="retry">Nochmal</string>
+    <string name="tap_to_start">TIPPE um zu Starten!</string>
+    <string name="pause_screen_title">PAUSIERT</string>
+    <string name="tap_to_jump">Tippe zum Springen!</string>
+    <string name="swipe_to_dash">Wische zum Sprinten!</string>
+    <string name="dash_and_jump">Sprint + Sprung</string>
+    <string name="continue_win">Fortsetzen</string>
+    <string name="win_title">Gewonnen!</string>
+</resources>
