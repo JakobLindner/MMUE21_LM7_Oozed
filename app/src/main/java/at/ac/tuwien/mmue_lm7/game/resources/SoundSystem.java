@@ -1,6 +1,7 @@
 package at.ac.tuwien.mmue_lm7.game.resources;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -27,7 +28,7 @@ public class SoundSystem {
     }
 
     public static final float DEFAULT_MUSIC_VOLUME = 0.1f;
-    public static final float DEFAULT_SOUND_VOLUME = 1f;
+    public static final float DEFAULT_SOUND_VOLUME = 0.5f;
     public static final int SOUND_PRIORITY = 1;//same value as in lecture slides
     /**
      * Max number of sounds, that can be played in parallel
@@ -45,14 +46,12 @@ public class SoundSystem {
     private boolean muted = false;
 
     private SoundPool soundPool;
-    private float soundVolume = DEFAULT_SOUND_VOLUME;
 
     //prevent instantiations
     private SoundSystem(Context context) {
         this.context = context;
 
         audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
-        setMusicVolume(DEFAULT_MUSIC_VOLUME);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
             loadAudioAttributes();
 
@@ -104,10 +103,18 @@ public class SoundSystem {
     }
 
     /**
-     * Plays sound with given sound id loaded with loadSound
+     * Plays sound with given sound id loaded with loadSound with 100% of default sound volume
      */
     public void playSound(int soundId) {
-        soundPool.play(soundId, soundVolume, soundVolume, SOUND_PRIORITY, 0, 1);
+        playSound(soundId,1);
+    }
+
+    /**
+     * Plays sound with given sound id loaded with loadSound
+     * @param soundVolume multiplier for sound volume
+     */
+    public void playSound(int soundId, float soundVolume) {
+        soundPool.play(soundId, DEFAULT_SOUND_VOLUME*soundVolume, DEFAULT_SOUND_VOLUME*soundVolume, SOUND_PRIORITY, 0, 1);
     }
 
     public void playMusic(int id) {
@@ -133,6 +140,7 @@ public class SoundSystem {
         //null check since creation may fail
         if (currentMusic != null) {
             currentMusic.setLooping(true);
+            currentMusic.setVolume(DEFAULT_MUSIC_VOLUME,DEFAULT_MUSIC_VOLUME);
             currentMusic.start();
         }
     }
@@ -177,27 +185,12 @@ public class SoundSystem {
         }
     }
 
-
-    /**
-     * @param volume in percent, this is clamped between to [0,1]
-     */
-    public void setMusicVolume(float volume) {
-        setVolume(AudioManager.STREAM_MUSIC, volume);
-    }
-
-    /**
-     * @param volume in percent, this is clamped between to [0,1]
-     */
-    public void setSoundVolume(float volume) {
-        this.soundVolume = volume;
-    }
-
-    private void setVolume(int streamType, float volume) {
+    /*private void setVolume(int streamType, float volume) {
         int max = audioManager.getStreamMaxVolume(streamType);
         int min = 0;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.P) {
             min = audioManager.getStreamMinVolume(streamType);
         }
         audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, Math.round((max - min) * volume) + min, 0);
-    }
+    }*/
 }
