@@ -82,6 +82,12 @@ public class GameActivity extends FullscreenActivity {
         //gameView.getGame().onLevelLoaded.removeListener(this);
     }
 
+    @Override
+    public void onBackPressed() {
+        //ignore back button, pause game instead
+        gameView.getGame().pauseGame();
+    }
+
     /**
      * replaces this activity with game over activity
      */
