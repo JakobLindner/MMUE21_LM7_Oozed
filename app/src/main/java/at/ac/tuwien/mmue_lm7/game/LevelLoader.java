@@ -369,7 +369,7 @@ public class LevelLoader {
                 .size(6, 3)
                 .pattern("P#+IO+" +
                          "##CIP#" +
-                         "OOPC##")
+                         "OO+C##")
                 .copy()
                 .at(D, 18 - D - 3)
                 .platform()

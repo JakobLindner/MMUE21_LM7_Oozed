@@ -6,10 +6,10 @@ import at.ac.tuwien.mmue_lm7.game.GameConstants;
 import at.ac.tuwien.mmue_lm7.game.level.Level;
 
 public class OuterWallBuilder extends LevelPartBuilder {
-    private String topPattern = "P";
-    private String bottomPattern = "P";
-    private String leftPattern = "P";
-    private String rightPattern = "P";
+    private String topPattern = "+";
+    private String bottomPattern = "+";
+    private String leftPattern = "+";
+    private String rightPattern = "+";
     private int thickness = 1;
 
     private int[] horHoles = new int[0];
