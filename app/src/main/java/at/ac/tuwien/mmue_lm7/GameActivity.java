@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 
 import at.ac.tuwien.mmue_lm7.game.LevelEvent;
+import at.ac.tuwien.mmue_lm7.game.QuitEvent;
 import at.ac.tuwien.mmue_lm7.game.Score;
 
 /**
@@ -37,6 +38,7 @@ public class GameActivity extends FullscreenActivity {
 
         gameView = findViewById(R.id.fullscreen_content);
         gameView.getGame().onGameOver.addListener(this,this::onGameOver);
+        gameView.getGame().onQuit.addListener(this, this::onQuit);
         //gameView.getGame().onLevelLoaded.addListener(this,this::onLevelLoaded);
     }
 
@@ -76,6 +78,7 @@ public class GameActivity extends FullscreenActivity {
         gameView.onDestroy();
 
         gameView.getGame().onGameOver.removeListener(this);
+        gameView.getGame().onQuit.removeListener(this);
         //gameView.getGame().onLevelLoaded.removeListener(this);
     }
 
@@ -92,6 +95,11 @@ public class GameActivity extends FullscreenActivity {
         this.finish();
         startActivity(intent);
 
+        return true;
+    }
+
+    private boolean onQuit(QuitEvent event) {
+        this.finish();
         return true;
     }
 

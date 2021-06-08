@@ -272,16 +272,23 @@ public class ObjectFactories {
         pauseScreen.addChild(title);
 
         //mute button
-        GameObject muteButton = makeMuteButton(-2, -1, 1, 1);
+        GameObject muteButton = makeMuteButton(0, -2, 1, 1);
         pauseScreen.addChild(muteButton);
 
         //resume button
-        GameObject resumeButton = makeImageButton(2, -1, 1, 1,
+        GameObject resumeButton = makeImageButton(4, -2, 1, 1,
                 ResourceSystem.SpriteEnum.resume,
                 button -> {
                     Game.get().resumeGame();
                 });
         pauseScreen.addChild(resumeButton);
+
+        GameObject mainMenuButton = makeImageButton(-4, -2, 1, 1,
+                ResourceSystem.SpriteEnum.house,
+                button -> {
+                    Game.get().quitGame();
+                });
+        pauseScreen.addChild(mainMenuButton);
 
         //main menu button
         //GameObject mainMenuButton = makeTextButton(0,-3.5f,"Main Menu", button -> {

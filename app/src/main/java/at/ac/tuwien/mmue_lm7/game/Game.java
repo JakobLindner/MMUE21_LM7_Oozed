@@ -94,6 +94,7 @@ public class Game {
     public final Subject<LevelEvent> onLevelLoaded = new Subject<>();
     public final Subject<LevelEvent> onLevelCleared = new Subject<>();
     public final Subject<Score> onGameOver = new Subject<>();
+    public final Subject<QuitEvent> onQuit = new Subject<QuitEvent>();
 
     private BlockingQueue<TapEvent> tapQueue = new LinkedBlockingQueue<>();
     private BlockingQueue<SwipeEvent> swipeQueue = new LinkedBlockingQueue<>();
@@ -412,6 +413,13 @@ public class Game {
             //TODO play sound, ...
         }
         paused = false;
+    }
+
+    /**
+     * emits event, that game activity should be cleared
+     */
+    public void quitGame() {
+        onQuit.notify(new QuitEvent());
     }
 
     /**

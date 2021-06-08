@@ -260,6 +260,10 @@ public class ResourceSystem {
                 info.spriteSheetId = R.drawable.ui;
                 info.firstX = 16;
                 break;
+            case house:
+                info.spriteSheetId = R.drawable.ui;
+                info.firstY = 16;
+                break;
             default:
                 Log.i(TAG, String.format("spriteInfo: Sprite %s not found!",spriteEnum.toString()));
                 return info;
@@ -309,7 +313,8 @@ public class ResourceSystem {
         muted,
         notMuted,
         pause,
-        resume
+        resume,
+        house
     }
 
     public enum Sound {
