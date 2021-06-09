@@ -244,25 +244,27 @@ public class ResourceSystem {
                 break;
             case muted:
                 info.spriteSheetId = R.drawable.ui;
-                //info.firstY = 16;
-                info.firstX = 48;
+                info.firstX = 80;
+                info.size = 48;
                 break;
             case notMuted:
                 info.spriteSheetId = R.drawable.ui;
-                //info.firstY = 16;
                 info.firstX = 32;
+                info.size = 48;
                 break;
             case pause:
                 info.spriteSheetId = R.drawable.ui;
-                //info.firstX = 80;
                 break;
             case resume:
                 info.spriteSheetId = R.drawable.ui;
-                info.firstX = 16;
+                info.firstX = 48;
+                info.firstY = 48;
+                info.size = 48;
                 break;
             case house:
                 info.spriteSheetId = R.drawable.ui;
-                info.firstY = 16;
+                info.firstY = 48;
+                info.size = 48;
                 break;
             default:
                 Log.i(TAG, String.format("spriteInfo: Sprite %s not found!",spriteEnum.toString()));
