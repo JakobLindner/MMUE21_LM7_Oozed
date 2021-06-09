@@ -6,18 +6,41 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.5"
+        app:srcCompat="@drawable/menu" />
+
+    <Button
+        android:id="@+id/startGame"
+        style="@style/Widget.Theme.MMUELM7.Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:width="192dp"
+        android:height="96dp"
+        android:background="@drawable/button"
+        android:onClick="onStartButtonClicked"
+        android:text="@string/start_game"
+        android:textSize="30dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView"
+        app:layout_constraintEnd_toEndOf="@+id/imageView"
+        app:layout_constraintHorizontal_bias="0.87"
+        app:layout_constraintStart_toStartOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="@+id/imageView"
+        app:layout_constraintVertical_bias="0.71" />
+
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-
-        <Button
-            android:id="@+id/startGame"
-            style="@style/Widget.Theme.MMUELM7.Button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="onStartButtonClicked"
-            android:text="Start Game" />
 
         <ScrollView
             android:layout_width="match_parent"
@@ -29,6 +52,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical" />
         </ScrollView>
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

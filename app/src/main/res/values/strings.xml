@@ -12,6 +12,7 @@
     <string name="title_activity_lives">Lives Screen</string>
     <string name="level">Level %1$s</string>
     <string name="lives">x %1$d</string>
+    <string name="start_game">Start Game!</string>
     <string name="tap_to_start">TAP to Start!</string>
     <string name="pause_screen_title">PAUSED</string>
     <string name="tap_to_jump">Tap to Jump!</string>
