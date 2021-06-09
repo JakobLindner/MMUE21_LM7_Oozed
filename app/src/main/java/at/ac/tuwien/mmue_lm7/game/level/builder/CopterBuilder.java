@@ -4,6 +4,7 @@ import at.ac.tuwien.mmue_lm7.game.level.Copter;
 import at.ac.tuwien.mmue_lm7.game.level.Jumper;
 import at.ac.tuwien.mmue_lm7.game.level.Level;
 import at.ac.tuwien.mmue_lm7.utils.Direction;
+import at.ac.tuwien.mmue_lm7.utils.Vec2;
 
 public class CopterBuilder extends LevelPartBuilder<CopterBuilder>{
     private Copter copter = new Copter();
@@ -15,6 +16,16 @@ public class CopterBuilder extends LevelPartBuilder<CopterBuilder>{
     public CopterBuilder at(int x, int y) {
         copter.x = x;
         copter.y = y;
+        return this;
+    }
+
+    public CopterBuilder noHover(boolean noHover) {
+        copter.noHover = noHover;
+        return this;
+    }
+
+    public CopterBuilder orient(Direction upDir) {
+        copter.upDir = upDir;
         return this;
     }
 

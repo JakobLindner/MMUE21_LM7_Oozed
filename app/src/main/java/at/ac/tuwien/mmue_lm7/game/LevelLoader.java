@@ -53,7 +53,35 @@ public class LevelLoader {
         put("Dash",LevelLoader::dashJumpTutorial);
         put("Climb",LevelLoader::theClimb);
         put("Gravity Tut", LevelLoader::gravityTutorial);
+        put("Copter Test", LevelLoader::copterTest);
     }};
+
+    public static void copterTest(GameObject root, Context context) {
+        Level level = new LevelBuilder("Copter Test")
+                .json(getJSON(context,"6"))
+                .copter()
+                    .at(4,H-1)
+                    .orient(Direction.DOWN)
+                    .noHover(true)
+                .copter()
+                    .at(2,H/2)
+                    .orient(Direction.LEFT)
+                .copter()
+                    .at(W/2,H-4)
+                    .orient(Direction.LEFT)
+                    .noHover(true)
+                .copter()
+                    .at(W-7,H/2)
+                    .orient(Direction.UP)
+                    .noHover(true)
+                .copter()
+                    .at(W/2,2)
+                    .orient(Direction.RIGHT)
+                    .noHover(true)
+                .build();
+
+        level.build(root,context);
+    }
 
     public static void gravityTutorial(GameObject root, Context context) {
         final int START_PLATFORM_HEIGHT = 6;

@@ -110,27 +110,19 @@ public class ObjectFactories {
         return jumper;
     }
 
-    public static GameObject makeCopter(int x, int y) {
-        final float COPTER_WIDTH = 0.5f-2*U;
-        final float COPTER_HEIGHT = U;
-        final float COPTER_OFFSET = 6*U;
-        final float BODY_WIDTH = 0.5f;
-        final float BODY_HEIGHT = 4*U;
-        final float BODY_OFFSET = -2*U;
-        AABB copterBox = new AABB(COPTER_WIDTH, COPTER_HEIGHT, CollisionLayers.PLAYER, CollisionLayers.ENEMY);
-        AABB bodyBox = new AABB(BODY_WIDTH, BODY_HEIGHT, CollisionLayers.PLAYER, CollisionLayers.ENEMY);
+    public static GameObject makeCopter(int x, int y, Direction upDir, boolean noHover) {
+
+        AABB copterBox = new AABB(0.5f, 0.5f, CollisionLayers.PLAYER, CollisionLayers.ENEMY);
+        AABB bodyBox = new AABB(0.5f, 0.5f, CollisionLayers.PLAYER, CollisionLayers.ENEMY);
 
 
-        Copter copter = new Copter(copterBox, bodyBox);
+        Copter copter = new Copter(copterBox, bodyBox, upDir, noHover);
         copter.position.set(x + 0.5f, y + 0.5f);
 
-        copterBox.position.set(0,COPTER_OFFSET);
         copter.addChild(copterBox);
 
-        bodyBox.position.set(0,BODY_OFFSET);
         copter.addChild(bodyBox);
 
-        //TODO different sprite for static blocker
         AnimatedSprite idleSprite = new AnimatedSprite(ResourceSystem.SpriteEnum.flyerIdle);
         idleSprite.position.set(0, 0);
         copter.addChild(idleSprite);
