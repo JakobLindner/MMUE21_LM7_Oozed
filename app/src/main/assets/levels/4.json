@@ -128,186 +128,6 @@
             "name": ""
         },
         {
-            "tileName": "platformPlate",
-            "x": 16,
-            "y": 17,
-            "mirrored": false,
-            "rotation": 360,
-            "dynamic": false,
-            "name": ""
-        },
-        {
-            "tileName": "platformPlate",
-            "x": 17,
-            "y": 17,
-            "mirrored": false,
-            "rotation": 360,
-            "dynamic": false,
-            "name": ""
-        },
-        {
-            "tileName": "platformPlate",
-            "x": 18,
-            "y": 17,
-            "mirrored": false,
-            "rotation": 360,
-            "dynamic": false,
-            "name": ""
-        },
-        {
-            "tileName": "platformPlate",
-            "x": 19,
-            "y": 17,
-            "mirrored": false,
-            "rotation": 360,
-            "dynamic": false,
-            "name": ""
-        },
-        {
-            "tileName": "platformPlate",
-            "x": 20,
-            "y": 17,
-            "mirrored": false,
-            "rotation": 360,
-            "dynamic": false,
-            "name": ""
-        },
-        {
-            "tileName": "platformPlate",
-            "x": 21,
-            "y": 17,
-            "mirrored": false,
-            "rotation": 360,
-            "dynamic": false,
-            "name": ""
-        },
-        {
-            "tileName": "platformPlate",
-            "x": 22,
-            "y": 17,
-            "mirrored": false,
-            "rotation": 360,
-            "dynamic": false,
-            "name": ""
-        },
-        {
-            "tileName": "platformPlate",
-            "x": 23,
-            "y": 17,
-            "mirrored": false,
-            "rotation": 360,
-            "dynamic": false,
-            "name": ""
-        },
-        {
-            "tileName": "platformPlate",
-            "x": 24,
-            "y": 17,
-            "mirrored": false,
-            "rotation": 360,
-            "dynamic": false,
-            "name": ""
-        },
-        {
-            "tileName": "platformPlate",
-            "x": 25,
-            "y": 17,
-            "mirrored": false,
-            "rotation": 360,
-            "dynamic": false,
-            "name": ""
-        },
-        {
-            "tileName": "platformPlate",
-            "x": 6,
-            "y": 17,
-            "mirrored": false,
-            "rotation": 360,
-            "dynamic": false,
-            "name": ""
-        },
-        {
-            "tileName": "platformPlate",
-            "x": 7,
-            "y": 17,
-            "mirrored": false,
-            "rotation": 360,
-            "dynamic": false,
-            "name": ""
-        },
-        {
-            "tileName": "platformPlate",
-            "x": 8,
-            "y": 17,
-            "mirrored": false,
-            "rotation": 360,
-            "dynamic": false,
-            "name": ""
-        },
-        {
-            "tileName": "platformPlate",
-            "x": 9,
-            "y": 17,
-            "mirrored": false,
-            "rotation": 360,
-            "dynamic": false,
-            "name": ""
-        },
-        {
-            "tileName": "platformPlate",
-            "x": 10,
-            "y": 17,
-            "mirrored": false,
-            "rotation": 360,
-            "dynamic": false,
-            "name": ""
-        },
-        {
-            "tileName": "platformPlate",
-            "x": 11,
-            "y": 17,
-            "mirrored": false,
-            "rotation": 360,
-            "dynamic": false,
-            "name": ""
-        },
-        {
-            "tileName": "platformPlate",
-            "x": 12,
-            "y": 17,
-            "mirrored": false,
-            "rotation": 360,
-            "dynamic": false,
-            "name": ""
-        },
-        {
-            "tileName": "platformPlate",
-            "x": 13,
-            "y": 17,
-            "mirrored": false,
-            "rotation": 360,
-            "dynamic": false,
-            "name": ""
-        },
-        {
-            "tileName": "platformPlate",
-            "x": 14,
-            "y": 17,
-            "mirrored": false,
-            "rotation": 360,
-            "dynamic": false,
-            "name": ""
-        },
-        {
-            "tileName": "platformPlate",
-            "x": 15,
-            "y": 17,
-            "mirrored": false,
-            "rotation": 360,
-            "dynamic": false,
-            "name": ""
-        },
-        {
             "tileName": "platformPipeVer",
             "x": 6,
             "y": 4,
@@ -1096,6 +916,96 @@
             "y": 5,
             "mirrored": false,
             "rotation": 180,
+            "dynamic": false,
+            "name": ""
+        },
+        {
+            "tileName": "platformBigPlate",
+            "x": 8,
+            "y": 16,
+            "mirrored": false,
+            "rotation": 360,
+            "dynamic": false,
+            "name": ""
+        },
+        {
+            "tileName": "platformBigPlate",
+            "x": 10,
+            "y": 16,
+            "mirrored": false,
+            "rotation": 360,
+            "dynamic": false,
+            "name": ""
+        },
+        {
+            "tileName": "platformBigPlate",
+            "x": 12,
+            "y": 16,
+            "mirrored": false,
+            "rotation": 360,
+            "dynamic": false,
+            "name": ""
+        },
+        {
+            "tileName": "platformBigPlate",
+            "x": 14,
+            "y": 16,
+            "mirrored": false,
+            "rotation": 360,
+            "dynamic": false,
+            "name": ""
+        },
+        {
+            "tileName": "platformBigPlate",
+            "x": 16,
+            "y": 16,
+            "mirrored": false,
+            "rotation": 360,
+            "dynamic": false,
+            "name": ""
+        },
+        {
+            "tileName": "platformBigPlate",
+            "x": 18,
+            "y": 16,
+            "mirrored": false,
+            "rotation": 360,
+            "dynamic": false,
+            "name": ""
+        },
+        {
+            "tileName": "platformBigPlate",
+            "x": 20,
+            "y": 16,
+            "mirrored": false,
+            "rotation": 360,
+            "dynamic": false,
+            "name": ""
+        },
+        {
+            "tileName": "platformBigPlate",
+            "x": 22,
+            "y": 16,
+            "mirrored": false,
+            "rotation": 360,
+            "dynamic": false,
+            "name": ""
+        },
+        {
+            "tileName": "platformBigPlate",
+            "x": 24,
+            "y": 16,
+            "mirrored": false,
+            "rotation": 360,
+            "dynamic": false,
+            "name": ""
+        },
+        {
+            "tileName": "platformBigPlate",
+            "x": 6,
+            "y": 16,
+            "mirrored": false,
+            "rotation": 360,
             "dynamic": false,
             "name": ""
         }
