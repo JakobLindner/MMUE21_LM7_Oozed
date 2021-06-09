@@ -341,7 +341,8 @@ public class Player extends GameObject {
         Game.get().getResourceSystem().playSound(ResourceSystem.Sound.PLAYER_DEATH);
 
         //call respawn function delayed
-        Game.get().getTimingSystem().addDelayedAction(Game.get()::respawnPlayer, RESPAWN_DELAY);
+        if(!Game.get().isLevelCleared())
+            Game.get().getTimingSystem().addDelayedAction(Game.get()::respawnPlayer, RESPAWN_DELAY);
 
         super.kill();
     }

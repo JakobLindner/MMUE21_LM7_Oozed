@@ -2,6 +2,7 @@ package at.ac.tuwien.mmue_lm7.utils;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  * Utility class to reuse objects, prevent too many instantiations
@@ -61,7 +62,7 @@ public class ObjectPool<T extends ObjectPool.Poolable> {
      * Frees all given objects, calls reset on every object
      * @param objects , !=null
      */
-    public void freeAll(ArrayList<T> objects) {
+    public void freeAll(Collection<T> objects) {
         freeObjects.addAll(objects);
         for(T t : objects)
             t.reset();

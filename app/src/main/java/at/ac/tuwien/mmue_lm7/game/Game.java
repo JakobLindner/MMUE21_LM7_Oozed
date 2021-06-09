@@ -82,6 +82,8 @@ public class Game {
      */
     private boolean paused = false;
 
+    private boolean levelCleared = false;
+
     //TODO optimization: have object pools for all types of game objects, free in GameObject::destroy
 
     ///////////////////////////////////////////////////////////////////////////
@@ -464,6 +466,13 @@ public class Game {
     // Level/scene management
     ///////////////////////////////////////////////////////////////////////////
 
+    /**
+     * @return true when level has been cleared but waiting for level load or loading
+     */
+    public boolean isLevelCleared() {
+        return levelCleared;
+    }
+
     private void advanceLevel() {
         ++lastMainLevel;
         currentLevel = Integer.toString(lastMainLevel);
@@ -485,12 +494,17 @@ public class Game {
         root = new GameObject();
         root.init();
 
+        //clear delayed routines
+        timingSystem.clearActions();
+
         levelStatusSystem.clearLevelStatus();
 
         if (!levelLoader.loadLevel(root, level)) {
             Log.i(TAG, "All levels completed, show win screen");
             onGameOver.notify(new Score(lastMainLevel-1, time, true));
         } else {
+            levelCleared = false;
+
             //add ingame ui
             root.addChild(ObjectFactories.makeIngameUI());
 
@@ -509,6 +523,7 @@ public class Game {
      */
     public void clearLevel() {
         Log.i(TAG, "Level cleared!");
+        levelCleared = true;
         onLevelCleared.notify(new LevelEvent(currentLevel));
 
         //play sound
