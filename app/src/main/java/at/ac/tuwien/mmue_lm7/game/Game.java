@@ -439,13 +439,13 @@ public class Game {
     public void respawnPlayer() {
         Log.d(TAG, "Respawn player");
 
+        //decrease lives
+        --playerLives;
+
         if (playerLives == 0) {
             Log.i(TAG, "No lives left, show lost screen");
             onGameOver.notify(new Score(lastMainLevel-1, time, false));
         } else {
-            //decrease lives
-            --playerLives;
-
             //restart level
             loadLevel();
         }
