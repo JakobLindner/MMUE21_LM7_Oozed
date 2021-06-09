@@ -3,10 +3,14 @@ package at.ac.tuwien.mmue_lm7;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import java.io.IOException;
@@ -49,6 +53,19 @@ public class MainActivity extends AppCompatActivity {
                 list.addView(button);
             }
         }
+
+        //set background image without anti-aliasing
+        ImageView imageView = findViewById(R.id.menu_background);
+
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inScaled = false;
+        options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+
+        Bitmap background = BitmapFactory.decodeResource(getResources(), R.drawable.menu,options);
+        BitmapDrawable drawable = new BitmapDrawable(getResources(), background);
+        drawable.getPaint().setFilterBitmap(false);
+
+        imageView.setImageDrawable(drawable);
 
         buttonSoundId = SoundSystem.get().loadSound(R.raw.button);
     }

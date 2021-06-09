@@ -1,17 +1,17 @@
 <resources>
     <string name="app_name">Oozed</string>
-    <string name="title_activity_game">Game</string>
-    <string name="dummy_button">Dummy Button</string>
-    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="title_activity_game" translatable="false">Game</string>
+    <string name="dummy_button" translatable="false">Dummy Button</string>
+    <string name="dummy_content" translatable="false">DUMMY\nCONTENT</string>
     <string name="game_over">Game Over!</string>
     <string name="your_score">Your Score: %1$d</string>
     <string name="new_highscore">New Highscore!</string>
     <string name="highscore">Highscore: %1$d</string>
     <string name="main_menu">Main Menu</string>
     <string name="retry">Retry</string>
-    <string name="title_activity_lives">Lives Screen</string>
-    <string name="level">Level %1$s</string>
-    <string name="lives">x %1$d</string>
+    <string name="title_activity_lives" translatable="false">Lives Screen</string>
+    <string name="level" translatable="false">Level %1$s</string>
+    <string name="lives" translatable="false">x %1$d</string>
     <string name="start_game">Start Game!</string>
     <string name="tap_to_start">TAP to Start!</string>
     <string name="pause_screen_title">PAUSED</string>
