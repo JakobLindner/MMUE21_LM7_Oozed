@@ -49,7 +49,7 @@ public class LevelLoader {
         //put("7", LevelLoader::createLevel1);
         //put("2", LevelLoader::createLevel2);
         //put("3", LevelLoader::fivePlatforms);
-        put("5", LevelLoader::tightSlalom);
+        put("3", LevelLoader::tightSlalom);
         put("Dash",LevelLoader::dashJumpTutorial);
         put("Climb",LevelLoader::theClimb);
         put("Gravity Tut", LevelLoader::gravityTutorial);
