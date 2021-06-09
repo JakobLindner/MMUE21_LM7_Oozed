@@ -52,7 +52,77 @@ public class LevelLoader {
         put("5", LevelLoader::tightSlalom);
         put("Dash",LevelLoader::dashJumpTutorial);
         put("Climb",LevelLoader::theClimb);
+        put("Gravity Tut", LevelLoader::gravityTutorial);
     }};
+
+    public static void gravityTutorial(GameObject root, Context context) {
+        final int START_PLATFORM_HEIGHT = 6;
+        final int START_X = W-5-6;
+        final int SPIKE_WALL_X = START_X-3;
+        final int TOP_SPIKE_START = SPIKE_WALL_X;
+        Level level = new LevelBuilder("Gravity Tutorial")
+                //start platform
+                .platform()
+                    .at(START_X,3)
+                    .size(2,START_PLATFORM_HEIGHT)
+                    .pattern("+p"+
+                             "+p"+
+                             "++"+
+                             "++"+
+                             "++"+
+                             "++"+
+                             "++"+
+                             "++")
+                //middle spike wall
+                .platform()
+                    .at(SPIKE_WALL_X,0)
+                    .size(2,START_PLATFORM_HEIGHT+6)
+                    .pattern("p>")
+                //bottom spike wall
+                .platform()
+                    .at(SPIKE_WALL_X+2,0)
+                    .size(W-(SPIKE_WALL_X+2),1)
+                    .pattern("+")
+                .copy()
+                    .y(1)
+                    .pattern("^")
+                //top wall
+                .platform()
+                    .at(0,H-2)
+                    .size(SPIKE_WALL_X-2,2)
+                    .pattern("P#")
+                //top spikes
+                .platform()
+                    .at(TOP_SPIKE_START,H-2)
+                    .size(W-TOP_SPIKE_START,2)
+                    .pattern("P#")
+                .platform()
+                    .at(TOP_SPIKE_START,H-3)
+                    .size(W-TOP_SPIKE_START,1)
+                    .pattern("v")
+                //left side
+                .platform()
+                    .at(0,2)
+                    .size(2,H-2-2)
+                    .pattern("P###")
+                .copy().x(2)
+                .copy().x(4)
+                .copy().x(6)
+                //bottom wall
+                .platform()
+                    .at(0,0)
+                    .size(SPIKE_WALL_X-2,2)
+                    .pattern("P#")
+                .player()
+                    .at(START_X-1,START_PLATFORM_HEIGHT)
+                    .orient(Direction.LEFT,false)
+                .blocker()
+                    .at(8,H/2)
+                    .orient(Direction.RIGHT,false)
+                .build();
+
+        level.build(root,context);
+    }
 
     public static void theClimb(GameObject root, Context context) {
         final int JUMPER_PLATFORM_HEIGHT = 11;
