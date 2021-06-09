@@ -38,15 +38,6 @@
             "name": ""
         },
         {
-            "tileName": "platformPipeHor",
-            "x": 3,
-            "y": 5,
-            "mirrored": false,
-            "rotation": 360,
-            "dynamic": false,
-            "name": ""
-        },
-        {
             "tileName": "platformPipeOpen",
             "x": 2,
             "y": 4,
@@ -65,25 +56,7 @@
             "name": ""
         },
         {
-            "tileName": "platformPipeHor",
-            "x": 3,
-            "y": 4,
-            "mirrored": false,
-            "rotation": 360,
-            "dynamic": false,
-            "name": ""
-        },
-        {
             "tileName": "platformPipeDL",
-            "x": 7,
-            "y": 5,
-            "mirrored": false,
-            "rotation": 360,
-            "dynamic": false,
-            "name": ""
-        },
-        {
-            "tileName": "platformPipeHor",
             "x": 6,
             "y": 5,
             "mirrored": false,
@@ -92,8 +65,17 @@
             "name": ""
         },
         {
+            "tileName": "platformPipeHor",
+            "x": 5,
+            "y": 5,
+            "mirrored": false,
+            "rotation": 360,
+            "dynamic": false,
+            "name": ""
+        },
+        {
             "tileName": "platformPipeUL",
-            "x": 7,
+            "x": 6,
             "y": 4,
             "mirrored": false,
             "rotation": 360,
@@ -102,7 +84,7 @@
         },
         {
             "tileName": "platformPipeCross",
-            "x": 6,
+            "x": 5,
             "y": 4,
             "mirrored": false,
             "rotation": 360,
@@ -111,7 +93,7 @@
         },
         {
             "tileName": "platformPipeUR",
-            "x": 5,
+            "x": 4,
             "y": 3,
             "mirrored": false,
             "rotation": 360,
@@ -120,7 +102,7 @@
         },
         {
             "tileName": "platformBigCross",
-            "x": 4,
+            "x": 3,
             "y": 4,
             "mirrored": false,
             "rotation": 360,
@@ -129,7 +111,7 @@
         },
         {
             "tileName": "platformPipeUL",
-            "x": 8,
+            "x": 7,
             "y": 3,
             "mirrored": false,
             "rotation": 360,
@@ -678,7 +660,7 @@
         },
         {
             "tileName": "platformPipeVer",
-            "x": 8,
+            "x": 7,
             "y": 4,
             "mirrored": false,
             "rotation": 360,
@@ -750,7 +732,7 @@
         },
         {
             "tileName": "platformPipeOpen",
-            "x": 6,
+            "x": 5,
             "y": 3,
             "mirrored": false,
             "rotation": 360,
@@ -822,7 +804,7 @@
         },
         {
             "tileName": "platformPipeDR",
-            "x": 8,
+            "x": 7,
             "y": 5,
             "mirrored": false,
             "rotation": 360,
@@ -849,7 +831,7 @@
         },
         {
             "tileName": "platformPipeHor",
-            "x": 7,
+            "x": 6,
             "y": 3,
             "mirrored": false,
             "rotation": 360,
@@ -867,7 +849,7 @@
         },
         {
             "tileName": "platformPipeVer",
-            "x": 6,
+            "x": 5,
             "y": 2,
             "mirrored": false,
             "rotation": 360,
@@ -941,6 +923,15 @@
             "tileName": "platformPlate",
             "x": 8,
             "y": 8,
+            "mirrored": false,
+            "rotation": 360,
+            "dynamic": false,
+            "name": ""
+        },
+        {
+            "tileName": "platformPipeCross",
+            "x": 8,
+            "y": 5,
             "mirrored": false,
             "rotation": 360,
             "dynamic": false,
