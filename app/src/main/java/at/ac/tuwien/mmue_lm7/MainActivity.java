@@ -28,12 +28,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //open database for later use
-        ScoreDatabase.get(getApplicationContext());
-
-        //initialize sound system
-        SoundSystem.load(getApplicationContext());
-
         //init level list
         LinearLayout list = findViewById(R.id.level_list);
         if(list!=null) {

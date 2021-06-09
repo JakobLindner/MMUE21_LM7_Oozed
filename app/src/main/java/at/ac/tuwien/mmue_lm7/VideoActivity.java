@@ -11,6 +11,9 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.VideoView;
 
+import at.ac.tuwien.mmue_lm7.game.ScoreDatabase;
+import at.ac.tuwien.mmue_lm7.game.resources.SoundSystem;
+
 import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
 import static android.content.Intent.FLAG_ACTIVITY_NO_HISTORY;
 
@@ -27,7 +30,17 @@ public class VideoActivity extends FullscreenActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video);
 
+        //INIT TASKS FOR FIRST ACTIVITY
+        //open database for later use
+        ScoreDatabase.get(getApplicationContext());
+        //initialize sound system
+        SoundSystem.load(getApplicationContext());
+
         videoView = findViewById(R.id.videoView);
+        videoView.setOnPreparedListener(mp -> {
+            if(SoundSystem.get().isMuted())
+                mp.setVolume(0,0);
+        });
         videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener()
         {
             public void onCompletion(MediaPlayer mp)

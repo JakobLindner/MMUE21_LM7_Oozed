@@ -32,6 +32,7 @@ public class SoundSystem {
     public static final float DEFAULT_MUSIC_VOLUME = 0.1f;
     public static final float DEFAULT_SOUND_VOLUME = 0.5f;
     public static final int SOUND_PRIORITY = 1;//same value as in lecture slides
+    public static final String MUTE_KEY = "muted";
     /**
      * Max number of sounds, that can be played in parallel
      */
@@ -45,7 +46,7 @@ public class SoundSystem {
     private AudioAttributes soundAttributes;
     private MediaPlayer currentMusic;
     private int currentMusicId = -1;
-    private boolean muted = false;
+    private boolean muted;
 
     private SoundPool soundPool;
 
@@ -58,6 +59,8 @@ public class SoundSystem {
             loadAudioAttributes();
 
         initSoundPool();
+
+        muted = context.getSharedPreferences(SoundSystem.TAG,Context.MODE_PRIVATE).getBoolean(MUTE_KEY,false);
     }
 
     private void initSoundPool() {
@@ -143,7 +146,8 @@ public class SoundSystem {
         if (currentMusic != null) {
             currentMusic.setLooping(true);
             currentMusic.setVolume(DEFAULT_MUSIC_VOLUME,DEFAULT_MUSIC_VOLUME);
-            currentMusic.start();
+            if(!muted)
+                currentMusic.start();
         }
     }
 
@@ -157,7 +161,7 @@ public class SoundSystem {
     public void resumeMusic() {
         if (currentMusic == null) {
             Log.w(TAG, "No music loaded to resume");
-        } else
+        } else if(!muted)
             currentMusic.start();
     }
 
@@ -177,6 +181,11 @@ public class SoundSystem {
 
     public void toggleMuted() {
         muted = !muted;
+
+        //store in shared preferences
+        SharedPreferences.Editor editor = context.getSharedPreferences(TAG,Context.MODE_PRIVATE).edit();
+        editor.putBoolean(MUTE_KEY,muted);
+        editor.commit();
 
         //pause or resume music
         if (currentMusic != null) {
