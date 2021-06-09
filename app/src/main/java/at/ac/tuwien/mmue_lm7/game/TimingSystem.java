@@ -37,7 +37,7 @@ public class TimingSystem {
         void perform();
     }
 
-    private final ObjectPool<TimedAction> freeActions = new ObjectPool<TimedAction>(TimedAction::new,16);
+    private final ObjectPool<TimedAction> freeActions = new ObjectPool<>(TimedAction::new,16);
     private final LinkedList<TimedAction> waitingActions = new LinkedList<TimedAction>();
     /**
      * new timed actions are first added to this collection, so timed actions can be added inside a timed action
@@ -92,5 +92,16 @@ public class TimingSystem {
      */
     public void addDelayedActionSeconds(Action action, float secondsDelay) {
         addDelayedAction(action, (int)(secondsDelay/ Constants.FIXED_DELTA)+1);
+    }
+
+    /**
+     * Removes all queued up actions
+     */
+    public void clearActions() {
+        freeActions.freeAll(newActions);
+        freeActions.freeAll(waitingActions);
+
+        newActions.clear();
+        waitingActions.clear();
     }
 }
