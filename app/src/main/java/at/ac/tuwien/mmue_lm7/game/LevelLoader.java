@@ -47,8 +47,8 @@ public class LevelLoader {
     public static HashMap<String, LevelFactory> levelsByName = new HashMap<String, LevelFactory>() {{
         //put("1", LevelLoader::movementTutorial);
         //put("7", LevelLoader::createLevel1);
-        put("2", LevelLoader::createLevel2);
-        put("3", LevelLoader::fivePlatforms);
+        //put("2", LevelLoader::createLevel2);
+        //put("3", LevelLoader::fivePlatforms);
         put("5", LevelLoader::tightSlalom);
         put("Dash",LevelLoader::dashJumpTutorial);
         put("Climb",LevelLoader::theClimb);
