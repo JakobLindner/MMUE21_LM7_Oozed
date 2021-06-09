@@ -306,7 +306,7 @@ public class Game {
         else if (event.getKeyCode() == PAUSE_TOGGLE_KEY)
             togglePause();
         else if(event.getKeyCode() == WIN_TRIGGER_KEY){
-            onGameOver.notify(new Score(lastMainLevel,time,true));
+            onGameOver.notify(new Score(lastMainLevel-1,time,true));
         }
     }
 
@@ -441,7 +441,7 @@ public class Game {
 
         if (playerLives == 0) {
             Log.i(TAG, "No lives left, show lost screen");
-            onGameOver.notify(new Score(lastMainLevel, time, false));
+            onGameOver.notify(new Score(lastMainLevel-1, time, false));
         } else {
             //decrease lives
             --playerLives;
@@ -489,7 +489,7 @@ public class Game {
 
         if (!levelLoader.loadLevel(root, level)) {
             Log.i(TAG, "All levels completed, show win screen");
-            onGameOver.notify(new Score(lastMainLevel, time, true));
+            onGameOver.notify(new Score(lastMainLevel-1, time, true));
         } else {
             //add ingame ui
             root.addChild(ObjectFactories.makeIngameUI());
