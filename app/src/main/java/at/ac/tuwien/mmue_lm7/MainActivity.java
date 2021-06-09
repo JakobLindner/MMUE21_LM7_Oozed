@@ -19,7 +19,7 @@ import at.ac.tuwien.mmue_lm7.game.LevelLoader;
 import at.ac.tuwien.mmue_lm7.game.ScoreDatabase;
 import at.ac.tuwien.mmue_lm7.game.resources.SoundSystem;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends FullscreenActivity {
     public static final String TAG = "MainActivity";
 
     private int buttonSoundId;
