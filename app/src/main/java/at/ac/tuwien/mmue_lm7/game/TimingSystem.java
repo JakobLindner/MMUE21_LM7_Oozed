@@ -44,11 +44,22 @@ public class TimingSystem {
      */
     private final LinkedList<TimedAction> newActions = new LinkedList<>();
 
+    /**
+     * if true all actions are cleared on next update
+     */
+    private boolean clearActions = false;
+
     public TimingSystem() {
 
     }
 
     public void update() {
+        if(clearActions) {
+            freeActions.freeAll(waitingActions);
+            waitingActions.clear();
+            clearActions = false;
+        }
+
         //add new actions
         waitingActions.addAll(newActions);
         newActions.clear();
@@ -98,10 +109,6 @@ public class TimingSystem {
      * Removes all queued up actions
      */
     public void clearActions() {
-        freeActions.freeAll(newActions);
-        freeActions.freeAll(waitingActions);
-
-        newActions.clear();
-        waitingActions.clear();
+        clearActions = true;
     }
 }
