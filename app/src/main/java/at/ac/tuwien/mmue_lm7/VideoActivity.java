@@ -22,6 +22,7 @@ import static android.content.Intent.FLAG_ACTIVITY_NO_HISTORY;
  * @author jakob
  */
 public class VideoActivity extends FullscreenActivity {
+    public static final float VIDEO_VOLUME = 0.75f;
 
      VideoView videoView;
 
@@ -40,6 +41,8 @@ public class VideoActivity extends FullscreenActivity {
         videoView.setOnPreparedListener(mp -> {
             if(SoundSystem.get().isMuted())
                 mp.setVolume(0,0);
+            else
+                mp.setVolume(VIDEO_VOLUME,VIDEO_VOLUME);
         });
         videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener()
         {
