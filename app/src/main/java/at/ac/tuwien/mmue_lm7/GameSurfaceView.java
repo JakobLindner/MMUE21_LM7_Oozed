@@ -71,13 +71,15 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        game.keyDown(event);
+        //disable keyboard event, since there are still bugs in it, but it is not mandatory
+        //game.keyDown(event);
         return true;
     }
 
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
-        game.keyUp(event);
+        //disable keyboard event, since there are still bugs in it, but it is not mandatory
+        //game.keyUp(event);
         return true;
     }
 
