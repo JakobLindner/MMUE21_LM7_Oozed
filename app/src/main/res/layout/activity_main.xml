@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:width="192dp"
         android:height="96dp"
-        android:background="@drawable/button"
+        android:background="@drawable/button9"
         android:onClick="onStartButtonClicked"
         android:text="@string/start_game"
         android:textSize="30dp"
