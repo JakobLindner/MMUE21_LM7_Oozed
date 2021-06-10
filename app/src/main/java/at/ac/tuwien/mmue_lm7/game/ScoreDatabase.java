@@ -6,6 +6,10 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
+/**
+ * Database class for scores, Accessible via singleton pattern
+ * @author simon
+ */
 @Database(entities={Score.class}, version = 1)
 public abstract class ScoreDatabase extends RoomDatabase {
     public abstract ScoreDAO scoreDAO();

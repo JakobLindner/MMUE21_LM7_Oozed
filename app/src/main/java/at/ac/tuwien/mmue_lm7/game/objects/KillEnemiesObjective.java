@@ -6,6 +6,7 @@ import at.ac.tuwien.mmue_lm7.game.Game;
 
 /**
  * Calls Game::clearLevel() and kills itself, when all enemies have been killed
+ * @author simon
  */
 public class KillEnemiesObjective extends GameObject{
     private static final int CHECK_INTERVAL = 30;

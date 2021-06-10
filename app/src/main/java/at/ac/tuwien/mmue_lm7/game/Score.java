@@ -3,6 +3,10 @@ package at.ac.tuwien.mmue_lm7.game;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+/**
+ * Entity class for score entries in room db
+ * @author simon
+ */
 @Entity(tableName = "score")
 public class Score {
 

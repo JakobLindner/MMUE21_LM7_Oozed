@@ -5,6 +5,11 @@ import java.util.Arrays;
 import at.ac.tuwien.mmue_lm7.game.GameConstants;
 import at.ac.tuwien.mmue_lm7.game.level.Level;
 
+/**
+ * Builder for making a ring wall on edges of level
+ * Holes at vertical and horizontal side can be configured
+ * @author simon
+ */
 public class OuterWallBuilder extends LevelPartBuilder {
     private String topPattern = "+";
     private String bottomPattern = "+";

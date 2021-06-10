@@ -8,6 +8,7 @@ import at.ac.tuwien.mmue_lm7.game.TapEvent;
  * As long as this game object exists, touch events are filtered.
  * For priority of the listeners, the configured layer is used
  * Used for pause screen
+ * @author simon
  */
 public class TouchEventFilter extends GameObject {
     @Override

@@ -7,6 +7,7 @@ import at.ac.tuwien.mmue_lm7.game.Game;
 /**
  * kills given gameobject after given amount of frames have passed
  * if null is passed as gameobject, then the object kills itself
+ * @author simon
  */
 public class Lifetime extends GameObject {
     private int frameTime;

@@ -72,18 +72,7 @@ public class Utils {
     }
 
     /**
-     * https://github.com/acron0/Easings/blob/master/Easings.cs
-     */
-    public static float easeInOutQuad(float t) {
-        if (t < 0.5f) {
-            return 4 * t * t * t;
-        } else {
-            float f = ((2 * t) - 2);
-            return 0.5f * f * f * f + 1;
-        }
-    }
-
-    /**
+     * Interpolation function
      * https://github.com/acron0/Easings/blob/master/Easings.cs
      */
     public static float easeInOutSine(float t) {

@@ -20,6 +20,7 @@ import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
 
 /**
  * Shows highscore and buttons to navigate to a new game activity or root main activity
+ * @author simon
  */
 public class GameOver extends FullscreenActivity {
     //Names for the expected data input

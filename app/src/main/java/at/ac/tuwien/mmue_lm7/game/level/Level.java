@@ -13,6 +13,11 @@ import at.ac.tuwien.mmue_lm7.game.ObjectFactories;
 import at.ac.tuwien.mmue_lm7.game.objects.GameObject;
 import at.ac.tuwien.mmue_lm7.game.objects.KillEnemiesObjective;
 
+/**
+ * Represents a level
+ * A level consists of a list of tiles
+ * @author simon
+ */
 public class Level {
     private static final String TAG = "Level";
     private static final String LEVEL_NAME_KEY = "levelName";

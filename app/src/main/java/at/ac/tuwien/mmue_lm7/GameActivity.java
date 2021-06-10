@@ -14,8 +14,6 @@ import at.ac.tuwien.mmue_lm7.game.QuitEvent;
 import at.ac.tuwien.mmue_lm7.game.Score;
 
 /**
- * An example full-screen activity that shows and hides the system UI (i.e.
- * status bar and navigation/system bar) with user interaction.
  * @author simon
  */
 public class GameActivity extends FullscreenActivity {

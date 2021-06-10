@@ -14,8 +14,8 @@ import at.ac.tuwien.mmue_lm7.R;
 
 /**
  * Don't keep this on Activity change
- * Loads and stores all sprite bitmaps
- * @author jakob
+ * Loads and stores all sprite bitmaps, gameplay music & sounds
+ * @author jakob & simon
  */
 public class ResourceSystem {
     private static final String TAG = "Resources";
@@ -321,6 +321,9 @@ public class ResourceSystem {
         house
     }
 
+    /**
+     * Gameplay sound list with resource id
+     */
     public enum Sound {
         OOZE_JUMP(R.raw.ooze_jump),
         PLAYER_DEATH(R.raw.player_death),

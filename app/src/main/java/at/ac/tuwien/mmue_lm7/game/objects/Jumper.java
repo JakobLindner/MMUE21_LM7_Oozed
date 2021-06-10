@@ -20,6 +20,7 @@ public class Jumper extends Enemy {
 
     //time until next jump when standing
     public static final int STANDING_TIME = 120;
+
     //time before jump, where jump can be anticipated
     public static final int ANTICIPATION_TIME = 60;
 

@@ -4,6 +4,9 @@ import org.json.JSONObject;
 
 import at.ac.tuwien.mmue_lm7.game.level.Level;
 
+/**
+ * @author simon
+ */
 public interface LevelBaseBuilder {
     PlatformBuilder platform();
     PlayerBuilder player();

@@ -4,6 +4,9 @@ import at.ac.tuwien.mmue_lm7.game.level.Level;
 import at.ac.tuwien.mmue_lm7.game.level.Player;
 import at.ac.tuwien.mmue_lm7.utils.Direction;
 
+/**
+ * @author simon
+ */
 public class PlayerBuilder extends LevelPartBuilder<PlayerBuilder>{
     private Player player = new Player();
 

@@ -5,6 +5,7 @@ import at.ac.tuwien.mmue_lm7.game.physics.PhysicsSystem;
 /**
  * Adds deadly behaviour to bounding box, that kills things by calling GameObject::kill()
  * it kills everything it can collide with
+ * @author simon
  */
 public class DeadlyAABB extends GameObject{
 

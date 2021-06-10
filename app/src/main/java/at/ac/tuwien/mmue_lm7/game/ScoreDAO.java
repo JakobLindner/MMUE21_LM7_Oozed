@@ -6,6 +6,10 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
+/**
+ * Interface for interacting with current highscore
+ * @author simon
+ */
 @Dao
 public interface ScoreDAO {
     @Query("SELECT * FROM score WHERE id=1")

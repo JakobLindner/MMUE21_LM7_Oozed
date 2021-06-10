@@ -2,6 +2,7 @@ package at.ac.tuwien.mmue_lm7.game;
 
 /**
  * keeps track of some state of the current level, so it can be checked whether or not objectives have been fulfilled
+ * @author simon
  */
 public class LevelStatusSystem {
     public static class LevelStatus {

@@ -8,6 +8,10 @@ import org.json.JSONObject;
 import at.ac.tuwien.mmue_lm7.game.ObjectFactories;
 import at.ac.tuwien.mmue_lm7.game.objects.GameObject;
 
+/**
+ * Ingame-Text
+ * @author simon
+ */
 public class Text extends Tile{
     private static final String TEXT_KEY = "text";
     private static final String NAME_KEY = "name";

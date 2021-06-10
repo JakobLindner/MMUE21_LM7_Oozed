@@ -5,6 +5,11 @@ import at.ac.tuwien.mmue_lm7.game.ObjectFactories;
 import at.ac.tuwien.mmue_lm7.game.resources.ResourceSystem;
 import at.ac.tuwien.mmue_lm7.utils.Vec2;
 
+/**
+ * Enemy base class that updates the enemy counter
+ * Creates a disappear effect on kill
+ * @author simon
+ */
 public class Enemy extends GameObject{
     @Override
     public void init() {

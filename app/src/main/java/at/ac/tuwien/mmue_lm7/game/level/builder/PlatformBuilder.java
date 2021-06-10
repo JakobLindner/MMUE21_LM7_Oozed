@@ -8,13 +8,17 @@ import at.ac.tuwien.mmue_lm7.game.level.Tile;
 import at.ac.tuwien.mmue_lm7.game.resources.ResourceSystem;
 import at.ac.tuwien.mmue_lm7.utils.Direction;
 
+/**
+ * @author simon
+ */
 public class PlatformBuilder extends LevelPartBuilder<PlatformBuilder> {
-    private static final String TAG = "PlatformBuilder";
-
     int x = 0;
     int y = 0;
     int width = 1;
     int height = 1;
+    /**
+     * Determines used tiles
+     */
     String pattern = "";
     ResourceSystem.SpriteEnum sprite = ResourceSystem.SpriteEnum.platformPipeOpen;
 

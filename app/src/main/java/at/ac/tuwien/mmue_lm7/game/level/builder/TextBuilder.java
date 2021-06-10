@@ -4,6 +4,9 @@ import at.ac.tuwien.mmue_lm7.game.level.Level;
 import at.ac.tuwien.mmue_lm7.game.level.Spikes;
 import at.ac.tuwien.mmue_lm7.game.level.Text;
 
+/**
+ * @author simon
+ */
 public class TextBuilder extends LevelPartBuilder<TextBuilder>{
     private Text text = new Text();
 

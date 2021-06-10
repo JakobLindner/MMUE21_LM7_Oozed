@@ -9,6 +9,9 @@ import at.ac.tuwien.mmue_lm7.game.ObjectFactories;
 import at.ac.tuwien.mmue_lm7.game.objects.GameObject;
 import at.ac.tuwien.mmue_lm7.utils.Direction;
 
+/**
+ * @author simon
+ */
 public class Copter extends Tile {
     public static final String NO_HOVER_KEY = "dynamic";
     public boolean noHover = false;

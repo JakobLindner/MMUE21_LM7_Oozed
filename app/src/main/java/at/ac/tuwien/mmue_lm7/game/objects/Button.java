@@ -7,6 +7,7 @@ import at.ac.tuwien.mmue_lm7.utils.Vec2;
 
 /**
  * Defines an area on screen, when tapped a given action is performed
+ * @author simon
  */
 public class Button extends GameObject {
     @FunctionalInterface

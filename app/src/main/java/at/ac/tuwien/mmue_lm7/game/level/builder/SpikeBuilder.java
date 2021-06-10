@@ -4,6 +4,9 @@ import at.ac.tuwien.mmue_lm7.game.level.Level;
 import at.ac.tuwien.mmue_lm7.game.level.Spikes;
 import at.ac.tuwien.mmue_lm7.utils.Direction;
 
+/**
+ * @author simon
+ */
 public class SpikeBuilder extends LevelPartBuilder<SpikeBuilder>{
     private Spikes spikes = new Spikes();
 

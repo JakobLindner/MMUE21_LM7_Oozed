@@ -9,6 +9,9 @@ import at.ac.tuwien.mmue_lm7.game.ObjectFactories;
 import at.ac.tuwien.mmue_lm7.game.objects.GameObject;
 import at.ac.tuwien.mmue_lm7.utils.Direction;
 
+/**
+ * @author simon
+ */
 public class Player extends Tile {
     public Direction upDir;
     public boolean runningCW;

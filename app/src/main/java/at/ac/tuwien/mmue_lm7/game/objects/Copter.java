@@ -9,6 +9,11 @@ import at.ac.tuwien.mmue_lm7.utils.Direction;
 import at.ac.tuwien.mmue_lm7.utils.Utils;
 import at.ac.tuwien.mmue_lm7.utils.Vec2;
 
+/**
+ * Enemy with a small helicopter, can hover on start position or fly upwards (also takes rotation into account)
+ * the rotor on top is deadly for the player
+ * @author simon
+ */
 public class Copter extends Enemy {
     public static final float U = GameConstants.UNITS_PER_PIXEL;
 
@@ -64,9 +69,11 @@ public class Copter extends Enemy {
     @Override
     public void update() {
         if(noHover) {
+            //fly "up"
             position.add(MOVE_SPEED*upDir.dir.x,MOVE_SPEED*upDir.dir.y);
         }
         else {
+            //hover back and forth
             hover += hoverInc;
 
             float t = (float) hover / (float) HOVER_DURATION;
@@ -100,6 +107,10 @@ public class Copter extends Enemy {
         updateBoxes();
     }
 
+    /**
+     * updates bounding boxes to reflect current rotation
+     * resizes and repositions boxes
+     */
     private void updateBoxes() {
         updateBox(copterBox,COPTER_WIDTH,COPTER_HEIGHT,COPTER_OFFSET);
         updateBox(bodyBox,BODY_WIDTH,BODY_HEIGHT,BODY_OFFSET);

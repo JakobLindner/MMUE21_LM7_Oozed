@@ -9,6 +9,10 @@ import org.json.JSONObject;
 
 import at.ac.tuwien.mmue_lm7.game.objects.GameObject;
 
+/**
+ * Base class for a level tile
+ * @author simon
+ */
 public abstract class Tile {
     public String tileName;
     public int x;

@@ -6,6 +6,9 @@ import at.ac.tuwien.mmue_lm7.game.level.Level;
 import at.ac.tuwien.mmue_lm7.utils.Direction;
 import at.ac.tuwien.mmue_lm7.utils.Vec2;
 
+/**
+ * @author simon
+ */
 public class CopterBuilder extends LevelPartBuilder<CopterBuilder>{
     private Copter copter = new Copter();
 

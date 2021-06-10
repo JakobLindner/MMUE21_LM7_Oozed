@@ -9,14 +9,15 @@ import at.ac.tuwien.mmue_lm7.game.ObjectFactories;
 import at.ac.tuwien.mmue_lm7.game.objects.GameObject;
 import at.ac.tuwien.mmue_lm7.utils.Direction;
 
+/**
+ * @author simon
+ */
 public class Blocker extends Tile {
     public static final String DYNAMIC_KEY = "dynamic";
 
     public Direction upDir;
     public boolean runningCW;
     public boolean dynamic = true;
-
-    //TODO way to configure dynamic field via json
 
     public Blocker(){}
     public Blocker(Blocker other) {

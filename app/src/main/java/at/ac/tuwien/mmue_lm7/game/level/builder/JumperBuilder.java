@@ -5,6 +5,9 @@ import at.ac.tuwien.mmue_lm7.game.level.Jumper;
 import at.ac.tuwien.mmue_lm7.game.level.Level;
 import at.ac.tuwien.mmue_lm7.utils.Direction;
 
+/**
+ * @author simon
+ */
 public class JumperBuilder extends LevelPartBuilder<JumperBuilder>{
     private Jumper jumper = new Jumper();
 

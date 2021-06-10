@@ -85,6 +85,9 @@ public enum Direction {
         }
     }
 
+    /**
+     * @return degrees of cardinal direction, RIGHT = 0 degrees
+     */
     public int getRotation() {
         if (this == Direction.RIGHT)
             return 0;

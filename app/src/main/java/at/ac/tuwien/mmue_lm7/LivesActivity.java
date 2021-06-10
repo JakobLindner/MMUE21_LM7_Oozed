@@ -13,8 +13,11 @@ import android.view.View;
 import android.widget.TextView;
 
 /**
+ * WARNING: This activity is currently unused and now implemented as a in-game screen, due to being much simpler
+ *
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
+ * @author simon
  */
 public class LivesActivity extends FullscreenActivity {
     public static final String LIVES_KEY = "lives";

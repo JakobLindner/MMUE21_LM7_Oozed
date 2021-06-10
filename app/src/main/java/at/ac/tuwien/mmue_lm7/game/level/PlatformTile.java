@@ -12,6 +12,9 @@ import at.ac.tuwien.mmue_lm7.game.objects.GameObject;
 import at.ac.tuwien.mmue_lm7.game.resources.ResourceSystem;
 import at.ac.tuwien.mmue_lm7.game.resources.SpriteInfo;
 
+/**
+ * @author simon
+ */
 public class PlatformTile extends Tile{
     private static final String TAG = "PlatformTile";
     public ResourceSystem.SpriteEnum sprite = ResourceSystem.SpriteEnum.platformPipeOpen;

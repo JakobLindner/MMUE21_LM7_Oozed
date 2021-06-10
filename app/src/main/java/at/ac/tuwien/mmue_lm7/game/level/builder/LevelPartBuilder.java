@@ -6,6 +6,10 @@ import org.json.JSONObject;
 
 import at.ac.tuwien.mmue_lm7.game.level.Level;
 
+/**
+ * Base class for specific parts of a level
+ * @author simon
+ */
 public abstract class LevelPartBuilder<SubBuilder extends LevelPartBuilder> implements LevelBaseBuilder {
     protected Level level;
     protected LevelBuilder parent;

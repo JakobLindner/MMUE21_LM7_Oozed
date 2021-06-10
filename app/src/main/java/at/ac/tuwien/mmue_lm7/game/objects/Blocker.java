@@ -14,6 +14,11 @@ import at.ac.tuwien.mmue_lm7.utils.Direction;
 import at.ac.tuwien.mmue_lm7.utils.Utils;
 import at.ac.tuwien.mmue_lm7.utils.Vec2;
 
+/**
+ * Blocker enemy, that cannot be touched from front
+ * can be configured to walk back and forth on platform or stand still
+ * @author simon
+ */
 public class Blocker extends Enemy {
     private static final String TAG = "Blocker";
 
@@ -143,6 +148,10 @@ public class Blocker extends Enemy {
         box.position.set(upDir.dir).inv().scl(BLOCKER_HALF_SIZE - HALF_HEIGHT);
     }
 
+    /**
+     * Performs raycasts to check if the end of the current platform has been reached
+     * @return true is end of platform has been reached
+     */
     private boolean endOfPlatformReached(Vec2 globalPos) {
         //setup ray
         ray.set(upDir.dir).inv().scl(WALKING_RAY_CAST_LENGTH);

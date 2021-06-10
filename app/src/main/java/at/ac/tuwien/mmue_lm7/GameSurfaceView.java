@@ -21,6 +21,7 @@ import at.ac.tuwien.mmue_lm7.utils.Vec2;
 
 /**
  * Custom surface view to render the game
+ * Forwards input events to game and manages the game loop thread
  * @author Simon
  */
 public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callback {

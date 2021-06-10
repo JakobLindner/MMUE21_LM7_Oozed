@@ -19,6 +19,10 @@ import at.ac.tuwien.mmue_lm7.game.LevelLoader;
 import at.ac.tuwien.mmue_lm7.game.ScoreDatabase;
 import at.ac.tuwien.mmue_lm7.game.resources.SoundSystem;
 
+/**
+ * Main menu activity
+ * @author simon
+ */
 public class MainActivity extends FullscreenActivity {
     public static final String TAG = "MainActivity";
 

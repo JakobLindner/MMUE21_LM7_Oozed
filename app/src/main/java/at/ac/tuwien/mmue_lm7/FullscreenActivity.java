@@ -10,6 +10,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * Base class for a fullscreen activity
+ * hides buttons and prevents resizing when user deliberately makes button show up
+ * @author simon
  */
 public abstract class FullscreenActivity extends AppCompatActivity {
     /**

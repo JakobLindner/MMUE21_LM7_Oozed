@@ -6,6 +6,11 @@ import at.ac.tuwien.mmue_lm7.game.resources.SoundSystem;
 import at.ac.tuwien.mmue_lm7.game.resources.SpriteInfo;
 import at.ac.tuwien.mmue_lm7.utils.Vec2;
 
+/**
+ * Button that mutes/unmutes music
+ * sprite is changed depending on current mute state
+ * @author simon
+ */
 public class MuteButton extends Button {
 
     private Sprite sprite;
@@ -31,6 +36,7 @@ public class MuteButton extends Button {
     private void press(Button button) {
         Game.get().getResourceSystem().playSound(ResourceSystem.Sound.BUTTON);
         SoundSystem.get().toggleMuted();
+
         updateSprite();
     }
 

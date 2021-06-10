@@ -13,11 +13,19 @@ import androidx.annotation.RequiresApi;
 
 import at.ac.tuwien.mmue_lm7.R;
 
+/**
+ * Utility methods to (un)load audio files and play them
+ * Muted setting is stored in preferences
+ * @author simon
+ */
 public class SoundSystem {
     private static final String TAG = "SoundSystem";
     private static SoundSystem INSTANCE;
 
 
+    /**
+     * needs to be called once before retrieving singleton
+     */
     public static void load(Context context) {
         if (INSTANCE != null)
             Log.w(TAG, "SoundSystem has already been loaded");
@@ -25,6 +33,10 @@ public class SoundSystem {
             INSTANCE = new SoundSystem(context);
     }
 
+    /**
+     * load(Context) needs to be called once before
+     * @return The singleton soundsystem instance
+     */
     public static SoundSystem get() {
         return INSTANCE;
     }

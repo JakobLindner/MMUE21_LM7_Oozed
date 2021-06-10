@@ -12,6 +12,7 @@ import at.ac.tuwien.mmue_lm7.utils.ObjectPool;
  * With the timing system you can register functions, which are called after a given delay
  * The timing system is updated before the game scene, the timer is reduced by 1 every update
  * If the timer of a registered function reaches 0, it is executed
+ * @author simon
  */
 public class TimingSystem {
     private static final String TAG = "TimingSystem";
