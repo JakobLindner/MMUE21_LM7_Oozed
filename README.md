@@ -16,3 +16,6 @@ The javadoc can be found in the "javadoc" folder
 
 **Sounds**: made with [rFXGen](https://raylibtech.itch.io/rfxgen)
 and [sfxia](https://rxi.itch.io/sfxia)
+
+**Music**: Licensed under the terms of the Humble Software Bundle: Big Music 2
+[https://support.humblebundle.com/hc/en-us/articles/1260802247230]
