@@ -533,24 +533,6 @@
             "name": ""
         },
         {
-            "tileName": "copter",
-            "x": 20,
-            "y": 13,
-            "mirrored": false,
-            "rotation": 90,
-            "dynamic": false,
-            "name": ""
-        },
-        {
-            "tileName": "copter",
-            "x": 20,
-            "y": 12,
-            "mirrored": false,
-            "rotation": 90,
-            "dynamic": false,
-            "name": ""
-        },
-        {
             "tileName": "platformPlate",
             "x": 10,
             "y": 0,
@@ -633,28 +615,10 @@
         },
         {
             "tileName": "spikes",
-            "x": 21,
-            "y": 2,
-            "mirrored": false,
-            "rotation": 360,
-            "dynamic": false,
-            "name": ""
-        },
-        {
-            "tileName": "spikes",
             "x": 15,
             "y": 2,
             "mirrored": false,
             "rotation": 360,
-            "dynamic": false,
-            "name": ""
-        },
-        {
-            "tileName": "spikes",
-            "x": 29,
-            "y": 7,
-            "mirrored": false,
-            "rotation": 270,
             "dynamic": false,
             "name": ""
         },
@@ -671,15 +635,6 @@
             "tileName": "spikes",
             "x": 2,
             "y": 11,
-            "mirrored": false,
-            "rotation": 90,
-            "dynamic": false,
-            "name": ""
-        },
-        {
-            "tileName": "spikes",
-            "x": 2,
-            "y": 10,
             "mirrored": false,
             "rotation": 90,
             "dynamic": false,
