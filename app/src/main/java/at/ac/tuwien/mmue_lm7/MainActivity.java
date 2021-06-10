@@ -26,6 +26,12 @@ import at.ac.tuwien.mmue_lm7.game.resources.SoundSystem;
 public class MainActivity extends FullscreenActivity {
     public static final String TAG = "MainActivity";
 
+    /**
+     * For debugging purposes
+     * if true, shows a list of buttons that shortcut into specific levels
+     */
+    private static final boolean SHOW_LEVEL_BUTTONS = false;
+
     private int buttonSoundId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,22 +39,24 @@ public class MainActivity extends FullscreenActivity {
         setContentView(R.layout.activity_main);
 
         //init level list
-        LinearLayout list = findViewById(R.id.level_list);
-        if(list!=null) {
-            String[] levels = getLevelNames();
-            int i = 0;
-            for(String level : levels) {
-                int dotIndex = level.lastIndexOf('.');
-                String noEnding = dotIndex==-1?level:level.substring(0,dotIndex);
+        if(SHOW_LEVEL_BUTTONS) {
+            LinearLayout list = findViewById(R.id.level_list);
+            if (list != null) {
+                String[] levels = getLevelNames();
+                int i = 0;
+                for (String level : levels) {
+                    int dotIndex = level.lastIndexOf('.');
+                    String noEnding = dotIndex == -1 ? level : level.substring(0, dotIndex);
 
-                Button button = new Button(this);
-                button.setText(noEnding);
-                button.setId(i++);
-                button.setOnClickListener(v -> {
-                    startGame(noEnding);
-                });
+                    Button button = new Button(this);
+                    button.setText(noEnding);
+                    button.setId(i++);
+                    button.setOnClickListener(v -> {
+                        startGame(noEnding);
+                    });
 
-                list.addView(button);
+                    list.addView(button);
+                }
             }
         }
 
