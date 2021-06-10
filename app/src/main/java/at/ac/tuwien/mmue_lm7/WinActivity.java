@@ -22,8 +22,8 @@ import static at.ac.tuwien.mmue_lm7.GameOver.SCORE_KEY;
 import static at.ac.tuwien.mmue_lm7.GameOver.TIME_KEY;
 
 /**
- * An example full-screen activity that shows and hides the system UI (i.e.
- * status bar and navigation/system bar) with user interaction.
+ * Win screen that get's shown after all levels are completed
+ * @author jakob
  */
 public class WinActivity extends AppCompatActivity {
 

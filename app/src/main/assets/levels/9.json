@@ -1,0 +1,536 @@
+{
+    "levelName": "9",
+    "tiles": [
+        {
+            "tileName": "ooze",
+            "x": 2,
+            "y": 6,
+            "mirrored": false,
+            "rotation": 270,
+            "dynamic": false,
+            "name": ""
+        },
+        {
+            "tileName": "copter",
+            "x": 17,
+            "y": 8,
+            "mirrored": false,
+            "rotation": 360,
+            "dynamic": true,
+            "name": ""
+        },
+        {
+            "tileName": "copter",
+            "x": 17,
+            "y": 14,
+            "mirrored": false,
+            "rotation": 360,
+            "dynamic": true,
+            "name": ""
+        },
+        {
+            "tileName": "copter",
+            "x": 9,
+            "y": 6,
+            "mirrored": false,
+            "rotation": 180,
+            "dynamic": true,
+            "name": ""
+        },
+        {
+            "tileName": "copter",
+            "x": 9,
+            "y": 4,
+            "mirrored": false,
+            "rotation": 180,
+            "dynamic": true,
+            "name": ""
+        },
+        {
+            "tileName": "copter",
+            "x": 17,
+            "y": 8,
+            "mirrored": false,
+            "rotation": 360,
+            "dynamic": true,
+            "name": ""
+        },
+        {
+            "tileName": "copter",
+            "x": 17,
+            "y": 2,
+            "mirrored": false,
+            "rotation": 360,
+            "dynamic": true,
+            "name": ""
+        },
+        {
+            "tileName": "spikes",
+            "x": 29,
+            "y": 10,
+            "mirrored": false,
+            "rotation": 270,
+            "dynamic": false,
+            "name": ""
+        },
+        {
+            "tileName": "platformBigGears",
+            "x": 29,
+            "y": 14,
+            "mirrored": false,
+            "rotation": 360,
+            "dynamic": false,
+            "name": ""
+        },
+        {
+            "tileName": "platformCircuit",
+            "x": 28,
+            "y": 2,
+            "mirrored": false,
+            "rotation": 360,
+            "dynamic": false,
+            "name": ""
+        },
+        {
+            "tileName": "platformMonitor",
+            "x": 29,
+            "y": 2,
+            "mirrored": false,
+            "rotation": 360,
+            "dynamic": false,
+            "name": ""
+        },
+        {
+            "tileName": "platformBigGears",
+            "x": 3,
+            "y": 6,
+            "mirrored": false,
+            "rotation": 360,
+            "dynamic": false,
+            "name": ""
+        },
+        {
+            "tileName": "platformCircuit",
+            "x": 4,
+            "y": 8,
+            "mirrored": false,
+            "rotation": 360,
+            "dynamic": false,
+            "name": ""
+        },
+        {
+            "tileName": "platformMonitor",
+            "x": 4,
+            "y": 9,
+            "mirrored": false,
+            "rotation": 360,
+            "dynamic": false,
+            "name": ""
+        },
+        {
+            "tileName": "jumper",
+            "x": 25,
+            "y": 9,
+            "mirrored": false,
+            "rotation": 90,
+            "dynamic": false,
+            "name": ""
+        },
+        {
+            "tileName": "platformHugePlate",
+            "x": 13,
+            "y": 11,
+            "mirrored": false,
+            "rotation": 360,
+            "dynamic": false,
+            "name": ""
+        },
+        {
+            "tileName": "platformHugePlate",
+            "x": 13,
+            "y": 8,
+            "mirrored": false,
+            "rotation": 360,
+            "dynamic": false,
+            "name": ""
+        },
+        {
+            "tileName": "platformHugePlate",
+            "x": 19,
+            "y": 8,
+            "mirrored": false,
+            "rotation": 360,
+            "dynamic": false,
+            "name": ""
+        },
+        {
+            "tileName": "platformHugePlate",
+            "x": 19,
+            "y": 11,
+            "mirrored": false,
+            "rotation": 360,
+            "dynamic": false,
+            "name": ""
+        },
+        {
+            "tileName": "platformHugePlate",
+            "x": 22,
+            "y": 11,
+            "mirrored": false,
+            "rotation": 360,
+            "dynamic": false,
+            "name": ""
+        },
+        {
+            "tileName": "platformHugePlate",
+            "x": 22,
+            "y": 8,
+            "mirrored": false,
+            "rotation": 360,
+            "dynamic": false,
+            "name": ""
+        },
+        {
+            "tileName": "platformHugePlate",
+            "x": 19,
+            "y": 5,
+            "mirrored": false,
+            "rotation": 360,
+            "dynamic": false,
+            "name": ""
+        },
+        {
+            "tileName": "platformHugePlate",
+            "x": 22,
+            "y": 5,
+            "mirrored": false,
+            "rotation": 360,
+            "dynamic": false,
+            "name": ""
+        },
+        {
+            "tileName": "platformHugePlate",
+            "x": 13,
+            "y": 5,
+            "mirrored": false,
+            "rotation": 360,
+            "dynamic": false,
+            "name": ""
+        },
+        {
+            "tileName": "platformHugePlate",
+            "x": 10,
+            "y": 8,
+            "mirrored": false,
+            "rotation": 360,
+            "dynamic": false,
+            "name": ""
+        },
+        {
+            "tileName": "platformHugePlate",
+            "x": 10,
+            "y": 11,
+            "mirrored": false,
+            "rotation": 360,
+            "dynamic": false,
+            "name": ""
+        },
+        {
+            "tileName": "platformHugePlate",
+            "x": 10,
+            "y": 5,
+            "mirrored": false,
+            "rotation": 360,
+            "dynamic": false,
+            "name": ""
+        },
+        {
+            "tileName": "platformHugePlate",
+            "x": 5,
+            "y": 6,
+            "mirrored": false,
+            "rotation": 360,
+            "dynamic": false,
+            "name": ""
+        },
+        {
+            "tileName": "platformHugePlate",
+            "x": 5,
+            "y": 9,
+            "mirrored": false,
+            "rotation": 360,
+            "dynamic": false,
+            "name": ""
+        },
+        {
+            "tileName": "platformMonitor",
+            "x": 3,
+            "y": 8,
+            "mirrored": false,
+            "rotation": 360,
+            "dynamic": false,
+            "name": ""
+        },
+        {
+            "tileName": "platformMonitor",
+            "x": 30,
+            "y": 7,
+            "mirrored": false,
+            "rotation": 360,
+            "dynamic": false,
+            "name": ""
+        },
+        {
+            "tileName": "platformCircuit",
+            "x": 30,
+            "y": 8,
+            "mirrored": false,
+            "rotation": 360,
+            "dynamic": false,
+            "name": ""
+        },
+        {
+            "tileName": "platformMonitor",
+            "x": 30,
+            "y": 10,
+            "mirrored": false,
+            "rotation": 360,
+            "dynamic": false,
+            "name": ""
+        },
+        {
+            "tileName": "platformCircuit",
+            "x": 30,
+            "y": 9,
+            "mirrored": false,
+            "rotation": 360,
+            "dynamic": false,
+            "name": ""
+        },
+        {
+            "tileName": "spikes",
+            "x": 29,
+            "y": 8,
+            "mirrored": false,
+            "rotation": 270,
+            "dynamic": false,
+            "name": ""
+        },
+        {
+            "tileName": "spikes",
+            "x": 31,
+            "y": 9,
+            "mirrored": false,
+            "rotation": 90,
+            "dynamic": false,
+            "name": ""
+        },
+        {
+            "tileName": "spikes",
+            "x": 31,
+            "y": 14,
+            "mirrored": false,
+            "rotation": 90,
+            "dynamic": false,
+            "name": ""
+        },
+        {
+            "tileName": "spikes",
+            "x": 30,
+            "y": 1,
+            "mirrored": false,
+            "rotation": 90,
+            "dynamic": false,
+            "name": ""
+        },
+        {
+            "tileName": "spikes",
+            "x": 28,
+            "y": 3,
+            "mirrored": false,
+            "rotation": 360,
+            "dynamic": false,
+            "name": ""
+        },
+        {
+            "tileName": "spikes",
+            "x": 30,
+            "y": 16,
+            "mirrored": false,
+            "rotation": 360,
+            "dynamic": false,
+            "name": ""
+        },
+        {
+            "tileName": "platformMonitor",
+            "x": 28,
+            "y": 1,
+            "mirrored": false,
+            "rotation": 360,
+            "dynamic": false,
+            "name": ""
+        },
+        {
+            "tileName": "platformMonitor",
+            "x": 29,
+            "y": 1,
+            "mirrored": false,
+            "rotation": 360,
+            "dynamic": false,
+            "name": ""
+        },
+        {
+            "tileName": "spikes",
+            "x": 27,
+            "y": 2,
+            "mirrored": false,
+            "rotation": 270,
+            "dynamic": false,
+            "name": ""
+        },
+        {
+            "tileName": "platformCircuit",
+            "x": 3,
+            "y": 2,
+            "mirrored": false,
+            "rotation": 360,
+            "dynamic": false,
+            "name": ""
+        },
+        {
+            "tileName": "platformMonitor",
+            "x": 4,
+            "y": 2,
+            "mirrored": false,
+            "rotation": 360,
+            "dynamic": false,
+            "name": ""
+        },
+        {
+            "tileName": "platformMonitor",
+            "x": 2,
+            "y": 1,
+            "mirrored": false,
+            "rotation": 360,
+            "dynamic": false,
+            "name": ""
+        },
+        {
+            "tileName": "platformMonitor",
+            "x": 3,
+            "y": 15,
+            "mirrored": false,
+            "rotation": 360,
+            "dynamic": false,
+            "name": ""
+        },
+        {
+            "tileName": "platformCircuit",
+            "x": 3,
+            "y": 1,
+            "mirrored": false,
+            "rotation": 360,
+            "dynamic": false,
+            "name": ""
+        },
+        {
+            "tileName": "platformMonitor",
+            "x": 3,
+            "y": 9,
+            "mirrored": false,
+            "rotation": 360,
+            "dynamic": false,
+            "name": ""
+        },
+        {
+            "tileName": "platformMonitor",
+            "x": 4,
+            "y": 16,
+            "mirrored": false,
+            "rotation": 360,
+            "dynamic": false,
+            "name": ""
+        },
+        {
+            "tileName": "platformCircuit",
+            "x": 2,
+            "y": 16,
+            "mirrored": false,
+            "rotation": 360,
+            "dynamic": false,
+            "name": ""
+        },
+        {
+            "tileName": "platformCircuit",
+            "x": 3,
+            "y": 16,
+            "mirrored": false,
+            "rotation": 360,
+            "dynamic": false,
+            "name": ""
+        },
+        {
+            "tileName": "spikes",
+            "x": 1,
+            "y": 16,
+            "mirrored": false,
+            "rotation": 270,
+            "dynamic": false,
+            "name": ""
+        },
+        {
+            "tileName": "spikes",
+            "x": 4,
+            "y": 17,
+            "mirrored": false,
+            "rotation": 360,
+            "dynamic": false,
+            "name": ""
+        },
+        {
+            "tileName": "spikes",
+            "x": 2,
+            "y": 2,
+            "mirrored": false,
+            "rotation": 360,
+            "dynamic": false,
+            "name": ""
+        },
+        {
+            "tileName": "spikes",
+            "x": 4,
+            "y": 3,
+            "mirrored": false,
+            "rotation": 360,
+            "dynamic": false,
+            "name": ""
+        },
+        {
+            "tileName": "spikes",
+            "x": 4,
+            "y": 1,
+            "mirrored": false,
+            "rotation": 90,
+            "dynamic": false,
+            "name": ""
+        },
+        {
+            "tileName": "spikes",
+            "x": 2,
+            "y": 15,
+            "mirrored": false,
+            "rotation": 180,
+            "dynamic": false,
+            "name": ""
+        },
+        {
+            "tileName": "spikes",
+            "x": 30,
+            "y": 6,
+            "mirrored": false,
+            "rotation": 180,
+            "dynamic": false,
+            "name": ""
+        }
+    ]
+}
