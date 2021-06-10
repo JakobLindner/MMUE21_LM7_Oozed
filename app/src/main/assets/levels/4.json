@@ -4,11 +4,20 @@
         {
             "tileName": "text",
             "x": 16,
-            "y": 3,
+            "y": 4,
             "mirrored": false,
             "rotation": 360,
             "dynamic": false,
             "name": "swipe_to_dash"
+        },
+        {
+            "tileName": "text",
+            "x": 16,
+            "y": 2,
+            "mirrored": false,
+            "rotation": 360,
+            "dynamic": false,
+            "name": "dash_and_jump"
         },
         {
             "tileName": "ooze",
