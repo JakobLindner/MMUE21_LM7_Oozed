@@ -2,9 +2,6 @@ package at.ac.tuwien.mmue_lm7.game;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Typeface;
 import android.util.Log;
 import android.view.KeyEvent;
 
@@ -13,7 +10,6 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import at.ac.tuwien.mmue_lm7.R;
-import at.ac.tuwien.mmue_lm7.game.level.Level;
 import at.ac.tuwien.mmue_lm7.game.objects.GameObject;
 import at.ac.tuwien.mmue_lm7.game.rendering.RenderSystem;
 import at.ac.tuwien.mmue_lm7.game.physics.PhysicsSystem;
@@ -42,7 +38,7 @@ public class Game {
         return singleton;
     }
 
-    private int playerLives = GameConstants.PLAYER_LIVES;
+    private int playerLives = GameConstants.PLAYER_LIVES_PER_LEVEL;
     private String currentLevel = "1";
     private int lastMainLevel = 1;
     /**
@@ -536,5 +532,7 @@ public class Game {
             loadLevel();
         },CLEAR_DELAY);
 
+        //restock lives
+        playerLives = GameConstants.PLAYER_LIVES_PER_LEVEL;
     }
 }
