@@ -38,6 +38,33 @@
             "name": ""
         },
         {
+            "tileName": "platformCircuit",
+            "x": 8,
+            "y": 11,
+            "mirrored": false,
+            "rotation": 360,
+            "dynamic": false,
+            "name": ""
+        },
+        {
+            "tileName": "platformBigPlate",
+            "x": 7,
+            "y": 12,
+            "mirrored": false,
+            "rotation": 360,
+            "dynamic": false,
+            "name": ""
+        },
+        {
+            "tileName": "platformMonitor",
+            "x": 7,
+            "y": 11,
+            "mirrored": false,
+            "rotation": 360,
+            "dynamic": false,
+            "name": ""
+        },
+        {
             "tileName": "platformPipeDL",
             "x": 16,
             "y": 8,
@@ -1004,6 +1031,33 @@
             "tileName": "platformBigPlate",
             "x": 6,
             "y": 16,
+            "mirrored": false,
+            "rotation": 360,
+            "dynamic": false,
+            "name": ""
+        },
+        {
+            "tileName": "platformBigPlate",
+            "x": 10,
+            "y": 13,
+            "mirrored": false,
+            "rotation": 360,
+            "dynamic": false,
+            "name": ""
+        },
+        {
+            "tileName": "platformCircuit",
+            "x": 7,
+            "y": 14,
+            "mirrored": false,
+            "rotation": 360,
+            "dynamic": false,
+            "name": ""
+        },
+        {
+            "tileName": "platformMonitor",
+            "x": 8,
+            "y": 14,
             "mirrored": false,
             "rotation": 360,
             "dynamic": false,
