@@ -49,15 +49,6 @@
         {
             "tileName": "copter",
             "x": 17,
-            "y": 8,
-            "mirrored": false,
-            "rotation": 360,
-            "dynamic": true,
-            "name": ""
-        },
-        {
-            "tileName": "copter",
-            "x": 17,
             "y": 2,
             "mirrored": false,
             "rotation": 360,
