@@ -1,13 +1,10 @@
 package at.ac.tuwien.mmue_lm7.game.objects;
 
-import android.graphics.Color;
-
 import at.ac.tuwien.mmue_lm7.game.Game;
 import at.ac.tuwien.mmue_lm7.game.GameConstants;
 import at.ac.tuwien.mmue_lm7.game.physics.CollisionLayers;
 import at.ac.tuwien.mmue_lm7.game.physics.PhysicsSystem;
 import at.ac.tuwien.mmue_lm7.game.rendering.Layers;
-import at.ac.tuwien.mmue_lm7.game.rendering.RenderSystem;
 import at.ac.tuwien.mmue_lm7.game.resources.ResourceSystem;
 import at.ac.tuwien.mmue_lm7.utils.Direction;
 import at.ac.tuwien.mmue_lm7.utils.Jump;
@@ -26,11 +23,18 @@ public class Jumper extends Enemy {
     //time before jump, where jump can be anticipated
     public static final int ANTICIPATION_TIME = 60;
 
-    public static final short MOVEMENT_MASK = CollisionLayers.ENEMY | CollisionLayers.PLATFORM;
+    public static final short MOVEMENT_MASK = CollisionLayers.PLATFORM;
     //sprite size
     public static final float HALF_SIZE = 0.5f;
-    public static final float HALF_WIDTH = 0.5f;
-    public static final float HALF_HEIGHT = 0.5f - GameConstants.UNITS_PER_PIXEL;
+    public static final float BODY_WIDTH = 0.5f;
+    public static final float BODY_HEIGHT = 0.5f-3*GameConstants.UNITS_PER_PIXEL;
+    public static final float BODY_OFFSET = BODY_HEIGHT-HALF_SIZE;//-2*GameConstants.UNITS_PER_PIXEL;
+    public static final float WEAK_WIDTH = BODY_WIDTH-2*GameConstants.UNITS_PER_PIXEL;
+    public static final float WEAK_HEIGHT = 2*GameConstants.UNITS_PER_PIXEL;
+    public static final float WEAK_OFFSET = 4*GameConstants.UNITS_PER_PIXEL;
+    public static final float MOVE_WIDTH = 0.5f;
+    public static final float MOVE_HEIGHT = HALF_SIZE-GameConstants.UNITS_PER_PIXEL;
+    public static final float MOVE_OFFSET = MOVE_HEIGHT-HALF_SIZE;
 
     private enum JumperState {
         JUMPING,
@@ -38,7 +42,12 @@ public class Jumper extends Enemy {
     }
     private JumperState state = JumperState.STANDING;
 
-    private AABB box;
+    private AABB bodyBox;
+    private AABB weakBox;
+    /**
+     * Bounding box used for sweep operations, layer=NONE
+     */
+    private AABB moveBox;
     private AnimatedSprite sprite;
     private Direction upDir;
 
@@ -48,8 +57,10 @@ public class Jumper extends Enemy {
     //helper vector to prevent allocations
     private Vec2 move = new Vec2();
 
-    public Jumper(AABB box, AnimatedSprite sprite, Direction upDir) {
-        this.box = box;
+    public Jumper(AABB bodyBox, AABB weakBox, AABB moveBox, AnimatedSprite sprite, Direction upDir) {
+        this.bodyBox = bodyBox;
+        this.weakBox = weakBox;
+        this.moveBox = moveBox;
         this.upDir = upDir;
         this.sprite = sprite;
 
@@ -61,13 +72,17 @@ public class Jumper extends Enemy {
     @Override
     public void init() {
         super.init();
-        box.onCollide.addListener(this,this::onCollide);
+        bodyBox.onCollide.addListener(this,this::onBodyCollide);
+        weakBox.onCollide.addListener(this, this::onWeakCollide);
+        moveBox.onCollide.addListener(this,this::onMoveCollide);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        box.onCollide.removeListener(this);
+        bodyBox.onCollide.removeListener(this);
+        weakBox.onCollide.removeListener(this);
+        moveBox.onCollide.removeListener(this);
     }
 
     @Override
@@ -81,7 +96,7 @@ public class Jumper extends Enemy {
             move.scl(upDir.dir.x*upDir.dir.x,upDir.dir.y*upDir.dir.y);
 
             //perform sweep
-            PhysicsSystem.Sweep movement = Game.get().getPhysicsSystem().move(box, move, MOVEMENT_MASK);
+            PhysicsSystem.Sweep movement = Game.get().getPhysicsSystem().move(moveBox, move, MOVEMENT_MASK);
 
             //updatePosition
             updatePos(movement.getPosition());
@@ -129,14 +144,20 @@ public class Jumper extends Enemy {
         rotation = upDir.rotateCW().getRotation();
 
         //update box position and size
-        updateBox();
+        updateBoxes();
     }
 
-    private void updateBox() {
-        box.position.set(Game.get().tmpVec().set(upDir.dir).inv().scl(HALF_SIZE - HALF_HEIGHT));
+    private void updateBoxes() {
+        updateBox(weakBox,WEAK_WIDTH,WEAK_HEIGHT,WEAK_OFFSET);
+        updateBox(bodyBox,BODY_WIDTH,BODY_HEIGHT,BODY_OFFSET);
+        updateBox(moveBox,MOVE_WIDTH, MOVE_HEIGHT, MOVE_OFFSET);
+    }
 
-        float width = upDir.isVertical() ? HALF_WIDTH : HALF_HEIGHT;
-        float height = upDir.isVertical() ? HALF_HEIGHT : HALF_WIDTH;
+    private void updateBox(AABB box, float halfWidth, float halfHeight, float offset) {
+        box.position.set(Game.get().tmpVec().set(upDir.dir).scl(offset));
+
+        float width = upDir.isVertical() ? halfWidth : halfHeight;
+        float height = upDir.isVertical() ? halfHeight : halfWidth;
         box.halfSize.set(width, height);
     }
 
@@ -145,7 +166,7 @@ public class Jumper extends Enemy {
      * @param boxPos
      */
     private void updatePos(Vec2 boxPos) {
-        setGlobalPosition(move.set(boxPos).sub(box.position));
+        setGlobalPosition(move.set(boxPos).sub(moveBox.position));
     }
 
     /**
@@ -154,8 +175,8 @@ public class Jumper extends Enemy {
      * @param edge
      */
     private void alignSpriteWithEdge(Direction edge) {
-        float currentSize = edge.isVertical() == upDir.isVertical() ? HALF_HEIGHT : HALF_WIDTH;
-        float diff = (currentSize-HALF_SIZE)+ (edge.dir.x+edge.dir.y)*(edge.isHorizontal()?box.position.x:box.position.y);
+        float currentSize = edge.isVertical() == upDir.isVertical() ? MOVE_HEIGHT : MOVE_WIDTH;
+        float diff = (currentSize-HALF_SIZE)+ (edge.dir.x+edge.dir.y)*(edge.isHorizontal()?moveBox.position.x:moveBox.position.y);
 
         position.add(move.set(edge.dir).scl(diff));
     }
@@ -182,7 +203,15 @@ public class Jumper extends Enemy {
         state = to;
     }
 
-    private boolean onCollide(PhysicsSystem.Contact contact) {
+    private boolean onWeakCollide(PhysicsSystem.Contact contact) {
+        if (contact.getOther().layer == Layers.PLAYER) {
+            kill();//get killed by player
+        }
+
+        return false;
+    }
+
+    private boolean onBodyCollide(PhysicsSystem.Contact contact) {
         if (contact.getOther().layer == Layers.PLAYER) {
             //check side of collision
             if (contact.getNormal().approxEquals(upDir.opposite().dir))
@@ -191,6 +220,10 @@ public class Jumper extends Enemy {
                 contact.getOther().kill();//kill player
 
         }
+        return false;
+    }
+
+    private boolean onMoveCollide(PhysicsSystem.Contact contact) {
         return false;
     }
 }

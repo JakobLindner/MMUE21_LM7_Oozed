@@ -94,14 +94,19 @@ public class ObjectFactories {
     }
 
     public static GameObject makeJumper(int x, int y, Direction upDir) {
+        //need not sizing, those are updated by the jumper itself
         AABB box = new AABB(0.5f, 0.5f, CollisionLayers.PLAYER, CollisionLayers.ENEMY);
+        AABB weakBox = new AABB(0.5f, 0.5f, CollisionLayers.PLAYER, CollisionLayers.ENEMY);
+        AABB moveBox = new AABB(0.5f, 0.5f, (short) 0, CollisionLayers.NONE);
 
         AnimatedSprite sprite = new AnimatedSprite(ResourceSystem.SpriteEnum.jumperIdle);
 
-        Jumper jumper = new Jumper(box, sprite, upDir);
+        Jumper jumper = new Jumper(box, weakBox, moveBox, sprite, upDir);
         jumper.position.set(x + 0.5f, y + 0.5f);
 
         jumper.addChild(box);
+        jumper.addChild(weakBox);
+        jumper.addChild(moveBox);
 
         sprite.position.set(0, 0);
         jumper.addChild(sprite);
