@@ -384,7 +384,7 @@ public class ObjectFactories {
         Lifetime object = new Lifetime(EFFECT_DURATION);
         object.position.set(x, y);
 
-        object.addChild(new Sprite(ResourceSystem.SpriteEnum.disappearEffect));
+        object.addChild(new AnimatedSprite(ResourceSystem.SpriteEnum.disappearEffect));
 
         object.setLayerRecursive(Layers.EFFECTS);
         return object;

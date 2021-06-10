@@ -238,6 +238,8 @@ public class ResourceSystem {
                 break;
             case disappearEffect:
                 info.spriteSheetId = R.drawable.effects;
+                info.animationLength = 6;
+                info.frameDuration = 5;
                 break;
             case heart:
                 info.spriteSheetId = R.drawable.heart;
