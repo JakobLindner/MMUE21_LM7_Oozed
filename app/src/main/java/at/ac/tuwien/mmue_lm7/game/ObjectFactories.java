@@ -15,6 +15,7 @@ import at.ac.tuwien.mmue_lm7.game.objects.DeadlyAABB;
 import at.ac.tuwien.mmue_lm7.game.objects.GameObject;
 import at.ac.tuwien.mmue_lm7.game.objects.Jumper;
 import at.ac.tuwien.mmue_lm7.game.objects.Lifetime;
+import at.ac.tuwien.mmue_lm7.game.objects.LiveScreenKeyContinue;
 import at.ac.tuwien.mmue_lm7.game.objects.MuteButton;
 import at.ac.tuwien.mmue_lm7.game.objects.Platform;
 import at.ac.tuwien.mmue_lm7.game.objects.Player;
@@ -375,6 +376,12 @@ public class ObjectFactories {
         });
         button.layer = Layers.UI;
         lifeScreen.addChild(button);
+
+        //for emulator you should also be able to press a key to resume game
+        LiveScreenKeyContinue keyResume = new LiveScreenKeyContinue();
+        //put on ui layer so event is not caught by touch event filter
+        keyResume.layer = Layers.UI;
+        lifeScreen.addChild(keyResume);
 
         return lifeScreen;
     }
