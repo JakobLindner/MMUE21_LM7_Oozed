@@ -131,12 +131,12 @@ public class ResourceSystem {
             case jumperIdle:
                 info.spriteSheetId = R.drawable.jumper;
                 info.animationLength = 6;
-                info.frameDuration = 10;
+                info.frameDuration = 8;
                 break;
             case jumperJump:
                 info.spriteSheetId = R.drawable.jumper;
                 info.animationLength = 6;
-                info.frameDuration = 10;
+                info.frameDuration = 8;
                 info.firstY = 16;
                 break;
             case platformPlate:
