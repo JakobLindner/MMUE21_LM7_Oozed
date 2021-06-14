@@ -77,6 +77,10 @@ public class Game {
      * true if gameplay is paused, no gameobjects are updated and a pause screen is shown
      */
     private boolean paused = false;
+    /**
+     * true if game is finished (= all levels cleared or all lives used up)
+     */
+    private boolean finished = false;
 
     private boolean levelCleared = false;
 
@@ -304,6 +308,7 @@ public class Game {
         else if (event.getKeyCode() == PAUSE_TOGGLE_KEY)
             togglePause();
         else if(event.getKeyCode() == WIN_TRIGGER_KEY){
+            finished = true;
             onGameOver.notify(new Score(lastMainLevel-1,time,true));
         }
     }
@@ -392,7 +397,7 @@ public class Game {
      * Does nothing if game is already paused
      */
     public void pauseGame() {
-        if (!paused) {
+        if (!paused && !finished) {
             pauseRoot.init();
             pauseRoot.addChild(ObjectFactories.makePauseScreen(context.getResources().getString(R.string.pause_screen_title)));
             //TODO play sound, ...
@@ -405,7 +410,7 @@ public class Game {
      * Does nothing if game is not paused
      */
     public void resumeGame() {
-        if (paused) {
+        if (paused && pauseRoot!=null) {
             pauseRoot.destroy();
             pauseRoot = new GameObject();
             //TODO play sound, ...
@@ -418,6 +423,7 @@ public class Game {
      */
     public void quitGame() {
         onQuit.notify(new QuitEvent());
+        finished = true;
     }
 
     /**
@@ -442,6 +448,7 @@ public class Game {
 
         if (playerLives == 0) {
             Log.i(TAG, "No lives left, show lost screen");
+            finished = true;
             onGameOver.notify(new Score(lastMainLevel-1, time, false));
         } else {
             //restart level
@@ -497,6 +504,7 @@ public class Game {
 
         if (!levelLoader.loadLevel(root, level)) {
             Log.i(TAG, "All levels completed, show win screen");
+            finished = true;
             onGameOver.notify(new Score(lastMainLevel-1, time, true));
         } else {
             levelCleared = false;
