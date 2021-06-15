@@ -185,7 +185,7 @@ public class Game {
         //process inputs
         processInputs();
 
-        if (!paused) {
+        if (!paused && !finished) {
             //advance physics, calculate collisions, emit collision events
             physicsSystem.update();
 

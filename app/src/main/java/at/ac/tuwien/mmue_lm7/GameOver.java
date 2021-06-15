@@ -100,7 +100,7 @@ public class GameOver extends FullscreenActivity {
 
     private void loadHighscore(Score highscore) {
         //check if current score is a new highscore
-        if(highscore == null || highscore.getScore()<score) {
+        if(highscore == null || highscore.getScore()<score || (highscore.getScore()==score && highscore.getTime()>time)) {
             highscore = new Score(score,time,gameCompleted);
             //store new highscore in database
             es.execute(() -> {

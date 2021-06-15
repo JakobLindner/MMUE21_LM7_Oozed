@@ -16,6 +16,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import at.ac.tuwien.mmue_lm7.game.resources.SoundSystem;
+import at.ac.tuwien.mmue_lm7.utils.Utils;
 
 import static at.ac.tuwien.mmue_lm7.GameOver.GAME_COMPLETED_KEY;
 import static at.ac.tuwien.mmue_lm7.GameOver.SCORE_KEY;
@@ -28,6 +29,8 @@ import static at.ac.tuwien.mmue_lm7.GameOver.TIME_KEY;
 public class WinActivity extends AppCompatActivity {
 
     private int buttonSoundId;
+
+    private int time;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,7 +90,12 @@ public class WinActivity extends AppCompatActivity {
         animations.addAnimation(smokeAnim);
         animations.addAnimation(textAnim);
 
+        //insert time
+        time = getIntent().getIntExtra(TIME_KEY,0);
+        TextView timeText = findViewById(R.id.timeText);
+        timeText.setText(getString(R.string.time, Utils.getMinutes(time), Utils.getLeftoverSeconds(time)));
 
+        //load button sound
         buttonSoundId = SoundSystem.get().loadSound(R.raw.button);
     }
 
@@ -95,7 +103,7 @@ public class WinActivity extends AppCompatActivity {
         //Switch to game over activity
         Intent intent = new Intent(this, GameOver.class);
         intent.putExtra(SCORE_KEY,getIntent().getIntExtra(SCORE_KEY,0));
-        intent.putExtra(TIME_KEY,getIntent().getIntExtra(TIME_KEY,0));
+        intent.putExtra(TIME_KEY,time);
         intent.putExtra(GAME_COMPLETED_KEY, getIntent().getBooleanExtra(GAME_COMPLETED_KEY,false));
         //finish this activity first, so the game over activity replaces this activity
         this.finish();

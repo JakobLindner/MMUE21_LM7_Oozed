@@ -1,5 +1,6 @@
 package at.ac.tuwien.mmue_lm7.utils;
 
+import at.ac.tuwien.mmue_lm7.Constants;
 import at.ac.tuwien.mmue_lm7.game.GameConstants;
 
 /**
@@ -70,6 +71,29 @@ public class Utils {
         y = GameConstants.GAME_HEIGHT - y;
         return y * GameConstants.PIXELS_PER_UNIT;
     }
+
+    /**
+     * @return seconds of given frames
+     */
+    public static int getSeconds(int frames) {
+        return ((frames * (int)Constants.FIXED_DELTA_MS)) / 1000;
+    }
+
+    /**
+     * @return minutes of given frames, discarding leftover seconds
+     */
+    public static int getMinutes(int frames) {
+        return getSeconds(frames)/60;
+    }
+
+    /**
+     * @return seconds after subtracting the minutes of given frames, 0..59
+     */
+    public static int getLeftoverSeconds(int frames) {
+        return getSeconds(frames)%60;
+    }
+
+
 
     /**
      * Interpolation function

@@ -74,6 +74,14 @@
             android:textAlignment="center"
             android:textAppearance="@style/Theme.MMUELM7.Heading" />
 
+        <TextView
+            android:id="@+id/timeText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/time"
+            android:textAlignment="center"
+            android:textAppearance="@style/Theme.MMUELM7.Heading2" />
+
         <Button
             android:id="@+id/continue_button"
             style="@style/Widget.Theme.MMUELM7.Button"
