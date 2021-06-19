@@ -27,8 +27,9 @@ public class SoundSystem {
      * needs to be called once before retrieving singleton
      */
     public static void load(Context context) {
-        if (INSTANCE != null)
-            Log.w(TAG, "SoundSystem has already been loaded");
+        if (INSTANCE != null) {
+            //Log.w(TAG, "SoundSystem has already been loaded");
+        }
         else
             INSTANCE = new SoundSystem(context);
     }
@@ -77,7 +78,7 @@ public class SoundSystem {
 
     private void initSoundPool() {
         if (soundPool != null) {
-            Log.w(TAG, "Sound pool already initialized");
+            //Log.w(TAG, "Sound pool already initialized");
             return;
         }
 
@@ -165,21 +166,21 @@ public class SoundSystem {
 
     public void pauseMusic() {
         if (currentMusic == null) {
-            Log.w(TAG, "No music loaded to pause");
+            //Log.w(TAG, "No music loaded to pause");
         } else
             currentMusic.pause();
     }
 
     public void resumeMusic() {
         if (currentMusic == null) {
-            Log.w(TAG, "No music loaded to resume");
+            //Log.w(TAG, "No music loaded to resume");
         } else if(!muted)
             currentMusic.start();
     }
 
     public void stopMusic() {
         if (currentMusic == null) {
-            Log.w(TAG, "No music loaded to stop");
+            //Log.w(TAG, "No music loaded to stop");
         } else {
             currentMusic.stop();
             currentMusicId = -1;

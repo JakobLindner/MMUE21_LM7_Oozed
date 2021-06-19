@@ -127,7 +127,7 @@ public class GameLoop implements Runnable {
                             pauseLock.wait();
                     }
                 } catch (InterruptedException e) {
-                    Log.e(TAG, "Interrupted game loop", e);
+                    //Log.e(TAG, "Interrupted game loop", e);
                     break;
                 }
             }
@@ -152,7 +152,7 @@ public class GameLoop implements Runnable {
                 canvas.drawBitmap(gameBitmap, gameBitmapSrc, gameBitmapDst, gameBitmapPaint);
             }
         } catch(Exception e) {
-            Log.e(TAG,"Error while rendering", e);
+            //Log.e(TAG,"Error while rendering", e);
         } finally {
             if (canvas != null) surfaceHolder.unlockCanvasAndPost(canvas);
         }

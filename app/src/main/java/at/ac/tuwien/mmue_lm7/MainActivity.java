@@ -97,7 +97,7 @@ public class MainActivity extends FullscreenActivity {
         try {
             levelFiles = getAssets().list("levels");
         } catch(IOException e) {
-            Log.e(TAG, "Exception listing level files", e);
+            ////Log.e(TAG, "Exception listing level files", e);
         }
 
         //combine file list and coded level list

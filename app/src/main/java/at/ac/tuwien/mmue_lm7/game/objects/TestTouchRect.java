@@ -72,14 +72,14 @@ public class TestTouchRect extends AABB {
 
 
     private boolean onTap(TapEvent e) {
-        Log.i(TAG, String.format("New target position: %s", e.getPosition()));
+        //Log.i(TAG, String.format("New target position: %s", e.getPosition()));
 
         targetPos.set(e.getPosition());
         return false;
     }
 
     private boolean onCollide(PhysicsSystem.Contact contact) {
-        Log.i(TAG, "Collision");
+        //Log.i(TAG, "Collision");
         isColliding = true;
 
         return false;

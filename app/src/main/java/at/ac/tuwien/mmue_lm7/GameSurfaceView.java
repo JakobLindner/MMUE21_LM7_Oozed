@@ -43,7 +43,7 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
         String startLevel = getActivity().getIntent().getStringExtra(GameActivity.START_LEVEL_KEY);
         game = new Game(context,startLevel==null||startLevel.isEmpty()?"1":startLevel);
         gestureDetector = new GestureDetectorCompat(context,new GameGestureListener());
-        Log.d(TAG, "Initialize GameSurfaceView");
+        //Log.d(TAG, "Initialize GameSurfaceView");
     }
 
     private void resumeGame(SurfaceHolder holder) {
@@ -71,7 +71,7 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
-        Log.d(TAG, "Surface created");
+        //Log.d(TAG, "Surface created");
         if(!surfaceCreatedOnce) {
             game.init();
             surfaceCreatedOnce = true;
@@ -86,7 +86,7 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
-        Log.d(TAG, "Surface destroyed");
+        //Log.d(TAG, "Surface destroyed");
         pauseGame();
     }
 
@@ -121,7 +121,7 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
             desiredHeight = (desiredWidth * GameConstants.GAME_RES_HEIGHT) / GameConstants.GAME_RES_WIDTH;
         }
 
-        Log.i(TAG, String.format("Setting dimensions of game view to %dx%d", desiredWidth, desiredHeight));
+        //Log.i(TAG, String.format("Setting dimensions of game view to %dx%d", desiredWidth, desiredHeight));
         //setMeasuredDimension(desiredWidth, desiredHeight);
         super.onMeasure(MeasureSpec.makeMeasureSpec(desiredWidth, MeasureSpec.EXACTLY),
                 MeasureSpec.makeMeasureSpec(desiredHeight, MeasureSpec.EXACTLY));
@@ -169,7 +169,7 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
 
         @Override
         public boolean onSingleTapUp(MotionEvent e) {
-            Log.d(TAG, "Single Tap Confirmed: "+e.toString());
+            //Log.d(TAG, "Single Tap Confirmed: "+e.toString());
             position.set(e.getX(),e.getY());
             screenToWorld();
 
@@ -179,7 +179,7 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
 
         @Override
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-            Log.d(TAG, "Fling: "+e1.toString()+", motion: "+e2.toString());
+            //Log.d(TAG, "Fling: "+e1.toString()+", motion: "+e2.toString());
             position.set(e1.getX(), e1.getY());
             screenToWorld();
 
@@ -190,7 +190,7 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
 
         @Override
         public void onLongPress(MotionEvent e) {
-            Log.d(TAG, String.format("Long press: "+e.toString()));
+            //Log.d(TAG, String.format("Long press: "+e.toString()));
 
             //if there is a long press on the bottom left corner => toggle debug render
             position.set(e.getX(), e.getY());
@@ -199,7 +199,7 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
 
             //check if the long press is close enough to the top left corner
             if(position.len2()<DEBUG_TOGGLE_RADIUS*DEBUG_TOGGLE_RADIUS) {
-                Log.i(TAG, "Long press at bottom left corner detected, toggling debug render");
+                //Log.i(TAG, "Long press at bottom left corner detected, toggling debug render");
                 game.toggleDebugRender();
             }
         }

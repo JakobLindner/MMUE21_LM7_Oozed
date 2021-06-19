@@ -45,7 +45,7 @@ public enum Direction {
             case RIGHT:
                 return UP;
             default:
-                Log.e(TAG, "Unknown Direction in rotateCCW");
+                //Log.e(TAG, "Unknown Direction in rotateCCW");
                 return UP;
         }
     }
@@ -61,7 +61,7 @@ public enum Direction {
             case RIGHT:
                 return DOWN;
             default:
-                Log.e(TAG, "Unknown Direction in rotateCW");
+                //Log.e(TAG, "Unknown Direction in rotateCW");
                 return UP;
         }
     }
@@ -80,7 +80,7 @@ public enum Direction {
             case RIGHT:
                 return LEFT;
             default:
-                Log.e(TAG, "Unknown Direction in opposite()");
+                //Log.e(TAG, "Unknown Direction in opposite()");
                 return UP;
         }
     }

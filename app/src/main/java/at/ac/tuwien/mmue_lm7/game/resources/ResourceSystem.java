@@ -269,7 +269,7 @@ public class ResourceSystem {
                 info.size = 48;
                 break;
             default:
-                Log.i(TAG, String.format("spriteInfo: Sprite %s not found!",spriteEnum.toString()));
+                //Log.i(TAG, String.format("spriteInfo: Sprite %s not found!",spriteEnum.toString()));
                 return info;
         }
         spriteInfos.put(spriteEnum, info);

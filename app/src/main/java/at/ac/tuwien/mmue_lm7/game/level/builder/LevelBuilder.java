@@ -64,7 +64,7 @@ public class LevelBuilder implements LevelBaseBuilder{
         try {
             level.loadJSON(json);
         } catch (JSONException e) {
-            Log.w(TAG,"Could not load from json", e);
+            //Log.w(TAG,"Could not load from json", e);
         }
         return this;
     }

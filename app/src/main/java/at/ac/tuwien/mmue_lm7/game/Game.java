@@ -133,7 +133,7 @@ public class Game {
      * Allocates ressources
      */
     public void init() {
-        Log.i(TAG, "Initialize Game");
+        //Log.i(TAG, "Initialize Game");
         //initialize singleton
         singleton = this;
 
@@ -150,7 +150,7 @@ public class Game {
      * Cleans up all resources
      */
     public void cleanup() {
-        Log.i(TAG, "Cleanup Game");
+        //Log.i(TAG, "Cleanup Game");
         resourceSystem.releaseResources();
         SoundSystem.get().stopMusic();
     }
@@ -161,7 +161,7 @@ public class Game {
      * pauses game
      */
     public void pause() {
-        Log.i(TAG, "Pause Game");
+        //Log.i(TAG, "Pause Game");
         resourceSystem.releaseResources();
 
         SoundSystem.get().pauseMusic();
@@ -172,7 +172,7 @@ public class Game {
      * loads all resources which are released in pause
      */
     public void resume() {
-        Log.i(TAG, "Resume Game");
+        //Log.i(TAG, "Resume Game");
         resourceSystem.loadResources();
 
         SoundSystem.get().playMusic(R.raw.retro_platformer_5);
@@ -265,7 +265,7 @@ public class Game {
      * @param position in game units
      */
     public void tap(Vec2 position) {
-        Log.d(TAG, String.format("Tap at: %s", position.toString()));
+        //Log.d(TAG, String.format("Tap at: %s", position.toString()));
 
         //enqueue event for later processing
         tapQueue.offer(new TapEvent(position));
@@ -280,7 +280,7 @@ public class Game {
      * @param direction should be normalized
      */
     public void swipe(Vec2 position, Vec2 direction) {
-        Log.d(TAG, String.format("Swipe starting at: %s, Direction: %s", position.toString(), direction.toString()));
+        //Log.d(TAG, String.format("Swipe starting at: %s, Direction: %s", position.toString(), direction.toString()));
 
         //enqueue swipe event
         swipeQueue.offer(new SwipeEvent(position, direction));
@@ -294,7 +294,7 @@ public class Game {
      * Called by GameSurfaceView whenever a key has been pressed
      */
     public void keyDown(KeyEvent event) {
-        Log.d(TAG, String.format("Key Down: %s", KeyEvent.keyCodeToString(event.getKeyCode())));
+        //Log.d(TAG, String.format("Key Down: %s", KeyEvent.keyCodeToString(event.getKeyCode())));
 
         //enqueue event for later processing
         keyDownQueue.offer(event);
@@ -317,7 +317,7 @@ public class Game {
      * Called by GameSurfaceView whenever a key has been pressed
      */
     public void keyUp(KeyEvent event) {
-        Log.d(TAG, String.format("Key Up: %s", KeyEvent.keyCodeToString(event.getKeyCode())));
+        //Log.d(TAG, String.format("Key Up: %s", KeyEvent.keyCodeToString(event.getKeyCode())));
 
         //enqueue event for later processing
         keyDownQueue.offer(event);
@@ -441,13 +441,13 @@ public class Game {
      * if lives==0, then the game is lost
      */
     public void respawnPlayer() {
-        Log.d(TAG, "Respawn player");
+        //Log.d(TAG, "Respawn player");
 
         //decrease lives
         --playerLives;
 
         if (playerLives == 0) {
-            Log.i(TAG, "No lives left, show lost screen");
+            //Log.i(TAG, "No lives left, show lost screen");
             finished = true;
             onGameOver.notify(new Score(lastMainLevel-1, time, false));
         } else {
@@ -503,7 +503,7 @@ public class Game {
         levelStatusSystem.clearLevelStatus();
 
         if (!levelLoader.loadLevel(root, level)) {
-            Log.i(TAG, "All levels completed, show win screen");
+            //Log.i(TAG, "All levels completed, show win screen");
             finished = true;
             onGameOver.notify(new Score(lastMainLevel-1, time, true));
         } else {
@@ -512,7 +512,7 @@ public class Game {
             //add ingame ui
             root.addChild(ObjectFactories.makeIngameUI());
 
-            Log.i(TAG, String.format("Loaded level '%s'", level));
+            //Log.i(TAG, String.format("Loaded level '%s'", level));
             onLevelLoaded.notify(new LevelEvent(level));
 
             //pause game and show lives screen
@@ -526,7 +526,7 @@ public class Game {
      * called when all objectives have been fulfilled
      */
     public void clearLevel() {
-        Log.i(TAG, "Level cleared!");
+        //Log.i(TAG, "Level cleared!");
         levelCleared = true;
         onLevelCleared.notify(new LevelEvent(currentLevel));
 

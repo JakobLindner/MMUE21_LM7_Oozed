@@ -58,7 +58,7 @@ public class PhysicsSystem {
      */
     public void addAABB(AABB box) {
         if(box.getCollisionLayer()==0) {
-            Log.w(TAG,String.format("No layer set for aabb %s, it will be ignored",box.toString()));
+            //Log.w(TAG,String.format("No layer set for aabb %s, it will be ignored",box.toString()));
             return;
         }
         aabbByLayer[BitUtils.getRightmostSetBit(box.getCollisionLayer())-1].add(box);

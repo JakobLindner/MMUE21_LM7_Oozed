@@ -575,7 +575,7 @@ public class LevelLoader {
                 level.build(root,context);
                 return true;
             } catch (JSONException e) {
-                Log.e(TAG, "Unable to load level json", e);
+                //Log.e(TAG, "Unable to load level json", e);
                 return false;
             }
         }
@@ -599,13 +599,13 @@ public class LevelLoader {
 
             fileContent = sb.toString();
         } catch (IOException e) {
-            Log.e(TAG, String.format("Exception while opening level %s", levelName), e);
+            //Log.e(TAG, String.format("Exception while opening level %s", levelName), e);
         }
 
         try {
             return (JSONObject) new JSONTokener(fileContent).nextValue();
         } catch (JSONException e) {
-            Log.e(TAG, "Unable to load level json", e);
+            //Log.e(TAG, "Unable to load level json", e);
             return new JSONObject();
         }
     }

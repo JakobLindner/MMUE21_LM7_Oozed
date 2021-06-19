@@ -309,7 +309,7 @@ public class Player extends GameObject {
                 break;
             }
             default: {
-                Log.e(TAG, "Unhandled/Unknown player state");
+                //Log.e(TAG, "Unhandled/Unknown player state");
             }
         }
 
@@ -323,7 +323,7 @@ public class Player extends GameObject {
         //debug tools
         /*if(lastPos.sub(position).len2()>PLAYER_DASH_SPEED*PLAYER_DASH_SPEED*4) {
            lastPos.add(position);
-           Log.w(TAG,String.format("Pos reset, %s -> %s | %s -> %s | Corner: %s",lastPos.toString(),position.toString(),lastState.toString(),state.toString(),cornerPos.toString()));
+           //Log.w(TAG,String.format("Pos reset, %s -> %s | %s -> %s | Corner: %s",lastPos.toString(),position.toString(),lastState.toString(),state.toString(),cornerPos.toString()));
         }
 
         lastPos.set(position);
@@ -400,7 +400,7 @@ public class Player extends GameObject {
         if (state == to)
             return;
 
-        //Log.d(TAG, String.format("Player State %-10s -> %s",state.toString(),to.toString()));
+        ////Log.d(TAG, String.format("Player State %-10s -> %s",state.toString(),to.toString()));
 
         switch (state) {
 
@@ -559,7 +559,7 @@ public class Player extends GameObject {
             }
         } else {
             if (frontRay == null) {
-                Log.e(TAG, "No collision for any ray detected");
+                //Log.e(TAG, "No collision for any ray detected");
                 //TODO should player simply fall down?
             }
         }

@@ -91,7 +91,7 @@ public class Level {
             tile = new Text();
         }
         else {
-            Log.e(TAG, String.format("Invalid Tile: %s",tileName));
+            //Log.e(TAG, String.format("Invalid Tile: %s",tileName));
         }
 
         tile.fromJSON(json);

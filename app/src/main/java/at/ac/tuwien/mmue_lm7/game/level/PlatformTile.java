@@ -33,7 +33,7 @@ public class PlatformTile extends Tile{
             sprite = ResourceSystem.SpriteEnum.valueOf(tileName);
         }
         catch(IllegalArgumentException e) {
-            Log.e(TAG, String.format("Unknown platform tile name: %s",tileName));
+            //Log.e(TAG, String.format("Unknown platform tile name: %s",tileName));
             sprite = ResourceSystem.SpriteEnum.platformBigGears;
         }
     }
