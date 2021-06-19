@@ -12,7 +12,7 @@
     <!-- The primary full-screen view. This can be replaced with whatever view
          is needed to present your content, e.g. VideoView, SurfaceView,
          TextureView, etc. -->
-    <at.ac.tuwien.mmue_lm7.GameSurfaceView
+    <io.itch.jaknak72.oozed.GameSurfaceView
         android:id="@+id/fullscreen_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

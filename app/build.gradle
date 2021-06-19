@@ -7,7 +7,7 @@ android {
     buildToolsVersion "30.0.3"
 
     defaultConfig {
-        applicationId "at.ac.tuwien.mmue_lm7"
+        applicationId "io.itch.jaknak72.oozed"
         minSdkVersion 19
         targetSdkVersion 30
         versionCode 1

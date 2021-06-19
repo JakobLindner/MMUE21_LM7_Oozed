@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="at.ac.tuwien.mmue_lm7">
+    package="io.itch.jaknak72.oozed">
 
     <application
         android:allowBackup="true"
@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ooze_launcher_icon_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MMUELM7">
-        <activity android:name=".VideoActivity"
+        <activity android:name="io.itch.jaknak72.oozed.VideoActivity"
             android:screenOrientation="landscape"
             android:theme="@style/Theme.MMUELM7.Fullscreen"
             android:noHistory="true">
@@ -20,28 +20,28 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".WinActivity"
+            android:name="io.itch.jaknak72.oozed.WinActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="landscape"
             android:theme="@style/Theme.MMUELM7.Fullscreen" />
         <activity
-            android:name=".LivesActivity"
+            android:name="io.itch.jaknak72.oozed.LivesActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_lives"
             android:screenOrientation="landscape"
             android:theme="@style/Theme.MMUELM7.Fullscreen" />
         <activity
-            android:name=".GameOver"
+            android:name="io.itch.jaknak72.oozed.GameOver"
             android:screenOrientation="landscape"
             android:theme="@style/Theme.MMUELM7.Fullscreen" /> <!-- alwaysRetainTaskState: dont let system kill state of this activity after some time -->
         <activity
-            android:name=".GameActivity"
+            android:name="io.itch.jaknak72.oozed.GameActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_game"
             android:screenOrientation="landscape"
             android:theme="@style/Theme.MMUELM7.Fullscreen" />
-        <activity android:name=".MainActivity"
+        <activity android:name="io.itch.jaknak72.oozed.MainActivity"
             android:screenOrientation="landscape"
             android:theme="@style/Theme.MMUELM7.Fullscreen" >
         </activity>
