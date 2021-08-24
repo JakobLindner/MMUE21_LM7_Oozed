@@ -100,7 +100,10 @@ public class GameOver extends FullscreenActivity {
 
     private void loadHighscore(Score highscore) {
         //check if current score is a new highscore
-        if(highscore == null || highscore.getScore()<score || (highscore.getScore()==score && highscore.getTime()>time)) {
+        if(highscore == null || //there is no highscore yet
+           highscore.getScore()<score || //player reached a higher level than last time
+           (gameCompleted && !highscore.gameCompleted()) || //player completed game for first time
+           (gameCompleted && highscore.getTime()>time)) { //player completed game faster than before
             highscore = new Score(score,time,gameCompleted);
             //store new highscore in database
             es.execute(() -> {
