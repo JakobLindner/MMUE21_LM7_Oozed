@@ -15,5 +15,5 @@
     <string name="dash_and_jump">Sprint + Sprung</string>
     <string name="continue_win">Fortsetzen</string>
     <string name="win_title">Gewonnen!</string>
-    <string name="time">Zeit: %1$0d:%2$2d</string>
+    <string name="time">Zeit: %1$0d:%2$02d</string>
 </resources>
