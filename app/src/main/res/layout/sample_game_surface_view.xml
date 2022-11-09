@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/gray_600">
 
-    <at.ac.tuwien.mmue_lm7.GameSurfaceView
+    <io.itch.jaknak72.oozed.GameSurfaceView
         style="@style/Widget.Theme.MMUELM7.MyView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
