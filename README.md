@@ -1,6 +1,5 @@
 # Oozed
-<img src="screenshots/Feature_image.png" alt="Oozed Title Image" width="60%">
-<img src="./screenshots/looping.gif" alt="Oozed looping GIF" width="31%">
+<img src="screenshots/Feature_image.png" alt="Oozed Title Image" width="60%"> <img src="./screenshots/looping.gif" alt="Oozed looping GIF" width="31%">
 
 Oozed is a small platformer for Android, which was developed during the course *Multimedia* at *Vienna University of Technology*. The goal was to develop a video game using only the Android API. No game engines and frameworks were allowed. Sprite and sound game assets were made from scratch.
 
